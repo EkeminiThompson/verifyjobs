@@ -1,5 +1,94 @@
 [
   {
+    "id": "anal_1778344560458",
+    "timestamp": "2026-05-09T16:36:00.458Z",
+    "jobTitle": "URL Job Posting",
+    "source": "Website",
+    "status": "suspicious",
+    "statusLabel": "SUSPICIOUS",
+    "riskScore": 43,
+    "legitimacyScore": 57,
+    "redFlags": [],
+    "positiveIndicators": [],
+    "explanation": "Mixed signals with notable concerns. Caution is strongly advised.",
+    "recommendation": "Proceed with extreme caution and independent research.",
+    "actionItems": [
+      "Verify the company on their official website",
+      "Check LinkedIn company page and real employees",
+      "Google the exact job posting text",
+      "Never pay any upfront fees or send money",
+      "Confirm recruiter via official company email"
+    ],
+    "metadata": {
+      "redFlagCount": 0,
+      "positiveCount": 0,
+      "contextPenalty": 43,
+      "originalLength": 109,
+      "cleanedLength": 109
+    },
+    "originalText": "Job from URL: https://verifyjobs.org/\nRemote position with high pay. Easy requirements. Contact via WhatsApp."
+  },
+  {
+    "id": "anal_1778326517120",
+    "timestamp": "2026-05-09T11:35:17.120Z",
+    "jobTitle": "URL Job Posting",
+    "source": "Website",
+    "status": "suspicious",
+    "statusLabel": "SUSPICIOUS",
+    "riskScore": 43,
+    "legitimacyScore": 57,
+    "redFlags": [],
+    "positiveIndicators": [],
+    "explanation": "Mixed signals with notable concerns. Caution is strongly advised.",
+    "recommendation": "Proceed with extreme caution and independent research.",
+    "actionItems": [
+      "Verify the company on their official website",
+      "Check LinkedIn company page and real employees",
+      "Google the exact job posting text",
+      "Never pay any upfront fees or send money",
+      "Confirm recruiter via official company email"
+    ],
+    "metadata": {
+      "redFlagCount": 0,
+      "positiveCount": 0,
+      "contextPenalty": 43,
+      "originalLength": 109,
+      "cleanedLength": 109
+    },
+    "originalText": "Job from URL: https://verifyjobs.org/\nRemote position with high pay. Easy requirements. Contact via WhatsApp."
+  },
+  {
+    "id": "anal_1778326475908",
+    "timestamp": "2026-05-09T11:34:35.908Z",
+    "jobTitle": "5995d5dc-077b-41ae-bf13-424bb9ee6998.docx",
+    "source": "File Upload",
+    "status": "legitimate",
+    "statusLabel": "LOW RISK - Likely Legitimate",
+    "riskScore": 5,
+    "legitimacyScore": 95,
+    "redFlags": [],
+    "positiveIndicators": [
+      "Mentions standard professional benefits"
+    ],
+    "explanation": "No major red flags found. Appears relatively safe.",
+    "recommendation": "Appears legitimate, but always perform standard due diligence.",
+    "actionItems": [
+      "Verify the company on their official website",
+      "Check LinkedIn company page and real employees",
+      "Google the exact job posting text",
+      "Never pay any upfront fees or send money",
+      "Confirm recruiter via official company email"
+    ],
+    "metadata": {
+      "redFlagCount": 0,
+      "positiveCount": 1,
+      "contextPenalty": 15,
+      "originalLength": 6200,
+      "cleanedLength": 6183
+    },
+    "originalText": "A RESEARCH PROPOSAL ON A MULTILEVEL COMPUTATIONAL FRAMEWORK FOR EPILEPTOGENESIS\n\n\n\nINTRODUCTION\n\nIn the pursuit of unraveling the complexities surrounding epileptogenesis, the crux of this doctoral investigation lies in the development of a comprehensive computational framework. This framework, designed to transcend multiple biological strata, seeks to delve into the intricate details at the molecular and cellular levels while simultaneously exploring the dynamic interplay at the system level. The overarching objective is to bridge the existing gap that separates biologically inspired models from simulations operating at the system level. The"
+  },
+  {
     "id": "anal_1778315419515",
     "timestamp": "2026-05-09T08:30:19.515Z",
     "jobTitle": "remote work",
