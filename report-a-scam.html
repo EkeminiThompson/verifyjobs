@@ -3,443 +3,310 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Report a Job Scam – Help Others Stay Safe | VerifyJobs</title>
-  <meta name="description" content="Report a job scam to VerifyJobs and help protect other job seekers. Your submission helps improve our detection engine and warns the community.">
+  <title>Report a Job Scam – VerifyJobs.org</title>
+  <meta name="description" content="Report a job scam to the right agency in your country. VerifyJobs provides direct links to EFCC (Nigeria), FTC (USA), Action Fraud (UK), and more, plus step-by-step guidance on what to do if you've been scammed.">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://verifyjobs.org/report-a-scam">
-
-  <!-- FONTS -->
+  <meta property="og:title" content="Report a Job Scam – VerifyJobs.org">
+  <meta property="og:description" content="Find the right place to report a job scam in your country, plus step-by-step guidance on protecting yourself after being targeted.">
+  <meta property="og:url" content="https://verifyjobs.org/report-a-scam">
+  <meta property="og:image" content="https://verifyjobs.org/og-image.png">
+  <meta name="theme-color" content="#0f1035">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
-
   <style>
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
     :root {
-      --navy: #0f1035;
-      --navy-mid: #1c1f5a;
-      --navy-light: #2a2e7a;
-      --red: #c0392b;
-      --red-bright: #e74c3c;
-      --red-pale: #fdf0ef;
-      --gold: #f0a500;
-      --gold-pale: #fff8e6;
-      --green: #1a7a45;
-      --green-pale: #eaf6ee;
-      --bg: #f0f2f8;
-      --surface: #ffffff;
-      --border: #dde0f0;
-      --text: #0f1035;
-      --muted: #5a5d80;
-      --faint: #9698b8;
-      --radius: 14px;
-      --shadow: 0 2px 16px rgba(15,16,53,0.08);
+      --navy:#0f1035; --navy-mid:#1c1f5a; --navy-light:#2a2e7a;
+      --red:#c0392b; --red-pale:#fdf0ef; --red-bright:#e74c3c;
+      --gold:#f0a500; --green:#1a7a45; --green-pale:#eaf6ee;
+      --bg:#f0f2f8; --surface:#fff; --border:#dde0f0;
+      --text:#0f1035; --muted:#5a5d80; --faint:#9698b8;
+      --radius:14px; --shadow:0 2px 16px rgba(15,16,53,0.08);
     }
-
-    html { scroll-behavior: smooth; }
-    body {
-      font-family: 'DM Sans', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      min-height: 100vh;
-      line-height: 1.6;
-    }
-
-    .page { max-width: 680px; margin: 0 auto; padding: 1rem 1rem 3rem; }
-
-    /* HEADER */
-    .header {
-      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%);
-      border-radius: var(--radius); padding: 1.5rem; margin-bottom: 1.5rem;
-      text-align: center; position: relative; overflow: hidden;
-    }
-    .header::before {
-      content: ''; position: absolute; inset: 0;
-      background: radial-gradient(ellipse at 50% 0%, rgba(240,165,0,0.15) 0%, transparent 70%);
-    }
-    .header-inner { position: relative; z-index: 1; }
-    .logo { display: inline-flex; align-items: center; gap: 10px; margin-bottom: 12px; }
-    .logo-icon {
-      width: 44px; height: 44px; background: var(--red); border-radius: 10px;
-      display: flex; align-items: center; justify-content: center;
-    }
-    .logo-icon i { font-size: 22px; color: white; }
-    .logo-text { font-family: 'Syne', sans-serif; font-size: 24px; font-weight: 800; color: white; }
-    .logo-text span { color: var(--gold); }
-    .tagline { font-size: 13px; color: rgba(255,255,255,0.7); max-width: 400px; margin: 0 auto; }
+    html { scroll-behavior:smooth; }
+    body { font-family:'DM Sans',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; }
+    .page { max-width:680px; margin:0 auto; padding:1rem 1rem 3rem; }
 
     /* NAV */
-    .nav {
-      background: var(--surface); border: 1px solid var(--border);
-      border-radius: var(--radius); padding: 12px; margin-bottom: 1.5rem;
-      display: flex; gap: 8px; overflow-x: auto; box-shadow: var(--shadow);
-    }
-    .nav a {
-      padding: 8px 16px; border-radius: 8px; font-size: 13px; font-weight: 600;
-      color: var(--muted); text-decoration: none; white-space: nowrap;
-      transition: all 0.15s; display: flex; align-items: center; gap: 6px;
-    }
-    .nav a:hover { background: #f5f6fc; color: var(--navy); }
-    .nav a.active { background: var(--navy); color: white; }
+    .topnav { background:var(--navy); padding:0 1.5rem; display:flex; align-items:center; justify-content:space-between; height:52px; position:sticky; top:0; z-index:100; }
+    .nav-logo { font-family:'Syne',sans-serif; font-size:15px; font-weight:800; color:white; text-decoration:none; }
+    .nav-logo span { color:var(--gold); }
+    .nav-links { display:flex; gap:4px; }
+    .nav-links a { font-size:12px; font-weight:500; color:rgba(255,255,255,0.65); text-decoration:none; padding:6px 10px; border-radius:8px; transition:all 0.15s; }
+    .nav-links a:hover { color:white; background:rgba(255,255,255,0.1); }
+    .nav-links a.active { color:white; background:rgba(255,255,255,0.15); }
+    @media(max-width:480px){ .nav-links a { font-size:11px; padding:6px 7px; } }
 
-    /* CONTENT */
-    .content {
-      background: var(--surface); border: 1px solid var(--border);
-      border-radius: var(--radius); padding: 2rem 1.75rem; box-shadow: var(--shadow);
-    }
-    .content h1 {
-      font-family: 'Syne', sans-serif; font-size: 28px; font-weight: 800;
-      color: var(--navy); margin-bottom: 1rem; line-height: 1.2;
-    }
-    .content h2 {
-      font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 800;
-      color: var(--navy); margin: 2rem 0 1rem; line-height: 1.3;
-    }
-    .content h2:first-of-type { margin-top: 1.5rem; }
-    .content p {
-      font-size: 15px; color: var(--muted); line-height: 1.75;
-      margin-bottom: 1.25rem;
-    }
-    .content ul {
-      margin: 1.25rem 0 1.25rem 1.5rem; color: var(--muted);
-    }
-    .content li {
-      font-size: 15px; line-height: 1.75; margin-bottom: 0.75rem;
-    }
+    /* PAGE HERO */
+    .page-hero { background:linear-gradient(135deg,var(--red) 0%,#8a1a28 100%); border-radius:var(--radius); padding:2rem 1.5rem; margin-bottom:1.25rem; position:relative; overflow:hidden; }
+    .page-hero::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse at 80% 20%,rgba(255,255,255,0.06) 0%,transparent 60%); pointer-events:none; }
+    .page-hero-grid { position:absolute; inset:0; background-image:linear-gradient(rgba(255,255,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.03) 1px,transparent 1px); background-size:32px 32px; pointer-events:none; }
+    .page-hero-inner { position:relative; z-index:1; }
+    .page-breadcrumb { font-size:11px; color:rgba(255,255,255,0.5); margin-bottom:10px; }
+    .page-breadcrumb a { color:rgba(255,255,255,0.5); text-decoration:none; }
+    .page-breadcrumb a:hover { color:white; }
+    .page-hero h1 { font-family:'Syne',sans-serif; font-size:clamp(22px,5vw,28px); font-weight:800; color:white; margin-bottom:8px; }
+    .page-hero p { font-size:13px; color:rgba(255,255,255,0.75); line-height:1.65; max-width:480px; }
 
-    .alert-box {
-      background: var(--red-pale); border-left: 4px solid var(--red);
-      border-radius: 0 10px 10px 0; padding: 1.25rem 1.5rem; margin: 1.5rem 0;
-    }
-    .alert-box h3 {
-      font-size: 15px; font-weight: 700; color: var(--red);
-      margin: 0 0 8px 0; display: flex; align-items: center; gap: 8px;
-    }
-    .alert-box h3 i { font-size: 18px; }
-    .alert-box p { margin: 0; color: #8a3026; font-size: 14px; line-height: 1.65; }
+    /* FLAG STRIP */
+    .flag-strip { height:5px; border-radius:3px; margin-bottom:1.25rem; background:repeating-linear-gradient(90deg,var(--red) 0,var(--red) 50%,#fff 50%,#fff 100%); background-size:16px 100%; }
 
-    /* FORM */
-    .form-section { margin: 2rem 0; }
-    .field { margin-bottom: 1.25rem; }
-    label {
-      display: block; font-size: 12px; font-weight: 600; color: var(--text);
-      margin-bottom: 6px; letter-spacing: 0.3px;
-    }
-    label span { color: var(--red); }
-    input[type=text], input[type=email], input[type=url], textarea, select {
-      width: 100%; padding: 11px 13px; border: 1.5px solid var(--border);
-      border-radius: 10px; font-size: 15px; background: #fafbff; color: var(--text);
-      font-family: 'DM Sans', sans-serif; transition: border-color 0.15s, box-shadow 0.15s;
-    }
-    input:focus, textarea:focus, select:focus {
-      outline: none; border-color: var(--navy-light); background: white;
-      box-shadow: 0 0 0 3px rgba(42,46,122,0.1);
-    }
-    textarea { min-height: 130px; resize: vertical; line-height: 1.55; }
-    select { cursor: pointer; }
-    .field-help {
-      font-size: 12px; color: var(--faint); margin-top: 5px; line-height: 1.5;
-    }
+    /* URGENT BANNER */
+    .urgent-banner { background:var(--red-pale); border:1px solid rgba(192,57,43,0.2); border-left:4px solid var(--red); border-radius:0 12px 12px 0; padding:1rem 1.25rem; margin-bottom:1rem; }
+    .urgent-banner strong { font-size:13px; font-weight:700; color:var(--red); display:block; margin-bottom:4px; }
+    .urgent-banner p { font-size:13px; color:var(--red); opacity:0.85; line-height:1.6; margin:0; }
 
-    .checkbox-field {
-      display: flex; align-items: flex-start; gap: 10px; margin: 1.5rem 0;
-    }
-    .checkbox-field input[type=checkbox] {
-      width: 18px; height: 18px; cursor: pointer; margin-top: 2px; flex-shrink: 0;
-    }
-    .checkbox-field label {
-      font-size: 13px; color: var(--muted); margin: 0; cursor: pointer;
-      font-weight: 400; line-height: 1.6;
-    }
+    /* CARD */
+    .card { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:1.5rem; margin-bottom:1rem; box-shadow:var(--shadow); }
+    .card h2 { font-family:'Syne',sans-serif; font-size:17px; font-weight:800; color:var(--navy); margin-bottom:0.75rem; display:flex; align-items:center; gap:8px; }
+    .card h2 i { font-size:20px; color:var(--red); }
+    .card p { font-size:13px; color:var(--muted); line-height:1.8; margin-bottom:10px; }
+    .card p:last-child { margin-bottom:0; }
 
-    .btn {
-      width: 100%; padding: 14px; background: var(--red); color: white; border: none;
-      border-radius: 10px; font-size: 15px; font-weight: 600; cursor: pointer;
-      display: flex; align-items: center; justify-content: center; gap: 8px;
-      margin-top: 6px; transition: all 0.15s; font-family: 'DM Sans', sans-serif;
-      letter-spacing: 0.2px; box-shadow: 0 4px 14px rgba(192,57,43,0.35);
-    }
-    .btn:hover {
-      background: var(--red-bright); transform: translateY(-1px);
-      box-shadow: 0 6px 18px rgba(192,57,43,0.4);
-    }
-    .btn:active { transform: translateY(0); }
-    .btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+    /* STEPS */
+    .steps { display:flex; flex-direction:column; gap:0; }
+    .step { display:flex; gap:14px; padding:12px 0; border-bottom:1px solid var(--border); }
+    .step:last-child { border:none; padding-bottom:0; }
+    .step-num { width:30px; height:30px; border-radius:50%; background:var(--red); color:white; font-family:'Syne',sans-serif; font-size:13px; font-weight:800; display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:2px; }
+    .step-body strong { display:block; font-size:13px; font-weight:700; color:var(--text); margin-bottom:3px; }
+    .step-body p { font-size:13px; color:var(--muted); line-height:1.6; margin:0; }
 
-    .success-msg {
-      display: none; background: var(--green-pale); border-left: 4px solid var(--green);
-      border-radius: 0 10px 10px 0; padding: 1.25rem 1.5rem; margin: 1.5rem 0;
-      text-align: center;
-    }
-    .success-msg i { font-size: 36px; color: var(--green); margin-bottom: 10px; display: block; }
-    .success-msg h3 {
-      font-family: 'Syne', sans-serif; font-size: 18px; font-weight: 800;
-      color: var(--green); margin: 0 0 8px 0;
-    }
-    .success-msg p { font-size: 14px; color: #0d5a2a; margin: 0; line-height: 1.6; }
+    /* AGENCY CARDS */
+    .agency-grid { display:flex; flex-direction:column; gap:10px; }
+    .agency-card { border:1px solid var(--border); border-radius:12px; padding:1rem 1.25rem; display:flex; align-items:flex-start; gap:14px; background:var(--surface); transition:border-color 0.15s; }
+    .agency-card:hover { border-color:var(--navy-light); }
+    .agency-flag { font-size:26px; flex-shrink:0; line-height:1; margin-top:2px; }
+    .agency-body { flex:1; min-width:0; }
+    .agency-body strong { display:block; font-size:14px; font-weight:700; color:var(--text); margin-bottom:2px; }
+    .agency-body .agency-name { font-size:12px; color:var(--muted); margin-bottom:6px; }
+    .agency-link { display:inline-flex; align-items:center; gap:5px; font-size:12px; font-weight:600; color:var(--navy-light); text-decoration:none; background:var(--bg); border:1px solid var(--border); padding:5px 12px; border-radius:20px; transition:all 0.15s; }
+    .agency-link:hover { background:var(--navy); color:white; border-color:var(--navy); }
+    .agency-link i { font-size:12px; }
 
-    .resources-grid {
-      display: grid; gap: 12px; margin: 1.5rem 0;
-    }
-    .resource-card {
-      background: #f5f6fc; border-radius: 10px; padding: 1rem 1.25rem;
-      border-left: 4px solid var(--navy); display: flex; gap: 12px;
-      align-items: flex-start;
-    }
-    .resource-card i { font-size: 20px; color: var(--navy); flex-shrink: 0; margin-top: 2px; }
-    .resource-card h3 {
-      font-size: 14px; font-weight: 700; color: var(--navy); margin: 0 0 4px 0;
-    }
-    .resource-card p { font-size: 13px; color: var(--muted); margin: 0 0 6px 0; line-height: 1.5; }
-    .resource-card a {
-      font-size: 13px; color: var(--red); font-weight: 600; text-decoration: none;
-    }
-    .resource-card a:hover { text-decoration: underline; }
+    /* CHECKLIST */
+    .checklist { display:flex; flex-direction:column; gap:8px; margin-top:0.5rem; }
+    .check-item { display:flex; align-items:flex-start; gap:10px; padding:10px 12px; background:#f5f6fc; border-radius:10px; }
+    .check-item i { font-size:16px; color:var(--green); flex-shrink:0; margin-top:1px; }
+    .check-item span { font-size:13px; color:var(--muted); line-height:1.55; }
+    .check-item.danger i { color:var(--red); }
+
+    /* CTA */
+    .cta-card { background:linear-gradient(135deg,var(--navy),var(--navy-mid)); border-radius:var(--radius); padding:1.5rem; text-align:center; margin-top:1rem; }
+    .cta-card h3 { font-family:'Syne',sans-serif; font-size:17px; font-weight:800; color:white; margin-bottom:8px; }
+    .cta-card p { font-size:13px; color:rgba(255,255,255,0.65); margin-bottom:1.25rem; line-height:1.6; }
+    .cta-btn { display:inline-flex; align-items:center; gap:8px; background:var(--red); color:white; padding:12px 24px; border-radius:10px; font-size:14px; font-weight:700; text-decoration:none; transition:opacity 0.15s; font-family:'DM Sans',sans-serif; }
+    .cta-btn:hover { opacity:0.88; }
 
     /* FOOTER */
-    footer {
-      text-align: center; font-size: 11px; color: var(--faint);
-      padding: 2rem 0 1rem; line-height: 2;
-    }
-    footer a { color: var(--navy-light); text-decoration: none; }
-    footer a:hover { text-decoration: underline; }
+    footer { text-align:center; font-size:11px; color:var(--faint); padding:1.5rem 0 0.5rem; line-height:2; }
+    footer a { color:var(--navy-light); text-decoration:none; }
+    footer a:hover { text-decoration:underline; }
+    .footer-links { display:flex; flex-wrap:wrap; justify-content:center; gap:16px; margin-bottom:6px; }
   </style>
 </head>
 <body>
 
+<nav class="topnav" role="navigation" aria-label="Main navigation">
+  <a href="index.html" class="nav-logo">Verify<span>Jobs</span></a>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="how-it-works.html">How It Works</a>
+    <a href="report-a-scam.html" class="active">Report</a>
+  </div>
+</nav>
+
 <div class="page">
-  <header class="header">
-    <div class="header-inner">
-      <div class="logo">
-        <div class="logo-icon"><i class="ti ti-shield-check"></i></div>
-        <div class="logo-text">Verify<span>Jobs</span></div>
-      </div>
-      <p class="tagline">Free job scam detection for everyone, everywhere</p>
+
+  <div class="page-hero">
+    <div class="page-hero-grid" aria-hidden="true"></div>
+    <div class="page-hero-inner">
+      <div class="page-breadcrumb"><a href="index.html">Home</a> / Report a Scam</div>
+      <h1>Report a Job Scam</h1>
+      <p>If you've encountered a fraudulent job posting — whether or not you lost money — reporting it protects others. Here's exactly what to do and where to go.</p>
     </div>
-  </header>
+  </div>
 
-  <nav class="nav">
-    <a href="/"><i class="ti ti-home"></i> Home</a>
-    <a href="/about"><i class="ti ti-info-circle"></i> About</a>
-    <a href="/how-it-works"><i class="ti ti-bulb"></i> How It Works</a>
-    <a href="/report-a-scam" class="active"><i class="ti ti-flag"></i> Report</a>
-    <a href="/privacy"><i class="ti ti-shield-lock"></i> Privacy</a>
-  </nav>
+  <div class="flag-strip" aria-hidden="true"></div>
 
-  <main class="content">
-    <h1>Report a Job Scam</h1>
-    
-    <p>If you've encountered a job scam, reporting it helps protect others and improves our detection system. Your submission is confidential and helps us identify new fraud patterns before they reach more victims.</p>
+  <!-- URGENT BANNER -->
+  <div class="urgent-banner" role="alert">
+    <strong>If you've already sent money or shared bank details, act now.</strong>
+    <p>Contact your bank immediately to freeze transfers and file a fraud claim. Time is critical — the sooner you call, the better the chance of recovery.</p>
+  </div>
 
-    <div class="alert-box">
-      <h3><i class="ti ti-alert-triangle"></i> Immediate Action Required?</h3>
-      <p>If you've already sent money or shared sensitive documents (BVN, NIN, passport, bank details), report the scam to your local authorities immediately. See the resources section below for contact information.</p>
-    </div>
-
-    <div class="form-section">
-      <form id="reportForm">
-        <div class="field">
-          <label for="scamSource">How did you receive this job offer? <span>*</span></label>
-          <select id="scamSource" required>
-            <option value="">— Select source —</option>
-            <option value="whatsapp">WhatsApp</option>
-            <option value="telegram">Telegram</option>
-            <option value="email">Email</option>
-            <option value="linkedin">LinkedIn</option>
-            <option value="facebook">Facebook</option>
-            <option value="instagram">Instagram</option>
-            <option value="sms">SMS / Text Message</option>
-            <option value="job-board">Job Board (Indeed, Jobberman, etc.)</option>
-            <option value="other">Other</option>
-          </select>
-        </div>
-
-        <div class="field">
-          <label for="companyName">Company Name (if provided)</label>
-          <input type="text" id="companyName" placeholder="e.g. Global Tech Solutions Ltd">
-        </div>
-
-        <div class="field">
-          <label for="jobTitle">Job Title <span>*</span></label>
-          <input type="text" id="jobTitle" placeholder="e.g. Remote Data Entry Clerk" required>
-        </div>
-
-        <div class="field">
-          <label for="scamDescription">Full Job Posting / Message <span>*</span></label>
-          <textarea id="scamDescription" placeholder="Paste the entire job posting, WhatsApp message, or email here. Include all details — contact info, salary, requirements, and any links they sent." required></textarea>
-          <div class="field-help">The more detail you provide, the better we can update our detection engine.</div>
-        </div>
-
-        <div class="field">
-          <label for="contactInfo">Scammer's Contact Information</label>
-          <input type="text" id="contactInfo" placeholder="Phone number, email, WhatsApp number, Telegram username, etc.">
-          <div class="field-help">This helps us identify repeat scammers and warn others.</div>
-        </div>
-
-        <div class="field">
-          <label for="scamURL">URL or Website (if any)</label>
-          <input type="url" id="scamURL" placeholder="https://example.com">
-        </div>
-
-        <div class="field">
-          <label for="moneyLost">Did you lose money? If yes, how much?</label>
-          <input type="text" id="moneyLost" placeholder="e.g. ₦50,000 or $200">
-          <div class="field-help">This is optional but helps us understand the financial impact of scams.</div>
-        </div>
-
-        <div class="field">
-          <label for="additionalInfo">Additional Information</label>
-          <textarea id="additionalInfo" placeholder="Any other details that might help? For example: How they contacted you first, what they asked for, what made you suspicious, etc." style="min-height:100px"></textarea>
-        </div>
-
-        <div class="field">
-          <label for="reporterEmail">Your Email (optional)</label>
-          <input type="email" id="reporterEmail" placeholder="your.email@example.com">
-          <div class="field-help">We'll only use this to follow up if we need clarification. We will never share your email or contact you for marketing.</div>
-        </div>
-
-        <div class="checkbox-field">
-          <input type="checkbox" id="consent" required>
-          <label for="consent">I confirm this information is accurate to the best of my knowledge, and I consent to VerifyJobs using this data to improve scam detection.</label>
-        </div>
-
-        <button type="submit" class="btn">
-          <i class="ti ti-flag"></i> Submit Report
-        </button>
-      </form>
-
-      <div class="success-msg" id="successMsg">
-        <i class="ti ti-circle-check"></i>
-        <h3>Report Submitted Successfully</h3>
-        <p>Thank you for helping protect others. Your report has been recorded and will be used to improve our scam detection system.</p>
-      </div>
-    </div>
-
-    <h2>Where to Report Job Scams to Authorities</h2>
-
-    <p>In addition to submitting here, we strongly recommend reporting job scams to your local consumer protection or law enforcement agency:</p>
-
-    <div class="resources-grid">
-      <div class="resource-card">
-        <i class="ti ti-flag-3"></i>
-        <div>
-          <h3>🇳🇬 Nigeria — EFCC</h3>
-          <p>Economic and Financial Crimes Commission</p>
-          <a href="https://efcc.gov.ng/" target="_blank" rel="noopener">efcc.gov.ng →</a>
+  <!-- IMMEDIATE STEPS -->
+  <div class="card">
+    <h2><i class="ti ti-alert-triangle"></i> What to Do Right Now</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <strong>Stop all contact with the scammer</strong>
+          <p>Do not reply to any further messages. Do not send any more money, documents, or information. Block their number/email after taking screenshots.</p>
         </div>
       </div>
-
-      <div class="resource-card">
-        <i class="ti ti-flag-3"></i>
-        <div>
-          <h3>🇺🇸 USA — FTC</h3>
-          <p>Federal Trade Commission</p>
-          <a href="https://reportfraud.ftc.gov/" target="_blank" rel="noopener">reportfraud.ftc.gov →</a>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <strong>Screenshot everything</strong>
+          <p>Take screenshots of all messages, emails, job postings, payment requests, and contact details before blocking. This is your evidence for any report or bank dispute.</p>
         </div>
       </div>
-
-      <div class="resource-card">
-        <i class="ti ti-flag-3"></i>
-        <div>
-          <h3>🇬🇧 UK — Action Fraud</h3>
-          <p>National Fraud &amp; Cyber Crime Reporting Centre</p>
-          <a href="https://www.actionfraud.police.uk/" target="_blank" rel="noopener">actionfraud.police.uk →</a>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <strong>Contact your bank if money was sent</strong>
+          <p>Call your bank's fraud line immediately. Explain you sent money to a scammer. Request a recall or chargeback. If you sent via mobile money (Opay, Palmpay, MTN Mobile Money), contact their fraud teams directly.</p>
         </div>
       </div>
-
-      <div class="resource-card">
-        <i class="ti ti-flag-3"></i>
-        <div>
-          <h3>🇨🇦 Canada — CAFC</h3>
-          <p>Canadian Anti-Fraud Centre</p>
-          <a href="https://antifraudcentre-centreantifraude.ca/" target="_blank" rel="noopener">antifraudcentre-centreantifraude.ca →</a>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <strong>Change any passwords shared</strong>
+          <p>If you provided a password, email access, or logged in to any portal they sent you, change those passwords immediately and enable two-factor authentication.</p>
         </div>
       </div>
-
-      <div class="resource-card">
-        <i class="ti ti-flag-3"></i>
-        <div>
-          <h3>🇦🇺 Australia — Scamwatch</h3>
-          <p>Australian Competition &amp; Consumer Commission</p>
-          <a href="https://www.scamwatch.gov.au/" target="_blank" rel="noopener">scamwatch.gov.au →</a>
-        </div>
-      </div>
-
-      <div class="resource-card">
-        <i class="ti ti-flag-3"></i>
-        <div>
-          <h3>🇰🇪 Kenya — DCI</h3>
-          <p>Directorate of Criminal Investigations</p>
-          <a href="https://www.cid.go.ke/" target="_blank" rel="noopener">cid.go.ke →</a>
+      <div class="step">
+        <div class="step-num">5</div>
+        <div class="step-body">
+          <strong>File an official report</strong>
+          <p>Use the agency links below for your country. Even if recovery seems unlikely, reports help agencies track scam networks and warn others.</p>
         </div>
       </div>
     </div>
+  </div>
 
-    <h2>What Happens After You Report?</h2>
+  <!-- AGENCIES BY COUNTRY -->
+  <div class="card">
+    <h2><i class="ti ti-world"></i> Report to the Right Agency</h2>
+    <p style="margin-bottom:1rem">Choose the reporting agency for your country. Have your screenshots and any transaction references ready before you start.</p>
+    <div class="agency-grid">
 
-    <ul>
-      <li><strong>We analyze the scam.</strong> Our team reviews your submission and extracts new fraud patterns to add to our detection engine.</li>
-      <li><strong>We update our database.</strong> If the scam uses tactics we haven't seen before, we build new detection rules to catch similar postings.</li>
-      <li><strong>We protect future victims.</strong> Your report directly improves the accuracy of VerifyJobs for everyone who uses it after you.</li>
-      <li><strong>We keep your information confidential.</strong> We never publish reporter names, emails, or personally identifying information.</li>
-    </ul>
+      <div class="agency-card">
+        <div class="agency-flag">🇳🇬</div>
+        <div class="agency-body">
+          <strong>Nigeria</strong>
+          <div class="agency-name">EFCC — Economic and Financial Crimes Commission</div>
+          <a href="https://efcc.gov.ng/report-a-scam" class="agency-link" rel="noopener noreferrer" target="_blank">
+            <i class="ti ti-external-link"></i> Report to EFCC
+          </a>
+        </div>
+      </div>
 
-    <p><strong>Thank you for taking the time to report.</strong> Every submission helps us stay ahead of scammers and protect job seekers around the world.</p>
+      <div class="agency-card">
+        <div class="agency-flag">🇳🇬</div>
+        <div class="agency-body">
+          <strong>Nigeria (Digital / Cyber)</strong>
+          <div class="agency-name">NITDA — National Information Technology Development Agency</div>
+          <a href="https://nitda.gov.ng" class="agency-link" rel="noopener noreferrer" target="_blank">
+            <i class="ti ti-external-link"></i> Report to NITDA
+          </a>
+        </div>
+      </div>
 
-  </main>
+      <div class="agency-card">
+        <div class="agency-flag">🇺🇸</div>
+        <div class="agency-body">
+          <strong>United States</strong>
+          <div class="agency-name">FTC — Federal Trade Commission</div>
+          <a href="https://reportfraud.ftc.gov/" class="agency-link" rel="noopener noreferrer" target="_blank">
+            <i class="ti ti-external-link"></i> Report to FTC
+          </a>
+        </div>
+      </div>
 
-  <footer>
+      <div class="agency-card">
+        <div class="agency-flag">🇬🇧</div>
+        <div class="agency-body">
+          <strong>United Kingdom</strong>
+          <div class="agency-name">Action Fraud — National Fraud Reporting Centre</div>
+          <a href="https://www.actionfraud.police.uk/reporting-fraud-and-cyber-crime" class="agency-link" rel="noopener noreferrer" target="_blank">
+            <i class="ti ti-external-link"></i> Report to Action Fraud
+          </a>
+        </div>
+      </div>
+
+      <div class="agency-card">
+        <div class="agency-flag">🇬🇭</div>
+        <div class="agency-body">
+          <strong>Ghana</strong>
+          <div class="agency-name">Ghana Police Service / EOCO</div>
+          <a href="https://www.police.gov.gh" class="agency-link" rel="noopener noreferrer" target="_blank">
+            <i class="ti ti-external-link"></i> Ghana Police Service
+          </a>
+        </div>
+      </div>
+
+      <div class="agency-card">
+        <div class="agency-flag">🇰🇪</div>
+        <div class="agency-body">
+          <strong>Kenya</strong>
+          <div class="agency-name">DCI — Directorate of Criminal Investigations</div>
+          <a href="https://www.dci.go.ke" class="agency-link" rel="noopener noreferrer" target="_blank">
+            <i class="ti ti-external-link"></i> DCI Kenya
+          </a>
+        </div>
+      </div>
+
+      <div class="agency-card">
+        <div class="agency-flag">🇮🇳</div>
+        <div class="agency-body">
+          <strong>India</strong>
+          <div class="agency-name">National Cyber Crime Reporting Portal</div>
+          <a href="https://cybercrime.gov.in/" class="agency-link" rel="noopener noreferrer" target="_blank">
+            <i class="ti ti-external-link"></i> cybercrime.gov.in
+          </a>
+        </div>
+      </div>
+
+      <div class="agency-card">
+        <div class="agency-flag">🇨🇦</div>
+        <div class="agency-body">
+          <strong>Canada</strong>
+          <div class="agency-name">Canadian Anti-Fraud Centre</div>
+          <a href="https://antifraudcentre-centreantifraude.ca/" class="agency-link" rel="noopener noreferrer" target="_blank">
+            <i class="ti ti-external-link"></i> Report to CAFC
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- DO / DON'T -->
+  <div class="card">
+    <h2><i class="ti ti-list-check"></i> Protect Yourself Going Forward</h2>
+    <div class="checklist">
+      <div class="check-item"><i class="ti ti-circle-check"></i><span>Always verify a company exists independently — search their name + "scam" and check LinkedIn, official websites, and Companies House / CAC registrations.</span></div>
+      <div class="check-item"><i class="ti ti-circle-check"></i><span>Call the company's official number (found on their verified website, not the one in the job posting) to confirm the recruiter works there.</span></div>
+      <div class="check-item"><i class="ti ti-circle-check"></i><span>Never accept a job offer without a proper interview, employment contract, or verifiable company registration.</span></div>
+      <div class="check-item danger"><i class="ti ti-circle-x"></i><span>Never pay for a job. Legitimate employers do not charge for training, starter kits, background checks, or processing fees.</span></div>
+      <div class="check-item danger"><i class="ti ti-circle-x"></i><span>Never share your BVN, NIN, passport, or bank details with a recruiter who contacted you unsolicited.</span></div>
+      <div class="check-item danger"><i class="ti ti-circle-x"></i><span>Never click links in unsolicited job offer messages — they may lead to phishing sites designed to steal your login credentials.</span></div>
+    </div>
+  </div>
+
+  <div class="cta-card">
+    <h3>Not sure if a job is legitimate?</h3>
+    <p>Use VerifyJobs to analyse any posting before you engage — free, instant, no sign-up.</p>
+    <a href="index.html" class="cta-btn"><i class="ti ti-shield-search"></i> Analyze a Job Posting</a>
+  </div>
+
+  <footer role="contentinfo">
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="how-it-works.html">How It Works</a>
+      <a href="report-a-scam.html">Report a Scam</a>
+      <a href="privacy.html">Privacy Policy</a>
+    </div>
     <p>© 2025 VerifyJobs.org — Free job scam detector. Not affiliated with any government agency.</p>
-    <p style="margin-top:4px">
-      <a href="/">Home</a> ·
-      <a href="/about">About</a> ·
-      <a href="/how-it-works">How It Works</a> ·
-      <a href="/report-a-scam">Report a Scam</a> ·
-      <a href="/privacy">Privacy Policy</a>
-    </p>
   </footer>
+
 </div>
-
-<script>
-  const form = document.getElementById('reportForm');
-  const successMsg = document.getElementById('successMsg');
-
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-
-    const data = {
-      source: document.getElementById('scamSource').value,
-      companyName: document.getElementById('companyName').value.trim(),
-      jobTitle: document.getElementById('jobTitle').value.trim(),
-      description: document.getElementById('scamDescription').value.trim(),
-      contactInfo: document.getElementById('contactInfo').value.trim(),
-      url: document.getElementById('scamURL').value.trim(),
-      moneyLost: document.getElementById('moneyLost').value.trim(),
-      additionalInfo: document.getElementById('additionalInfo').value.trim(),
-      reporterEmail: document.getElementById('reporterEmail').value.trim()
-    };
-
-    try {
-      const res = await fetch('/submit-report', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-      });
-
-      if (res.ok) {
-        form.style.display = 'none';
-        successMsg.style.display = 'block';
-        successMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      } else {
-        alert('Submission failed. Please try again or contact support.');
-      }
-    } catch (err) {
-      alert('Network error. Please check your connection and try again.');
-    }
-  });
-</script>
-
 </body>
 </html>

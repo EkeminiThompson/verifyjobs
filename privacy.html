@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Privacy Policy – VerifyJobs.org</title>
+  <meta name="description" content="VerifyJobs.org privacy policy — what data we collect, how we use it, and what we never do with the job descriptions you submit for analysis.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://verifyjobs.org/privacy">
+  <meta name="theme-color" content="#0f1035">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+  <style>
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    :root {
+      --navy:#0f1035; --navy-mid:#1c1f5a; --navy-light:#2a2e7a;
+      --red:#c0392b; --red-pale:#fdf0ef;
+      --gold:#f0a500; --green:#1a7a45; --green-pale:#eaf6ee;
+      --bg:#f0f2f8; --surface:#fff; --border:#dde0f0;
+      --text:#0f1035; --muted:#5a5d80; --faint:#9698b8;
+      --radius:14px; --shadow:0 2px 16px rgba(15,16,53,0.08);
+    }
+    html { scroll-behavior:smooth; }
+    body { font-family:'DM Sans',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; }
+    .page { max-width:680px; margin:0 auto; padding:1rem 1rem 3rem; }
+
+    /* NAV */
+    .topnav { background:var(--navy); padding:0 1.5rem; display:flex; align-items:center; justify-content:space-between; height:52px; position:sticky; top:0; z-index:100; }
+    .nav-logo { font-family:'Syne',sans-serif; font-size:15px; font-weight:800; color:white; text-decoration:none; }
+    .nav-logo span { color:var(--gold); }
+    .nav-links { display:flex; gap:4px; }
+    .nav-links a { font-size:12px; font-weight:500; color:rgba(255,255,255,0.65); text-decoration:none; padding:6px 10px; border-radius:8px; transition:all 0.15s; }
+    .nav-links a:hover { color:white; background:rgba(255,255,255,0.1); }
+    .nav-links a.active { color:white; background:rgba(255,255,255,0.15); }
+    @media(max-width:480px){ .nav-links a { font-size:11px; padding:6px 7px; } }
+
+    /* PAGE HERO */
+    .page-hero { background:linear-gradient(135deg,var(--navy) 0%,var(--navy-mid) 60%,#1a1060 100%); border-radius:var(--radius); padding:2rem 1.5rem; margin-bottom:1.25rem; position:relative; overflow:hidden; }
+    .page-hero::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse at 80% 20%,rgba(240,165,0,0.1) 0%,transparent 60%); pointer-events:none; }
+    .page-hero-grid { position:absolute; inset:0; background-image:linear-gradient(rgba(255,255,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.03) 1px,transparent 1px); background-size:32px 32px; pointer-events:none; }
+    .page-hero-inner { position:relative; z-index:1; }
+    .page-breadcrumb { font-size:11px; color:rgba(255,255,255,0.45); margin-bottom:10px; }
+    .page-breadcrumb a { color:rgba(255,255,255,0.5); text-decoration:none; }
+    .page-breadcrumb a:hover { color:white; }
+    .page-hero h1 { font-family:'Syne',sans-serif; font-size:clamp(22px,5vw,28px); font-weight:800; color:white; margin-bottom:8px; }
+    .page-hero p { font-size:13px; color:rgba(255,255,255,0.65); line-height:1.65; max-width:480px; }
+    .page-hero .updated { font-size:11px; color:rgba(255,255,255,0.4); margin-top:10px; }
+
+    /* FLAG STRIP */
+    .flag-strip { height:5px; border-radius:3px; margin-bottom:1.25rem; background:repeating-linear-gradient(90deg,var(--red) 0,var(--red) 50%,#fff 50%,#fff 100%); background-size:16px 100%; }
+
+    /* SUMMARY BOXES */
+    .summary-row { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:1rem; }
+    .summary-box { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:1rem; text-align:center; box-shadow:var(--shadow); }
+    .summary-box i { font-size:22px; margin-bottom:6px; display:block; }
+    .summary-box.good i { color:var(--green); }
+    .summary-box.bad i { color:var(--red); }
+    .summary-box strong { display:block; font-size:11px; font-weight:700; color:var(--text); line-height:1.4; }
+
+    /* CARD */
+    .card { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:1.5rem; margin-bottom:1rem; box-shadow:var(--shadow); }
+    .card h2 { font-family:'Syne',sans-serif; font-size:16px; font-weight:800; color:var(--navy); margin-bottom:0.75rem; display:flex; align-items:center; gap:8px; padding-bottom:0.75rem; border-bottom:1px solid var(--border); }
+    .card h2 i { font-size:18px; color:var(--navy-light); }
+    .card p { font-size:13px; color:var(--muted); line-height:1.8; margin-bottom:10px; }
+    .card p:last-child { margin-bottom:0; }
+    .card ul { margin:8px 0 10px 0; padding-left:0; list-style:none; display:flex; flex-direction:column; gap:6px; }
+    .card ul li { font-size:13px; color:var(--muted); line-height:1.6; display:flex; align-items:flex-start; gap:8px; }
+    .card ul li::before { content:''; width:5px; height:5px; border-radius:50%; background:var(--navy-light); flex-shrink:0; margin-top:7px; }
+
+    /* HIGHLIGHT BOX */
+    .highlight { background:var(--green-pale); border:1px solid rgba(26,122,69,0.2); border-radius:10px; padding:1rem 1.25rem; margin:0.75rem 0; }
+    .highlight p { color:var(--green); margin:0; font-size:13px; line-height:1.7; }
+    .highlight strong { color:var(--green); }
+
+    /* CONTACT */
+    .contact-box { background:#f5f6fc; border-radius:10px; padding:1rem 1.25rem; margin-top:0.75rem; }
+    .contact-box p { margin:0; font-size:13px; color:var(--muted); line-height:1.7; }
+    .contact-box a { color:var(--navy-light); }
+
+    /* FOOTER */
+    footer { text-align:center; font-size:11px; color:var(--faint); padding:1.5rem 0 0.5rem; line-height:2; }
+    footer a { color:var(--navy-light); text-decoration:none; }
+    footer a:hover { text-decoration:underline; }
+    .footer-links { display:flex; flex-wrap:wrap; justify-content:center; gap:16px; margin-bottom:6px; }
+
+    @media(max-width:480px){
+      .summary-row { grid-template-columns:1fr 1fr; }
+      .summary-row .summary-box:last-child { grid-column:span 2; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="topnav" role="navigation" aria-label="Main navigation">
+  <a href="index.html" class="nav-logo">Verify<span>Jobs</span></a>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="how-it-works.html">How It Works</a>
+    <a href="report-a-scam.html">Report</a>
+  </div>
+</nav>
+
+<div class="page">
+
+  <div class="page-hero">
+    <div class="page-hero-grid" aria-hidden="true"></div>
+    <div class="page-hero-inner">
+      <div class="page-breadcrumb"><a href="index.html">Home</a> / Privacy Policy</div>
+      <h1>Privacy Policy</h1>
+      <p>We built VerifyJobs to protect people — that ethos extends to your data. Here's exactly what we collect, what we don't, and what we never do.</p>
+      <div class="updated">Last updated: May 2025</div>
+    </div>
+  </div>
+
+  <div class="flag-strip" aria-hidden="true"></div>
+
+  <!-- SUMMARY -->
+  <div class="summary-row">
+    <div class="summary-box good">
+      <i class="ti ti-eye-off"></i>
+      <strong>We don't store your job text</strong>
+    </div>
+    <div class="summary-box good">
+      <i class="ti ti-user-off"></i>
+      <strong>No account or email required</strong>
+    </div>
+    <div class="summary-box good">
+      <i class="ti ti-coin-off"></i>
+      <strong>Never sold to third parties</strong>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2><i class="ti ti-info-circle"></i> 1. About This Policy</h2>
+    <p>This Privacy Policy describes how VerifyJobs.org ("we", "our", or "the service") handles information when you use our free job scam detection tool. By using VerifyJobs, you agree to the practices described here.</p>
+    <p>We are committed to keeping this policy simple, clear, and honest — no legal jargon designed to obscure what we actually do.</p>
+  </div>
+
+  <div class="card">
+    <h2><i class="ti ti-file-upload"></i> 2. Information You Submit for Analysis</h2>
+    <p>When you use VerifyJobs to analyse a job posting, you may submit one of the following:</p>
+    <ul>
+      <li>Job description text pasted into the tool</li>
+      <li>A PDF or Word document uploaded for analysis</li>
+      <li>A URL to a job posting page</li>
+    </ul>
+    <div class="highlight">
+      <p><strong>This content is processed in memory to generate your result and is not written to permanent storage.</strong> We do not save, index, or retain the text of your job descriptions, uploaded files, or the contents of URLs you submit.</p>
+    </div>
+    <p>Analysis results (risk score, verdict, red flags list) may be stored in aggregate and anonymised form to help us improve detection accuracy. This data contains no content from your submission — only numerical scores and verdict labels.</p>
+  </div>
+
+  <div class="card">
+    <h2><i class="ti ti-device-analytics"></i> 3. Automatically Collected Information</h2>
+    <p>Like virtually all web services, our servers automatically log basic request data when you visit VerifyJobs. This includes:</p>
+    <ul>
+      <li>Your IP address (used only for rate limiting and abuse prevention)</li>
+      <li>Browser type and version</li>
+      <li>The page or endpoint you accessed</li>
+      <li>The date and time of your request</li>
+    </ul>
+    <p>This data is held in standard server logs, is not linked to your submissions, and is not used to build profiles or track individuals across sessions.</p>
+  </div>
+
+  <div class="card">
+    <h2><i class="ti ti-cookie"></i> 4. Cookies and Tracking</h2>
+    <p>VerifyJobs does not use advertising cookies, tracking pixels, or third-party analytics services that profile users. We do not use Google Analytics, Facebook Pixel, or similar tools.</p>
+    <p>The site may set a minimal session cookie to maintain your current tab state (e.g. which input tab is active). This cookie expires when you close your browser and contains no personal information.</p>
+  </div>
+
+  <div class="card">
+    <h2><i class="ti ti-share"></i> 5. Data Sharing</h2>
+    <p>We do not sell, rent, or share your data with advertisers, data brokers, or marketing companies — ever.</p>
+    <p>The only circumstances in which we might disclose information are:</p>
+    <ul>
+      <li>When required by law, court order, or valid legal process</li>
+      <li>To prevent imminent harm or illegal activity</li>
+      <li>In the event of a service acquisition, in which case any acquirer would be bound by this policy</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2><i class="ti ti-lock"></i> 6. Security</h2>
+    <p>All data transmitted between your browser and VerifyJobs is encrypted via HTTPS/TLS. Uploaded files are processed in memory and immediately discarded after analysis. We do not store uploaded files on disk.</p>
+    <p>No system is perfectly secure. We implement industry-standard security practices but cannot guarantee absolute security of data in transit or on our servers.</p>
+  </div>
+
+  <div class="card">
+    <h2><i class="ti ti-user-check"></i> 7. Your Rights</h2>
+    <p>Because we do not collect personal information tied to your identity, most traditional data rights (access, correction, deletion) do not apply in the conventional sense — there is no profile to access or delete.</p>
+    <p>If you have a specific concern about data that may have been inadvertently retained, contact us at the address below and we will investigate promptly.</p>
+  </div>
+
+  <div class="card">
+    <h2><i class="ti ti-users"></i> 8. Children</h2>
+    <p>VerifyJobs is not directed at children under the age of 13. We do not knowingly collect information from children. If you believe a child has submitted information through our service, please contact us.</p>
+  </div>
+
+  <div class="card">
+    <h2><i class="ti ti-refresh"></i> 9. Changes to This Policy</h2>
+    <p>We may update this policy from time to time. When we do, we will update the "Last updated" date at the top of this page. Continued use of VerifyJobs after a policy change constitutes acceptance of the updated policy.</p>
+    <p>We will not make changes that retroactively allow us to do things with your data that this policy currently prohibits without notifying you prominently.</p>
+  </div>
+
+  <div class="card">
+    <h2><i class="ti ti-mail"></i> 10. Contact</h2>
+    <p>Questions, concerns, or requests about this Privacy Policy:</p>
+    <div class="contact-box">
+      <p>
+        <strong>VerifyJobs.org</strong><br>
+        Email: <a href="mailto:privacy@verifyjobs.org">privacy@verifyjobs.org</a><br>
+        Website: <a href="https://verifyjobs.org">verifyjobs.org</a>
+      </p>
+    </div>
+  </div>
+
+  <footer role="contentinfo">
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="how-it-works.html">How It Works</a>
+      <a href="report-a-scam.html">Report a Scam</a>
+      <a href="privacy.html">Privacy Policy</a>
+    </div>
+    <p>© 2025 VerifyJobs.org — Free job scam detector. Not affiliated with any government agency.</p>
+  </footer>
+
+</div>
+</body>
+</html>

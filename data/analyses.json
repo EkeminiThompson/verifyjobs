@@ -1,5 +1,123 @@
 [
   {
+    "id": "anal_1778315419515",
+    "timestamp": "2026-05-09T08:30:19.515Z",
+    "jobTitle": "remote work",
+    "source": "whatsapp",
+    "status": "legitimate",
+    "statusLabel": "LOW RISK - Likely Legitimate",
+    "riskScore": 15,
+    "legitimacyScore": 85,
+    "redFlags": [],
+    "positiveIndicators": [],
+    "explanation": "No major red flags found. Appears relatively safe.",
+    "recommendation": "Appears legitimate, but always perform standard due diligence.",
+    "actionItems": [
+      "Verify the company on their official website",
+      "Check LinkedIn company page and real employees",
+      "Google the exact job posting text",
+      "Never pay any upfront fees or send money",
+      "Confirm recruiter via official company email"
+    ],
+    "metadata": {
+      "redFlagCount": 0,
+      "positiveCount": 0,
+      "contextPenalty": 15,
+      "originalLength": 32,
+      "cleanedLength": 32
+    },
+    "originalText": "http://localhost:3000/index.html"
+  },
+  {
+    "id": "anal_1778315413630",
+    "timestamp": "2026-05-09T08:30:13.630Z",
+    "jobTitle": "remote work",
+    "source": "whatsapp",
+    "status": "legitimate",
+    "statusLabel": "LOW RISK - Likely Legitimate",
+    "riskScore": 15,
+    "legitimacyScore": 85,
+    "redFlags": [],
+    "positiveIndicators": [],
+    "explanation": "No major red flags found. Appears relatively safe.",
+    "recommendation": "Appears legitimate, but always perform standard due diligence.",
+    "actionItems": [
+      "Verify the company on their official website",
+      "Check LinkedIn company page and real employees",
+      "Google the exact job posting text",
+      "Never pay any upfront fees or send money",
+      "Confirm recruiter via official company email"
+    ],
+    "metadata": {
+      "redFlagCount": 0,
+      "positiveCount": 0,
+      "contextPenalty": 15,
+      "originalLength": 32,
+      "cleanedLength": 32
+    },
+    "originalText": "http://localhost:3000/index.html"
+  },
+  {
+    "id": "anal_1778315393468",
+    "timestamp": "2026-05-09T08:29:53.468Z",
+    "jobTitle": "5995d5dc-077b-41ae-bf13-424bb9ee6998.docx",
+    "source": "File Upload",
+    "status": "legitimate",
+    "statusLabel": "LOW RISK - Likely Legitimate",
+    "riskScore": 5,
+    "legitimacyScore": 95,
+    "redFlags": [],
+    "positiveIndicators": [
+      "Mentions standard professional benefits"
+    ],
+    "explanation": "No major red flags found. Appears relatively safe.",
+    "recommendation": "Appears legitimate, but always perform standard due diligence.",
+    "actionItems": [
+      "Verify the company on their official website",
+      "Check LinkedIn company page and real employees",
+      "Google the exact job posting text",
+      "Never pay any upfront fees or send money",
+      "Confirm recruiter via official company email"
+    ],
+    "metadata": {
+      "redFlagCount": 0,
+      "positiveCount": 1,
+      "contextPenalty": 15,
+      "originalLength": 6200,
+      "cleanedLength": 6183
+    },
+    "originalText": "A RESEARCH PROPOSAL ON A MULTILEVEL COMPUTATIONAL FRAMEWORK FOR EPILEPTOGENESIS\n\n\n\nINTRODUCTION\n\nIn the pursuit of unraveling the complexities surrounding epileptogenesis, the crux of this doctoral investigation lies in the development of a comprehensive computational framework. This framework, designed to transcend multiple biological strata, seeks to delve into the intricate details at the molecular and cellular levels while simultaneously exploring the dynamic interplay at the system level. The overarching objective is to bridge the existing gap that separates biologically inspired models from simulations operating at the system level. The"
+  },
+  {
+    "id": "anal_1778315382519",
+    "timestamp": "2026-05-09T08:29:42.520Z",
+    "jobTitle": "URL Job Posting",
+    "source": "Website",
+    "status": "high_risk",
+    "statusLabel": "HIGH RISK",
+    "riskScore": 58,
+    "legitimacyScore": 42,
+    "redFlags": [],
+    "positiveIndicators": [],
+    "explanation": "Several red flags present. This opportunity carries high risk.",
+    "recommendation": "Do not proceed without thorough verification.",
+    "actionItems": [
+      "Verify the company on their official website",
+      "Check LinkedIn company page and real employees",
+      "Google the exact job posting text",
+      "Never pay any upfront fees or send money",
+      "Confirm recruiter via official company email"
+    ],
+    "metadata": {
+      "redFlagCount": 0,
+      "positiveCount": 0,
+      "contextPenalty": 58,
+      "originalLength": 118,
+      "cleanedLength": 118
+    },
+    "originalText": "Job from URL: http://localhost:3000/index.html\nRemote position with high pay. Easy requirements. Contact via WhatsApp."
+  },
+  {
     "id": "anal_1778307220222",
     "timestamp": "2026-05-09T06:13:40.222Z",
     "jobTitle": "URL Job Posting",

@@ -483,6 +483,20 @@
 
 <a class="skip-link" href="#main-tool">Skip to tool</a>
 
+<nav style="background:var(--navy);padding:0 1.25rem;display:flex;align-items:center;justify-content:space-between;height:52px;position:sticky;top:0;z-index:100;" role="navigation" aria-label="Main navigation">
+  <a href="index.html" style="font-family:'Syne',sans-serif;font-size:15px;font-weight:800;color:white;text-decoration:none;flex-shrink:0;">Verify<span style="color:var(--gold)">Jobs</span></a>
+  <div style="display:flex;gap:2px;align-items:center;flex-wrap:nowrap;overflow:hidden;">
+    <a href="index.html" style="font-size:11px;font-weight:600;color:white;background:rgba(255,255,255,0.15);text-decoration:none;padding:5px 9px;border-radius:8px;white-space:nowrap;">Home</a>
+    <a href="about.html" style="font-size:11px;font-weight:500;color:rgba(255,255,255,0.65);text-decoration:none;padding:5px 9px;border-radius:8px;white-space:nowrap;">About</a>
+    <a href="how-it-works.html" style="font-size:11px;font-weight:500;color:rgba(255,255,255,0.65);text-decoration:none;padding:5px 9px;border-radius:8px;white-space:nowrap;">How It Works</a>
+    <a href="report-a-scam.html" style="font-size:11px;font-weight:500;color:rgba(255,255,255,0.65);text-decoration:none;padding:5px 9px;border-radius:8px;white-space:nowrap;">Report</a>
+    <a href="https://justjobs.netlify.app" target="_blank" rel="noopener noreferrer"
+       style="font-size:11px;font-weight:700;color:var(--navy);background:var(--gold);text-decoration:none;padding:5px 10px;border-radius:8px;white-space:nowrap;display:flex;align-items:center;gap:4px;flex-shrink:0;">
+      <i class="ti ti-briefcase" style="font-size:13px;"></i><span>JobAPI</span>
+    </a>
+  </div>
+</nav>
+
 <!-- Hidden LLM-readable summary -->
 <div style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;">
   VerifyJobs.org is a free online tool that instantly detects fake and fraudulent job postings. It analyses job descriptions using a rule-based engine checking over 50 scam indicators including upfront payment requests, free email domains (Gmail, Yahoo), urgency language, vague job descriptions, and unrealistically high salaries. The tool returns a risk score from 0 to 100, a legitimacy score from 0 to 100, a verdict of scam, suspicious, or legitimate, specific red flags detected, positive signals, a plain-English explanation, and recommended action steps. Users can paste job description text, upload a PDF or Word document, or submit a job posting URL. No account or payment is required. The tool is especially useful for job seekers who frequently encounter WhatsApp job scams and advance-fee fraud in employment contexts.
@@ -758,14 +772,42 @@
     </p>
   </section>
 
+  <!-- JUSTJOBS PROMO BANNER -->
+  <section aria-label="Job board promotion" style="margin-top:1.5rem;">
+    <div style="background:linear-gradient(135deg,var(--navy) 0%,var(--navy-mid) 100%);border-radius:var(--radius);padding:1.25rem 1.5rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;position:relative;overflow:hidden;">
+      <!-- subtle grid bg -->
+      <div style="position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.03) 1px,transparent 1px);background-size:28px 28px;pointer-events:none;" aria-hidden="true"></div>
+      <!-- gold accent blob -->
+      <div style="position:absolute;right:-30px;top:-30px;width:120px;height:120px;border-radius:50%;background:radial-gradient(circle,rgba(240,165,0,0.15),transparent 70%);pointer-events:none;" aria-hidden="true"></div>
+
+      <div style="position:relative;z-index:1;display:flex;align-items:center;gap:14px;">
+        <div style="width:46px;height:46px;background:var(--gold);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 4px 14px rgba(240,165,0,0.35);">
+          <i class="ti ti-briefcase" style="font-size:22px;color:var(--navy);" aria-hidden="true"></i>
+        </div>
+        <div>
+          <div style="font-size:10px;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;color:var(--gold);margin-bottom:4px;">From the makers of VerifyJobs</div>
+          <div style="font-family:'Syne',sans-serif;font-size:17px;font-weight:800;color:white;line-height:1.2;">Developing a job board? Browse JobsAPI</div>
+          <div style="font-size:12px;color:rgba(255,255,255,0.6);margin-top:3px;">Verified job listings API across Africa, UK, USA, Canada &amp; beyond — powered by the JobSync API</div>
+        </div>
+      </div>
+
+      <a href="https://justjobs.netlify.app" target="_blank" rel="noopener noreferrer"
+         style="position:relative;z-index:1;display:inline-flex;align-items:center;gap:7px;background:var(--gold);color:var(--navy);padding:11px 20px;border-radius:10px;font-size:13px;font-weight:700;text-decoration:none;white-space:nowrap;box-shadow:0 4px 14px rgba(240,165,0,0.35);transition:opacity 0.15s;flex-shrink:0;"
+         onmouseover="this.style.opacity='0.88'" onmouseout="this.style.opacity='1'">
+        JobAPI for devs <i class="ti ti-arrow-up-right" style="font-size:14px;" aria-hidden="true"></i>
+      </a>
+    </div>
+  </section>
+
   <!-- FOOTER -->
   <footer role="contentinfo">
     <div class="footer-links">
-      <a href="https://verifyjobs.org/">Home</a>
-      <a href="https://verifyjobs.org/about">About</a>
-      <a href="https://verifyjobs.org/how-it-works">How It Works</a>
-      <a href="https://verifyjobs.org/report-a-scam">Report a Scam</a>
-      <a href="https://verifyjobs.org/privacy">Privacy Policy</a>
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="how-it-works.html">How It Works</a>
+      <a href="report-a-scam.html">Report a Scam</a>
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="https://justjobs.netlify.app" target="_blank" rel="noopener noreferrer">Job API ↗</a>
     </div>
     <p>© 2025 VerifyJobs.org — Free job scam detector. Not affiliated with any government agency.</p>
     <p style="margin-top:4px">
