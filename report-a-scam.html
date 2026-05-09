@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Report a Job Scam – Help Others Stay Safe | VerifyJobs</title>
+  <meta name="description" content="Report a job scam to VerifyJobs and help protect other job seekers. Your submission helps improve our detection engine and warns the community.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://verifyjobs.org/report-a-scam">
+
+  <!-- FONTS -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --navy: #0f1035;
+      --navy-mid: #1c1f5a;
+      --navy-light: #2a2e7a;
+      --red: #c0392b;
+      --red-bright: #e74c3c;
+      --red-pale: #fdf0ef;
+      --gold: #f0a500;
+      --gold-pale: #fff8e6;
+      --green: #1a7a45;
+      --green-pale: #eaf6ee;
+      --bg: #f0f2f8;
+      --surface: #ffffff;
+      --border: #dde0f0;
+      --text: #0f1035;
+      --muted: #5a5d80;
+      --faint: #9698b8;
+      --radius: 14px;
+      --shadow: 0 2px 16px rgba(15,16,53,0.08);
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+    .page { max-width: 680px; margin: 0 auto; padding: 1rem 1rem 3rem; }
+
+    /* HEADER */
+    .header {
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%);
+      border-radius: var(--radius); padding: 1.5rem; margin-bottom: 1.5rem;
+      text-align: center; position: relative; overflow: hidden;
+    }
+    .header::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 50% 0%, rgba(240,165,0,0.15) 0%, transparent 70%);
+    }
+    .header-inner { position: relative; z-index: 1; }
+    .logo { display: inline-flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+    .logo-icon {
+      width: 44px; height: 44px; background: var(--red); border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .logo-icon i { font-size: 22px; color: white; }
+    .logo-text { font-family: 'Syne', sans-serif; font-size: 24px; font-weight: 800; color: white; }
+    .logo-text span { color: var(--gold); }
+    .tagline { font-size: 13px; color: rgba(255,255,255,0.7); max-width: 400px; margin: 0 auto; }
+
+    /* NAV */
+    .nav {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 12px; margin-bottom: 1.5rem;
+      display: flex; gap: 8px; overflow-x: auto; box-shadow: var(--shadow);
+    }
+    .nav a {
+      padding: 8px 16px; border-radius: 8px; font-size: 13px; font-weight: 600;
+      color: var(--muted); text-decoration: none; white-space: nowrap;
+      transition: all 0.15s; display: flex; align-items: center; gap: 6px;
+    }
+    .nav a:hover { background: #f5f6fc; color: var(--navy); }
+    .nav a.active { background: var(--navy); color: white; }
+
+    /* CONTENT */
+    .content {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 2rem 1.75rem; box-shadow: var(--shadow);
+    }
+    .content h1 {
+      font-family: 'Syne', sans-serif; font-size: 28px; font-weight: 800;
+      color: var(--navy); margin-bottom: 1rem; line-height: 1.2;
+    }
+    .content h2 {
+      font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 800;
+      color: var(--navy); margin: 2rem 0 1rem; line-height: 1.3;
+    }
+    .content h2:first-of-type { margin-top: 1.5rem; }
+    .content p {
+      font-size: 15px; color: var(--muted); line-height: 1.75;
+      margin-bottom: 1.25rem;
+    }
+    .content ul {
+      margin: 1.25rem 0 1.25rem 1.5rem; color: var(--muted);
+    }
+    .content li {
+      font-size: 15px; line-height: 1.75; margin-bottom: 0.75rem;
+    }
+
+    .alert-box {
+      background: var(--red-pale); border-left: 4px solid var(--red);
+      border-radius: 0 10px 10px 0; padding: 1.25rem 1.5rem; margin: 1.5rem 0;
+    }
+    .alert-box h3 {
+      font-size: 15px; font-weight: 700; color: var(--red);
+      margin: 0 0 8px 0; display: flex; align-items: center; gap: 8px;
+    }
+    .alert-box h3 i { font-size: 18px; }
+    .alert-box p { margin: 0; color: #8a3026; font-size: 14px; line-height: 1.65; }
+
+    /* FORM */
+    .form-section { margin: 2rem 0; }
+    .field { margin-bottom: 1.25rem; }
+    label {
+      display: block; font-size: 12px; font-weight: 600; color: var(--text);
+      margin-bottom: 6px; letter-spacing: 0.3px;
+    }
+    label span { color: var(--red); }
+    input[type=text], input[type=email], input[type=url], textarea, select {
+      width: 100%; padding: 11px 13px; border: 1.5px solid var(--border);
+      border-radius: 10px; font-size: 15px; background: #fafbff; color: var(--text);
+      font-family: 'DM Sans', sans-serif; transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    input:focus, textarea:focus, select:focus {
+      outline: none; border-color: var(--navy-light); background: white;
+      box-shadow: 0 0 0 3px rgba(42,46,122,0.1);
+    }
+    textarea { min-height: 130px; resize: vertical; line-height: 1.55; }
+    select { cursor: pointer; }
+    .field-help {
+      font-size: 12px; color: var(--faint); margin-top: 5px; line-height: 1.5;
+    }
+
+    .checkbox-field {
+      display: flex; align-items: flex-start; gap: 10px; margin: 1.5rem 0;
+    }
+    .checkbox-field input[type=checkbox] {
+      width: 18px; height: 18px; cursor: pointer; margin-top: 2px; flex-shrink: 0;
+    }
+    .checkbox-field label {
+      font-size: 13px; color: var(--muted); margin: 0; cursor: pointer;
+      font-weight: 400; line-height: 1.6;
+    }
+
+    .btn {
+      width: 100%; padding: 14px; background: var(--red); color: white; border: none;
+      border-radius: 10px; font-size: 15px; font-weight: 600; cursor: pointer;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      margin-top: 6px; transition: all 0.15s; font-family: 'DM Sans', sans-serif;
+      letter-spacing: 0.2px; box-shadow: 0 4px 14px rgba(192,57,43,0.35);
+    }
+    .btn:hover {
+      background: var(--red-bright); transform: translateY(-1px);
+      box-shadow: 0 6px 18px rgba(192,57,43,0.4);
+    }
+    .btn:active { transform: translateY(0); }
+    .btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+
+    .success-msg {
+      display: none; background: var(--green-pale); border-left: 4px solid var(--green);
+      border-radius: 0 10px 10px 0; padding: 1.25rem 1.5rem; margin: 1.5rem 0;
+      text-align: center;
+    }
+    .success-msg i { font-size: 36px; color: var(--green); margin-bottom: 10px; display: block; }
+    .success-msg h3 {
+      font-family: 'Syne', sans-serif; font-size: 18px; font-weight: 800;
+      color: var(--green); margin: 0 0 8px 0;
+    }
+    .success-msg p { font-size: 14px; color: #0d5a2a; margin: 0; line-height: 1.6; }
+
+    .resources-grid {
+      display: grid; gap: 12px; margin: 1.5rem 0;
+    }
+    .resource-card {
+      background: #f5f6fc; border-radius: 10px; padding: 1rem 1.25rem;
+      border-left: 4px solid var(--navy); display: flex; gap: 12px;
+      align-items: flex-start;
+    }
+    .resource-card i { font-size: 20px; color: var(--navy); flex-shrink: 0; margin-top: 2px; }
+    .resource-card h3 {
+      font-size: 14px; font-weight: 700; color: var(--navy); margin: 0 0 4px 0;
+    }
+    .resource-card p { font-size: 13px; color: var(--muted); margin: 0 0 6px 0; line-height: 1.5; }
+    .resource-card a {
+      font-size: 13px; color: var(--red); font-weight: 600; text-decoration: none;
+    }
+    .resource-card a:hover { text-decoration: underline; }
+
+    /* FOOTER */
+    footer {
+      text-align: center; font-size: 11px; color: var(--faint);
+      padding: 2rem 0 1rem; line-height: 2;
+    }
+    footer a { color: var(--navy-light); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+
+<div class="page">
+  <header class="header">
+    <div class="header-inner">
+      <div class="logo">
+        <div class="logo-icon"><i class="ti ti-shield-check"></i></div>
+        <div class="logo-text">Verify<span>Jobs</span></div>
+      </div>
+      <p class="tagline">Free job scam detection for everyone, everywhere</p>
+    </div>
+  </header>
+
+  <nav class="nav">
+    <a href="/"><i class="ti ti-home"></i> Home</a>
+    <a href="/about"><i class="ti ti-info-circle"></i> About</a>
+    <a href="/how-it-works"><i class="ti ti-bulb"></i> How It Works</a>
+    <a href="/report-a-scam" class="active"><i class="ti ti-flag"></i> Report</a>
+    <a href="/privacy"><i class="ti ti-shield-lock"></i> Privacy</a>
+  </nav>
+
+  <main class="content">
+    <h1>Report a Job Scam</h1>
+    
+    <p>If you've encountered a job scam, reporting it helps protect others and improves our detection system. Your submission is confidential and helps us identify new fraud patterns before they reach more victims.</p>
+
+    <div class="alert-box">
+      <h3><i class="ti ti-alert-triangle"></i> Immediate Action Required?</h3>
+      <p>If you've already sent money or shared sensitive documents (BVN, NIN, passport, bank details), report the scam to your local authorities immediately. See the resources section below for contact information.</p>
+    </div>
+
+    <div class="form-section">
+      <form id="reportForm">
+        <div class="field">
+          <label for="scamSource">How did you receive this job offer? <span>*</span></label>
+          <select id="scamSource" required>
+            <option value="">— Select source —</option>
+            <option value="whatsapp">WhatsApp</option>
+            <option value="telegram">Telegram</option>
+            <option value="email">Email</option>
+            <option value="linkedin">LinkedIn</option>
+            <option value="facebook">Facebook</option>
+            <option value="instagram">Instagram</option>
+            <option value="sms">SMS / Text Message</option>
+            <option value="job-board">Job Board (Indeed, Jobberman, etc.)</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="companyName">Company Name (if provided)</label>
+          <input type="text" id="companyName" placeholder="e.g. Global Tech Solutions Ltd">
+        </div>
+
+        <div class="field">
+          <label for="jobTitle">Job Title <span>*</span></label>
+          <input type="text" id="jobTitle" placeholder="e.g. Remote Data Entry Clerk" required>
+        </div>
+
+        <div class="field">
+          <label for="scamDescription">Full Job Posting / Message <span>*</span></label>
+          <textarea id="scamDescription" placeholder="Paste the entire job posting, WhatsApp message, or email here. Include all details — contact info, salary, requirements, and any links they sent." required></textarea>
+          <div class="field-help">The more detail you provide, the better we can update our detection engine.</div>
+        </div>
+
+        <div class="field">
+          <label for="contactInfo">Scammer's Contact Information</label>
+          <input type="text" id="contactInfo" placeholder="Phone number, email, WhatsApp number, Telegram username, etc.">
+          <div class="field-help">This helps us identify repeat scammers and warn others.</div>
+        </div>
+
+        <div class="field">
+          <label for="scamURL">URL or Website (if any)</label>
+          <input type="url" id="scamURL" placeholder="https://example.com">
+        </div>
+
+        <div class="field">
+          <label for="moneyLost">Did you lose money? If yes, how much?</label>
+          <input type="text" id="moneyLost" placeholder="e.g. ₦50,000 or $200">
+          <div class="field-help">This is optional but helps us understand the financial impact of scams.</div>
+        </div>
+
+        <div class="field">
+          <label for="additionalInfo">Additional Information</label>
+          <textarea id="additionalInfo" placeholder="Any other details that might help? For example: How they contacted you first, what they asked for, what made you suspicious, etc." style="min-height:100px"></textarea>
+        </div>
+
+        <div class="field">
+          <label for="reporterEmail">Your Email (optional)</label>
+          <input type="email" id="reporterEmail" placeholder="your.email@example.com">
+          <div class="field-help">We'll only use this to follow up if we need clarification. We will never share your email or contact you for marketing.</div>
+        </div>
+
+        <div class="checkbox-field">
+          <input type="checkbox" id="consent" required>
+          <label for="consent">I confirm this information is accurate to the best of my knowledge, and I consent to VerifyJobs using this data to improve scam detection.</label>
+        </div>
+
+        <button type="submit" class="btn">
+          <i class="ti ti-flag"></i> Submit Report
+        </button>
+      </form>
+
+      <div class="success-msg" id="successMsg">
+        <i class="ti ti-circle-check"></i>
+        <h3>Report Submitted Successfully</h3>
+        <p>Thank you for helping protect others. Your report has been recorded and will be used to improve our scam detection system.</p>
+      </div>
+    </div>
+
+    <h2>Where to Report Job Scams to Authorities</h2>
+
+    <p>In addition to submitting here, we strongly recommend reporting job scams to your local consumer protection or law enforcement agency:</p>
+
+    <div class="resources-grid">
+      <div class="resource-card">
+        <i class="ti ti-flag-3"></i>
+        <div>
+          <h3>🇳🇬 Nigeria — EFCC</h3>
+          <p>Economic and Financial Crimes Commission</p>
+          <a href="https://efcc.gov.ng/" target="_blank" rel="noopener">efcc.gov.ng →</a>
+        </div>
+      </div>
+
+      <div class="resource-card">
+        <i class="ti ti-flag-3"></i>
+        <div>
+          <h3>🇺🇸 USA — FTC</h3>
+          <p>Federal Trade Commission</p>
+          <a href="https://reportfraud.ftc.gov/" target="_blank" rel="noopener">reportfraud.ftc.gov →</a>
+        </div>
+      </div>
+
+      <div class="resource-card">
+        <i class="ti ti-flag-3"></i>
+        <div>
+          <h3>🇬🇧 UK — Action Fraud</h3>
+          <p>National Fraud &amp; Cyber Crime Reporting Centre</p>
+          <a href="https://www.actionfraud.police.uk/" target="_blank" rel="noopener">actionfraud.police.uk →</a>
+        </div>
+      </div>
+
+      <div class="resource-card">
+        <i class="ti ti-flag-3"></i>
+        <div>
+          <h3>🇨🇦 Canada — CAFC</h3>
+          <p>Canadian Anti-Fraud Centre</p>
+          <a href="https://antifraudcentre-centreantifraude.ca/" target="_blank" rel="noopener">antifraudcentre-centreantifraude.ca →</a>
+        </div>
+      </div>
+
+      <div class="resource-card">
+        <i class="ti ti-flag-3"></i>
+        <div>
+          <h3>🇦🇺 Australia — Scamwatch</h3>
+          <p>Australian Competition &amp; Consumer Commission</p>
+          <a href="https://www.scamwatch.gov.au/" target="_blank" rel="noopener">scamwatch.gov.au →</a>
+        </div>
+      </div>
+
+      <div class="resource-card">
+        <i class="ti ti-flag-3"></i>
+        <div>
+          <h3>🇰🇪 Kenya — DCI</h3>
+          <p>Directorate of Criminal Investigations</p>
+          <a href="https://www.cid.go.ke/" target="_blank" rel="noopener">cid.go.ke →</a>
+        </div>
+      </div>
+    </div>
+
+    <h2>What Happens After You Report?</h2>
+
+    <ul>
+      <li><strong>We analyze the scam.</strong> Our team reviews your submission and extracts new fraud patterns to add to our detection engine.</li>
+      <li><strong>We update our database.</strong> If the scam uses tactics we haven't seen before, we build new detection rules to catch similar postings.</li>
+      <li><strong>We protect future victims.</strong> Your report directly improves the accuracy of VerifyJobs for everyone who uses it after you.</li>
+      <li><strong>We keep your information confidential.</strong> We never publish reporter names, emails, or personally identifying information.</li>
+    </ul>
+
+    <p><strong>Thank you for taking the time to report.</strong> Every submission helps us stay ahead of scammers and protect job seekers around the world.</p>
+
+  </main>
+
+  <footer>
+    <p>© 2025 VerifyJobs.org — Free job scam detector. Not affiliated with any government agency.</p>
+    <p style="margin-top:4px">
+      <a href="/">Home</a> ·
+      <a href="/about">About</a> ·
+      <a href="/how-it-works">How It Works</a> ·
+      <a href="/report-a-scam">Report a Scam</a> ·
+      <a href="/privacy">Privacy Policy</a>
+    </p>
+  </footer>
+</div>
+
+<script>
+  const form = document.getElementById('reportForm');
+  const successMsg = document.getElementById('successMsg');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const data = {
+      source: document.getElementById('scamSource').value,
+      companyName: document.getElementById('companyName').value.trim(),
+      jobTitle: document.getElementById('jobTitle').value.trim(),
+      description: document.getElementById('scamDescription').value.trim(),
+      contactInfo: document.getElementById('contactInfo').value.trim(),
+      url: document.getElementById('scamURL').value.trim(),
+      moneyLost: document.getElementById('moneyLost').value.trim(),
+      additionalInfo: document.getElementById('additionalInfo').value.trim(),
+      reporterEmail: document.getElementById('reporterEmail').value.trim()
+    };
+
+    try {
+      const res = await fetch('/submit-report', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+
+      if (res.ok) {
+        form.style.display = 'none';
+        successMsg.style.display = 'block';
+        successMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      } else {
+        alert('Submission failed. Please try again or contact support.');
+      }
+    } catch (err) {
+      alert('Network error. Please check your connection and try again.');
+    }
+  });
+</script>
+
+</body>
+</html>

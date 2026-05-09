@@ -1,5 +1,96 @@
 [
   {
+    "id": "anal_1778305595619",
+    "timestamp": "2026-05-09T05:46:35.619Z",
+    "jobTitle": "5995d5dc-077b-41ae-bf13-424bb9ee6998.docx",
+    "source": "File Upload",
+    "status": "legitimate",
+    "statusLabel": "LOW RISK - Likely Legitimate",
+    "riskScore": 5,
+    "legitimacyScore": 95,
+    "redFlags": [],
+    "positiveIndicators": [
+      "Mentions standard professional benefits"
+    ],
+    "explanation": "No major red flags found. Appears relatively safe.",
+    "recommendation": "Appears legitimate, but always perform standard due diligence.",
+    "actionItems": [
+      "Verify the company on their official website",
+      "Check LinkedIn company page and real employees",
+      "Google the exact job posting text",
+      "Never pay any upfront fees or send money",
+      "Confirm recruiter via official company email"
+    ],
+    "metadata": {
+      "redFlagCount": 0,
+      "positiveCount": 1,
+      "contextPenalty": 15,
+      "originalLength": 6200,
+      "cleanedLength": 6183
+    },
+    "originalText": "A RESEARCH PROPOSAL ON A MULTILEVEL COMPUTATIONAL FRAMEWORK FOR EPILEPTOGENESIS\n\n\n\nINTRODUCTION\n\nIn the pursuit of unraveling the complexities surrounding epileptogenesis, the crux of this doctoral investigation lies in the development of a comprehensive computational framework. This framework, designed to transcend multiple biological strata, seeks to delve into the intricate details at the molecular and cellular levels while simultaneously exploring the dynamic interplay at the system level. The overarching objective is to bridge the existing gap that separates biologically inspired models from simulations operating at the system level. The"
+  },
+  {
+    "id": "anal_1778304224830",
+    "timestamp": "2026-05-09T05:23:44.830Z",
+    "jobTitle": "URL Job Posting",
+    "source": "Website",
+    "status": "caution",
+    "statusLabel": "CAUTION",
+    "riskScore": 25,
+    "legitimacyScore": 75,
+    "redFlags": [],
+    "positiveIndicators": [],
+    "explanation": "Some minor concerns detected. Additional verification recommended.",
+    "recommendation": "Looks potentially okay but still verify the company.",
+    "actionItems": [
+      "Verify the company on their official website",
+      "Check LinkedIn company page and real employees",
+      "Google the exact job posting text",
+      "Never pay any upfront fees or send money",
+      "Confirm recruiter via official company email"
+    ],
+    "metadata": {
+      "redFlagCount": 0,
+      "positiveCount": 0,
+      "contextPenalty": 25,
+      "originalLength": 158,
+      "cleanedLength": 158
+    },
+    "originalText": "Job from URL: https://mail.google.com/mail/u/0/#inbox/FMfcgzQgLjWSkTWLSVdZrHJvlQsVZhxB\nRemote position with high pay. Easy requirements. Contact via WhatsApp."
+  },
+  {
+    "id": "anal_1778304162529",
+    "timestamp": "2026-05-09T05:22:42.529Z",
+    "jobTitle": "ANIEKAN USORO's RESUME_015626.docx",
+    "source": "File Upload",
+    "status": "caution",
+    "statusLabel": "CAUTION",
+    "riskScore": 38,
+    "legitimacyScore": 62,
+    "redFlags": [
+      "Mentions reshipping, tasks, or money movement"
+    ],
+    "positiveIndicators": [],
+    "explanation": "Some minor concerns detected. Additional verification recommended.",
+    "recommendation": "Looks potentially okay but still verify the company.",
+    "actionItems": [
+      "Verify the company on their official website",
+      "Check LinkedIn company page and real employees",
+      "Google the exact job posting text",
+      "Never pay any upfront fees or send money",
+      "Confirm recruiter via official company email"
+    ],
+    "metadata": {
+      "redFlagCount": 1,
+      "positiveCount": 0,
+      "contextPenalty": 0,
+      "originalLength": 3882,
+      "cleanedLength": 3813
+    },
+    "originalText": "ANIEKAN ASUQUO USORO Lead Baggage Handler, Ibom AirEnugu, Enugu State, Nigeria📞 +234 708 314 5810 | ✉️ aniekan.usoro@ibomair.com  \n\n\n\nPROFESSIONAL SUMMARY\n\nCustomer-focused operations professional with hands-on experience in airline ground operations, administration, and service delivery. Holder of a Higher National Diploma in Public Administration with professional certifications in Human Resources Management and Environmental Health & Safety. Proven ability to lead teams, resolve customer and operational issues, ensure safety compliance, and maintain high service standards in fast-paced environments. Currently a Lead Baggage Handler at Ibo"
+  },
+  {
     "id": "anal_1778295846326",
     "timestamp": "2026-05-09T03:04:06.326Z",
     "jobTitle": "URL Job Posting",

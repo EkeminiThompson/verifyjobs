@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>How VerifyJobs Works – Job Scam Detection Explained</title>
+  <meta name="description" content="Learn how VerifyJobs.org detects job scams using rule-based analysis, what the risk scores mean, and how to interpret your results.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://verifyjobs.org/how-it-works">
+
+  <!-- FONTS -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --navy: #0f1035;
+      --navy-mid: #1c1f5a;
+      --navy-light: #2a2e7a;
+      --red: #c0392b;
+      --red-bright: #e74c3c;
+      --red-pale: #fdf0ef;
+      --gold: #f0a500;
+      --gold-pale: #fff8e6;
+      --green: #1a7a45;
+      --green-pale: #eaf6ee;
+      --bg: #f0f2f8;
+      --surface: #ffffff;
+      --border: #dde0f0;
+      --text: #0f1035;
+      --muted: #5a5d80;
+      --faint: #9698b8;
+      --radius: 14px;
+      --shadow: 0 2px 16px rgba(15,16,53,0.08);
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+    .page { max-width: 680px; margin: 0 auto; padding: 1rem 1rem 3rem; }
+
+    /* HEADER */
+    .header {
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%);
+      border-radius: var(--radius); padding: 1.5rem; margin-bottom: 1.5rem;
+      text-align: center; position: relative; overflow: hidden;
+    }
+    .header::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 50% 0%, rgba(240,165,0,0.15) 0%, transparent 70%);
+    }
+    .header-inner { position: relative; z-index: 1; }
+    .logo { display: inline-flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+    .logo-icon {
+      width: 44px; height: 44px; background: var(--red); border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .logo-icon i { font-size: 22px; color: white; }
+    .logo-text { font-family: 'Syne', sans-serif; font-size: 24px; font-weight: 800; color: white; }
+    .logo-text span { color: var(--gold); }
+    .tagline { font-size: 13px; color: rgba(255,255,255,0.7); max-width: 400px; margin: 0 auto; }
+
+    /* NAV */
+    .nav {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 12px; margin-bottom: 1.5rem;
+      display: flex; gap: 8px; overflow-x: auto; box-shadow: var(--shadow);
+    }
+    .nav a {
+      padding: 8px 16px; border-radius: 8px; font-size: 13px; font-weight: 600;
+      color: var(--muted); text-decoration: none; white-space: nowrap;
+      transition: all 0.15s; display: flex; align-items: center; gap: 6px;
+    }
+    .nav a:hover { background: #f5f6fc; color: var(--navy); }
+    .nav a.active { background: var(--navy); color: white; }
+
+    /* CONTENT */
+    .content {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 2rem 1.75rem; box-shadow: var(--shadow);
+    }
+    .content h1 {
+      font-family: 'Syne', sans-serif; font-size: 28px; font-weight: 800;
+      color: var(--navy); margin-bottom: 1rem; line-height: 1.2;
+    }
+    .content h2 {
+      font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 800;
+      color: var(--navy); margin: 2rem 0 1rem; line-height: 1.3;
+    }
+    .content h2:first-of-type { margin-top: 1.5rem; }
+    .content h3 {
+      font-size: 16px; font-weight: 700; color: var(--navy);
+      margin: 1.5rem 0 0.75rem;
+    }
+    .content p {
+      font-size: 15px; color: var(--muted); line-height: 1.75;
+      margin-bottom: 1.25rem;
+    }
+    .content ul, .content ol {
+      margin: 1.25rem 0 1.25rem 1.5rem; color: var(--muted);
+    }
+    .content li {
+      font-size: 15px; line-height: 1.75; margin-bottom: 0.75rem;
+    }
+    .content strong { color: var(--navy); }
+
+    .step-grid {
+      display: grid; gap: 16px; margin: 1.5rem 0;
+    }
+    .step-card {
+      background: #f5f6fc; border-radius: 10px; padding: 1.25rem;
+      border-left: 4px solid var(--navy); display: flex; gap: 14px;
+    }
+    .step-num {
+      width: 36px; height: 36px; background: var(--navy); border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Syne', sans-serif; font-size: 18px; font-weight: 800;
+      color: white; flex-shrink: 0;
+    }
+    .step-content h3 {
+      font-size: 16px; font-weight: 700; color: var(--navy);
+      margin: 0 0 6px 0;
+    }
+    .step-content p {
+      font-size: 14px; color: var(--muted); line-height: 1.6; margin: 0;
+    }
+
+    .score-guide {
+      display: grid; gap: 12px; margin: 1.5rem 0;
+    }
+    .score-row {
+      background: #f5f6fc; border-radius: 10px; padding: 1rem 1.25rem;
+      display: grid; grid-template-columns: 100px 1fr; gap: 16px;
+      align-items: center; border-left: 4px solid;
+    }
+    .score-row.high { border-color: var(--red); }
+    .score-row.mid { border-color: var(--gold); }
+    .score-row.low { border-color: var(--green); }
+    .score-range {
+      font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 800;
+      text-align: center;
+    }
+    .score-row.high .score-range { color: var(--red); }
+    .score-row.mid .score-range { color: var(--gold); }
+    .score-row.low .score-range { color: var(--green); }
+    .score-desc h4 {
+      font-size: 14px; font-weight: 700; color: var(--navy); margin: 0 0 4px 0;
+    }
+    .score-desc p {
+      font-size: 13px; color: var(--muted); margin: 0; line-height: 1.5;
+    }
+
+    .indicator-list {
+      display: grid; gap: 10px; margin: 1.5rem 0;
+    }
+    .indicator-item {
+      background: var(--red-pale); border-radius: 10px; padding: 12px 16px;
+      display: flex; gap: 12px; align-items: flex-start; border-left: 3px solid var(--red);
+    }
+    .indicator-item i { font-size: 18px; color: var(--red); flex-shrink: 0; margin-top: 2px; }
+    .indicator-item strong { display: block; font-size: 14px; color: var(--red); margin-bottom: 3px; }
+    .indicator-item p { font-size: 13px; color: #8a3026; margin: 0; line-height: 1.5; }
+
+    .info-box {
+      background: #e8f4fd; border-left: 4px solid #2196f3;
+      border-radius: 0 10px 10px 0; padding: 1.25rem 1.5rem; margin: 1.5rem 0;
+    }
+    .info-box h3 {
+      font-size: 15px; font-weight: 700; color: #0d47a1;
+      margin: 0 0 8px 0; display: flex; align-items: center; gap: 8px;
+    }
+    .info-box h3 i { font-size: 18px; }
+    .info-box p { margin: 0; color: #1565c0; font-size: 14px; line-height: 1.65; }
+
+    .cta-box {
+      background: linear-gradient(135deg, var(--navy), var(--navy-mid));
+      border-radius: var(--radius); padding: 1.75rem; margin: 2rem 0;
+      text-align: center;
+    }
+    .cta-box h3 {
+      font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 800;
+      color: white; margin: 0 0 10px 0;
+    }
+    .cta-box p {
+      font-size: 14px; color: rgba(255,255,255,0.75); margin: 0 0 20px 0;
+    }
+    .cta-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--red); color: white; padding: 12px 28px;
+      border-radius: 10px; font-size: 15px; font-weight: 600;
+      text-decoration: none; transition: all 0.15s;
+      box-shadow: 0 4px 14px rgba(192,57,43,0.4);
+    }
+    .cta-btn:hover {
+      background: var(--red-bright); transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(192,57,43,0.5);
+    }
+
+    /* FOOTER */
+    footer {
+      text-align: center; font-size: 11px; color: var(--faint);
+      padding: 2rem 0 1rem; line-height: 2;
+    }
+    footer a { color: var(--navy-light); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+
+<div class="page">
+  <header class="header">
+    <div class="header-inner">
+      <div class="logo">
+        <div class="logo-icon"><i class="ti ti-shield-check"></i></div>
+        <div class="logo-text">Verify<span>Jobs</span></div>
+      </div>
+      <p class="tagline">Free job scam detection for everyone, everywhere</p>
+    </div>
+  </header>
+
+  <nav class="nav">
+    <a href="/"><i class="ti ti-home"></i> Home</a>
+    <a href="/about"><i class="ti ti-info-circle"></i> About</a>
+    <a href="/how-it-works" class="active"><i class="ti ti-bulb"></i> How It Works</a>
+    <a href="/report-a-scam"><i class="ti ti-flag"></i> Report</a>
+    <a href="/privacy"><i class="ti ti-shield-lock"></i> Privacy</a>
+  </nav>
+
+  <main class="content">
+    <h1>How VerifyJobs Works</h1>
+    
+    <p>VerifyJobs uses a rule-based detection engine to analyze job postings for scam indicators. We check over 50 different patterns, cross-reference them with known fraud tactics, and generate a risk score in seconds. Here's exactly how it works — no black box, no mystery.</p>
+
+    <h2>The Process</h2>
+
+    <div class="step-grid">
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h3>You Submit a Job Posting</h3>
+          <p>Paste the text, upload a PDF or Word file, or enter a URL to a job listing. We accept any format — WhatsApp messages, email screenshots, LinkedIn posts, anything.</p>
+        </div>
+      </div>
+
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h3>We Extract &amp; Normalize the Data</h3>
+          <p>Our system extracts the text, cleans up formatting, and identifies key fields: job title, company name, contact information, salary, requirements, and descriptions.</p>
+        </div>
+      </div>
+
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h3>We Run 50+ Scam Checks</h3>
+          <p>The engine scans for red flags like payment requests, free email domains, urgency tactics, vague descriptions, unrealistic salaries, and suspicious contact methods.</p>
+        </div>
+      </div>
+
+      <div class="step-card">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <h3>We Calculate Risk &amp; Legitimacy Scores</h3>
+          <p>Each flag is weighted based on severity. The risk score reflects how many scam indicators are present. The legitimacy score shows positive signals (verifiable company, professional language, etc.).</p>
+        </div>
+      </div>
+
+      <div class="step-card">
+        <div class="step-num">5</div>
+        <div class="step-content">
+          <h3>You Get Your Results</h3>
+          <p>We return a verdict (scam / suspicious / legitimate), a detailed breakdown of red flags and positive signals, and recommended next steps — all in plain English.</p>
+        </div>
+      </div>
+    </div>
+
+    <h2>Understanding Your Risk Score</h2>
+
+    <p>The risk score is a number from 0 to 100. Higher scores indicate more scam indicators. Here's how to interpret it:</p>
+
+    <div class="score-guide">
+      <div class="score-row high">
+        <div class="score-range">70–100</div>
+        <div class="score-desc">
+          <h4>High Risk / Likely Scam</h4>
+          <p>Multiple serious red flags detected. Do not proceed. Do not send money, share personal documents, or provide banking information.</p>
+        </div>
+      </div>
+
+      <div class="score-row mid">
+        <div class="score-range">45–69</div>
+        <div class="score-desc">
+          <h4>Suspicious / Caution Advised</h4>
+          <p>Several warning signs present. Research the company independently before proceeding. Verify their website, check company registration, and search for reviews from employees.</p>
+        </div>
+      </div>
+
+      <div class="score-row low">
+        <div class="score-range">0–44</div>
+        <div class="score-desc">
+          <h4>Lower Risk / Likely Legitimate</h4>
+          <p>No major scam indicators found. The posting appears more credible, but always verify employer details independently before sharing personal information.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="info-box">
+      <h3><i class="ti ti-info-circle"></i> Important Note</h3>
+      <p>A low risk score does NOT guarantee a job is legitimate. It means we found no obvious red flags. Always do your own research: verify the company website, check their registration with local business authorities, search for employee reviews on Glassdoor or similar sites, and never pay money upfront.</p>
+    </div>
+
+    <h2>What We Check For</h2>
+
+    <p>Our engine scans for these common scam indicators:</p>
+
+    <div class="indicator-list">
+      <div class="indicator-item">
+        <i class="ti ti-coin"></i>
+        <div>
+          <strong>Upfront Payment Requests</strong>
+          <p>Any mention of registration fees, starter kits, training materials, equipment deposits, or "processing charges" before you're hired.</p>
+        </div>
+      </div>
+
+      <div class="indicator-item">
+        <i class="ti ti-mail"></i>
+        <div>
+          <strong>Free Email Domains</strong>
+          <p>Company contact using @gmail.com, @yahoo.com, @hotmail.com, or other free services instead of a professional company domain.</p>
+        </div>
+      </div>
+
+      <div class="indicator-item">
+        <i class="ti ti-trending-up"></i>
+        <div>
+          <strong>Unrealistic Salary Offers</strong>
+          <p>Extremely high pay for simple tasks like data entry, clicking ads, or watching videos (e.g., ₦500,000/week for basic work).</p>
+        </div>
+      </div>
+
+      <div class="indicator-item">
+        <i class="ti ti-brand-whatsapp"></i>
+        <div>
+          <strong>WhatsApp-Only Communication</strong>
+          <p>Job offers conducted exclusively through WhatsApp, Telegram, or personal messaging apps with no formal company website or email.</p>
+        </div>
+      </div>
+
+      <div class="indicator-item">
+        <i class="ti ti-clock"></i>
+        <div>
+          <strong>False Urgency Tactics</strong>
+          <p>Phrases like "limited slots," "only 5 positions left," "apply within 24 hours," or "first come first served" designed to pressure quick decisions.</p>
+        </div>
+      </div>
+
+      <div class="indicator-item">
+        <i class="ti ti-file-description"></i>
+        <div>
+          <strong>Vague Job Descriptions</strong>
+          <p>No clear explanation of duties, requirements, or company background. Generic phrases like "earn money online" with no specifics.</p>
+        </div>
+      </div>
+
+      <div class="indicator-item">
+        <i class="ti ti-id"></i>
+        <div>
+          <strong>ID Requests Before Interview</strong>
+          <p>Asking for BVN, NIN, passport copies, or bank account details before any formal interview or hiring process.</p>
+        </div>
+      </div>
+
+      <div class="indicator-item">
+        <i class="ti ti-currency-bitcoin"></i>
+        <div>
+          <strong>Cryptocurrency References</strong>
+          <p>Mentions of Bitcoin, crypto wallets, or blockchain "investment opportunities" as part of the job offer.</p>
+        </div>
+      </div>
+    </div>
+
+    <h2>What We DON'T Do</h2>
+
+    <ul>
+      <li><strong>We don't contact employers.</strong> We analyze text only. We never reach out to companies or verify postings with them directly.</li>
+      <li><strong>We don't guarantee accuracy.</strong> Our tool is very good, but scammers evolve. Always use your judgment.</li>
+      <li><strong>We don't store your submissions.</strong> After generating your result, we delete the data. We keep no record of what you check.</li>
+      <li><strong>We don't replace due diligence.</strong> Even if a posting scores low risk, you should still research the company independently.</li>
+    </ul>
+
+    <h2>How to Use VerifyJobs Effectively</h2>
+
+    <ol>
+      <li><strong>Copy the entire job posting.</strong> The more text we have, the more accurate the analysis. Include company name, contact info, salary, and full description.</li>
+      <li><strong>Check the source field.</strong> If you received the job via WhatsApp, select "WhatsApp" in the source field for more accurate detection.</li>
+      <li><strong>Read the full breakdown.</strong> Don't just look at the score — read the red flags and positive signals. Understanding *why* a posting is risky is more useful than the number alone.</li>
+      <li><strong>Cross-check with other tools.</strong> Search the company name on Google, check their website, look for employee reviews on Glassdoor, and verify business registration if possible.</li>
+      <li><strong>Trust your gut.</strong> If something feels wrong, it probably is — even if the score is low.</li>
+    </ol>
+
+    <div class="cta-box">
+      <h3>Ready to Check a Job Posting?</h3>
+      <p>Paste, upload, or enter a URL — get your result in seconds.</p>
+      <a href="/" class="cta-btn">
+        <i class="ti ti-shield-search"></i> Analyze a Job Now
+      </a>
+    </div>
+
+  </main>
+
+  <footer>
+    <p>© 2025 VerifyJobs.org — Free job scam detector. Not affiliated with any government agency.</p>
+    <p style="margin-top:4px">
+      <a href="/">Home</a> ·
+      <a href="/about">About</a> ·
+      <a href="/how-it-works">How It Works</a> ·
+      <a href="/report-a-scam">Report a Scam</a> ·
+      <a href="/privacy">Privacy Policy</a>
+    </p>
+  </footer>
+</div>
+
+</body>
+</html>

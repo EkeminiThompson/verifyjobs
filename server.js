@@ -25,7 +25,32 @@ const upload = multer({
 // ====================== MIDDLEWARE ======================
 app.use(cors());
 app.use(express.json({ limit: '5mb' }));
-app.use(express.static(path.join(__dirname)));
+
+// IMPORTANT: Serve static files but don't let it handle the root route by itself
+app.use(express.static(path.join(__dirname), {
+  index: false // Disable automatic index.html serving so we can control it
+}));
+
+// ====================== ROUTES ======================
+
+// CRITICAL FIX: Explicit root route to serve index.html immediately
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'index.html'));
+});
+
+// Health check endpoint for uptime monitoring
+app.get('/health', (req, res) => {
+  res.json({ 
+    status: 'ok', 
+    timestamp: new Date().toISOString(),
+    uptime: process.uptime()
+  });
+});
+
+// Serve any other HTML files explicitly
+app.get('*.html', (req, res) => {
+  res.sendFile(path.join(__dirname, req.path));
+});
 
 ensureStorage();
 
@@ -39,7 +64,7 @@ try {
   console.error('❌ Failed to load pdf-parse:', e.message);
 }
 
-// ====================== ROUTES ======================
+// ====================== API ROUTES ======================
 
 // Text Analysis
 app.post('/analyze', (req, res) => {
@@ -132,6 +157,20 @@ app.get('/analyses', (req, res) => {
   }
 });
 
+// Catch-all route to handle client-side routing (if you're using SPA routing)
+// This should be the LAST route - it will serve index.html for any unknown routes
+app.get('*', (req, res) => {
+  // Don't interfere with API routes
+  if (req.path.startsWith('/api/')) {
+    return res.status(404).json({ error: 'API endpoint not found' });
+  }
+  // For any other unknown routes, serve index.html (useful for SPA deep linking)
+  res.sendFile(path.join(__dirname, 'index.html'));
+});
+
+// Start server
 app.listen(PORT, () => {
   console.log(`🚀 Job Scam Detector running on http://localhost:${PORT}`);
+  console.log(`📄 Serving index.html from: ${path.join(__dirname, 'index.html')}`);
+  console.log(`✅ Health check available at: http://localhost:${PORT}/health`);
 });

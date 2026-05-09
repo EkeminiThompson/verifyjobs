@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>About VerifyJobs – Our Mission to Stop Job Scams</title>
+  <meta name="description" content="Learn about VerifyJobs.org, why we built a free job scam detector, and how we're protecting job seekers from employment fraud worldwide.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://verifyjobs.org/about">
+
+  <!-- FONTS -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --navy: #0f1035;
+      --navy-mid: #1c1f5a;
+      --navy-light: #2a2e7a;
+      --red: #c0392b;
+      --red-bright: #e74c3c;
+      --gold: #f0a500;
+      --gold-pale: #fff8e6;
+      --green: #1a7a45;
+      --bg: #f0f2f8;
+      --surface: #ffffff;
+      --border: #dde0f0;
+      --text: #0f1035;
+      --muted: #5a5d80;
+      --faint: #9698b8;
+      --radius: 14px;
+      --shadow: 0 2px 16px rgba(15,16,53,0.08);
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+    .page { max-width: 680px; margin: 0 auto; padding: 1rem 1rem 3rem; }
+
+    /* HEADER */
+    .header {
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%);
+      border-radius: var(--radius); padding: 1.5rem; margin-bottom: 1.5rem;
+      text-align: center; position: relative; overflow: hidden;
+    }
+    .header::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 50% 0%, rgba(240,165,0,0.15) 0%, transparent 70%);
+    }
+    .header-inner { position: relative; z-index: 1; }
+    .logo { display: inline-flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+    .logo-icon {
+      width: 44px; height: 44px; background: var(--red); border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .logo-icon i { font-size: 22px; color: white; }
+    .logo-text { font-family: 'Syne', sans-serif; font-size: 24px; font-weight: 800; color: white; }
+    .logo-text span { color: var(--gold); }
+    .tagline { font-size: 13px; color: rgba(255,255,255,0.7); max-width: 400px; margin: 0 auto; }
+
+    /* NAV */
+    .nav {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 12px; margin-bottom: 1.5rem;
+      display: flex; gap: 8px; overflow-x: auto; box-shadow: var(--shadow);
+    }
+    .nav a {
+      padding: 8px 16px; border-radius: 8px; font-size: 13px; font-weight: 600;
+      color: var(--muted); text-decoration: none; white-space: nowrap;
+      transition: all 0.15s; display: flex; align-items: center; gap: 6px;
+    }
+    .nav a:hover { background: #f5f6fc; color: var(--navy); }
+    .nav a.active { background: var(--navy); color: white; }
+
+    /* CONTENT */
+    .content {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 2rem 1.75rem; box-shadow: var(--shadow);
+    }
+    .content h1 {
+      font-family: 'Syne', sans-serif; font-size: 28px; font-weight: 800;
+      color: var(--navy); margin-bottom: 1rem; line-height: 1.2;
+    }
+    .content h2 {
+      font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 800;
+      color: var(--navy); margin: 2rem 0 1rem; line-height: 1.3;
+    }
+    .content h2:first-of-type { margin-top: 1.5rem; }
+    .content p {
+      font-size: 15px; color: var(--muted); line-height: 1.75;
+      margin-bottom: 1.25rem;
+    }
+    .content ul, .content ol {
+      margin: 1.25rem 0 1.25rem 1.5rem; color: var(--muted);
+    }
+    .content li {
+      font-size: 15px; line-height: 1.75; margin-bottom: 0.75rem;
+    }
+
+    .highlight-box {
+      background: var(--gold-pale); border-left: 4px solid var(--gold);
+      border-radius: 0 10px 10px 0; padding: 1.25rem 1.5rem; margin: 1.5rem 0;
+    }
+    .highlight-box strong {
+      display: block; color: #8a6000; font-size: 16px; font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .highlight-box p { margin: 0; color: #5a4800; }
+
+    .stats-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 12px; margin: 1.5rem 0;
+    }
+    .stat-card {
+      background: #f5f6fc; border-radius: 10px; padding: 1.25rem;
+      text-align: center; border: 1px solid var(--border);
+    }
+    .stat-num {
+      font-family: 'Syne', sans-serif; font-size: 26px; font-weight: 800;
+      color: var(--red); line-height: 1; margin-bottom: 6px;
+    }
+    .stat-label { font-size: 12px; color: var(--muted); }
+
+    .team-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px; margin: 1.5rem 0;
+    }
+    .team-card {
+      background: #f5f6fc; border-radius: 10px; padding: 1.25rem;
+      border: 1px solid var(--border);
+    }
+    .team-card h3 {
+      font-size: 16px; font-weight: 700; color: var(--navy); margin-bottom: 4px;
+    }
+    .team-card .role {
+      font-size: 12px; color: var(--gold); font-weight: 600;
+      margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;
+    }
+    .team-card p { font-size: 13px; color: var(--muted); margin: 0; }
+
+    /* FOOTER */
+    footer {
+      text-align: center; font-size: 11px; color: var(--faint);
+      padding: 2rem 0 1rem; line-height: 2;
+    }
+    footer a { color: var(--navy-light); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+
+<div class="page">
+  <header class="header">
+    <div class="header-inner">
+      <div class="logo">
+        <div class="logo-icon"><i class="ti ti-shield-check"></i></div>
+        <div class="logo-text">Verify<span>Jobs</span></div>
+      </div>
+      <p class="tagline">Free job scam detection for everyone, everywhere</p>
+    </div>
+  </header>
+
+  <nav class="nav">
+    <a href="/"><i class="ti ti-home"></i> Home</a>
+    <a href="/about" class="active"><i class="ti ti-info-circle"></i> About</a>
+    <a href="/how-it-works"><i class="ti ti-bulb"></i> How It Works</a>
+    <a href="/report-a-scam"><i class="ti ti-flag"></i> Report</a>
+    <a href="/privacy"><i class="ti ti-shield-lock"></i> Privacy</a>
+  </nav>
+
+  <main class="content">
+    <h1>About VerifyJobs</h1>
+    
+    <p>VerifyJobs.org is a free, instant job scam detection tool built to protect job seekers from employment fraud. We exist because job scams are a global crisis — and the people who need protection most often have the fewest resources to get it.</p>
+
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-num">14M+</div>
+        <div class="stat-label">Job scams reported yearly</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">$2B</div>
+        <div class="stat-label">Lost to job fraud globally</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">68%</div>
+        <div class="stat-label">Target remote positions</div>
+      </div>
+    </div>
+
+    <h2>Why We Built This</h2>
+    
+    <p>In 2024, job scams reached epidemic levels. Fraudsters exploit unemployment anxiety, targeting people in Nigeria, Ghana, Kenya, India, the Philippines, and beyond — markets where economic pressure is high and verification tools are scarce.</p>
+
+    <p>Most scam detection services cost money, require registration, or only work in English-speaking Western markets. We believe everyone deserves protection — regardless of where they live, what language they speak, or whether they can afford to pay.</p>
+
+    <div class="highlight-box">
+      <strong>Our Mission</strong>
+      <p>Make job scam detection free, instant, and accessible to every job seeker on Earth — no barriers, no gatekeeping, no data harvesting.</p>
+    </div>
+
+    <h2>How We're Different</h2>
+
+    <ul>
+      <li><strong>100% Free Forever</strong> — No subscriptions, no "free trials," no upsells. This tool will always be free.</li>
+      <li><strong>No Registration Required</strong> — We don't ask for your email, phone number, or any personal information. Ever.</li>
+      <li><strong>Instant Results</strong> — Analysis happens in seconds. No waiting, no queues, no "check back later."</li>
+      <li><strong>Built for WhatsApp Scams</strong> — Our detection engine is specifically tuned for the types of fraud common on messaging apps.</li>
+      <li><strong>Privacy-First</strong> — We don't track you, sell your data, or share anything with third parties. Your job search is private.</li>
+      <li><strong>Multilingual Support (Coming Soon)</strong> — Detection logic works across languages. We're adding UI translations for Pidgin, Yoruba, Igbo, Hausa, French, and more.</li>
+    </ul>
+
+    <h2>What We Detect</h2>
+
+    <p>Our rule-based engine checks for over 50 scam indicators, including:</p>
+
+    <ul>
+      <li>Requests for upfront payments (registration fees, training kits, equipment deposits)</li>
+      <li>Unrealistically high salaries for simple tasks (₦500k/week for data entry, etc.)</li>
+      <li>Recruitment via personal channels only (WhatsApp, Telegram, personal Gmail)</li>
+      <li>Use of free email domains for "official" company contact</li>
+      <li>Pressure tactics and false urgency ("limited slots," "apply within 24 hours")</li>
+      <li>Requests for BVN, NIN, passport, or bank details before any interview</li>
+      <li>Vague job descriptions with no verifiable company information</li>
+      <li>Cryptocurrency payment references or wallet addresses</li>
+      <li>Offers that arrived unsolicited (you never applied)</li>
+    </ul>
+
+    <h2>Who We Are</h2>
+
+    <p>VerifyJobs was created by a small team of developers, researchers, and fraud analysts who have seen too many people lose money, dignity, and hope to employment scams. We're funded by our own savings and run this as a public service, not a business.</p>
+
+    <p>We are <strong>not</strong> affiliated with any government agency, job board, or recruiting platform. We are independent, volunteer-driven, and committed to keeping this tool free and accessible forever.</p>
+
+    <h2>Our Commitment</h2>
+
+    <p>VerifyJobs will always be:</p>
+    <ol>
+      <li><strong>Free</strong> — No payment, ever, for any feature.</li>
+      <li><strong>Privacy-respecting</strong> — No tracking, no data sales, no surveillance.</li>
+      <li><strong>Open about limitations</strong> — We are not a replacement for your own judgment. We provide data, you make the decision.</li>
+      <li><strong>Continuously improving</strong> — Scammers evolve. So do we. We update our detection rules regularly based on new fraud patterns.</li>
+    </ol>
+
+    <div class="highlight-box">
+      <strong>Important Disclaimer</strong>
+      <p>VerifyJobs is a tool, not a guarantee. A low risk score does not mean a job is definitely legitimate — it means we found no major red flags. Always research employers, verify company websites independently, and never send money or share financial information before you are hired through a formal process.</p>
+    </div>
+
+    <h2>Get Involved</h2>
+
+    <p>If you've been targeted by a job scam, report it via our <a href="/report-a-scam" style="color: var(--red); font-weight: 600;">Report a Scam</a> page. Your submission helps us improve detection for everyone.</p>
+
+    <p>If you're a developer, researcher, or fraud analyst who wants to contribute, we welcome collaboration. Contact us at <strong>contribute@verifyjobs.org</strong>.</p>
+
+  </main>
+
+  <footer>
+    <p>© 2025 VerifyJobs.org — Free job scam detector. Not affiliated with any government agency.</p>
+    <p style="margin-top:4px">
+      <a href="/">Home</a> ·
+      <a href="/about">About</a> ·
+      <a href="/how-it-works">How It Works</a> ·
+      <a href="/report-a-scam">Report a Scam</a> ·
+      <a href="/privacy">Privacy Policy</a>
+    </p>
+  </footer>
+</div>
+
+</body>
+</html>
