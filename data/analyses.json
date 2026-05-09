@@ -1,5 +1,244 @@
 [
   {
+    "id": "anal_1778295846326",
+    "timestamp": "2026-05-09T03:04:06.326Z",
+    "jobTitle": "URL Job Posting",
+    "source": "Website",
+    "status": "suspicious",
+    "statusLabel": "SUSPICIOUS",
+    "riskScore": 43,
+    "legitimacyScore": 57,
+    "redFlags": [],
+    "positiveIndicators": [],
+    "explanation": "Mixed signals with notable concerns. Caution is strongly advised.",
+    "recommendation": "Proceed with extreme caution and independent research.",
+    "actionItems": [
+      "Verify the company on their official website",
+      "Check LinkedIn company page and real employees",
+      "Google the exact job posting text",
+      "Never pay any upfront fees or send money",
+      "Confirm recruiter via official company email"
+    ],
+    "metadata": {
+      "redFlagCount": 0,
+      "positiveCount": 0,
+      "contextPenalty": 43,
+      "originalLength": 118,
+      "cleanedLength": 118
+    },
+    "originalText": "Job from URL: https://verifyjobs.onrender.com/\nRemote position with high pay. Easy requirements. Contact via WhatsApp."
+  },
+  {
+    "id": "anal_1778294216038",
+    "timestamp": "2026-05-09T02:36:56.038Z",
+    "jobTitle": "URL Job Posting",
+    "source": "Website",
+    "status": "suspicious",
+    "statusLabel": "SUSPICIOUS",
+    "riskScore": 43,
+    "legitimacyScore": 57,
+    "redFlags": [],
+    "positiveIndicators": [],
+    "explanation": "Mixed signals with notable concerns. Caution is strongly advised.",
+    "recommendation": "Proceed with extreme caution and independent research.",
+    "actionItems": [
+      "Verify the company on their official website",
+      "Check LinkedIn company page and real employees",
+      "Google the exact job posting text",
+      "Never pay any upfront fees or send money",
+      "Confirm recruiter via official company email"
+    ],
+    "metadata": {
+      "redFlagCount": 0,
+      "positiveCount": 0,
+      "contextPenalty": 43,
+      "originalLength": 144,
+      "cleanedLength": 144
+    },
+    "originalText": "Job from URL: https://chatgpt.com/c/69fe91a7-8acc-83ea-b0b7-fafb77c3093c\nRemote position with high pay. Easy requirements. Contact via WhatsApp."
+  },
+  {
+    "id": "anal_1778294162595",
+    "timestamp": "2026-05-09T02:36:02.595Z",
+    "jobTitle": "5995d5dc-077b-41ae-bf13-424bb9ee6998.docx",
+    "source": "File Upload",
+    "status": "legitimate",
+    "statusLabel": "LOW RISK - Likely Legitimate",
+    "riskScore": 5,
+    "legitimacyScore": 95,
+    "redFlags": [],
+    "positiveIndicators": [
+      "Mentions standard professional benefits"
+    ],
+    "explanation": "No major red flags found. Appears relatively safe.",
+    "recommendation": "Appears legitimate, but always perform standard due diligence.",
+    "actionItems": [
+      "Verify the company on their official website",
+      "Check LinkedIn company page and real employees",
+      "Google the exact job posting text",
+      "Never pay any upfront fees or send money",
+      "Confirm recruiter via official company email"
+    ],
+    "metadata": {
+      "redFlagCount": 0,
+      "positiveCount": 1,
+      "contextPenalty": 15,
+      "originalLength": 6200,
+      "cleanedLength": 6183
+    },
+    "originalText": "A RESEARCH PROPOSAL ON A MULTILEVEL COMPUTATIONAL FRAMEWORK FOR EPILEPTOGENESIS\n\n\n\nINTRODUCTION\n\nIn the pursuit of unraveling the complexities surrounding epileptogenesis, the crux of this doctoral investigation lies in the development of a comprehensive computational framework. This framework, designed to transcend multiple biological strata, seeks to delve into the intricate details at the molecular and cellular levels while simultaneously exploring the dynamic interplay at the system level. The overarching objective is to bridge the existing gap that separates biologically inspired models from simulations operating at the system level. The"
+  },
+  {
+    "id": "anal_1778294082210",
+    "timestamp": "2026-05-09T02:34:42.210Z",
+    "jobTitle": "customer service",
+    "source": "whatsapp",
+    "status": "legitimate",
+    "statusLabel": "LOW RISK - Likely Legitimate",
+    "riskScore": 15,
+    "legitimacyScore": 85,
+    "redFlags": [],
+    "positiveIndicators": [],
+    "explanation": "No major red flags found. Appears relatively safe.",
+    "recommendation": "Appears legitimate, but always perform standard due diligence.",
+    "actionItems": [
+      "Verify the company on their official website",
+      "Check LinkedIn company page and real employees",
+      "Google the exact job posting text",
+      "Never pay any upfront fees or send money",
+      "Confirm recruiter via official company email"
+    ],
+    "metadata": {
+      "redFlagCount": 0,
+      "positiveCount": 0,
+      "contextPenalty": 15,
+      "originalLength": 13,
+      "cleanedLength": 13
+    },
+    "originalText": "kjhbk hk ljlj"
+  },
+  {
+    "id": "anal_1778294063297",
+    "timestamp": "2026-05-09T02:34:23.297Z",
+    "jobTitle": "customer service",
+    "source": "whatsapp",
+    "status": "legitimate",
+    "statusLabel": "LOW RISK - Likely Legitimate",
+    "riskScore": 15,
+    "legitimacyScore": 85,
+    "redFlags": [],
+    "positiveIndicators": [],
+    "explanation": "No major red flags found. Appears relatively safe.",
+    "recommendation": "Appears legitimate, but always perform standard due diligence.",
+    "actionItems": [
+      "Verify the company on their official website",
+      "Check LinkedIn company page and real employees",
+      "Google the exact job posting text",
+      "Never pay any upfront fees or send money",
+      "Confirm recruiter via official company email"
+    ],
+    "metadata": {
+      "redFlagCount": 0,
+      "positiveCount": 0,
+      "contextPenalty": 15,
+      "originalLength": 18,
+      "cleanedLength": 18
+    },
+    "originalText": "ddsjghsd shdkjhskj"
+  },
+  {
+    "id": "anal_1778293754131",
+    "timestamp": "2026-05-09T02:29:14.131Z",
+    "jobTitle": "customer service",
+    "source": "whatsapp",
+    "status": "legitimate",
+    "statusLabel": "LOW RISK - Likely Legitimate",
+    "riskScore": 15,
+    "legitimacyScore": 85,
+    "redFlags": [],
+    "positiveIndicators": [],
+    "explanation": "No major red flags found. Appears relatively safe.",
+    "recommendation": "Appears legitimate, but always perform standard due diligence.",
+    "actionItems": [
+      "Verify the company on their official website",
+      "Check LinkedIn company page and real employees",
+      "Google the exact job posting text",
+      "Never pay any upfront fees or send money",
+      "Confirm recruiter via official company email"
+    ],
+    "metadata": {
+      "redFlagCount": 0,
+      "positiveCount": 0,
+      "contextPenalty": 15,
+      "originalLength": 18,
+      "cleanedLength": 18
+    },
+    "originalText": "ddsjghsd shdkjhskj"
+  },
+  {
+    "id": "anal_1778293531761",
+    "timestamp": "2026-05-09T02:25:31.761Z",
+    "jobTitle": "Appelroth_Erica.pdf",
+    "source": "File Upload",
+    "status": "suspicious",
+    "statusLabel": "SUSPICIOUS",
+    "riskScore": 48,
+    "legitimacyScore": 52,
+    "redFlags": [
+      "Mentions reshipping, tasks, or money movement",
+      "Common scam job categories"
+    ],
+    "positiveIndicators": [
+      "Mentions standard professional benefits"
+    ],
+    "explanation": "Mixed signals with notable concerns. Caution is strongly advised.",
+    "recommendation": "Proceed with extreme caution and independent research.",
+    "actionItems": [
+      "Verify the company on their official website",
+      "Check LinkedIn company page and real employees",
+      "Google the exact job posting text",
+      "Never pay any upfront fees or send money",
+      "Confirm recruiter via official company email"
+    ],
+    "metadata": {
+      "redFlagCount": 2,
+      "positiveCount": 1,
+      "contextPenalty": 0,
+      "originalLength": 42428,
+      "cleanedLength": 39594
+    },
+    "originalText": "\n\n \n \n \n \n \n \nMARKETING PLAN FOR \nA RESTAURANT \nErica Appelroth \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nBachelor’s thesis \nNovember 2015 \nDegree Programme in Tourism \n \n\n \n \nABSTRACT \nTampereen ammattikorkeakoulu \nTampere University of Applied Sciences \nDegree Programme in Tourism \n \n \nAPPELROTH, ERICA:  \nMarketing Plan for a Restaurant  \n \nBachelor's thesis 26 pages, appendices 21 pages  \nNovember 2015 \n  \n \nThe aim of this bachelor's thesis was to create a marketing plan for Dream Hostel & Hotel's \nupcoming restaurant.  Dream  Hostel  &  Hotel  has  not  created  a  marketing  plan  for  the \nrestaurant before. The thesis was commissioned by the compa"
+  },
+  {
+    "id": "anal_1778293023188",
+    "timestamp": "2026-05-09T02:17:03.188Z",
+    "jobTitle": "URL Job Posting",
+    "source": "Website",
+    "status": "suspicious",
+    "statusLabel": "SUSPICIOUS",
+    "riskScore": 43,
+    "legitimacyScore": 57,
+    "redFlags": [],
+    "positiveIndicators": [],
+    "explanation": "Mixed signals with notable concerns. Caution is strongly advised.",
+    "recommendation": "Proceed with extreme caution and independent research.",
+    "actionItems": [
+      "Verify the company on their official website",
+      "Check LinkedIn company page and real employees",
+      "Google the exact job posting text",
+      "Never pay any upfront fees or send money",
+      "Confirm recruiter via official company email"
+    ],
+    "metadata": {
+      "redFlagCount": 0,
+      "positiveCount": 0,
+      "contextPenalty": 43,
+      "originalLength": 113,
+      "cleanedLength": 113
+    },
+    "originalText": "Job from URL: https://kebbidailynews.com/\nRemote position with high pay. Easy requirements. Contact via WhatsApp."
+  },
+  {
     "id": "anal_1778288468873",
     "timestamp": "2026-05-09T01:01:08.873Z",
     "jobTitle": "URL Job Posting",
