@@ -31,6 +31,22 @@ app.use(express.static(path.join(__dirname), {
   index: false // Disable automatic index.html serving so we can control it
 }));
 
+// ====================== FAVICON SUPPORT ======================
+// Option 1: Serve favicon.ico from root directory
+app.get('/favicon.ico', (req, res) => {
+  res.sendFile(path.join(__dirname, 'favicon.ico'));
+});
+
+// Option 2: Serve multiple favicon formats (for better browser support)
+app.get('/favicon.png', (req, res) => {
+  res.sendFile(path.join(__dirname, 'favicon.png'));
+});
+
+// Option 3: If you have multiple favicon sizes for different devices
+app.get('/apple-touch-icon.png', (req, res) => {
+  res.sendFile(path.join(__dirname, 'apple-touch-icon.png'));
+});
+
 // ====================== ROUTES ======================
 
 // CRITICAL FIX: Explicit root route to serve index.html immediately
@@ -173,4 +189,5 @@ app.listen(PORT, () => {
   console.log(`🚀 Job Scam Detector running on http://localhost:${PORT}`);
   console.log(`📄 Serving index.html from: ${path.join(__dirname, 'index.html')}`);
   console.log(`✅ Health check available at: http://localhost:${PORT}/health`);
+  console.log(`🖼️  Favicon available at: http://localhost:${PORT}/favicon.ico`);
 });

@@ -1,5 +1,152 @@
 [
   {
+    "id": "anal_1778307220222",
+    "timestamp": "2026-05-09T06:13:40.222Z",
+    "jobTitle": "URL Job Posting",
+    "source": "Website",
+    "status": "caution",
+    "statusLabel": "CAUTION",
+    "riskScore": 30,
+    "legitimacyScore": 70,
+    "redFlags": [],
+    "positiveIndicators": [
+      "Official company career page"
+    ],
+    "explanation": "Some minor concerns detected. Additional verification recommended.",
+    "recommendation": "Looks potentially okay but still verify the company.",
+    "actionItems": [
+      "Verify the company on their official website",
+      "Check LinkedIn company page and real employees",
+      "Google the exact job posting text",
+      "Never pay any upfront fees or send money",
+      "Confirm recruiter via official company email"
+    ],
+    "metadata": {
+      "redFlagCount": 0,
+      "positiveCount": 1,
+      "contextPenalty": 43,
+      "originalLength": 118,
+      "cleanedLength": 118
+    },
+    "originalText": "Job from URL: https://www.ibomair.com/careers/\nRemote position with high pay. Easy requirements. Contact via WhatsApp."
+  },
+  {
+    "id": "anal_1778307185579",
+    "timestamp": "2026-05-09T06:13:05.579Z",
+    "jobTitle": "URL Job Posting",
+    "source": "Website",
+    "status": "suspicious",
+    "statusLabel": "SUSPICIOUS",
+    "riskScore": 43,
+    "legitimacyScore": 57,
+    "redFlags": [],
+    "positiveIndicators": [],
+    "explanation": "Mixed signals with notable concerns. Caution is strongly advised.",
+    "recommendation": "Proceed with extreme caution and independent research.",
+    "actionItems": [
+      "Verify the company on their official website",
+      "Check LinkedIn company page and real employees",
+      "Google the exact job posting text",
+      "Never pay any upfront fees or send money",
+      "Confirm recruiter via official company email"
+    ],
+    "metadata": {
+      "redFlagCount": 0,
+      "positiveCount": 0,
+      "contextPenalty": 43,
+      "originalLength": 110,
+      "cleanedLength": 110
+    },
+    "originalText": "Job from URL: https://www.ibomair.com/\nRemote position with high pay. Easy requirements. Contact via WhatsApp."
+  },
+  {
+    "id": "anal_1778307149325",
+    "timestamp": "2026-05-09T06:12:29.325Z",
+    "jobTitle": "URL Job Posting",
+    "source": "Website",
+    "status": "suspicious",
+    "statusLabel": "SUSPICIOUS",
+    "riskScore": 43,
+    "legitimacyScore": 57,
+    "redFlags": [],
+    "positiveIndicators": [],
+    "explanation": "Mixed signals with notable concerns. Caution is strongly advised.",
+    "recommendation": "Proceed with extreme caution and independent research.",
+    "actionItems": [
+      "Verify the company on their official website",
+      "Check LinkedIn company page and real employees",
+      "Google the exact job posting text",
+      "Never pay any upfront fees or send money",
+      "Confirm recruiter via official company email"
+    ],
+    "metadata": {
+      "redFlagCount": 0,
+      "positiveCount": 0,
+      "contextPenalty": 43,
+      "originalLength": 109,
+      "cleanedLength": 109
+    },
+    "originalText": "Job from URL: https://www.google.com/\nRemote position with high pay. Easy requirements. Contact via WhatsApp."
+  },
+  {
+    "id": "anal_1778307103774",
+    "timestamp": "2026-05-09T06:11:43.774Z",
+    "jobTitle": "URL Job Posting",
+    "source": "Website",
+    "status": "suspicious",
+    "statusLabel": "SUSPICIOUS",
+    "riskScore": 43,
+    "legitimacyScore": 57,
+    "redFlags": [],
+    "positiveIndicators": [],
+    "explanation": "Mixed signals with notable concerns. Caution is strongly advised.",
+    "recommendation": "Proceed with extreme caution and independent research.",
+    "actionItems": [
+      "Verify the company on their official website",
+      "Check LinkedIn company page and real employees",
+      "Google the exact job posting text",
+      "Never pay any upfront fees or send money",
+      "Confirm recruiter via official company email"
+    ],
+    "metadata": {
+      "redFlagCount": 0,
+      "positiveCount": 0,
+      "contextPenalty": 43,
+      "originalLength": 108,
+      "cleanedLength": 108
+    },
+    "originalText": "Job from URL: http://verifyjobs.org/\nRemote position with high pay. Easy requirements. Contact via WhatsApp."
+  },
+  {
+    "id": "anal_1778307021855",
+    "timestamp": "2026-05-09T06:10:21.855Z",
+    "jobTitle": "URL Job Posting",
+    "source": "Website",
+    "status": "suspicious",
+    "statusLabel": "SUSPICIOUS",
+    "riskScore": 43,
+    "legitimacyScore": 57,
+    "redFlags": [],
+    "positiveIndicators": [],
+    "explanation": "Mixed signals with notable concerns. Caution is strongly advised.",
+    "recommendation": "Proceed with extreme caution and independent research.",
+    "actionItems": [
+      "Verify the company on their official website",
+      "Check LinkedIn company page and real employees",
+      "Google the exact job posting text",
+      "Never pay any upfront fees or send money",
+      "Confirm recruiter via official company email"
+    ],
+    "metadata": {
+      "redFlagCount": 0,
+      "positiveCount": 0,
+      "contextPenalty": 43,
+      "originalLength": 94,
+      "cleanedLength": 94
+    },
+    "originalText": "Job from URL: Scam.com\nRemote position with high pay. Easy requirements. Contact via WhatsApp."
+  },
+  {
     "id": "anal_1778305595619",
     "timestamp": "2026-05-09T05:46:35.619Z",
     "jobTitle": "5995d5dc-077b-41ae-bf13-424bb9ee6998.docx",
