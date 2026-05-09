@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Job Scam Detector</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    :root{
+      --am-navy:#3C3B6E;--am-navy-50:#eeeef8;--am-navy-100:#c5c4e8;--am-navy-800:#1e1d3d;
+      --am-red:#B22234;--am-red-50:#fce8ea;--am-red-600:#8a1a28;
+      --am-gold:#C8A951;
+      --bg:#f4f4f8;--surface:#fff;--border:#e0e0ea;
+      --text:#1a1a2e;--muted:#6b6b8a;--faint:#9898aa;
+    }
+    body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);padding:1.5rem 1rem;min-height:100vh}
+    .wrap{max-width:720px;margin:0 auto}
+
+    .hero{background:var(--am-navy);border-radius:14px;padding:1.75rem 1.5rem;margin-bottom:1.25rem;position:relative;overflow:hidden}
+    .hero-stars{position:absolute;inset:0;pointer-events:none;opacity:0.06;font-size:11px;letter-spacing:6px;line-height:2;color:white;overflow:hidden;padding:6px 8px;word-break:break-all}
+    .hero-inner{position:relative;z-index:1;display:flex;align-items:center;gap:14px}
+    .hero-icon{width:52px;height:52px;background:var(--am-red);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    .hero-icon i{font-size:24px;color:white}
+    .hero h1{font-size:20px;font-weight:600;color:white;margin-bottom:3px}
+    .hero p{font-size:13px;color:rgba(255,255,255,0.7)}
+    .stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:1rem;position:relative;z-index:1}
+    .stat{background:rgba(255,255,255,0.1);border-radius:8px;padding:10px;text-align:center}
+    .stat-n{font-size:18px;font-weight:600;color:var(--am-gold)}
+    .stat-l{font-size:11px;color:rgba(255,255,255,0.65);margin-top:1px}
+
+    .stripe{height:5px;border-radius:3px;margin-bottom:1.25rem;background:repeating-linear-gradient(90deg,var(--am-red) 0,var(--am-red) 50%,#fff 50%,#fff 100%);background-size:18px 100%;border:1px solid var(--border)}
+
+    .badge{display:inline-flex;align-items:center;gap:5px;background:var(--am-navy-50);border:1px solid var(--am-navy-100);border-radius:20px;padding:4px 12px;font-size:11px;color:var(--am-navy-800);margin-bottom:1rem}
+    .badge i{font-size:13px;color:var(--am-navy)}
+
+    .card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1.25rem 1.5rem;margin-bottom:1.25rem}
+
+    .tabs{display:flex;gap:6px;margin-bottom:1.25rem}
+    .tab-btn{flex:1;padding:9px 6px;border:1px solid var(--border);border-radius:8px;background:#f7f7fb;font-size:12px;font-weight:500;color:var(--muted);cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px;transition:all 0.15s}
+    .tab-btn i{font-size:18px}
+    .tab-btn.active{background:var(--am-navy-50);border-color:var(--am-navy-100);color:var(--am-navy-800)}
+    .tab-pane{display:none}
+    .tab-pane.active{display:block}
+
+    label{display:block;font-size:12px;font-weight:600;color:var(--muted);margin-bottom:5px}
+    .field{margin-bottom:14px}
+    input[type=text],input[type=url],textarea{width:100%;padding:9px 11px;border:1px solid var(--border);border-radius:8px;font-size:13px;background:#fafafa;color:var(--text);font-family:inherit;transition:border-color 0.15s}
+    input:focus,textarea:focus{outline:none;border-color:var(--am-navy);background:#fff}
+    textarea{min-height:120px;resize:vertical}
+    .row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+
+    .upload-zone{border:2px dashed var(--border);border-radius:8px;padding:1.5rem;text-align:center;cursor:pointer;background:#fafafa;transition:border-color 0.15s}
+    .upload-zone:hover,.upload-zone.drag{border-color:var(--am-navy);background:var(--am-navy-50)}
+    .upload-zone i{font-size:28px;color:var(--faint);margin-bottom:8px;display:block}
+    .upload-zone p{font-size:13px;color:var(--muted)}
+    .upload-zone small{font-size:11px;color:var(--faint)}
+
+    .btn{width:100%;padding:11px;background:var(--am-red);color:white;border:none;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:7px;margin-top:4px;transition:opacity 0.15s}
+    .btn:hover{opacity:0.88}
+    .btn:disabled{opacity:0.4;cursor:not-allowed}
+
+    .loading{text-align:center;padding:2.5rem;display:none}
+    .spinner{width:34px;height:34px;border:3px solid var(--border);border-top-color:var(--am-navy);border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 12px}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .loading p{font-size:13px;color:var(--muted)}
+
+    .results{display:none}
+    .verdict{border-radius:12px;padding:1.25rem 1.5rem;margin-bottom:1rem;display:flex;align-items:center;gap:14px}
+    .verdict i{font-size:30px;flex-shrink:0}
+    .verdict-label{font-size:17px;font-weight:600}
+    .verdict-sub{font-size:12px;margin-top:3px;opacity:0.8}
+
+    .v-scam{background:var(--am-red-50);border-left:4px solid var(--am-red)}
+    .v-scam i,.v-scam .verdict-label,.v-scam .verdict-sub{color:var(--am-red-600)}
+    .v-suspicious{background:#fff8e6;border-left:4px solid #c8a200}
+    .v-suspicious i,.v-suspicious .verdict-label,.v-suspicious .verdict-sub{color:#7a6000}
+    .v-legitimate,.v-verified{background:#eaf6ee;border-left:4px solid #2a8a4a}
+    .v-legitimate i,.v-legitimate .verdict-label,.v-legitimate .verdict-sub{color:#1a6030}
+    .v-unverified{background:var(--am-navy-50);border-left:4px solid var(--am-navy)}
+    .v-unverified i,.v-unverified .verdict-label,.v-unverified .verdict-sub{color:var(--am-navy-800)}
+
+    .scores{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:1rem}
+    .score-card{background:#f7f7fb;border-radius:8px;padding:14px;text-align:center}
+    .score-label{font-size:11px;color:var(--muted);margin-bottom:5px;text-transform:uppercase;letter-spacing:.3px}
+    .score-val{font-size:26px;font-weight:700}
+    .risk-hi{color:var(--am-red)}.risk-mid{color:#c07800}.risk-lo{color:#2a8a4a}
+    .leg-hi{color:#2a8a4a}.leg-mid{color:#c07800}.leg-lo{color:var(--am-red)}
+
+    .sec-hdr{font-size:13px;font-weight:600;color:var(--text);margin:1rem 0 8px;display:flex;align-items:center;gap:6px}
+    .sec-hdr i{font-size:15px;color:var(--am-navy)}
+    .flag-item{background:var(--am-red-50);border-left:3px solid var(--am-red);border-radius:0 8px 8px 0;padding:9px 12px;margin-bottom:7px;font-size:13px;color:var(--am-red-600);display:flex;gap:8px;align-items:flex-start}
+    .flag-item i{flex-shrink:0;margin-top:1px;font-size:15px}
+    .pos-item{background:#eaf6ee;border-left:3px solid #2a8a4a;border-radius:0 8px 8px 0;padding:9px 12px;margin-bottom:7px;font-size:13px;color:#1a6030;display:flex;gap:8px;align-items:flex-start}
+    .pos-item i{flex-shrink:0;margin-top:1px;font-size:15px}
+    .analysis-text{font-size:13px;color:var(--muted);line-height:1.7}
+    .rec-box{background:var(--am-navy-50);border-radius:8px;padding:1rem 1.25rem;margin-top:1rem}
+    .rec-box h3{font-size:13px;font-weight:600;color:var(--am-navy-800);margin-bottom:8px;display:flex;align-items:center;gap:6px}
+    .rec-box h3 i{font-size:15px}
+    .rec-text{font-size:13px;color:var(--muted);margin-bottom:8px}
+    .action-row{display:flex;align-items:flex-start;gap:8px;padding:5px 0;font-size:13px;color:var(--muted);border-bottom:1px solid var(--border)}
+    .action-row:last-child{border:none}
+    .action-row i{color:var(--am-navy);font-size:14px;margin-top:1px;flex-shrink:0}
+
+    .tips-card{background:var(--am-navy);border-radius:14px;padding:1.25rem 1.5rem;margin-top:1rem}
+    .tips-card h2{font-size:14px;font-weight:600;color:white;margin-bottom:1rem;display:flex;align-items:center;gap:8px}
+    .tips-card h2 i{color:var(--am-gold);font-size:16px}
+    .tips-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px}
+    .tip-cell{background:rgba(255,255,255,0.08);border-radius:8px;padding:10px 12px}
+    .tip-cell i{font-size:16px;color:var(--am-gold);margin-bottom:5px;display:block}
+    .tip-cell strong{display:block;font-size:12px;font-weight:600;color:white;margin-bottom:3px}
+    .tip-cell p{font-size:11px;color:rgba(255,255,255,0.65);line-height:1.5}
+
+    footer{text-align:center;font-size:11px;color:var(--faint);padding:1rem 0 0.25rem}
+    footer a{color:var(--am-navy)}
+  </style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="hero">
+    <div class="hero-stars">★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★</div>
+    <div class="hero-inner">
+      <div class="hero-icon"><i class="ti ti-shield-check"></i></div>
+      <div>
+        <h1>Job Scam Detector</h1>
+        <p>Local Rule Engine • PDF & Word Support • URL Check</p>
+      </div>
+    </div>
+    <div class="stats-row">
+      <div class="stat"><div class="stat-n">14M+</div><div class="stat-l">Job scams yearly</div></div>
+      <div class="stat"><div class="stat-n">$2B</div><div class="stat-l">Lost to fraud</div></div>
+      <div class="stat"><div class="stat-n">68%</div><div class="stat-l">Target remote jobs</div></div>
+    </div>
+  </div>
+
+  <div class="stripe"></div>
+
+  <div style="text-align:center;margin-bottom:1rem">
+    <span class="badge"><i class="ti ti-shield-check"></i> Local Rule Engine v1.3 — Ready</span>
+  </div>
+
+  <div class="card">
+    <div class="tabs">
+      <button class="tab-btn active" id="tab-text" onclick="switchTab('text')"><i class="ti ti-file-text"></i><span>Paste text</span></button>
+      <button class="tab-btn" id="tab-file" onclick="switchTab('file')"><i class="ti ti-upload"></i><span>Upload File</span></button>
+      <button class="tab-btn" id="tab-url" onclick="switchTab('url')"><i class="ti ti-link"></i><span>Check URL</span></button>
+    </div>
+
+    <!-- Paste Text -->
+    <div id="pane-text" class="tab-pane active">
+      <div class="row2">
+        <div class="field"><label>Job Title</label><input type="text" id="jt" placeholder="e.g. Remote Data Entry Specialist"></div>
+        <div class="field"><label>Company Name</label><input type="text" id="co" placeholder="Optional"></div>
+      </div>
+      <div class="field"><label>Job Description</label><textarea id="jd" placeholder="Paste the full job posting here..."></textarea></div>
+      <div class="row2">
+        <div class="field"><label>Source</label><input type="text" id="src" placeholder="WhatsApp, Email, LinkedIn..."></div>
+        <div class="field"><label>Contact Info</label><input type="text" id="cnt" placeholder="Optional"></div>
+      </div>
+      <button class="btn" onclick="analyzeText()"><i class="ti ti-search"></i> Analyze Job Posting</button>
+    </div>
+
+    <!-- File Upload -->
+    <div id="pane-file" class="tab-pane">
+      <div class="field">
+        <label>Upload Job Posting</label>
+        <div class="upload-zone" id="dropZone" onclick="document.getElementById('fileIn').click()">
+          <i class="ti ti-cloud-upload"></i>
+          <p>Click to upload or drag & drop</p>
+          <small>Supported: PDF, Word (.doc, .docx)</small>
+        </div>
+        <input type="file" id="fileIn" accept=".pdf,.doc,.docx" style="display:none">
+        <div class="file-pill" id="filePill"><i class="ti ti-file"></i><span id="fileName">No file selected</span></div>
+      </div>
+      <button class="btn" id="fileBtn" onclick="analyzeFile()" disabled><i class="ti ti-search"></i> Analyze File</button>
+    </div>
+
+    <!-- URL Check -->
+    <div id="pane-url" class="tab-pane">
+      <div class="field">
+        <label>Job Posting URL</label>
+        <input type="text" id="jobUrl" placeholder="https://example.com/job/12345">
+        <p style="font-size:11px;color:var(--faint);margin-top:6px">We'll analyze the URL and simulate job content check</p>
+      </div>
+      <button class="btn" onclick="analyzeUrl()"><i class="ti ti-search"></i> Analyze URL</button>
+    </div>
+  </div>
+
+  <div class="loading" id="loading"><div class="spinner"></div><p>Analyzing...</p></div>
+
+  <div class="results" id="results">
+    <div id="verdict"></div>
+    <div class="card">
+      <div class="scores" id="scores"></div>
+      <div id="flagsWrap"></div>
+      <div id="posWrap"></div>
+      <div class="sec-hdr"><i class="ti ti-chart-bar"></i> Detailed Analysis</div>
+      <p class="analysis-text" id="analysisText"></p>
+      <div class="rec-box" id="recWrap"></div>
+    </div>
+  </div>
+
+  <div class="tips-card">
+    <h2><i class="ti ti-alert-triangle"></i> Common Job Scam Warning Signs</h2>
+    <div class="tips-grid">
+      <div class="tip-cell"><i class="ti ti-coin"></i><strong>Upfront payment</strong><p>Never pay for training, equipment, or registration</p></div>
+      <div class="tip-cell"><i class="ti ti-trending-up"></i><strong>Too good to be true</strong><p>High pay for easy work is almost always a scam</p></div>
+      <div class="tip-cell"><i class="ti ti-mail"></i><strong>Free email domains</strong><p>Gmail, Yahoo, Hotmail = high risk</p></div>
+      <div class="tip-cell"><i class="ti ti-clock"></i><strong>Urgency pressure</strong><p>"Limited slots", "Apply immediately"</p></div>
+    </div>
+  </div>
+
+  <footer>Local Rule Engine v1.3 • PDF & Word Support • Report scams to <a href="https://www.ftc.gov/fraud">FTC</a></footer>
+</div>
+
+<script>
+  const API_URL = 'http://localhost:3000/analyze';
+  const FILE_API_URL = 'http://localhost:3000/analyze-file';
+  const URL_API_URL = 'http://localhost:3000/analyze-url';
+
+  let currentFile = null;
+
+  function switchTab(name) {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+    document.getElementById('tab-' + name).classList.add('active');
+    document.getElementById('pane-' + name).classList.add('active');
+  }
+
+  // File Upload Handling
+  const dropZone = document.getElementById('dropZone');
+  const fileIn = document.getElementById('fileIn');
+
+  dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('drag'); });
+  dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag'));
+  dropZone.addEventListener('drop', e => {
+    e.preventDefault();
+    dropZone.classList.remove('drag');
+    if (e.dataTransfer.files[0]) handleFile(e.dataTransfer.files[0]);
+  });
+  fileIn.addEventListener('change', e => {
+    if (e.target.files[0]) handleFile(e.target.files[0]);
+  });
+
+  function handleFile(file) {
+    currentFile = file;
+    document.getElementById('fileName').textContent = `${file.name} (${(file.size/1024).toFixed(1)} KB)`;
+    document.getElementById('filePill').classList.add('show');
+    document.getElementById('fileBtn').disabled = false;
+  }
+
+  function showLoading() {
+    document.getElementById('loading').style.display = 'block';
+    document.getElementById('results').style.display = 'none';
+  }
+
+  // ==================== ANALYZE FUNCTIONS ====================
+  async function analyzeText() {
+    const text = document.getElementById('jd').value.trim();
+    if (!text) return alert('Please paste the job description.');
+
+    const jobTitle = document.getElementById('jt').value.trim() || 'Untitled Job';
+    const source = document.getElementById('src').value.trim() || 'Manual';
+
+    showLoading();
+    try {
+      const res = await fetch(API_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text, jobTitle, source })
+      });
+      const result = await res.json();
+      showResults(result);
+    } catch (e) {
+      alert('Error: ' + e.message);
+    } finally {
+      document.getElementById('loading').style.display = 'none';
+    }
+  }
+
+  async function analyzeFile() {
+    if (!currentFile) return alert('Please select a file first.');
+
+    showLoading();
+    const formData = new FormData();
+    formData.append('file', currentFile);
+    formData.append('jobTitle', document.getElementById('jt').value.trim() || currentFile.name);
+
+    try {
+      const res = await fetch(FILE_API_URL, { method: 'POST', body: formData });
+      if (!res.ok) throw new Error('File processing failed');
+      const result = await res.json();
+      showResults(result);
+    } catch (e) {
+      alert('File analysis failed: ' + e.message);
+    } finally {
+      document.getElementById('loading').style.display = 'none';
+    }
+  }
+
+  async function analyzeUrl() {
+    const url = document.getElementById('jobUrl').value.trim();
+    if (!url) return alert('Please enter a URL.');
+
+    showLoading();
+    try {
+      const res = await fetch(URL_API_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ url })
+      });
+      const result = await res.json();
+      showResults(result);
+    } catch (e) {
+      alert('URL analysis failed: ' + e.message);
+    } finally {
+      document.getElementById('loading').style.display = 'none';
+    }
+  }
+
+  function showResults(a) {
+    const vMap = {
+      scam:       { cls:'v-scam',       icon:'ti-shield-x',       label:'Likely a Scam',          sub:'Multiple serious red flags detected' },
+      high_risk:  { cls:'v-scam',       icon:'ti-shield-x',       label:'High Risk',              sub:'Strong scam indicators present' },
+      suspicious: { cls:'v-suspicious', icon:'ti-alert-triangle', label:'Suspicious',             sub:'Several warning signs found' },
+      caution:    { cls:'v-suspicious', icon:'ti-alert-triangle', label:'Caution Advised',        sub:'Some concerns detected' },
+      legitimate: { cls:'v-legitimate', icon:'ti-shield-check',   label:'Likely Legitimate',      sub:'No major red flags detected' }
+    };
+
+    const v = vMap[a.status] || vMap.caution;
+    document.getElementById('verdict').innerHTML = `
+      <div class="verdict ${v.cls}">
+        <i class="ti ${v.icon}"></i>
+        <div>
+          <div class="verdict-label">${v.label}</div>
+          <div class="verdict-sub">${v.sub}</div>
+        </div>
+      </div>`;
+
+    const rC = a.riskScore >= 70 ? 'risk-hi' : a.riskScore >= 45 ? 'risk-mid' : 'risk-lo';
+    const lC = a.legitimacyScore >= 70 ? 'leg-hi' : a.legitimacyScore >= 45 ? 'leg-mid' : 'leg-lo';
+
+    document.getElementById('scores').innerHTML = `
+      <div class="score-card">
+        <div class="score-label">Risk Score</div>
+        <div class="score-val ${rC}">${a.riskScore}<span style="font-size:14px;font-weight:400">/100</span></div>
+      </div>
+      <div class="score-card">
+        <div class="score-label">Legitimacy</div>
+        <div class="score-val ${lC}">${a.legitimacyScore}<span style="font-size:14px;font-weight:400">/100</span></div>
+      </div>`;
+
+    let fH = a.redFlags?.length ? `<div class="sec-hdr"><i class="ti ti-flag"></i> Red Flags (${a.redFlags.length})</div>` : '';
+    (a.redFlags || []).forEach(f => fH += `<div class="flag-item"><i class="ti ti-alert-circle"></i><span>${f}</span></div>`);
+    document.getElementById('flagsWrap').innerHTML = fH;
+
+    let pH = a.positiveIndicators?.length ? `<div class="sec-hdr" style="margin-top:1rem"><i class="ti ti-check"></i> Positive Signals</div>` : '';
+    (a.positiveIndicators || []).forEach(p => pH += `<div class="pos-item"><i class="ti ti-circle-check"></i><span>${p}</span></div>`);
+    document.getElementById('posWrap').innerHTML = pH;
+
+    document.getElementById('analysisText').textContent = a.explanation || 'Analysis completed.';
+    
+    let rH = `<h3><i class="ti ti-clipboard-list"></i> Recommendation</h3><p class="rec-text">${a.recommendation || ''}</p>`;
+    (a.actionItems || []).forEach(item => rH += `<div class="action-row"><i class="ti ti-arrow-right"></i><span>${item}</span></div>`);
+    document.getElementById('recWrap').innerHTML = rH;
+
+    document.getElementById('results').style.display = 'block';
+    document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
+  }
+</script>
+</body>
+</html>

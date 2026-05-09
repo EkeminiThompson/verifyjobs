@@ -1,0 +1,428 @@
+[
+  {
+    "id": "anal_1778288468873",
+    "timestamp": "2026-05-09T01:01:08.873Z",
+    "jobTitle": "URL Job Posting",
+    "source": "Website",
+    "status": "suspicious",
+    "statusLabel": "SUSPICIOUS",
+    "riskScore": 43,
+    "legitimacyScore": 57,
+    "redFlags": [],
+    "positiveIndicators": [],
+    "explanation": "Mixed signals with notable concerns. Caution is strongly advised.",
+    "recommendation": "Proceed with extreme caution and independent research.",
+    "actionItems": [
+      "Verify the company on their official website",
+      "Check LinkedIn company page and real employees",
+      "Google the exact job posting text",
+      "Never pay any upfront fees or send money",
+      "Confirm recruiter via official company email"
+    ],
+    "metadata": {
+      "redFlagCount": 0,
+      "positiveCount": 0,
+      "contextPenalty": 43,
+      "originalLength": 113,
+      "cleanedLength": 113
+    },
+    "originalText": "Job from URL: https://kebbidailynews.com/\nRemote position with high pay. Easy requirements. Contact via WhatsApp."
+  },
+  {
+    "id": "anal_1778288361946",
+    "timestamp": "2026-05-09T00:59:21.946Z",
+    "jobTitle": "URL Job Posting",
+    "source": "Website",
+    "status": "suspicious",
+    "statusLabel": "SUSPICIOUS",
+    "riskScore": 40,
+    "legitimacyScore": 60,
+    "redFlags": [],
+    "positiveIndicators": [],
+    "explanation": "Mixed signals with notable concerns. Caution is strongly advised.",
+    "recommendation": "Proceed with extreme caution and independent research.",
+    "actionItems": [
+      "Verify the company on their official website",
+      "Check LinkedIn company page and real employees",
+      "Google the exact job posting text",
+      "Never pay any upfront fees or send money",
+      "Confirm recruiter via official company email"
+    ],
+    "metadata": {
+      "redFlagCount": 0,
+      "positiveCount": 0,
+      "contextPenalty": 40,
+      "originalLength": 160,
+      "cleanedLength": 160
+    },
+    "originalText": "Job from URL: https://console.x.ai/team/f8879a50-3acc-497a-859c-316b9ddfea61/rate-limits\nRemote position with high pay. Easy requirements. Contact via WhatsApp."
+  },
+  {
+    "id": "anal_1778288101670",
+    "timestamp": "2026-05-09T00:55:01.670Z",
+    "jobTitle": "Account Reactivation Form (2).pdf",
+    "source": "File Upload",
+    "status": "legitimate",
+    "statusLabel": "LOW RISK - Likely Legitimate",
+    "riskScore": 15,
+    "legitimacyScore": 85,
+    "redFlags": [],
+    "positiveIndicators": [],
+    "explanation": "No major red flags found. Appears relatively safe.",
+    "recommendation": "Appears legitimate, but always perform standard due diligence.",
+    "actionItems": [
+      "Verify the company on their official website",
+      "Check LinkedIn company page and real employees",
+      "Google the exact job posting text",
+      "Never pay any upfront fees or send money",
+      "Confirm recruiter via official company email"
+    ],
+    "metadata": {
+      "redFlagCount": 0,
+      "positiveCount": 0,
+      "contextPenalty": 15,
+      "originalLength": 782,
+      "cleanedLength": 741
+    },
+    "originalText": "\n\nBANK VERIFICATION NUMBER (BVN)\nRESIDENTIAL ADDRESS:\n(Please tick as appropriate)\nSignature\nE-MAIL: \nPRIMARY MOBILE NUMBER : \nKindly use the contact information below to replace my contact details with the Bank.\nCUSTOMER CONTACT UPDATE:\nSignature\nACCOUNT NAME: \nACCOUNT NUMBER:\nI/We hereby authorize Polaris Bank Ltd. To reactivate this account(s) which has been inactive. I/We confirm that the above information is correct and also agree \nmy/our above account(s) shall be subject to the terms and conditions applicable by the Bank to such account as may be amended from time to time.\nReason(s) for contact update:\nPersonal              Phone loss/T"
+  },
+  {
+    "id": "anal_1778288079740",
+    "timestamp": "2026-05-09T00:54:39.740Z",
+    "jobTitle": "Appelroth_Erica.pdf",
+    "source": "File Upload",
+    "status": "suspicious",
+    "statusLabel": "SUSPICIOUS",
+    "riskScore": 48,
+    "legitimacyScore": 52,
+    "redFlags": [
+      "Mentions reshipping, tasks, or money movement",
+      "Common scam job categories"
+    ],
+    "positiveIndicators": [
+      "Mentions standard professional benefits"
+    ],
+    "explanation": "Mixed signals with notable concerns. Caution is strongly advised.",
+    "recommendation": "Proceed with extreme caution and independent research.",
+    "actionItems": [
+      "Verify the company on their official website",
+      "Check LinkedIn company page and real employees",
+      "Google the exact job posting text",
+      "Never pay any upfront fees or send money",
+      "Confirm recruiter via official company email"
+    ],
+    "metadata": {
+      "redFlagCount": 2,
+      "positiveCount": 1,
+      "contextPenalty": 0,
+      "originalLength": 42428,
+      "cleanedLength": 39594
+    },
+    "originalText": "\n\n \n \n \n \n \n \nMARKETING PLAN FOR \nA RESTAURANT \nErica Appelroth \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nBachelor’s thesis \nNovember 2015 \nDegree Programme in Tourism \n \n\n \n \nABSTRACT \nTampereen ammattikorkeakoulu \nTampere University of Applied Sciences \nDegree Programme in Tourism \n \n \nAPPELROTH, ERICA:  \nMarketing Plan for a Restaurant  \n \nBachelor's thesis 26 pages, appendices 21 pages  \nNovember 2015 \n  \n \nThe aim of this bachelor's thesis was to create a marketing plan for Dream Hostel & Hotel's \nupcoming restaurant.  Dream  Hostel  &  Hotel  has  not  created  a  marketing  plan  for  the \nrestaurant before. The thesis was commissioned by the compa"
+  },
+  {
+    "id": "anal_1778288067972",
+    "timestamp": "2026-05-09T00:54:27.972Z",
+    "jobTitle": "5995d5dc-077b-41ae-bf13-424bb9ee6998.docx",
+    "source": "File Upload",
+    "status": "legitimate",
+    "statusLabel": "LOW RISK - Likely Legitimate",
+    "riskScore": 5,
+    "legitimacyScore": 95,
+    "redFlags": [],
+    "positiveIndicators": [
+      "Mentions standard professional benefits"
+    ],
+    "explanation": "No major red flags found. Appears relatively safe.",
+    "recommendation": "Appears legitimate, but always perform standard due diligence.",
+    "actionItems": [
+      "Verify the company on their official website",
+      "Check LinkedIn company page and real employees",
+      "Google the exact job posting text",
+      "Never pay any upfront fees or send money",
+      "Confirm recruiter via official company email"
+    ],
+    "metadata": {
+      "redFlagCount": 0,
+      "positiveCount": 1,
+      "contextPenalty": 15,
+      "originalLength": 6200,
+      "cleanedLength": 6183
+    },
+    "originalText": "A RESEARCH PROPOSAL ON A MULTILEVEL COMPUTATIONAL FRAMEWORK FOR EPILEPTOGENESIS\n\n\n\nINTRODUCTION\n\nIn the pursuit of unraveling the complexities surrounding epileptogenesis, the crux of this doctoral investigation lies in the development of a comprehensive computational framework. This framework, designed to transcend multiple biological strata, seeks to delve into the intricate details at the molecular and cellular levels while simultaneously exploring the dynamic interplay at the system level. The overarching objective is to bridge the existing gap that separates biologically inspired models from simulations operating at the system level. The"
+  },
+  {
+    "id": "anal_1778287290140",
+    "timestamp": "2026-05-09T00:41:30.140Z",
+    "jobTitle": "5995d5dc-077b-41ae-bf13-424bb9ee6998.docx",
+    "source": "File Upload",
+    "status": "legitimate",
+    "statusLabel": "LOW RISK - Likely Legitimate",
+    "riskScore": 5,
+    "legitimacyScore": 95,
+    "redFlags": [],
+    "positiveIndicators": [
+      "Mentions standard professional benefits"
+    ],
+    "explanation": "No major red flags found. Appears relatively safe.",
+    "recommendation": "Appears legitimate, but always perform standard due diligence.",
+    "actionItems": [
+      "Verify the company on their official website",
+      "Check LinkedIn company page and real employees",
+      "Google the exact job posting text",
+      "Never pay any upfront fees or send money",
+      "Confirm recruiter via official company email"
+    ],
+    "metadata": {
+      "redFlagCount": 0,
+      "positiveCount": 1,
+      "contextPenalty": 15,
+      "originalLength": 6200,
+      "cleanedLength": 6183
+    },
+    "originalText": "A RESEARCH PROPOSAL ON A MULTILEVEL COMPUTATIONAL FRAMEWORK FOR EPILEPTOGENESIS\n\n\n\nINTRODUCTION\n\nIn the pursuit of unraveling the complexities surrounding epileptogenesis, the crux of this doctoral investigation lies in the development of a comprehensive computational framework. This framework, designed to transcend multiple biological strata, seeks to delve into the intricate details at the molecular and cellular levels while simultaneously exploring the dynamic interplay at the system level. The overarching objective is to bridge the existing gap that separates biologically inspired models from simulations operating at the system level. The"
+  },
+  {
+    "id": "anal_1778287275266",
+    "timestamp": "2026-05-09T00:41:15.266Z",
+    "jobTitle": "URL Job Posting",
+    "source": "Website",
+    "status": "high_risk",
+    "statusLabel": "HIGH RISK",
+    "riskScore": 65,
+    "legitimacyScore": 35,
+    "redFlags": [
+      "Requires off-platform communication"
+    ],
+    "positiveIndicators": [],
+    "explanation": "Several red flags present. This opportunity carries high risk.",
+    "recommendation": "Do not proceed without thorough verification.",
+    "actionItems": [
+      "Verify the company on their official website",
+      "Check LinkedIn company page and real employees",
+      "Google the exact job posting text",
+      "Never pay any upfront fees or send money",
+      "Confirm recruiter via official company email"
+    ],
+    "metadata": {
+      "redFlagCount": 1,
+      "positiveCount": 0,
+      "contextPenalty": 25,
+      "originalLength": 221,
+      "cleanedLength": 185
+    },
+    "originalText": "\n      Job from URL: https://medium.com/@edekobifrank/fix-for-pdfjs-error-failed-to-load-pdf-url-parse-is-not-a-function-346d08ff8abb\n      Remote position.\n      High pay.\n      Easy work.\n      Contact on WhatsApp.\n    "
+  },
+  {
+    "id": "anal_1778286994283",
+    "timestamp": "2026-05-09T00:36:34.283Z",
+    "jobTitle": "arthub.docx",
+    "source": "File Upload",
+    "status": "suspicious",
+    "statusLabel": "SUSPICIOUS",
+    "riskScore": 53,
+    "legitimacyScore": 47,
+    "redFlags": [
+      "Mentions reshipping, tasks, or money movement"
+    ],
+    "positiveIndicators": [],
+    "explanation": "Mixed signals with notable concerns. Caution is strongly advised.",
+    "recommendation": "Proceed with extreme caution and independent research.",
+    "actionItems": [
+      "Verify the company on their official website",
+      "Check LinkedIn company page and real employees",
+      "Google the exact job posting text",
+      "Never pay any upfront fees or send money",
+      "Confirm recruiter via official company email"
+    ],
+    "metadata": {
+      "redFlagCount": 1,
+      "positiveCount": 0,
+      "contextPenalty": 15,
+      "originalLength": 6823,
+      "cleanedLength": 5242
+    },
+    "originalText": "Root-Level Structure\n\narthub-ng/\n\n├── backend/                 # Node.js/Express API server\n\n├── frontend/                # React.js web app\n\n├── shared/                  # Common utils (e.g., types, constants) – optional for monorepo\n\n├── docs/                    # Documentation & assets\n\n├── scripts/                 # Build/deploy scripts\n\n├── .env.example             # Template for env vars (e.g., DB_URL, PAYSTACK_KEY)\n\n├── .gitignore               # Standard ignores (node_modules, .env, etc.)\n\n├── README.md                # Project overview, setup instructions\n\n├── docker-compose.yml       # For local dev (MongoDB + services)\n\n└── package"
+  },
+  {
+    "id": "anal_1778286207740",
+    "timestamp": "2026-05-09T00:23:27.740Z",
+    "jobTitle": "ANIEKAN USORO's RESUME_015626.docx",
+    "source": "File Upload",
+    "status": "caution",
+    "statusLabel": "CAUTION",
+    "riskScore": 38,
+    "legitimacyScore": 62,
+    "redFlags": [
+      "Mentions reshipping, tasks, or money movement"
+    ],
+    "positiveIndicators": [],
+    "explanation": "Some minor concerns detected. Additional verification recommended.",
+    "recommendation": "Looks potentially okay but still verify the company.",
+    "actionItems": [
+      "Verify the company on their official website",
+      "Check LinkedIn company page and real employees",
+      "Google the exact job posting text",
+      "Never pay any upfront fees or send money",
+      "Confirm recruiter via official company email"
+    ],
+    "metadata": {
+      "redFlagCount": 1,
+      "positiveCount": 0,
+      "contextPenalty": 0
+    },
+    "originalText": "ANIEKAN ASUQUO USORO Lead Baggage Handler, Ibom AirEnugu, Enugu State, Nigeria📞 +234 708 314 5810 | ✉️ aniekan.usoro@ibomair.com  \n\n\n\nPROFESSIONAL SUMMARY\n\nCustomer-focused operations professional with hands-on experience in airline ground operations, administration, and service delivery. Holder of a Higher National Diploma in Public Administration with professional certifications in Human Resources Management and Environmental Health & Safety. Proven ability to lead teams, resolve customer and operational issues, ensure safety compliance, and maintain high service standards in fast-paced environments. Currently a Lead Baggage Handler at Ibo"
+  },
+  {
+    "id": "anal_1778285876127",
+    "timestamp": "2026-05-09T00:17:56.127Z",
+    "jobTitle": "customer service",
+    "source": "whatsapp",
+    "status": "legitimate",
+    "statusLabel": "LOW RISK - Likely Legitimate",
+    "riskScore": 15,
+    "legitimacyScore": 85,
+    "redFlags": [],
+    "positiveIndicators": [],
+    "explanation": "No major red flags found. Appears relatively safe.",
+    "recommendation": "Appears legitimate, but always perform standard due diligence.",
+    "actionItems": [
+      "Verify the company on their official website",
+      "Check LinkedIn company page and real employees",
+      "Google the exact job posting text",
+      "Never pay any upfront fees or send money",
+      "Confirm recruiter via official company email"
+    ],
+    "metadata": {
+      "redFlagCount": 0,
+      "positiveCount": 0,
+      "contextPenalty": 15
+    },
+    "originalText": "fake ibom"
+  },
+  {
+    "id": "anal_1778285845572",
+    "timestamp": "2026-05-09T00:17:25.572Z",
+    "jobTitle": "customer service",
+    "source": "whatsapp",
+    "status": "legitimate",
+    "statusLabel": "LOW RISK - Likely Legitimate",
+    "riskScore": 15,
+    "legitimacyScore": 85,
+    "redFlags": [],
+    "positiveIndicators": [],
+    "explanation": "No major red flags found. Appears relatively safe.",
+    "recommendation": "Appears legitimate, but always perform standard due diligence.",
+    "actionItems": [
+      "Verify the company on their official website",
+      "Check LinkedIn company page and real employees",
+      "Google the exact job posting text",
+      "Never pay any upfront fees or send money",
+      "Confirm recruiter via official company email"
+    ],
+    "metadata": {
+      "redFlagCount": 0,
+      "positiveCount": 0,
+      "contextPenalty": 15
+    },
+    "originalText": "fake description"
+  },
+  {
+    "id": "anal_1778285825494",
+    "timestamp": "2026-05-09T00:17:05.494Z",
+    "jobTitle": "customer service",
+    "source": "whatsapp",
+    "status": "legitimate",
+    "statusLabel": "LOW RISK - Likely Legitimate",
+    "riskScore": 15,
+    "legitimacyScore": 85,
+    "redFlags": [],
+    "positiveIndicators": [],
+    "explanation": "No major red flags found. Appears relatively safe.",
+    "recommendation": "Appears legitimate, but always perform standard due diligence.",
+    "actionItems": [
+      "Verify the company on their official website",
+      "Check LinkedIn company page and real employees",
+      "Google the exact job posting text",
+      "Never pay any upfront fees or send money",
+      "Confirm recruiter via official company email"
+    ],
+    "metadata": {
+      "redFlagCount": 0,
+      "positiveCount": 0,
+      "contextPenalty": 15
+    },
+    "originalText": "npm install multer pdf-parse mammoth"
+  },
+  {
+    "id": "anal_1746740000001",
+    "timestamp": "2025-05-08T14:30:22.123Z",
+    "jobTitle": "Remote Data Entry Clerk - $450/day",
+    "source": "WhatsApp",
+    "riskScore": 92,
+    "status": "scam",
+    "redFlags": [
+      "Requests upfront payment",
+      "Requests cryptocurrency payment",
+      "Requires off-platform communication",
+      "Unrealistically high daily/weekly pay"
+    ],
+    "positiveIndicators": [],
+    "explanation": "Multiple strong scam indicators detected.",
+    "originalText": "We are hiring data entry workers... pay upfront fee of $50 via USDT..."
+  },
+  {
+    "text": "Analyze this job posting URL for legitimacy and scam signals: https://www.ibomair.com/careers/#:~:text=Ibom%20Air%20is%20always%20looking,in%20themselves%20and%20their%20jobs.\n\nConsider: domain reputation, URL structure, known scam platforms, job board legitimacy.\n\nReturn ONLY valid JSON, no markdown:\n{\n  \"status\": \"legitimate|suspicious|scam|unverified\",\n  \"riskScore\": 0-100,\n  \"legitimacyScore\": 0-100,\n  \"redFlags\": [\"flag1\"],\n  \"positiveIndicators\": [\"indicator1\"],\n  \"explanation\": \"2-3 sentence analysis\",\n  \"recommendation\": \"one clear recommendation\",\n  \"actionItems\": [\"step1\",\"step2\",\"step3\"]\n}",
+    "result": {
+      "status": "legitimate",
+      "statusLabel": "LOW RISK - Likely Legitimate",
+      "riskScore": 2,
+      "legitimacyScore": 98,
+      "redFlags": [],
+      "positiveIndicators": [
+        "Official company career page"
+      ],
+      "explanation": "No major red flags found. Appears relatively safe.",
+      "recommendation": "Appears legitimate, but always perform standard due diligence.",
+      "actionItems": [
+        "Verify the company on their official website",
+        "Check LinkedIn company page and real employees",
+        "Google the exact job posting text",
+        "Never pay any upfront fees or send money",
+        "Confirm recruiter via official company email"
+      ],
+      "metadata": {
+        "redFlagCount": 0,
+        "positiveCount": 1,
+        "contextPenalty": 15
+      }
+    },
+    "createdAt": "2026-05-08T23:42:53.264Z"
+  },
+  {
+    "text": "Analyze this job posting URL for legitimacy and scam signals: https://jobsgrams.com/ibom-air-recruitment/\n\nConsider: domain reputation, URL structure, known scam platforms, job board legitimacy.\n\nReturn ONLY valid JSON, no markdown:\n{\n  \"status\": \"legitimate|suspicious|scam|unverified\",\n  \"riskScore\": 0-100,\n  \"legitimacyScore\": 0-100,\n  \"redFlags\": [\"flag1\"],\n  \"positiveIndicators\": [\"indicator1\"],\n  \"explanation\": \"2-3 sentence analysis\",\n  \"recommendation\": \"one clear recommendation\",\n  \"actionItems\": [\"step1\",\"step2\",\"step3\"]\n}",
+    "result": {
+      "status": "legitimate",
+      "statusLabel": "LOW RISK - Likely Legitimate",
+      "riskScore": 15,
+      "legitimacyScore": 85,
+      "redFlags": [],
+      "positiveIndicators": [],
+      "explanation": "No major red flags found. Appears relatively safe.",
+      "recommendation": "Appears legitimate, but always perform standard due diligence.",
+      "actionItems": [
+        "Verify the company on their official website",
+        "Check LinkedIn company page and real employees",
+        "Google the exact job posting text",
+        "Never pay any upfront fees or send money",
+        "Confirm recruiter via official company email"
+      ],
+      "metadata": {
+        "redFlagCount": 0,
+        "positiveCount": 0,
+        "contextPenalty": 15
+      }
+    },
+    "createdAt": "2026-05-08T23:44:11.631Z"
+  }
+]
