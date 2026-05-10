@@ -875,48 +875,77 @@
     </div>`;
 
   // ── 2. JOB STATUS BADGE — always show something meaningful ───────────────
-  const jsWrap = document.getElementById('jobStatusWrap');
-
-  // Server tells us the status; fall back to 'Open' (safe assumption for
-  // any actively-posted job where we couldn't detect explicit signals).
-  const rawStatus = a.jobStatus || 'Open';
-
-  // Decide what label to display
-  // If the server returned 'Unknown' we show 'Open' with a lower-confidence note
-  const jsLabel    = rawStatus === 'Unknown' ? 'Open' : rawStatus;
-  const isInferred = rawStatus === 'Unknown'; // we're guessing
-
-  const jsMeta = a.jobStatusMeta || STATUS_META[jsLabel] || STATUS_META['Open'];
-
-  // "Not accepting" warning — only when we know for certain
-  const notAcceptingStatuses = ['Filled', 'Closed', 'Expired', 'Cancelled', 'On Hold'];
-  const notAccepting = notAcceptingStatuses.includes(jsLabel);
-
+  const jsWrap  = document.getElementById('jobStatusWrap');
+  const jsMeta  = a.jobStatusMeta || STATUS_META[a.jobStatus] || STATUS_META['Open'];
+  const jsLabel = a.jobStatus     || 'Open';
+  
+  // "Not accepting" warning for definitive closed states
+  const notAcceptingStatuses = ['Filled', 'Closed', 'Expired', 'Cancelled', 'Likely Closed'];
+  const notAccepting = notAcceptingStatuses.includes(jsLabel) || a.isAcceptingApplications === false;
+  
   const notAcceptingHTML = notAccepting
     ? `<span class="job-status-not-accepting">
-          <i class="ti ti-ban" aria-hidden="true"></i> Not accepting applications
-        </span>`
+        <i class="ti ti-ban" aria-hidden="true"></i> Not accepting applications
+      </span>`
     : '';
-
-  // If fetch failed for a URL scan, show a small note
-  const fetchNoteHTML = (a.fetchError)
+  
+  // Inferred qualifier — shown when freshness algorithm guessed (not explicit text)
+  const inferredNote = a.jobStatusInferred
+    ? `<span style="font-size:10px;color:var(--faint);margin-left:6px;font-weight:400">
+        (inferred from posting signals)
+      </span>`
+    : '';
+  
+  // Freshness signals list — the "why" behind the verdict
+  let freshnessSignalsHTML = '';
+  if (a.freshness?.signals?.length) {
+    const items = a.freshness.signals
+      .map(s => {
+        const isFresh = s.weight < 0;
+        const icon    = isFresh ? 'ti-circle-check' : 'ti-alert-circle';
+        const color   = isFresh ? 'var(--green)'    : '#c07800';
+        return `<div style="display:flex;gap:6px;align-items:flex-start;font-size:11px;color:var(--muted);padding:4px 0;border-bottom:1px solid var(--border)">
+                  <i class="ti ${icon}" style="color:${color};font-size:13px;margin-top:1px;flex-shrink:0"></i>
+                  <span>${s.signal}</span>
+                </div>`;
+      })
+      .join('');
+  
+    // Freshness bar — visual indicator
+    const freshnessScore = a.freshness.freshnessScore ?? 50;
+    const barColor = freshnessScore >= 70 ? 'var(--green)'
+                  : freshnessScore >= 40 ? '#d97706'
+                  : 'var(--red)';
+  
+    freshnessSignalsHTML = `
+      <div style="margin-top:10px">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
+          <span style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--muted)">
+            Posting Freshness
+          </span>
+          <span style="font-size:11px;font-weight:600;color:${barColor}">${freshnessScore}/100</span>
+        </div>
+        <div style="height:6px;background:var(--border);border-radius:3px;overflow:hidden;margin-bottom:10px">
+          <div style="height:100%;width:${freshnessScore}%;background:${barColor};border-radius:3px;transition:width 0.6s ease"></div>
+        </div>
+        <div style="border-top:1px solid var(--border);padding-top:6px">
+          ${items}
+        </div>
+      </div>`;
+  }
+  
+  // Fetch note for URL analysis
+  const fetchNoteHTML = a.fetchError
     ? `<div style="font-size:11px;color:var(--faint);margin-top:6px">
-          <i class="ti ti-info-circle" style="font-size:12px"></i>
-          Page could not be fetched — status inferred from URL structure.
-        </div>`
+        <i class="ti ti-info-circle" style="font-size:12px"></i>
+        Page could not be fetched — status inferred from URL structure only.
+      </div>`
     : '';
-
-  // Confidence qualifier shown when we're guessing
-  const inferredNote = isInferred
-    ? `<span style="font-size:10px;color:var(--faint);margin-left:8px;font-weight:400">
-          (no explicit status in posting)
-        </span>`
-    : '';
-
+  
   jsWrap.style.display = 'block';
   jsWrap.innerHTML = `
     <div class="job-status-label">Position Status</div>
-    <div style="display:flex;align-items:center;flex-wrap:wrap;gap:6px">
+    <div style="display:flex;align-items:center;flex-wrap:wrap;gap:6px;margin-bottom:${freshnessSignalsHTML ? '10px' : '0'}">
       <span class="job-status-pill" style="color:${jsMeta.color}">
         <span class="js-dot"></span>
         ${jsMeta.icon} ${jsMeta.badge}
@@ -924,6 +953,7 @@
       ${inferredNote}
       ${notAcceptingHTML}
     </div>
+    ${freshnessSignalsHTML}
     ${fetchNoteHTML}`;
 
   // ── 3. SCORES ─────────────────────────────────────────────────────────────

@@ -2,6 +2,7 @@
 // Rewritten for real-world accuracy. Fixes over-penalising of legitimate postings.
 
 const { redFlags, positiveSignals } = require('./rules');
+const { analyzeJobFreshness } = require('./job-freshness');
 const { normalizeScore, getStatus, getStatusLabel } = require('./scorer');
 const { addAnalysis } = require('./storage');
 
@@ -311,104 +312,140 @@ function buildActionItems(score, metadata, jobStatus) {
 // ─────────────────────────────────────────────
 
 function analyzeJob(text, jobTitle = 'Untitled Job', source = 'Unknown') {
-  if (!text || typeof text !== 'string' || text.trim().length === 0) {
-    return {
-      error: 'Invalid or empty job description',
-      status: 'unverified',
-      riskScore: 0,
+    if (!text || typeof text !== 'string' || text.trim().length === 0) {
+      return {
+        error: 'Invalid or empty job description',
+        status: 'unverified',
+        riskScore: 0,
+      };
+    }
+   
+    const clean = cleanText(text);
+    let riskScore = 0;
+    const redFlagsFound  = [];
+    const positivesFound = [];
+   
+    // ── Red Flags ──────────────────────────────────
+    for (const rule of redFlags) {
+      if (rule.pattern.test(clean)) {
+        riskScore += rule.score;
+        redFlagsFound.push(rule.reason);
+      }
+    }
+   
+    // ── Positive Signals ────────────────────────────
+    for (const rule of positiveSignals) {
+      if (rule.pattern.test(clean)) {
+        riskScore += rule.score;
+        positivesFound.push(rule.reason);
+      }
+    }
+   
+    // ── Context Adjustments ─────────────────────────
+    const contextResult = contextAnalysis(clean);
+    riskScore += contextResult.netPenalty;
+   
+    // ── Freshness / Staleness Detection ─────────────
+    // This runs AFTER context so it operates on clean text.
+    // It is separate from fraud scoring — a stale job is not necessarily a scam.
+    const freshness = analyzeJobFreshness(clean);
+   
+    // If the freshness detector is highly confident the role is closed,
+    // override explicit-pattern jobStatus rather than leaving it Unknown.
+    // detectJobStatus() still runs first for explicit signals ("position filled", etc.)
+    const explicitStatus = detectJobStatus(clean);
+   
+    // Merge: explicit text signals win; freshness fills the gap when status is Unknown
+    let jobStatus;
+    if (explicitStatus.status !== 'Unknown') {
+      // Trust explicit text patterns absolutely
+      jobStatus = explicitStatus;
+    } else {
+      // Use freshness inference
+      jobStatus = {
+        status:                  freshness.status,
+        isAcceptingApplications: freshness.isAccepting,
+        confidence:              freshness.confidence,
+        meta: {
+          color: freshness.color,
+          icon:  freshness.icon,
+          badge: freshness.label,
+        },
+        inferred:        true,   // flag so UI can show "inferred" qualifier
+        freshnessScore:  freshness.freshnessScore,
+        stalenessScore:  freshness.stalenessScore,
+        freshnessSignals: freshness.signals,
+      };
+    }
+   
+    // ── Metadata ────────────────────────────────────
+    const metadata = extractMetadata(clean);
+   
+    // ── Normalise risk score ─────────────────────────
+    riskScore = normalizeScore(riskScore);
+   
+    const status         = getStatus(riskScore);
+    const explanation    = buildExplanation(riskScore, redFlagsFound.length, positivesFound.length, contextResult);
+    const recommendation = buildRecommendation(riskScore, jobStatus);
+    const actionItems    = buildActionItems(riskScore, metadata, jobStatus);
+   
+    const result = {
+      status,
+      statusLabel:     getStatusLabel(riskScore),
+      riskScore,
+      legitimacyScore: Math.max(0, 100 - riskScore),
+   
+      // Job status — now freshness-aware
+      jobStatus:               jobStatus.status,
+      jobStatusMeta:           jobStatus.meta,
+      isAcceptingApplications: jobStatus.isAcceptingApplications,
+      jobStatusConfidence:     jobStatus.confidence,
+      jobStatusInferred:       jobStatus.inferred || false,
+   
+      // Freshness details (for UI display)
+      freshness: {
+        score:    freshness.freshnessScore,  // 0 = stale, 100 = very fresh
+        staleness: freshness.stalenessScore, // 0 = fresh, 100 = stale
+        label:    freshness.label,
+        signals:  freshness.signals,         // top signals driving the verdict
+      },
+   
+      redFlags:           redFlagsFound,
+      positiveIndicators: positivesFound,
+   
+      explanation,
+      recommendation,
+      actionItems,
+   
+      metadata: {
+        redFlagCount:         redFlagsFound.length,
+        positiveCount:        positivesFound.length,
+        contextPenalty:       contextResult.penalty,
+        contextBonus:         contextResult.bonus,
+        netContextAdjustment: contextResult.netPenalty,
+        contextFlags:         contextResult.contextFlags,
+        originalLength:       text.length,
+        cleanedLength:        clean.length,
+        wordCount:            metadata.wordCount,
+        hasEmail:             metadata.hasEmail,
+        hasFreeEmail:         metadata.hasFreeEmail,
+        hasPhone:             metadata.hasPhone,
+        hasURL:               metadata.hasURL,
+        hasSalary:            metadata.hasSalary,
+        hasLocation:          metadata.hasLocation,
+        hasCompanyName:       metadata.hasCompanyName,
+        analysisTimestamp:    new Date().toISOString(),
+      },
     };
-  }
-
-  const clean = cleanText(text);
-  let riskScore = 0;
-  const redFlagsFound    = [];
-  const positivesFound   = [];
-
-  // ── Red Flags ────────────────────────────────
-  for (const rule of redFlags) {
-    if (rule.pattern.test(clean)) {
-      riskScore += rule.score;
-      redFlagsFound.push(rule.reason);
+   
+    try {
+      addAnalysis(result, jobTitle, source, text);
+    } catch (err) {
+      console.error('Storage error:', err.message);
     }
-  }
-
-  // ── Positive Signals ─────────────────────────
-  for (const rule of positiveSignals) {
-    if (rule.pattern.test(clean)) {
-      riskScore += rule.score; // these are negative values
-      positivesFound.push(rule.reason);
-    }
-  }
-
-  // ── Context Adjustments ──────────────────────
-  const contextResult = contextAnalysis(clean);
-  riskScore += contextResult.netPenalty;
-
-  // ── Metadata ─────────────────────────────────
-  const metadata  = extractMetadata(clean);
-  const jobStatus = detectJobStatus(clean);
-
-  // ── Normalise ────────────────────────────────
-  riskScore = normalizeScore(riskScore);
-
-  const status      = getStatus(riskScore);
-  const explanation = buildExplanation(riskScore, redFlagsFound.length, positivesFound.length, contextResult);
-  const recommendation = buildRecommendation(riskScore, jobStatus);
-  const actionItems    = buildActionItems(riskScore, metadata, jobStatus);
-
-  const result = {
-    // Core verdict
-    status,
-    statusLabel:      getStatusLabel(riskScore),
-    riskScore,
-    legitimacyScore:  Math.max(0, 100 - riskScore),
-
-    // Job status
-    jobStatus:                jobStatus.status,
-    jobStatusMeta:            jobStatus.meta,          // { color, icon, badge }
-    isAcceptingApplications:  jobStatus.isAcceptingApplications,
-    jobStatusConfidence:      jobStatus.confidence,
-
-    // Findings
-    redFlags:           redFlagsFound,
-    positiveIndicators: positivesFound,
-
-    // Narrative
-    explanation,
-    recommendation,
-    actionItems,
-
-    // Detailed metadata (for debugging / history)
-    metadata: {
-      redFlagCount:          redFlagsFound.length,
-      positiveCount:         positivesFound.length,
-      contextPenalty:        contextResult.penalty,
-      contextBonus:          contextResult.bonus,
-      netContextAdjustment:  contextResult.netPenalty,
-      contextFlags:          contextResult.contextFlags,
-      originalLength:        text.length,
-      cleanedLength:         clean.length,
-      wordCount:             metadata.wordCount,
-      hasEmail:              metadata.hasEmail,
-      hasFreeEmail:          metadata.hasFreeEmail,
-      hasPhone:              metadata.hasPhone,
-      hasURL:                metadata.hasURL,
-      hasSalary:             metadata.hasSalary,
-      hasLocation:           metadata.hasLocation,
-      hasCompanyName:        metadata.hasCompanyName,
-      analysisTimestamp:     new Date().toISOString(),
-    },
-  };
-
-  // ── Persist ──────────────────────────────────
-  try {
-    addAnalysis(result, jobTitle, source, text);
-  } catch (err) {
-    console.error('Storage error:', err.message);
-  }
-
-  return result;
-}
+   
+    return result;
+  }  
 
 module.exports = analyzeJob;
 module.exports.JOB_STATUS_META = JOB_STATUS_META;
