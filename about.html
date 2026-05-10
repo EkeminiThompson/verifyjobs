@@ -25,27 +25,36 @@
       --bg:#f0f2f8; --surface:#fff; --border:#dde0f0;
       --text:#0f1035; --muted:#5a5d80; --faint:#9698b8;
       --radius:14px; --shadow:0 2px 16px rgba(15,16,53,0.08);
+      --nav-h: 56px;
     }
     html { scroll-behavior: smooth; }
-    body { font-family:'DM Sans',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; }
+    body { font-family:'DM Sans',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; padding-bottom: env(safe-area-inset-bottom); }
     .page { max-width:680px; margin:0 auto; padding:1rem 1rem 3rem; }
 
-    /* NAV */
-    .topnav {
-      background:var(--navy); padding:0 1.5rem;
-      display:flex; align-items:center; justify-content:space-between;
-      height:52px; position:sticky; top:0; z-index:100;
-    }
-    .nav-logo { font-family:'Syne',sans-serif; font-size:15px; font-weight:800; color:white; text-decoration:none; }
-    .nav-logo span { color:var(--gold); }
-    .nav-links { display:flex; gap:4px; }
-    .nav-links a {
-      font-size:12px; font-weight:500; color:rgba(255,255,255,0.65);
-      text-decoration:none; padding:6px 10px; border-radius:8px; transition:all 0.15s;
-    }
-    .nav-links a:hover { color:white; background:rgba(255,255,255,0.1); }
-    .nav-links a.active { color:white; background:rgba(255,255,255,0.15); }
-    @media(max-width:480px){ .nav-links { gap:0; } .nav-links a { font-size:11px; padding:6px 7px; } }
+    /* NAV - Mobile First */
+    nav { background: var(--navy); position: sticky; top: 0; z-index: 200; box-shadow: 0 2px 12px rgba(0,0,0,0.18); }
+    .nav-bar { display: flex; align-items: center; justify-content: space-between; height: var(--nav-h); padding: 0 1rem; max-width: 680px; margin: 0 auto; }
+    .nav-logo { font-family: 'Syne', sans-serif; font-size: 17px; font-weight: 800; color: white; text-decoration: none; flex-shrink: 0; letter-spacing: -0.3px; }
+    .nav-logo span { color: var(--gold); }
+    .nav-toggle { display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 5px; width: 44px; height: 44px; background: none; border: none; cursor: pointer; border-radius: 8px; -webkit-tap-highlight-color: transparent; transition: background 0.2s; flex-shrink: 0; }
+    .nav-toggle:active { background: rgba(255,255,255,0.1); }
+    .nav-toggle .bar { display: block; width: 22px; height: 2px; background: white; border-radius: 2px; transition: transform 0.28s cubic-bezier(.4,0,.2,1), opacity 0.2s; transform-origin: center; }
+    .nav-toggle[aria-expanded="true"] .bar:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-toggle[aria-expanded="true"] .bar:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .nav-toggle[aria-expanded="true"] .bar:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .nav-dropdown { background: var(--navy-mid); overflow: hidden; max-height: 0; transition: max-height 0.32s cubic-bezier(.4,0,.2,1), opacity 0.25s; opacity: 0; border-top: 1px solid rgba(255,255,255,0.07); }
+    .nav-dropdown.open { max-height: 420px; opacity: 1; }
+    .nav-dropdown-inner { max-width: 680px; margin: 0 auto; padding: 0.5rem 1rem 1rem; display: flex; flex-direction: column; gap: 2px; }
+    .nav-link { display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.75); text-decoration: none; padding: 12px 14px; border-radius: 10px; transition: background 0.15s, color 0.15s; -webkit-tap-highlight-color: transparent; min-height: 48px; }
+    .nav-link i { font-size: 18px; flex-shrink: 0; color: rgba(255,255,255,0.4); transition: color 0.15s; }
+    .nav-link:hover, .nav-link:active { background: rgba(255,255,255,0.08); color: white; }
+    .nav-link:hover i, .nav-link:active i { color: rgba(255,255,255,0.7); }
+    .nav-link.active { background: rgba(255,255,255,0.1); color: white; font-weight: 600; }
+    .nav-link.active i { color: var(--gold); }
+    .nav-link.nav-cta { background: var(--gold); color: var(--navy); font-weight: 700; margin-top: 6px; }
+    .nav-link.nav-cta i { color: var(--navy); opacity: 0.7; }
+    .nav-link.nav-cta:hover { background: #e09500; color: var(--navy); }
+    .nav-divider { height: 1px; background: rgba(255,255,255,0.07); margin: 4px 0; }
 
     /* PAGE HERO */
     .page-hero {
@@ -76,18 +85,18 @@
       background:repeating-linear-gradient(90deg,var(--red) 0,var(--red) 50%,#fff 50%,#fff 100%);
       background-size:16px 100%; }
 
+    /* STAT STRIP */
+    .stat-strip { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:1rem; }
+    .stat-box { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:1.25rem 1rem; text-align:center; box-shadow:var(--shadow); }
+    .stat-box .n { font-family:'Syne',sans-serif; font-size:26px; font-weight:800; color:var(--red); }
+    .stat-box .l { font-size:11px; color:var(--muted); margin-top:3px; line-height:1.4; }
+
     /* CARD */
     .card { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:1.5rem; margin-bottom:1rem; box-shadow:var(--shadow); }
     .card h2 { font-family:'Syne',sans-serif; font-size:17px; font-weight:800; color:var(--navy); margin-bottom:0.75rem; display:flex; align-items:center; gap:8px; }
     .card h2 i { font-size:20px; color:var(--red); }
     .card p { font-size:13px; color:var(--muted); line-height:1.8; margin-bottom:10px; }
     .card p:last-child { margin-bottom:0; }
-
-    /* STAT STRIP */
-    .stat-strip { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:1rem; }
-    .stat-box { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:1.25rem 1rem; text-align:center; box-shadow:var(--shadow); }
-    .stat-box .n { font-family:'Syne',sans-serif; font-size:26px; font-weight:800; color:var(--red); }
-    .stat-box .l { font-size:11px; color:var(--muted); margin-top:3px; line-height:1.4; }
 
     /* TEAM / MISSION CELLS */
     .value-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:1rem; }
@@ -107,7 +116,7 @@
     footer { text-align:center; font-size:11px; color:var(--faint); padding:1.5rem 0 0.5rem; line-height:2; }
     footer a { color:var(--navy-light); text-decoration:none; }
     footer a:hover { text-decoration:underline; }
-    .footer-links { display:flex; flex-wrap:wrap; justify-content:center; gap:16px; margin-bottom:6px; }
+    .footer-links { display:flex; flex-wrap:wrap; justify-content:center; gap:12px; margin-bottom:8px; }
 
     @media(max-width:480px){
       .stat-strip { grid-template-columns:1fr 1fr; }
@@ -118,13 +127,22 @@
 </head>
 <body>
 
-<nav class="topnav" role="navigation" aria-label="Main navigation">
-  <a href="index.html" class="nav-logo">Verify<span>Jobs</span></a>
-  <div class="nav-links">
-    <a href="index.html">Home</a>
-    <a href="about.html" class="active">About</a>
-    <a href="how-it-works.html">How It Works</a>
-    <a href="report-a-scam.html">Report</a>
+<nav role="navigation" aria-label="Main navigation">
+  <div class="nav-bar">
+    <a href="index.html" class="nav-logo">Verify<span>Jobs</span></a>
+    <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="navDropdown" aria-label="Open navigation menu">
+      <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+    </button>
+  </div>
+  <div class="nav-dropdown" id="navDropdown" role="menu">
+    <div class="nav-dropdown-inner">
+      <a href="index.html" class="nav-link" role="menuitem"><i class="ti ti-home" aria-hidden="true"></i> Home</a>
+      <a href="about.html" class="nav-link active" role="menuitem"><i class="ti ti-info-circle" aria-hidden="true"></i> About</a>
+      <a href="how-it-works.html" class="nav-link" role="menuitem"><i class="ti ti-bulb" aria-hidden="true"></i> How It Works</a>
+      <a href="report-a-scam.html" class="nav-link" role="menuitem"><i class="ti ti-flag" aria-hidden="true"></i> Report a Scam</a>
+      <div class="nav-divider" role="separator"></div>
+      <a href="https://justjobs.netlify.app" target="_blank" rel="noopener noreferrer" class="nav-link nav-cta" role="menuitem"><i class="ti ti-briefcase" aria-hidden="true"></i> JobAPI for Devs</a>
+    </div>
   </div>
 </nav>
 
@@ -216,5 +234,40 @@
   </footer>
 
 </div>
+
+<script>
+  const navToggle = document.getElementById('navToggle');
+  const navDropdown = document.getElementById('navDropdown');
+
+  navToggle.addEventListener('click', () => {
+    const isOpen = navDropdown.classList.contains('open');
+    navDropdown.classList.toggle('open', !isOpen);
+    navToggle.setAttribute('aria-expanded', String(!isOpen));
+    navToggle.setAttribute('aria-label', isOpen ? 'Open navigation menu' : 'Close navigation menu');
+  });
+
+  navDropdown.querySelectorAll('.nav-link').forEach(link => {
+    link.addEventListener('click', () => {
+      navDropdown.classList.remove('open');
+      navToggle.setAttribute('aria-expanded', 'false');
+      navToggle.setAttribute('aria-label', 'Open navigation menu');
+    });
+  });
+
+  document.addEventListener('click', e => {
+    if (!navToggle.contains(e.target) && !navDropdown.contains(e.target)) {
+      navDropdown.classList.remove('open');
+      navToggle.setAttribute('aria-expanded', 'false');
+    }
+  });
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && navDropdown.classList.contains('open')) {
+      navDropdown.classList.remove('open');
+      navToggle.setAttribute('aria-expanded', 'false');
+      navToggle.focus();
+    }
+  });
+</script>
 </body>
 </html>

@@ -3,19 +3,31 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Report a Job Scam – VerifyJobs.org</title>
-  <meta name="description" content="Report a job scam to the right agency in your country. VerifyJobs provides direct links to EFCC (Nigeria), FTC (USA), Action Fraud (UK), and more, plus step-by-step guidance on what to do if you've been scammed.">
+  <title>Report a Job Scam 2026 | Official Guidance & Agency Links | VerifyJobs.org</title>
+  <meta name="description" content="Learn how to report a job scam in your country. Direct links to EFCC Nigeria, FTC USA, Action Fraud UK, and more. Step-by-step instructions if you've been scammed or lost money.">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://verifyjobs.org/report-a-scam">
-  <meta property="og:title" content="Report a Job Scam – VerifyJobs.org">
-  <meta property="og:description" content="Find the right place to report a job scam in your country, plus step-by-step guidance on protecting yourself after being targeted.">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Report a Job Scam – Official Guidance & Agency Links">
+  <meta property="og:description" content="Step-by-step guide on what to do after a job scam + direct reporting links for Nigeria, USA, UK, Ghana, Kenya, India & more.">
   <meta property="og:url" content="https://verifyjobs.org/report-a-scam">
-  <meta property="og:image" content="https://verifyjobs.org/og-image.png">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://verifyjobs.org/og-report-scam.jpg">
+  <meta property="og:site_name" content="VerifyJobs.org">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Report a Job Scam – VerifyJobs.org">
+  <meta name="twitter:description" content="How to report job scams + official agency links by country.">
+  <meta name="twitter:image" content="https://verifyjobs.org/og-report-scam.jpg">
+
   <meta name="theme-color" content="#0f1035">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+
   <style>
     *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
     :root {
@@ -25,48 +37,54 @@
       --bg:#f0f2f8; --surface:#fff; --border:#dde0f0;
       --text:#0f1035; --muted:#5a5d80; --faint:#9698b8;
       --radius:14px; --shadow:0 2px 16px rgba(15,16,53,0.08);
+      --nav-h: 56px;
     }
     html { scroll-behavior:smooth; }
-    body { font-family:'DM Sans',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; }
-    .page { max-width:680px; margin:0 auto; padding:1rem 1rem 3rem; }
+    body { font-family:'DM Sans',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; padding-bottom: env(safe-area-inset-bottom); }
+    .page { max-width:680px; margin:0 auto; padding:1rem 1rem 4rem; }
 
     /* NAV */
-    .topnav { background:var(--navy); padding:0 1.5rem; display:flex; align-items:center; justify-content:space-between; height:52px; position:sticky; top:0; z-index:100; }
-    .nav-logo { font-family:'Syne',sans-serif; font-size:15px; font-weight:800; color:white; text-decoration:none; }
-    .nav-logo span { color:var(--gold); }
-    .nav-links { display:flex; gap:4px; }
-    .nav-links a { font-size:12px; font-weight:500; color:rgba(255,255,255,0.65); text-decoration:none; padding:6px 10px; border-radius:8px; transition:all 0.15s; }
-    .nav-links a:hover { color:white; background:rgba(255,255,255,0.1); }
-    .nav-links a.active { color:white; background:rgba(255,255,255,0.15); }
-    @media(max-width:480px){ .nav-links a { font-size:11px; padding:6px 7px; } }
+    nav { background: var(--navy); position: sticky; top: 0; z-index: 200; box-shadow: 0 2px 12px rgba(0,0,0,0.18); }
+    .nav-bar { display: flex; align-items: center; justify-content: space-between; height: var(--nav-h); padding: 0 1rem; max-width: 680px; margin: 0 auto; }
+    .nav-logo { font-family: 'Syne', sans-serif; font-size: 17px; font-weight: 800; color: white; text-decoration: none; flex-shrink: 0; letter-spacing: -0.3px; }
+    .nav-logo span { color: var(--gold); }
+    .nav-toggle { display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 5px; width: 44px; height: 44px; background: none; border: none; cursor: pointer; border-radius: 8px; -webkit-tap-highlight-color: transparent; transition: background 0.2s; }
+    .nav-toggle:active { background: rgba(255,255,255,0.1); }
+    .nav-toggle .bar { display: block; width: 22px; height: 2px; background: white; border-radius: 2px; transition: transform 0.28s cubic-bezier(.4,0,.2,1), opacity 0.2s; transform-origin: center; }
+    .nav-toggle[aria-expanded="true"] .bar:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-toggle[aria-expanded="true"] .bar:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .nav-toggle[aria-expanded="true"] .bar:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-    /* PAGE HERO */
+    .nav-dropdown { background: var(--navy-mid); overflow: hidden; max-height: 0; transition: max-height 0.32s cubic-bezier(.4,0,.2,1), opacity 0.25s; opacity: 0; border-top: 1px solid rgba(255,255,255,0.07); }
+    .nav-dropdown.open { max-height: 420px; opacity: 1; }
+    .nav-dropdown-inner { max-width: 680px; margin: 0 auto; padding: 0.5rem 1rem 1rem; display: flex; flex-direction: column; gap: 2px; }
+    .nav-link { display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.75); text-decoration: none; padding: 12px 14px; border-radius: 10px; transition: background 0.15s, color 0.15s; min-height: 48px; }
+    .nav-link i { font-size: 18px; flex-shrink: 0; color: rgba(255,255,255,0.4); }
+    .nav-link:hover, .nav-link:active { background: rgba(255,255,255,0.08); color: white; }
+    .nav-link.active { background: rgba(255,255,255,0.1); color: white; font-weight: 600; }
+    .nav-link.active i { color: var(--gold); }
+
+    /* PAGE STYLES */
     .page-hero { background:linear-gradient(135deg,var(--red) 0%,#8a1a28 100%); border-radius:var(--radius); padding:2rem 1.5rem; margin-bottom:1.25rem; position:relative; overflow:hidden; }
-    .page-hero::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse at 80% 20%,rgba(255,255,255,0.06) 0%,transparent 60%); pointer-events:none; }
-    .page-hero-grid { position:absolute; inset:0; background-image:linear-gradient(rgba(255,255,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.03) 1px,transparent 1px); background-size:32px 32px; pointer-events:none; }
+    .page-hero::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse at 80% 20%,rgba(255,255,255,0.06) 0%,transparent 60%); }
+    .page-hero-grid { position:absolute; inset:0; background-image:linear-gradient(rgba(255,255,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.03) 1px,transparent 1px); background-size:32px 32px; }
     .page-hero-inner { position:relative; z-index:1; }
     .page-breadcrumb { font-size:11px; color:rgba(255,255,255,0.5); margin-bottom:10px; }
     .page-breadcrumb a { color:rgba(255,255,255,0.5); text-decoration:none; }
-    .page-breadcrumb a:hover { color:white; }
     .page-hero h1 { font-family:'Syne',sans-serif; font-size:clamp(22px,5vw,28px); font-weight:800; color:white; margin-bottom:8px; }
-    .page-hero p { font-size:13px; color:rgba(255,255,255,0.75); line-height:1.65; max-width:480px; }
+    .page-hero p { font-size:13px; color:rgba(255,255,255,0.75); line-height:1.65; }
 
-    /* FLAG STRIP */
     .flag-strip { height:5px; border-radius:3px; margin-bottom:1.25rem; background:repeating-linear-gradient(90deg,var(--red) 0,var(--red) 50%,#fff 50%,#fff 100%); background-size:16px 100%; }
 
-    /* URGENT BANNER */
     .urgent-banner { background:var(--red-pale); border:1px solid rgba(192,57,43,0.2); border-left:4px solid var(--red); border-radius:0 12px 12px 0; padding:1rem 1.25rem; margin-bottom:1rem; }
     .urgent-banner strong { font-size:13px; font-weight:700; color:var(--red); display:block; margin-bottom:4px; }
-    .urgent-banner p { font-size:13px; color:var(--red); opacity:0.85; line-height:1.6; margin:0; }
+    .urgent-banner p { font-size:13px; color:var(--red); opacity:0.9; line-height:1.6; margin:0; }
 
-    /* CARD */
     .card { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:1.5rem; margin-bottom:1rem; box-shadow:var(--shadow); }
     .card h2 { font-family:'Syne',sans-serif; font-size:17px; font-weight:800; color:var(--navy); margin-bottom:0.75rem; display:flex; align-items:center; gap:8px; }
     .card h2 i { font-size:20px; color:var(--red); }
     .card p { font-size:13px; color:var(--muted); line-height:1.8; margin-bottom:10px; }
-    .card p:last-child { margin-bottom:0; }
 
-    /* STEPS */
     .steps { display:flex; flex-direction:column; gap:0; }
     .step { display:flex; gap:14px; padding:12px 0; border-bottom:1px solid var(--border); }
     .step:last-child { border:none; padding-bottom:0; }
@@ -74,7 +92,6 @@
     .step-body strong { display:block; font-size:13px; font-weight:700; color:var(--text); margin-bottom:3px; }
     .step-body p { font-size:13px; color:var(--muted); line-height:1.6; margin:0; }
 
-    /* AGENCY CARDS */
     .agency-grid { display:flex; flex-direction:column; gap:10px; }
     .agency-card { border:1px solid var(--border); border-radius:12px; padding:1rem 1.25rem; display:flex; align-items:flex-start; gap:14px; background:var(--surface); transition:border-color 0.15s; }
     .agency-card:hover { border-color:var(--navy-light); }
@@ -84,38 +101,45 @@
     .agency-body .agency-name { font-size:12px; color:var(--muted); margin-bottom:6px; }
     .agency-link { display:inline-flex; align-items:center; gap:5px; font-size:12px; font-weight:600; color:var(--navy-light); text-decoration:none; background:var(--bg); border:1px solid var(--border); padding:5px 12px; border-radius:20px; transition:all 0.15s; }
     .agency-link:hover { background:var(--navy); color:white; border-color:var(--navy); }
-    .agency-link i { font-size:12px; }
 
-    /* CHECKLIST */
     .checklist { display:flex; flex-direction:column; gap:8px; margin-top:0.5rem; }
     .check-item { display:flex; align-items:flex-start; gap:10px; padding:10px 12px; background:#f5f6fc; border-radius:10px; }
     .check-item i { font-size:16px; color:var(--green); flex-shrink:0; margin-top:1px; }
-    .check-item span { font-size:13px; color:var(--muted); line-height:1.55; }
     .check-item.danger i { color:var(--red); }
+    .check-item span { font-size:13px; color:var(--muted); line-height:1.55; }
 
-    /* CTA */
     .cta-card { background:linear-gradient(135deg,var(--navy),var(--navy-mid)); border-radius:var(--radius); padding:1.5rem; text-align:center; margin-top:1rem; }
     .cta-card h3 { font-family:'Syne',sans-serif; font-size:17px; font-weight:800; color:white; margin-bottom:8px; }
     .cta-card p { font-size:13px; color:rgba(255,255,255,0.65); margin-bottom:1.25rem; line-height:1.6; }
-    .cta-btn { display:inline-flex; align-items:center; gap:8px; background:var(--red); color:white; padding:12px 24px; border-radius:10px; font-size:14px; font-weight:700; text-decoration:none; transition:opacity 0.15s; font-family:'DM Sans',sans-serif; }
-    .cta-btn:hover { opacity:0.88; }
+    .cta-btn { display:inline-flex; align-items:center; gap:8px; background:var(--red); color:white; padding:12px 24px; border-radius:10px; font-size:14px; font-weight:700; text-decoration:none; transition:opacity 0.15s; }
 
-    /* FOOTER */
-    footer { text-align:center; font-size:11px; color:var(--faint); padding:1.5rem 0 0.5rem; line-height:2; }
+    footer { text-align:center; font-size:11px; color:var(--faint); padding:2rem 0 1rem; line-height:2; }
     footer a { color:var(--navy-light); text-decoration:none; }
     footer a:hover { text-decoration:underline; }
-    .footer-links { display:flex; flex-wrap:wrap; justify-content:center; gap:16px; margin-bottom:6px; }
+    .footer-links { display:flex; flex-wrap:wrap; justify-content:center; gap:12px; margin-bottom:8px; }
+
+    details { margin-bottom:1rem; }
+    summary { font-weight:600; cursor:pointer; font-size:14px; }
   </style>
 </head>
 <body>
 
-<nav class="topnav" role="navigation" aria-label="Main navigation">
-  <a href="index.html" class="nav-logo">Verify<span>Jobs</span></a>
-  <div class="nav-links">
-    <a href="index.html">Home</a>
-    <a href="about.html">About</a>
-    <a href="how-it-works.html">How It Works</a>
-    <a href="report-a-scam.html" class="active">Report</a>
+<nav role="navigation" aria-label="Main navigation">
+  <div class="nav-bar">
+    <a href="index.html" class="nav-logo">Verify<span>Jobs</span></a>
+    <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="navDropdown" aria-label="Open navigation menu">
+      <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+    </button>
+  </div>
+  <div class="nav-dropdown" id="navDropdown" role="menu">
+    <div class="nav-dropdown-inner">
+      <a href="index.html" class="nav-link"><i class="ti ti-home"></i> Home</a>
+      <a href="about.html" class="nav-link"><i class="ti ti-info-circle"></i> About</a>
+      <a href="how-it-works.html" class="nav-link"><i class="ti ti-bulb"></i> How It Works</a>
+      <a href="report-a-scam.html" class="nav-link active"><i class="ti ti-flag"></i> Report a Scam</a>
+      <div class="nav-divider" role="separator" style="height:1px; background:rgba(255,255,255,0.07); margin:8px 0;"></div>
+      <a href="privacy.html" class="nav-link"><i class="ti ti-shield-check"></i> Privacy Policy</a>
+    </div>
   </div>
 </nav>
 
@@ -126,19 +150,17 @@
     <div class="page-hero-inner">
       <div class="page-breadcrumb"><a href="index.html">Home</a> / Report a Scam</div>
       <h1>Report a Job Scam</h1>
-      <p>If you've encountered a fraudulent job posting — whether or not you lost money — reporting it protects others. Here's exactly what to do and where to go.</p>
+      <p>If you've encountered a fraudulent job posting — whether or not you lost money — reporting it helps protect others. Here's exactly what to do and where to report it.</p>
     </div>
   </div>
 
   <div class="flag-strip" aria-hidden="true"></div>
 
-  <!-- URGENT BANNER -->
   <div class="urgent-banner" role="alert">
     <strong>If you've already sent money or shared bank details, act now.</strong>
-    <p>Contact your bank immediately to freeze transfers and file a fraud claim. Time is critical — the sooner you call, the better the chance of recovery.</p>
+    <p>Contact your bank or mobile money provider immediately to freeze or reverse transfers.</p>
   </div>
 
-  <!-- IMMEDIATE STEPS -->
   <div class="card">
     <h2><i class="ti ti-alert-triangle"></i> What to Do Right Now</h2>
     <div class="steps">
@@ -146,44 +168,43 @@
         <div class="step-num">1</div>
         <div class="step-body">
           <strong>Stop all contact with the scammer</strong>
-          <p>Do not reply to any further messages. Do not send any more money, documents, or information. Block their number/email after taking screenshots.</p>
+          <p>Block their number and email after taking screenshots.</p>
         </div>
       </div>
       <div class="step">
         <div class="step-num">2</div>
         <div class="step-body">
           <strong>Screenshot everything</strong>
-          <p>Take screenshots of all messages, emails, job postings, payment requests, and contact details before blocking. This is your evidence for any report or bank dispute.</p>
+          <p>Save all messages, job postings, emails, and payment requests as evidence.</p>
         </div>
       </div>
       <div class="step">
         <div class="step-num">3</div>
         <div class="step-body">
-          <strong>Contact your bank if money was sent</strong>
-          <p>Call your bank's fraud line immediately. Explain you sent money to a scammer. Request a recall or chargeback. If you sent via mobile money (Opay, Palmpay, MTN Mobile Money), contact their fraud teams directly.</p>
+          <strong>Contact your bank immediately</strong>
+          <p>If money was sent, call your bank's fraud department right away.</p>
         </div>
       </div>
       <div class="step">
         <div class="step-num">4</div>
         <div class="step-body">
-          <strong>Change any passwords shared</strong>
-          <p>If you provided a password, email access, or logged in to any portal they sent you, change those passwords immediately and enable two-factor authentication.</p>
+          <strong>Change compromised passwords</strong>
+          <p>Update any passwords you shared and enable two-factor authentication.</p>
         </div>
       </div>
       <div class="step">
         <div class="step-num">5</div>
         <div class="step-body">
-          <strong>File an official report</strong>
-          <p>Use the agency links below for your country. Even if recovery seems unlikely, reports help agencies track scam networks and warn others.</p>
+          <strong>Report to the authorities</strong>
+          <p>Use the official links below for your country.</p>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- AGENCIES BY COUNTRY -->
   <div class="card">
     <h2><i class="ti ti-world"></i> Report to the Right Agency</h2>
-    <p style="margin-bottom:1rem">Choose the reporting agency for your country. Have your screenshots and any transaction references ready before you start.</p>
+    <p style="margin-bottom:1rem">Select your country and report the scam:</p>
     <div class="agency-grid">
 
       <div class="agency-card">
@@ -191,7 +212,7 @@
         <div class="agency-body">
           <strong>Nigeria</strong>
           <div class="agency-name">EFCC — Economic and Financial Crimes Commission</div>
-          <a href="https://efcc.gov.ng/report-a-scam" class="agency-link" rel="noopener noreferrer" target="_blank">
+          <a href="https://efcc.gov.ng/report-a-scam" target="_blank" rel="noopener noreferrer" class="agency-link">
             <i class="ti ti-external-link"></i> Report to EFCC
           </a>
         </div>
@@ -200,9 +221,9 @@
       <div class="agency-card">
         <div class="agency-flag">🇳🇬</div>
         <div class="agency-body">
-          <strong>Nigeria (Digital / Cyber)</strong>
+          <strong>Nigeria (Cybercrime)</strong>
           <div class="agency-name">NITDA — National Information Technology Development Agency</div>
-          <a href="https://nitda.gov.ng" class="agency-link" rel="noopener noreferrer" target="_blank">
+          <a href="https://nitda.gov.ng" target="_blank" rel="noopener noreferrer" class="agency-link">
             <i class="ti ti-external-link"></i> Report to NITDA
           </a>
         </div>
@@ -213,7 +234,7 @@
         <div class="agency-body">
           <strong>United States</strong>
           <div class="agency-name">FTC — Federal Trade Commission</div>
-          <a href="https://reportfraud.ftc.gov/" class="agency-link" rel="noopener noreferrer" target="_blank">
+          <a href="https://reportfraud.ftc.gov/" target="_blank" rel="noopener noreferrer" class="agency-link">
             <i class="ti ti-external-link"></i> Report to FTC
           </a>
         </div>
@@ -223,8 +244,8 @@
         <div class="agency-flag">🇬🇧</div>
         <div class="agency-body">
           <strong>United Kingdom</strong>
-          <div class="agency-name">Action Fraud — National Fraud Reporting Centre</div>
-          <a href="https://www.actionfraud.police.uk/reporting-fraud-and-cyber-crime" class="agency-link" rel="noopener noreferrer" target="_blank">
+          <div class="agency-name">Action Fraud</div>
+          <a href="https://www.actionfraud.police.uk/" target="_blank" rel="noopener noreferrer" class="agency-link">
             <i class="ti ti-external-link"></i> Report to Action Fraud
           </a>
         </div>
@@ -234,9 +255,9 @@
         <div class="agency-flag">🇬🇭</div>
         <div class="agency-body">
           <strong>Ghana</strong>
-          <div class="agency-name">Ghana Police Service / EOCO</div>
-          <a href="https://www.police.gov.gh" class="agency-link" rel="noopener noreferrer" target="_blank">
-            <i class="ti ti-external-link"></i> Ghana Police Service
+          <div class="agency-name">EOCO / Ghana Police</div>
+          <a href="https://www.police.gov.gh" target="_blank" rel="noopener noreferrer" class="agency-link">
+            <i class="ti ti-external-link"></i> Report to Ghana Police
           </a>
         </div>
       </div>
@@ -246,8 +267,8 @@
         <div class="agency-body">
           <strong>Kenya</strong>
           <div class="agency-name">DCI — Directorate of Criminal Investigations</div>
-          <a href="https://www.dci.go.ke" class="agency-link" rel="noopener noreferrer" target="_blank">
-            <i class="ti ti-external-link"></i> DCI Kenya
+          <a href="https://www.dci.go.ke" target="_blank" rel="noopener noreferrer" class="agency-link">
+            <i class="ti ti-external-link"></i> Report to DCI Kenya
           </a>
         </div>
       </div>
@@ -256,9 +277,9 @@
         <div class="agency-flag">🇮🇳</div>
         <div class="agency-body">
           <strong>India</strong>
-          <div class="agency-name">National Cyber Crime Reporting Portal</div>
-          <a href="https://cybercrime.gov.in/" class="agency-link" rel="noopener noreferrer" target="_blank">
-            <i class="ti ti-external-link"></i> cybercrime.gov.in
+          <div class="agency-name">National Cyber Crime Portal</div>
+          <a href="https://cybercrime.gov.in/" target="_blank" rel="noopener noreferrer" class="agency-link">
+            <i class="ti ti-external-link"></i> Report Online
           </a>
         </div>
       </div>
@@ -268,7 +289,7 @@
         <div class="agency-body">
           <strong>Canada</strong>
           <div class="agency-name">Canadian Anti-Fraud Centre</div>
-          <a href="https://antifraudcentre-centreantifraude.ca/" class="agency-link" rel="noopener noreferrer" target="_blank">
+          <a href="https://antifraudcentre-centreantifraude.ca/" target="_blank" rel="noopener noreferrer" class="agency-link">
             <i class="ti ti-external-link"></i> Report to CAFC
           </a>
         </div>
@@ -277,22 +298,20 @@
     </div>
   </div>
 
-  <!-- DO / DON'T -->
   <div class="card">
     <h2><i class="ti ti-list-check"></i> Protect Yourself Going Forward</h2>
     <div class="checklist">
-      <div class="check-item"><i class="ti ti-circle-check"></i><span>Always verify a company exists independently — search their name + "scam" and check LinkedIn, official websites, and Companies House / CAC registrations.</span></div>
-      <div class="check-item"><i class="ti ti-circle-check"></i><span>Call the company's official number (found on their verified website, not the one in the job posting) to confirm the recruiter works there.</span></div>
-      <div class="check-item"><i class="ti ti-circle-check"></i><span>Never accept a job offer without a proper interview, employment contract, or verifiable company registration.</span></div>
-      <div class="check-item danger"><i class="ti ti-circle-x"></i><span>Never pay for a job. Legitimate employers do not charge for training, starter kits, background checks, or processing fees.</span></div>
-      <div class="check-item danger"><i class="ti ti-circle-x"></i><span>Never share your BVN, NIN, passport, or bank details with a recruiter who contacted you unsolicited.</span></div>
-      <div class="check-item danger"><i class="ti ti-circle-x"></i><span>Never click links in unsolicited job offer messages — they may lead to phishing sites designed to steal your login credentials.</span></div>
+      <div class="check-item"><i class="ti ti-circle-check"></i><span>Always verify the company independently before applying.</span></div>
+      <div class="check-item"><i class="ti ti-circle-check"></i><span>Never pay money for a job opportunity.</span></div>
+      <div class="check-item"><i class="ti ti-circle-check"></i><span>Call the official company number to confirm the offer.</span></div>
+      <div class="check-item danger"><i class="ti ti-circle-x"></i><span>Never share BVN, NIN, passport, or banking details with unsolicited recruiters.</span></div>
+      <div class="check-item danger"><i class="ti ti-circle-x"></i><span>Avoid clicking links in job offer messages.</span></div>
     </div>
   </div>
 
   <div class="cta-card">
-    <h3>Not sure if a job is legitimate?</h3>
-    <p>Use VerifyJobs to analyse any posting before you engage — free, instant, no sign-up.</p>
+    <h3>Not sure if a job offer is real?</h3>
+    <p>Use our free tool to analyze any job posting instantly.</p>
     <a href="index.html" class="cta-btn"><i class="ti ti-shield-search"></i> Analyze a Job Posting</a>
   </div>
 
@@ -304,9 +323,35 @@
       <a href="report-a-scam.html">Report a Scam</a>
       <a href="privacy.html">Privacy Policy</a>
     </div>
-    <p>© 2025 VerifyJobs.org — Free job scam detector. Not affiliated with any government agency.</p>
+    <p>© 2026 VerifyJobs.org — Free job scam detector. Not affiliated with any government agency.</p>
   </footer>
-
 </div>
+
+<!-- Navigation Script -->
+<script>
+  const navToggle = document.getElementById('navToggle');
+  const navDropdown = document.getElementById('navDropdown');
+
+  navToggle.addEventListener('click', () => {
+    const isOpen = navDropdown.classList.contains('open');
+    navDropdown.classList.toggle('open', !isOpen);
+    navToggle.setAttribute('aria-expanded', String(!isOpen));
+  });
+
+  navDropdown.querySelectorAll('.nav-link').forEach(link => {
+    link.addEventListener('click', () => {
+      navDropdown.classList.remove('open');
+      navToggle.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  document.addEventListener('click', e => {
+    if (!navToggle.contains(e.target) && !navDropdown.contains(e.target)) {
+      navDropdown.classList.remove('open');
+      navToggle.setAttribute('aria-expanded', 'false');
+    }
+  });
+</script>
+
 </body>
 </html>

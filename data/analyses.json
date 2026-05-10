@@ -1,5 +1,1341 @@
 [
   {
+    "id": "anal_1778391595788",
+    "timestamp": "2026-05-10T05:39:55.788Z",
+    "jobTitle": "Open Application @ Render",
+    "source": "URL",
+    "status": "low_concern",
+    "statusLabel": "🟢 LOW CONCERN",
+    "riskScore": 14,
+    "legitimacyScore": 86,
+    "jobStatus": "Unknown",
+    "jobStatusMeta": {
+      "color": "#d1d5db",
+      "icon": "❓",
+      "badge": "Status Unknown"
+    },
+    "isAcceptingApplications": true,
+    "jobStatusConfidence": "low",
+    "redFlags": [],
+    "positiveIndicators": [],
+    "explanation": "This posting appears relatively safe — no red flags were detected. Always verify company information independently before accepting any offer.",
+    "recommendation": "✓ APPEARS LEGITIMATE. Conduct standard due diligence: confirm the company website, read reviews, and verify the recruiter on LinkedIn.",
+    "actionItems": [
+      "🔍 Verify the company on its official website — search for it independently, don't use links in the posting",
+      "💼 Find the company on LinkedIn and check whether employees list it on their profiles",
+      "🔎 Paste the job title + key phrases in quotes into Google to detect copy-paste scam postings",
+      "⭐ Read company reviews on Glassdoor, Indeed, and Google before accepting any offer",
+      "🤝 Contact the company directly through its official website to confirm this posting is genuine",
+      "❌ Never pay for training, equipment, starter kits, or background checks before your first day of work"
+    ],
+    "metadata": {
+      "redFlagCount": 0,
+      "positiveCount": 0,
+      "contextPenalty": 14,
+      "contextBonus": 0,
+      "netContextAdjustment": 14,
+      "contextFlags": [
+        "No official website or online presence mentioned"
+      ],
+      "originalLength": 25,
+      "cleanedLength": 25,
+      "wordCount": 4,
+      "hasEmail": false,
+      "hasFreeEmail": false,
+      "hasPhone": false,
+      "hasURL": false,
+      "hasSalary": false,
+      "hasLocation": false,
+      "hasCompanyName": false,
+      "analysisTimestamp": "2026-05-10T05:39:55.785Z"
+    },
+    "originalText": "Open Application @ Render"
+  },
+  {
+    "id": "anal_1778390457931",
+    "timestamp": "2026-05-10T05:20:57.931Z",
+    "jobTitle": "016-Change-of-Supervisor.docx",
+    "source": "File Upload",
+    "status": "low_concern",
+    "statusLabel": "🟢 LOW CONCERN",
+    "riskScore": 19,
+    "legitimacyScore": 81,
+    "jobStatus": "Unknown",
+    "jobStatusMeta": {
+      "color": "#d1d5db",
+      "icon": "❓",
+      "badge": "Status Unknown"
+    },
+    "isAcceptingApplications": true,
+    "jobStatusConfidence": "low",
+    "redFlags": [
+      "Task-based commission scam pattern (common in WhatsApp scams)",
+      "Uses free personal email domain instead of company domain"
+    ],
+    "positiveIndicators": [
+      "Requires formal education or professional certifications",
+      "Contains detailed job description sections",
+      "Specifies standard employment type",
+      "Mentions standard confidentiality or NDA requirements"
+    ],
+    "explanation": "This posting appears relatively safe — 2 red flags were detected. Multiple positive signals (4) indicate professional legitimacy. Always verify company information independently before accepting any offer.",
+    "recommendation": "✓ APPEARS LEGITIMATE. Conduct standard due diligence: confirm the company website, read reviews, and verify the recruiter on LinkedIn.",
+    "actionItems": [
+      "🔍 Verify the company on its official website — search for it independently, don't use links in the posting",
+      "💼 Find the company on LinkedIn and check whether employees list it on their profiles",
+      "🔎 Paste the job title + key phrases in quotes into Google to detect copy-paste scam postings",
+      "📧 The email domain is a free provider (Gmail/Yahoo/etc.) — legitimate companies use branded email",
+      "⭐ Read company reviews on Glassdoor, Indeed, and Google before accepting any offer",
+      "🤝 Contact the company directly through its official website to confirm this posting is genuine",
+      "❌ Never pay for training, equipment, starter kits, or background checks before your first day of work"
+    ],
+    "metadata": {
+      "redFlagCount": 2,
+      "positiveCount": 4,
+      "contextPenalty": 0,
+      "contextBonus": 4,
+      "netContextAdjustment": -4,
+      "contextFlags": [
+        "Qualifications section present"
+      ],
+      "originalLength": 4622,
+      "cleanedLength": 3658,
+      "wordCount": 473,
+      "hasEmail": true,
+      "hasFreeEmail": true,
+      "hasPhone": true,
+      "hasURL": false,
+      "hasSalary": false,
+      "hasLocation": false,
+      "hasCompanyName": false,
+      "analysisTimestamp": "2026-05-10T05:20:57.930Z"
+    },
+    "originalText": "NNAMDI AZIKIWE UNIVERSITY, AWKA\n\nSCHOOL OF POSTGRADUATE STUDIES\n\nAPPLICATION FOR CHANGE OF SUPERVISOR\n\n(For the student who wishes to change supervisor)\n\n\n\nDepartment:\n\nCOMPUTER SCIENCE\n\nFaculty:\n\nPHYSICAL SCIENCE\n\n\n\nSession:\n\n2025/2026\n\nReg. No.\n\n2023517003FA\n\n\n\n\n\n\n\n\n\nSTUDENT’S DETAILS:\n\n\n\nName:\n\nTHOMPSON     EKEMINI          EKERETE\n\n\n\n(Surname)\n\n (Other Names)\n\n\n\nPhone Number:\n\n08085434165\n\nEmail:kaemzythompson@gmail.com\n\n\n\nPermanent Home Address:\n\n10 Airport View Estate, Enugu, Enugu State\n\n\n\nDegree or Diploma in View:\n\nPhD\n\n\n\nMode of Study:\n\nFull Time:            /\n\n1.\n\nNAME IN FULL (SURNAME FIRST):\n\n\n\n  2.\n\nPHONE NUMBER AND EMAIL ADDRES"
+  },
+  {
+    "id": "anal_1778390413383",
+    "timestamp": "2026-05-10T05:20:13.383Z",
+    "jobTitle": "5995d5dc-077b-41ae-bf13-424bb9ee6998.docx",
+    "source": "File Upload",
+    "status": "definite_scam",
+    "statusLabel": "🚨 DEFINITE SCAM",
+    "riskScore": 94,
+    "legitimacyScore": 6,
+    "jobStatus": "Unknown",
+    "jobStatusMeta": {
+      "color": "#d1d5db",
+      "icon": "❓",
+      "badge": "Status Unknown"
+    },
+    "isAcceptingApplications": true,
+    "jobStatusConfidence": "low",
+    "redFlags": [
+      "Requests sensitive financial or identity documents prematurely",
+      "Requires personal investment or capital contribution"
+    ],
+    "positiveIndicators": [
+      "Specifies paid time off benefits"
+    ],
+    "explanation": "This posting has 2 serious red flags and matches well-documented employment fraud patterns. Context flags: No official website or online presence mentioned. The combination of indicators makes this almost certainly a scam.",
+    "recommendation": "🚨 AVOID COMPLETELY. Do not respond, send money, or share personal information. This posting exhibits overwhelming scam indicators.",
+    "actionItems": [
+      "🛑 DO NOT send money, gift cards, or cryptocurrency under any circumstances",
+      "🛑 DO NOT share your bank account, BVN, NIN, or passport details",
+      "📱 Report this posting to the platform where you found it",
+      "🚔 File a report: FTC (USA) · EFCC / NITDA (Nigeria) · Action Fraud (UK)",
+      "⚠️ Search \"[company name] scam\" on Google and check ScamPulse, BBB Scam Tracker",
+      "🔎 Paste the job title + key phrases in quotes into Google to detect copy-paste scam postings",
+      "❌ Never pay for training, equipment, starter kits, or background checks before your first day of work"
+    ],
+    "metadata": {
+      "redFlagCount": 2,
+      "positiveCount": 1,
+      "contextPenalty": 14,
+      "contextBonus": 0,
+      "netContextAdjustment": 14,
+      "contextFlags": [
+        "No official website or online presence mentioned"
+      ],
+      "originalLength": 6200,
+      "cleanedLength": 6190,
+      "wordCount": 781,
+      "hasEmail": false,
+      "hasFreeEmail": false,
+      "hasPhone": false,
+      "hasURL": false,
+      "hasSalary": false,
+      "hasLocation": true,
+      "hasCompanyName": false,
+      "analysisTimestamp": "2026-05-10T05:20:13.382Z"
+    },
+    "originalText": "A RESEARCH PROPOSAL ON A MULTILEVEL COMPUTATIONAL FRAMEWORK FOR EPILEPTOGENESIS\n\n\n\nINTRODUCTION\n\nIn the pursuit of unraveling the complexities surrounding epileptogenesis, the crux of this doctoral investigation lies in the development of a comprehensive computational framework. This framework, designed to transcend multiple biological strata, seeks to delve into the intricate details at the molecular and cellular levels while simultaneously exploring the dynamic interplay at the system level. The overarching objective is to bridge the existing gap that separates biologically inspired models from simulations operating at the system level. The"
+  },
+  {
+    "id": "anal_1778389911385",
+    "timestamp": "2026-05-10T05:11:51.385Z",
+    "jobTitle": "Job Application for AI Tutor - Software Engineering Specialist at xAI",
+    "source": "URL",
+    "status": "low_concern",
+    "statusLabel": "🟢 LOW CONCERN",
+    "riskScore": 13,
+    "legitimacyScore": 87,
+    "jobStatus": "Unknown",
+    "jobStatusMeta": {
+      "color": "#d1d5db",
+      "icon": "❓",
+      "badge": "Status Unknown"
+    },
+    "isAcceptingApplications": true,
+    "jobStatusConfidence": "low",
+    "redFlags": [
+      "Requests sensitive financial or identity documents prematurely",
+      "Task-based commission scam pattern (common in WhatsApp scams)"
+    ],
+    "positiveIndicators": [
+      "Includes standard equal opportunity or diversity statements",
+      "Mentions standard professional benefits package",
+      "Specifies paid time off benefits",
+      "Describes structured, professional interview process",
+      "Contains detailed job description sections",
+      "Specifies standard employment type",
+      "Mentions standard confidentiality or NDA requirements"
+    ],
+    "explanation": "This posting appears relatively safe — 2 red flags were detected. Multiple positive signals (7) indicate professional legitimacy. Always verify company information independently before accepting any offer.",
+    "recommendation": "✓ APPEARS LEGITIMATE. Conduct standard due diligence: confirm the company website, read reviews, and verify the recruiter on LinkedIn.",
+    "actionItems": [
+      "🔍 Verify the company on its official website — search for it independently, don't use links in the posting",
+      "💼 Find the company on LinkedIn and check whether employees list it on their profiles",
+      "🔎 Paste the job title + key phrases in quotes into Google to detect copy-paste scam postings",
+      "⭐ Read company reviews on Glassdoor, Indeed, and Google before accepting any offer",
+      "🤝 Contact the company directly through its official website to confirm this posting is genuine",
+      "❌ Never pay for training, equipment, starter kits, or background checks before your first day of work"
+    ],
+    "metadata": {
+      "redFlagCount": 2,
+      "positiveCount": 7,
+      "contextPenalty": 14,
+      "contextBonus": 10,
+      "netContextAdjustment": 4,
+      "contextFlags": [
+        "No official website or online presence mentioned",
+        "Team structure or reporting line described",
+        "Qualifications section present"
+      ],
+      "originalLength": 6313,
+      "cleanedLength": 6313,
+      "wordCount": 856,
+      "hasEmail": false,
+      "hasFreeEmail": false,
+      "hasPhone": false,
+      "hasURL": false,
+      "hasSalary": true,
+      "hasLocation": true,
+      "hasCompanyName": true,
+      "analysisTimestamp": "2026-05-10T05:11:51.384Z"
+    },
+    "originalText": "Job Application for AI Tutor - Software Engineering Specialist at xAI \n\n \n\n \n\n Back to jobs \n\nAI Tutor - Software Engineering Specialist\n\n \nRemote\n\n Apply \n\n ABOUT xAI \n\n xAI’s mission is to create AI systems that can accurately understand the universe and aid humanity in its pursuit of knowledge. Our team is small, highly motivated, and focused on engineering excellence. This organization is for individuals who appreciate challenging themselves and thrive on curiosity. We operate with a flat organizational structure. All employees are expected to be hands-on and to contribute directly to the company’s mission. Leadership is given to those wh"
+  },
+  {
+    "id": "anal_1778389833826",
+    "timestamp": "2026-05-10T05:10:33.827Z",
+    "jobTitle": "Careers | Render",
+    "source": "URL",
+    "status": "low_concern",
+    "statusLabel": "🟢 LOW CONCERN",
+    "riskScore": 10,
+    "legitimacyScore": 90,
+    "jobStatus": "Unknown",
+    "jobStatusMeta": {
+      "color": "#d1d5db",
+      "icon": "❓",
+      "badge": "Status Unknown"
+    },
+    "isAcceptingApplications": true,
+    "jobStatusConfidence": "low",
+    "redFlags": [
+      "Requests sensitive financial or identity documents prematurely"
+    ],
+    "positiveIndicators": [
+      "Mentions standard professional benefits package",
+      "Specifies paid time off benefits",
+      "Offers equity or stock options (typical of legitimate companies)"
+    ],
+    "explanation": "This posting appears relatively safe — 1 red flag was detected. Multiple positive signals (3) indicate professional legitimacy. Always verify company information independently before accepting any offer.",
+    "recommendation": "✓ APPEARS LEGITIMATE. Conduct standard due diligence: confirm the company website, read reviews, and verify the recruiter on LinkedIn.",
+    "actionItems": [
+      "🔍 Verify the company on its official website — search for it independently, don't use links in the posting",
+      "💼 Find the company on LinkedIn and check whether employees list it on their profiles",
+      "🔎 Paste the job title + key phrases in quotes into Google to detect copy-paste scam postings",
+      "⭐ Read company reviews on Glassdoor, Indeed, and Google before accepting any offer",
+      "🤝 Contact the company directly through its official website to confirm this posting is genuine",
+      "❌ Never pay for training, equipment, starter kits, or background checks before your first day of work"
+    ],
+    "metadata": {
+      "redFlagCount": 1,
+      "positiveCount": 3,
+      "contextPenalty": 0,
+      "contextBonus": 0,
+      "netContextAdjustment": 0,
+      "contextFlags": [],
+      "originalLength": 4771,
+      "cleanedLength": 4771,
+      "wordCount": 685,
+      "hasEmail": false,
+      "hasFreeEmail": false,
+      "hasPhone": false,
+      "hasURL": false,
+      "hasSalary": true,
+      "hasLocation": true,
+      "hasCompanyName": true,
+      "analysisTimestamp": "2026-05-10T05:10:33.825Z"
+    },
+    "originalText": "Careers | Render \n \n \n \n\nWe&#x27;re removing seat fees and making pricing better for fast-growing teams \n Learn more \n \n\n Careers \n\n Evolve the cloud. Elevate your craft. \n\n \nWe’re working to empower every developer and business to move fast and focus on what matters most to them. Render is on an ambitious, long-term journey — and we’d love for you to join us.\n \n\n Explore open roles \n\n \n\n \n\n \n\n \n\n \n\n \n\n \n\n \n\nOur operating principles\n\nThese underlying values inform how we make decisions, partner with one another, and ultimately serve our users. They represent the types of attributes and behaviors we value in each other and continuously aspire "
+  },
+  {
+    "id": "anal_1778389798017",
+    "timestamp": "2026-05-10T05:09:58.017Z",
+    "jobTitle": "URL Job Posting",
+    "source": "URL",
+    "status": "caution",
+    "statusLabel": "🔵 CAUTION ADVISED",
+    "riskScore": 20,
+    "legitimacyScore": 80,
+    "jobStatus": "Unknown",
+    "jobStatusMeta": {
+      "color": "#d1d5db",
+      "icon": "❓",
+      "badge": "Status Unknown"
+    },
+    "isAcceptingApplications": true,
+    "jobStatusConfidence": "low",
+    "redFlags": [],
+    "positiveIndicators": [],
+    "explanation": "This posting has 0 minor concerns. Context flags: Very short description for a remote/entry-level posting. Standard due diligence is recommended.",
+    "recommendation": "✓ POTENTIALLY LEGITIMATE. Verify the company on Glassdoor and LinkedIn, and confirm job details through the official company website.",
+    "actionItems": [
+      "🔍 Verify the company on its official website — search for it independently, don't use links in the posting",
+      "💼 Find the company on LinkedIn and check whether employees list it on their profiles",
+      "🔎 Paste the job title + key phrases in quotes into Google to detect copy-paste scam postings",
+      "⭐ Read company reviews on Glassdoor, Indeed, and Google before accepting any offer",
+      "🤝 Contact the company directly through its official website to confirm this posting is genuine",
+      "❌ Never pay for training, equipment, starter kits, or background checks before your first day of work"
+    ],
+    "metadata": {
+      "redFlagCount": 0,
+      "positiveCount": 0,
+      "contextPenalty": 20,
+      "contextBonus": 0,
+      "netContextAdjustment": 20,
+      "contextFlags": [
+        "Very short description for a remote/entry-level posting"
+      ],
+      "originalLength": 103,
+      "cleanedLength": 103,
+      "wordCount": 8,
+      "hasEmail": false,
+      "hasFreeEmail": false,
+      "hasPhone": false,
+      "hasURL": true,
+      "hasSalary": false,
+      "hasLocation": true,
+      "hasCompanyName": false,
+      "analysisTimestamp": "2026-05-10T05:09:58.013Z"
+    },
+    "originalText": "Job posting URL: https://x.ai/careers/open-roles?location=remote\nDomain: x.ai\nPath: /careers/open-roles"
+  },
+  {
+    "id": "anal_1778368298159",
+    "timestamp": "2026-05-09T23:11:38.159Z",
+    "jobTitle": "Customer service",
+    "source": "Email",
+    "status": "caution",
+    "statusLabel": "🔵 CAUTION ADVISED",
+    "riskScore": 34,
+    "legitimacyScore": 66,
+    "jobStatus": "Unknown",
+    "jobStatusMeta": {
+      "color": "#d1d5db",
+      "icon": "❓",
+      "badge": "Status Unknown"
+    },
+    "isAcceptingApplications": true,
+    "jobStatusConfidence": "low",
+    "redFlags": [],
+    "positiveIndicators": [],
+    "explanation": "This posting has 0 minor concerns. Context flags: No official website or online presence mentioned; Very short description for a remote/entry-level posting. Standard due diligence is recommended.",
+    "recommendation": "✓ POTENTIALLY LEGITIMATE. Verify the company on Glassdoor and LinkedIn, and confirm job details through the official company website.",
+    "actionItems": [
+      "🔍 Verify the company on its official website — search for it independently, don't use links in the posting",
+      "💼 Find the company on LinkedIn and check whether employees list it on their profiles",
+      "🔎 Paste the job title + key phrases in quotes into Google to detect copy-paste scam postings",
+      "⭐ Read company reviews on Glassdoor, Indeed, and Google before accepting any offer",
+      "🤝 Contact the company directly through its official website to confirm this posting is genuine",
+      "❌ Never pay for training, equipment, starter kits, or background checks before your first day of work"
+    ],
+    "metadata": {
+      "redFlagCount": 0,
+      "positiveCount": 0,
+      "contextPenalty": 34,
+      "contextBonus": 0,
+      "netContextAdjustment": 34,
+      "contextFlags": [
+        "No official website or online presence mentioned",
+        "Very short description for a remote/entry-level posting"
+      ],
+      "originalLength": 19,
+      "cleanedLength": 19,
+      "wordCount": 3,
+      "hasEmail": false,
+      "hasFreeEmail": false,
+      "hasPhone": false,
+      "hasURL": false,
+      "hasSalary": false,
+      "hasLocation": true,
+      "hasCompanyName": false,
+      "analysisTimestamp": "2026-05-09T23:11:38.151Z"
+    },
+    "originalText": "customer remote job"
+  },
+  {
+    "id": "anal_1778368257000",
+    "timestamp": "2026-05-09T23:10:57.000Z",
+    "jobTitle": "URL Job Posting",
+    "source": "Website",
+    "status": "low_concern",
+    "statusLabel": "🟢 LOW CONCERN",
+    "riskScore": 16,
+    "legitimacyScore": 84,
+    "jobStatus": "Unknown",
+    "jobStatusMeta": {
+      "color": "#d1d5db",
+      "icon": "❓",
+      "badge": "Status Unknown"
+    },
+    "isAcceptingApplications": true,
+    "jobStatusConfidence": "low",
+    "redFlags": [],
+    "positiveIndicators": [
+      "Contains detailed job description sections"
+    ],
+    "explanation": "This posting appears relatively safe — no red flags were detected. Always verify company information independently before accepting any offer.",
+    "recommendation": "✓ APPEARS LEGITIMATE. Conduct standard due diligence: confirm the company website, read reviews, and verify the recruiter on LinkedIn.",
+    "actionItems": [
+      "🔍 Verify the company on its official website — search for it independently, don't use links in the posting",
+      "💼 Find the company on LinkedIn and check whether employees list it on their profiles",
+      "🔎 Paste the job title + key phrases in quotes into Google to detect copy-paste scam postings",
+      "⭐ Read company reviews on Glassdoor, Indeed, and Google before accepting any offer",
+      "🤝 Contact the company directly through its official website to confirm this posting is genuine",
+      "❌ Never pay for training, equipment, starter kits, or background checks before your first day of work"
+    ],
+    "metadata": {
+      "redFlagCount": 0,
+      "positiveCount": 1,
+      "contextPenalty": 30,
+      "contextBonus": 8,
+      "netContextAdjustment": 22,
+      "contextFlags": [
+        "WhatsApp listed as sole contact channel",
+        "Industry-standard tools or platforms referenced"
+      ],
+      "originalLength": 123,
+      "cleanedLength": 123,
+      "wordCount": 14,
+      "hasEmail": false,
+      "hasFreeEmail": false,
+      "hasPhone": false,
+      "hasURL": true,
+      "hasSalary": true,
+      "hasLocation": true,
+      "hasCompanyName": false,
+      "analysisTimestamp": "2026-05-09T23:10:56.997Z"
+    },
+    "originalText": "Job from URL: https://console.groq.com/authenticate\nRemote position with high pay. Easy requirements. Contact via WhatsApp."
+  },
+  {
+    "id": "anal_1778368211252",
+    "timestamp": "2026-05-09T23:10:11.252Z",
+    "jobTitle": "URL Job Posting",
+    "source": "Website",
+    "status": "suspicious",
+    "statusLabel": "🟡 SUSPICIOUS",
+    "riskScore": 36,
+    "legitimacyScore": 64,
+    "jobStatus": "Unknown",
+    "jobStatusMeta": {
+      "color": "#d1d5db",
+      "icon": "❓",
+      "badge": "Status Unknown"
+    },
+    "isAcceptingApplications": true,
+    "jobStatusConfidence": "low",
+    "redFlags": [],
+    "positiveIndicators": [
+      "Contains detailed job description sections"
+    ],
+    "explanation": "This posting has 0 minor concerns. Context flags: WhatsApp listed as sole contact channel; Very short description for a remote/entry-level posting; Industry-standard tools or platforms referenced. Standard due diligence is recommended.",
+    "recommendation": "✓ POTENTIALLY LEGITIMATE. Verify the company on Glassdoor and LinkedIn, and confirm job details through the official company website.",
+    "actionItems": [
+      "🔍 Verify the company on its official website — search for it independently, don't use links in the posting",
+      "💼 Find the company on LinkedIn and check whether employees list it on their profiles",
+      "🔎 Paste the job title + key phrases in quotes into Google to detect copy-paste scam postings",
+      "⭐ Read company reviews on Glassdoor, Indeed, and Google before accepting any offer",
+      "🤝 Contact the company directly through its official website to confirm this posting is genuine",
+      "❌ Never pay for training, equipment, starter kits, or background checks before your first day of work"
+    ],
+    "metadata": {
+      "redFlagCount": 0,
+      "positiveCount": 1,
+      "contextPenalty": 50,
+      "contextBonus": 8,
+      "netContextAdjustment": 42,
+      "contextFlags": [
+        "WhatsApp listed as sole contact channel",
+        "Very short description for a remote/entry-level posting",
+        "Industry-standard tools or platforms referenced"
+      ],
+      "originalLength": 119,
+      "cleanedLength": 119,
+      "wordCount": 14,
+      "hasEmail": false,
+      "hasFreeEmail": false,
+      "hasPhone": false,
+      "hasURL": true,
+      "hasSalary": true,
+      "hasLocation": true,
+      "hasCompanyName": false,
+      "analysisTimestamp": "2026-05-09T23:10:11.251Z"
+    },
+    "originalText": "Job from URL: http://localhost:3000/favicon.ico\nRemote position with high pay. Easy requirements. Contact via WhatsApp."
+  },
+  {
+    "id": "anal_1778368192413",
+    "timestamp": "2026-05-09T23:09:52.413Z",
+    "jobTitle": "URL Job Posting",
+    "source": "Website",
+    "status": "legitimate",
+    "statusLabel": "✅ LIKELY LEGITIMATE",
+    "riskScore": 2,
+    "legitimacyScore": 98,
+    "jobStatus": "Unknown",
+    "jobStatusMeta": {
+      "color": "#d1d5db",
+      "icon": "❓",
+      "badge": "Status Unknown"
+    },
+    "isAcceptingApplications": true,
+    "jobStatusConfidence": "low",
+    "redFlags": [],
+    "positiveIndicators": [
+      "Contains detailed job description sections"
+    ],
+    "explanation": "This posting appears relatively safe — no red flags were detected. Always verify company information independently before accepting any offer.",
+    "recommendation": "✓ APPEARS LEGITIMATE. Conduct standard due diligence: confirm the company website, read reviews, and verify the recruiter on LinkedIn.",
+    "actionItems": [
+      "🔍 Verify the company on its official website — search for it independently, don't use links in the posting",
+      "💼 Find the company on LinkedIn and check whether employees list it on their profiles",
+      "🔎 Paste the job title + key phrases in quotes into Google to detect copy-paste scam postings",
+      "⭐ Read company reviews on Glassdoor, Indeed, and Google before accepting any offer",
+      "🤝 Contact the company directly through its official website to confirm this posting is genuine",
+      "❌ Never pay for training, equipment, starter kits, or background checks before your first day of work"
+    ],
+    "metadata": {
+      "redFlagCount": 0,
+      "positiveCount": 1,
+      "contextPenalty": 30,
+      "contextBonus": 22,
+      "netContextAdjustment": 8,
+      "contextFlags": [
+        "WhatsApp listed as sole contact channel",
+        "Industry-standard tools or platforms referenced",
+        "Listed on known legitimate ATS or job platform"
+      ],
+      "originalLength": 152,
+      "cleanedLength": 152,
+      "wordCount": 14,
+      "hasEmail": false,
+      "hasFreeEmail": false,
+      "hasPhone": false,
+      "hasURL": true,
+      "hasSalary": true,
+      "hasLocation": true,
+      "hasCompanyName": false,
+      "analysisTimestamp": "2026-05-09T23:09:52.411Z"
+    },
+    "originalText": "Job from URL: https://jobs.ashbyhq.com/scam/558f18ed-c98c-4928-aa2b-2f9e297eea42\nRemote position with high pay. Easy requirements. Contact via WhatsApp."
+  },
+  {
+    "id": "anal_1778368179493",
+    "timestamp": "2026-05-09T23:09:39.493Z",
+    "jobTitle": "URL Job Posting",
+    "source": "Website",
+    "status": "legitimate",
+    "statusLabel": "✅ LIKELY LEGITIMATE",
+    "riskScore": 2,
+    "legitimacyScore": 98,
+    "jobStatus": "Unknown",
+    "jobStatusMeta": {
+      "color": "#d1d5db",
+      "icon": "❓",
+      "badge": "Status Unknown"
+    },
+    "isAcceptingApplications": true,
+    "jobStatusConfidence": "low",
+    "redFlags": [],
+    "positiveIndicators": [
+      "Contains detailed job description sections"
+    ],
+    "explanation": "This posting appears relatively safe — no red flags were detected. Always verify company information independently before accepting any offer.",
+    "recommendation": "✓ APPEARS LEGITIMATE. Conduct standard due diligence: confirm the company website, read reviews, and verify the recruiter on LinkedIn.",
+    "actionItems": [
+      "🔍 Verify the company on its official website — search for it independently, don't use links in the posting",
+      "💼 Find the company on LinkedIn and check whether employees list it on their profiles",
+      "🔎 Paste the job title + key phrases in quotes into Google to detect copy-paste scam postings",
+      "⭐ Read company reviews on Glassdoor, Indeed, and Google before accepting any offer",
+      "🤝 Contact the company directly through its official website to confirm this posting is genuine",
+      "❌ Never pay for training, equipment, starter kits, or background checks before your first day of work"
+    ],
+    "metadata": {
+      "redFlagCount": 0,
+      "positiveCount": 1,
+      "contextPenalty": 30,
+      "contextBonus": 22,
+      "netContextAdjustment": 8,
+      "contextFlags": [
+        "WhatsApp listed as sole contact channel",
+        "Industry-standard tools or platforms referenced",
+        "Listed on known legitimate ATS or job platform"
+      ],
+      "originalLength": 154,
+      "cleanedLength": 154,
+      "wordCount": 14,
+      "hasEmail": false,
+      "hasFreeEmail": false,
+      "hasPhone": false,
+      "hasURL": true,
+      "hasSalary": true,
+      "hasLocation": true,
+      "hasCompanyName": false,
+      "analysisTimestamp": "2026-05-09T23:09:39.489Z"
+    },
+    "originalText": "Job from URL: https://jobs.ashbyhq.com/render/558f18ed-c98c-4928-aa2b-2f9e297eea42\nRemote position with high pay. Easy requirements. Contact via WhatsApp."
+  },
+  {
+    "id": "anal_1778368037905",
+    "timestamp": "2026-05-09T23:07:17.905Z",
+    "jobTitle": "URL Job Posting",
+    "source": "Website",
+    "status": "low_concern",
+    "statusLabel": "🟢 LOW CONCERN",
+    "riskScore": 16,
+    "legitimacyScore": 84,
+    "jobStatus": "Unknown",
+    "jobStatusMeta": {
+      "color": "#d1d5db",
+      "icon": "❓",
+      "badge": "Status Unknown"
+    },
+    "isAcceptingApplications": true,
+    "jobStatusConfidence": "low",
+    "redFlags": [],
+    "positiveIndicators": [
+      "Contains detailed job description sections"
+    ],
+    "explanation": "This posting appears relatively safe — no red flags were detected. Always verify company information independently before accepting any offer.",
+    "recommendation": "✓ APPEARS LEGITIMATE. Conduct standard due diligence: confirm the company website, read reviews, and verify the recruiter on LinkedIn.",
+    "actionItems": [
+      "🔍 Verify the company on its official website — search for it independently, don't use links in the posting",
+      "💼 Find the company on LinkedIn and check whether employees list it on their profiles",
+      "🔎 Paste the job title + key phrases in quotes into Google to detect copy-paste scam postings",
+      "⭐ Read company reviews on Glassdoor, Indeed, and Google before accepting any offer",
+      "🤝 Contact the company directly through its official website to confirm this posting is genuine",
+      "❌ Never pay for training, equipment, starter kits, or background checks before your first day of work"
+    ],
+    "metadata": {
+      "redFlagCount": 0,
+      "positiveCount": 1,
+      "contextPenalty": 30,
+      "contextBonus": 8,
+      "netContextAdjustment": 22,
+      "contextFlags": [
+        "WhatsApp listed as sole contact channel",
+        "Industry-standard tools or platforms referenced"
+      ],
+      "originalLength": 133,
+      "cleanedLength": 133,
+      "wordCount": 14,
+      "hasEmail": false,
+      "hasFreeEmail": false,
+      "hasPhone": false,
+      "hasURL": true,
+      "hasSalary": true,
+      "hasLocation": true,
+      "hasCompanyName": false,
+      "analysisTimestamp": "2026-05-09T23:07:17.904Z"
+    },
+    "originalText": "Job from URL: https://x.ai/careers/open-roles?location=remote\nRemote position with high pay. Easy requirements. Contact via WhatsApp."
+  },
+  {
+    "id": "anal_1778368018196",
+    "timestamp": "2026-05-09T23:06:58.196Z",
+    "jobTitle": "URL Job Posting",
+    "source": "Website",
+    "status": "legitimate",
+    "statusLabel": "✅ LIKELY LEGITIMATE",
+    "riskScore": 2,
+    "legitimacyScore": 98,
+    "jobStatus": "Unknown",
+    "jobStatusMeta": {
+      "color": "#d1d5db",
+      "icon": "❓",
+      "badge": "Status Unknown"
+    },
+    "isAcceptingApplications": true,
+    "jobStatusConfidence": "low",
+    "redFlags": [],
+    "positiveIndicators": [
+      "Contains detailed job description sections"
+    ],
+    "explanation": "This posting appears relatively safe — no red flags were detected. Always verify company information independently before accepting any offer.",
+    "recommendation": "✓ APPEARS LEGITIMATE. Conduct standard due diligence: confirm the company website, read reviews, and verify the recruiter on LinkedIn.",
+    "actionItems": [
+      "🔍 Verify the company on its official website — search for it independently, don't use links in the posting",
+      "💼 Find the company on LinkedIn and check whether employees list it on their profiles",
+      "🔎 Paste the job title + key phrases in quotes into Google to detect copy-paste scam postings",
+      "⭐ Read company reviews on Glassdoor, Indeed, and Google before accepting any offer",
+      "🤝 Contact the company directly through its official website to confirm this posting is genuine",
+      "❌ Never pay for training, equipment, starter kits, or background checks before your first day of work"
+    ],
+    "metadata": {
+      "redFlagCount": 0,
+      "positiveCount": 1,
+      "contextPenalty": 30,
+      "contextBonus": 22,
+      "netContextAdjustment": 8,
+      "contextFlags": [
+        "WhatsApp listed as sole contact channel",
+        "Industry-standard tools or platforms referenced",
+        "Listed on known legitimate ATS or job platform"
+      ],
+      "originalLength": 138,
+      "cleanedLength": 138,
+      "wordCount": 14,
+      "hasEmail": false,
+      "hasFreeEmail": false,
+      "hasPhone": true,
+      "hasURL": true,
+      "hasSalary": true,
+      "hasLocation": true,
+      "hasCompanyName": false,
+      "analysisTimestamp": "2026-05-09T23:06:58.195Z"
+    },
+    "originalText": "Job from URL: https://job-boards.greenhouse.io/xai/jobs/5063490007\nRemote position with high pay. Easy requirements. Contact via WhatsApp."
+  },
+  {
+    "id": "anal_1778367970609",
+    "timestamp": "2026-05-09T23:06:10.609Z",
+    "jobTitle": "URL Job Posting",
+    "source": "Website",
+    "status": "low_concern",
+    "statusLabel": "🟢 LOW CONCERN",
+    "riskScore": 16,
+    "legitimacyScore": 84,
+    "jobStatus": "Unknown",
+    "jobStatusMeta": {
+      "color": "#d1d5db",
+      "icon": "❓",
+      "badge": "Status Unknown"
+    },
+    "isAcceptingApplications": true,
+    "jobStatusConfidence": "low",
+    "redFlags": [],
+    "positiveIndicators": [
+      "Contains detailed job description sections"
+    ],
+    "explanation": "This posting appears relatively safe — no red flags were detected. Always verify company information independently before accepting any offer.",
+    "recommendation": "✓ APPEARS LEGITIMATE. Conduct standard due diligence: confirm the company website, read reviews, and verify the recruiter on LinkedIn.",
+    "actionItems": [
+      "🔍 Verify the company on its official website — search for it independently, don't use links in the posting",
+      "💼 Find the company on LinkedIn and check whether employees list it on their profiles",
+      "🔎 Paste the job title + key phrases in quotes into Google to detect copy-paste scam postings",
+      "⭐ Read company reviews on Glassdoor, Indeed, and Google before accepting any offer",
+      "🤝 Contact the company directly through its official website to confirm this posting is genuine",
+      "❌ Never pay for training, equipment, starter kits, or background checks before your first day of work"
+    ],
+    "metadata": {
+      "redFlagCount": 0,
+      "positiveCount": 1,
+      "contextPenalty": 30,
+      "contextBonus": 8,
+      "netContextAdjustment": 22,
+      "contextFlags": [
+        "WhatsApp listed as sole contact channel",
+        "Industry-standard tools or platforms referenced"
+      ],
+      "originalLength": 133,
+      "cleanedLength": 133,
+      "wordCount": 14,
+      "hasEmail": false,
+      "hasFreeEmail": false,
+      "hasPhone": false,
+      "hasURL": true,
+      "hasSalary": true,
+      "hasLocation": true,
+      "hasCompanyName": false,
+      "analysisTimestamp": "2026-05-09T23:06:10.607Z"
+    },
+    "originalText": "Job from URL: https://x.ai/careers/open-roles?location=remote\nRemote position with high pay. Easy requirements. Contact via WhatsApp."
+  },
+  {
+    "id": "anal_1778367274309",
+    "timestamp": "2026-05-09T22:54:34.309Z",
+    "jobTitle": "URL Job Posting",
+    "source": "Website",
+    "status": "caution",
+    "statusLabel": "🔵 CAUTION ADVISED",
+    "riskScore": 31,
+    "legitimacyScore": 69,
+    "jobStatus": "Unknown",
+    "isAcceptingApplications": true,
+    "redFlags": [],
+    "positiveIndicators": [
+      "Contains detailed job description sections"
+    ],
+    "explanation": "This posting has 0 minor concerns that warrant additional verification. Conduct standard due diligence before proceeding.",
+    "recommendation": "✓ POTENTIALLY LEGITIMATE but verify the company, check reviews on Glassdoor, and confirm job details independently.",
+    "actionItems": [
+      "🔍 Verify the company on their official website (search independently, don't use links in posting)",
+      "💼 Check the company LinkedIn page and verify employees work there",
+      "🔎 Google the exact job posting text in quotes to find copied scam postings",
+      "⭐ Read company reviews on Glassdoor, Indeed, and Google Reviews",
+      "🤝 Contact the company directly through their official website to confirm the posting",
+      "❌ Never pay for training, equipment, or background checks before starting work"
+    ],
+    "metadata": {
+      "redFlagCount": 0,
+      "positiveCount": 1,
+      "contextPenalty": 43,
+      "contextBonus": 6,
+      "netContextAdjustment": 37,
+      "contextFlags": [
+        "WhatsApp communication mentioned",
+        "Suspiciously brief job description for remote work",
+        "Industry-standard tools mentioned"
+      ],
+      "originalLength": 133,
+      "cleanedLength": 133,
+      "wordCount": 14,
+      "hasEmail": false,
+      "hasPhone": false,
+      "hasURL": true,
+      "hasSalary": false,
+      "hasLocation": true,
+      "hasCompanyName": false,
+      "jobStatusConfidence": "low",
+      "analysisTimestamp": "2026-05-09T22:54:34.308Z"
+    },
+    "originalText": "Job from URL: https://x.ai/careers/open-roles?location=remote\nRemote position with high pay. Easy requirements. Contact via WhatsApp."
+  },
+  {
+    "id": "anal_1778367226906",
+    "timestamp": "2026-05-09T22:53:46.906Z",
+    "jobTitle": "URL Job Posting",
+    "source": "Website",
+    "status": "caution",
+    "statusLabel": "🔵 CAUTION ADVISED",
+    "riskScore": 31,
+    "legitimacyScore": 69,
+    "jobStatus": "Unknown",
+    "isAcceptingApplications": true,
+    "redFlags": [],
+    "positiveIndicators": [
+      "Contains detailed job description sections"
+    ],
+    "explanation": "This posting has 0 minor concerns that warrant additional verification. Conduct standard due diligence before proceeding.",
+    "recommendation": "✓ POTENTIALLY LEGITIMATE but verify the company, check reviews on Glassdoor, and confirm job details independently.",
+    "actionItems": [
+      "🔍 Verify the company on their official website (search independently, don't use links in posting)",
+      "💼 Check the company LinkedIn page and verify employees work there",
+      "🔎 Google the exact job posting text in quotes to find copied scam postings",
+      "⭐ Read company reviews on Glassdoor, Indeed, and Google Reviews",
+      "🤝 Contact the company directly through their official website to confirm the posting",
+      "❌ Never pay for training, equipment, or background checks before starting work"
+    ],
+    "metadata": {
+      "redFlagCount": 0,
+      "positiveCount": 1,
+      "contextPenalty": 43,
+      "contextBonus": 6,
+      "netContextAdjustment": 37,
+      "contextFlags": [
+        "WhatsApp communication mentioned",
+        "Suspiciously brief job description for remote work",
+        "Industry-standard tools mentioned"
+      ],
+      "originalLength": 133,
+      "cleanedLength": 133,
+      "wordCount": 14,
+      "hasEmail": false,
+      "hasPhone": false,
+      "hasURL": true,
+      "hasSalary": false,
+      "hasLocation": true,
+      "hasCompanyName": false,
+      "jobStatusConfidence": "low",
+      "analysisTimestamp": "2026-05-09T22:53:46.898Z"
+    },
+    "originalText": "Job from URL: https://x.ai/careers/open-roles?location=remote\nRemote position with high pay. Easy requirements. Contact via WhatsApp."
+  },
+  {
+    "id": "anal_1778367080388",
+    "timestamp": "2026-05-09T22:51:20.388Z",
+    "jobTitle": "URL Job Posting",
+    "source": "Website",
+    "status": "caution",
+    "statusLabel": "🔵 CAUTION ADVISED",
+    "riskScore": 31,
+    "legitimacyScore": 69,
+    "jobStatus": "Unknown",
+    "isAcceptingApplications": true,
+    "redFlags": [],
+    "positiveIndicators": [
+      "Contains detailed job description sections"
+    ],
+    "explanation": "This posting has 0 minor concerns that warrant additional verification. Conduct standard due diligence before proceeding.",
+    "recommendation": "✓ POTENTIALLY LEGITIMATE but verify the company, check reviews on Glassdoor, and confirm job details independently.",
+    "actionItems": [
+      "🔍 Verify the company on their official website (search independently, don't use links in posting)",
+      "💼 Check the company LinkedIn page and verify employees work there",
+      "🔎 Google the exact job posting text in quotes to find copied scam postings",
+      "⭐ Read company reviews on Glassdoor, Indeed, and Google Reviews",
+      "🤝 Contact the company directly through their official website to confirm the posting",
+      "❌ Never pay for training, equipment, or background checks before starting work"
+    ],
+    "metadata": {
+      "redFlagCount": 0,
+      "positiveCount": 1,
+      "contextPenalty": 43,
+      "contextBonus": 6,
+      "netContextAdjustment": 37,
+      "contextFlags": [
+        "WhatsApp communication mentioned",
+        "Suspiciously brief job description for remote work",
+        "Industry-standard tools mentioned"
+      ],
+      "originalLength": 133,
+      "cleanedLength": 133,
+      "wordCount": 14,
+      "hasEmail": false,
+      "hasPhone": false,
+      "hasURL": true,
+      "hasSalary": false,
+      "hasLocation": true,
+      "hasCompanyName": false,
+      "jobStatusConfidence": "low",
+      "analysisTimestamp": "2026-05-09T22:51:20.381Z"
+    },
+    "originalText": "Job from URL: https://x.ai/careers/open-roles?location=remote\nRemote position with high pay. Easy requirements. Contact via WhatsApp."
+  },
+  {
+    "id": "anal_1778366738589",
+    "timestamp": "2026-05-09T22:45:38.589Z",
+    "jobTitle": "URL Job Posting",
+    "source": "Website",
+    "status": "caution",
+    "statusLabel": "🔵 CAUTION ADVISED",
+    "riskScore": 31,
+    "legitimacyScore": 69,
+    "jobStatus": "Unknown",
+    "isAcceptingApplications": true,
+    "redFlags": [],
+    "positiveIndicators": [
+      "Contains detailed job description sections"
+    ],
+    "explanation": "This posting has 0 minor concerns that warrant additional verification. Conduct standard due diligence before proceeding.",
+    "recommendation": "✓ POTENTIALLY LEGITIMATE but verify the company, check reviews on Glassdoor, and confirm job details independently.",
+    "actionItems": [
+      "🔍 Verify the company on their official website (search independently, don't use links in posting)",
+      "💼 Check the company LinkedIn page and verify employees work there",
+      "🔎 Google the exact job posting text in quotes to find copied scam postings",
+      "⭐ Read company reviews on Glassdoor, Indeed, and Google Reviews",
+      "🤝 Contact the company directly through their official website to confirm the posting",
+      "❌ Never pay for training, equipment, or background checks before starting work"
+    ],
+    "metadata": {
+      "redFlagCount": 0,
+      "positiveCount": 1,
+      "contextPenalty": 43,
+      "contextBonus": 6,
+      "netContextAdjustment": 37,
+      "contextFlags": [
+        "WhatsApp communication mentioned",
+        "Suspiciously brief job description for remote work",
+        "Industry-standard tools mentioned"
+      ],
+      "originalLength": 133,
+      "cleanedLength": 133,
+      "wordCount": 14,
+      "hasEmail": false,
+      "hasPhone": false,
+      "hasURL": true,
+      "hasSalary": false,
+      "hasLocation": true,
+      "hasCompanyName": false,
+      "jobStatusConfidence": "low",
+      "analysisTimestamp": "2026-05-09T22:45:38.588Z"
+    },
+    "originalText": "Job from URL: https://x.ai/careers/open-roles?location=remote\nRemote position with high pay. Easy requirements. Contact via WhatsApp."
+  },
+  {
+    "id": "anal_1778366686664",
+    "timestamp": "2026-05-09T22:44:46.664Z",
+    "jobTitle": "URL Job Posting",
+    "source": "Website",
+    "status": "caution",
+    "statusLabel": "🔵 CAUTION ADVISED",
+    "riskScore": 31,
+    "legitimacyScore": 69,
+    "jobStatus": "Unknown",
+    "isAcceptingApplications": true,
+    "redFlags": [],
+    "positiveIndicators": [
+      "Contains detailed job description sections"
+    ],
+    "explanation": "This posting has 0 minor concerns that warrant additional verification. Conduct standard due diligence before proceeding.",
+    "recommendation": "✓ POTENTIALLY LEGITIMATE but verify the company, check reviews on Glassdoor, and confirm job details independently.",
+    "actionItems": [
+      "🔍 Verify the company on their official website (search independently, don't use links in posting)",
+      "💼 Check the company LinkedIn page and verify employees work there",
+      "🔎 Google the exact job posting text in quotes to find copied scam postings",
+      "⭐ Read company reviews on Glassdoor, Indeed, and Google Reviews",
+      "🤝 Contact the company directly through their official website to confirm the posting",
+      "❌ Never pay for training, equipment, or background checks before starting work"
+    ],
+    "metadata": {
+      "redFlagCount": 0,
+      "positiveCount": 1,
+      "contextPenalty": 43,
+      "contextBonus": 6,
+      "netContextAdjustment": 37,
+      "contextFlags": [
+        "WhatsApp communication mentioned",
+        "Suspiciously brief job description for remote work",
+        "Industry-standard tools mentioned"
+      ],
+      "originalLength": 106,
+      "cleanedLength": 106,
+      "wordCount": 14,
+      "hasEmail": false,
+      "hasPhone": false,
+      "hasURL": true,
+      "hasSalary": false,
+      "hasLocation": true,
+      "hasCompanyName": false,
+      "jobStatusConfidence": "low",
+      "analysisTimestamp": "2026-05-09T22:44:46.662Z"
+    },
+    "originalText": "Job from URL: https://x.ai/careers\nRemote position with high pay. Easy requirements. Contact via WhatsApp."
+  },
+  {
+    "id": "anal_1778366166953",
+    "timestamp": "2026-05-09T22:36:06.953Z",
+    "jobTitle": "URL Job Posting",
+    "source": "Website",
+    "status": "suspicious",
+    "statusLabel": "🟡 SUSPICIOUS",
+    "riskScore": 46,
+    "legitimacyScore": 54,
+    "jobStatus": "Unknown",
+    "isAcceptingApplications": true,
+    "redFlags": [],
+    "positiveIndicators": [
+      "Contains detailed job description sections"
+    ],
+    "explanation": "This posting shows 0 concerning indicators requiring careful verification. Proceed only with thorough independent research.",
+    "recommendation": "⚡ PROCEED WITH EXTREME CAUTION. Verify the company through independent sources. Never pay any fees upfront.",
+    "actionItems": [
+      "🔍 Verify the company on their official website (search independently, don't use links in posting)",
+      "💼 Check the company LinkedIn page and verify employees work there",
+      "🔎 Google the exact job posting text in quotes to find copied scam postings",
+      "⚠️ Search \"[company name] scam\" on Google and check ScamPulse, Ripoff Report",
+      "❌ Never pay for training, equipment, or background checks before starting work"
+    ],
+    "metadata": {
+      "redFlagCount": 0,
+      "positiveCount": 1,
+      "contextPenalty": 58,
+      "contextBonus": 6,
+      "netContextAdjustment": 52,
+      "contextFlags": [
+        "WhatsApp communication mentioned",
+        "No official website or online presence mentioned",
+        "Suspiciously brief job description for remote work",
+        "Industry-standard tools mentioned"
+      ],
+      "originalLength": 106,
+      "cleanedLength": 106,
+      "wordCount": 14,
+      "hasEmail": false,
+      "hasPhone": false,
+      "hasURL": true,
+      "hasSalary": false,
+      "hasLocation": true,
+      "hasCompanyName": false,
+      "jobStatusConfidence": "low",
+      "analysisTimestamp": "2026-05-09T22:36:06.952Z"
+    },
+    "originalText": "Job from URL: https://x.ai/careers\nRemote position with high pay. Easy requirements. Contact via WhatsApp."
+  },
+  {
+    "id": "anal_1778366143009",
+    "timestamp": "2026-05-09T22:35:43.009Z",
+    "jobTitle": "URL Job Posting",
+    "source": "Website",
+    "status": "suspicious",
+    "statusLabel": "🟡 SUSPICIOUS",
+    "riskScore": 46,
+    "legitimacyScore": 54,
+    "jobStatus": "Unknown",
+    "isAcceptingApplications": true,
+    "redFlags": [],
+    "positiveIndicators": [
+      "Contains detailed job description sections"
+    ],
+    "explanation": "This posting shows 0 concerning indicators requiring careful verification. Proceed only with thorough independent research.",
+    "recommendation": "⚡ PROCEED WITH EXTREME CAUTION. Verify the company through independent sources. Never pay any fees upfront.",
+    "actionItems": [
+      "🔍 Verify the company on their official website (search independently, don't use links in posting)",
+      "💼 Check the company LinkedIn page and verify employees work there",
+      "🔎 Google the exact job posting text in quotes to find copied scam postings",
+      "⚠️ Search \"[company name] scam\" on Google and check ScamPulse, Ripoff Report",
+      "❌ Never pay for training, equipment, or background checks before starting work"
+    ],
+    "metadata": {
+      "redFlagCount": 0,
+      "positiveCount": 1,
+      "contextPenalty": 58,
+      "contextBonus": 6,
+      "netContextAdjustment": 52,
+      "contextFlags": [
+        "WhatsApp communication mentioned",
+        "No official website or online presence mentioned",
+        "Suspiciously brief job description for remote work",
+        "Industry-standard tools mentioned"
+      ],
+      "originalLength": 133,
+      "cleanedLength": 133,
+      "wordCount": 14,
+      "hasEmail": false,
+      "hasPhone": false,
+      "hasURL": true,
+      "hasSalary": false,
+      "hasLocation": true,
+      "hasCompanyName": false,
+      "jobStatusConfidence": "low",
+      "analysisTimestamp": "2026-05-09T22:35:43.008Z"
+    },
+    "originalText": "Job from URL: https://x.ai/careers/open-roles?location=remote\nRemote position with high pay. Easy requirements. Contact via WhatsApp."
+  },
+  {
+    "id": "anal_1778366094146",
+    "timestamp": "2026-05-09T22:34:54.146Z",
+    "jobTitle": "URL Job Posting",
+    "source": "Website",
+    "status": "caution",
+    "statusLabel": "🔵 CAUTION ADVISED",
+    "riskScore": 31,
+    "legitimacyScore": 69,
+    "jobStatus": "Unknown",
+    "isAcceptingApplications": true,
+    "redFlags": [],
+    "positiveIndicators": [
+      "Contains detailed job description sections"
+    ],
+    "explanation": "This posting has 0 minor concerns that warrant additional verification. Conduct standard due diligence before proceeding.",
+    "recommendation": "✓ POTENTIALLY LEGITIMATE but verify the company, check reviews on Glassdoor, and confirm job details independently.",
+    "actionItems": [
+      "🔍 Verify the company on their official website (search independently, don't use links in posting)",
+      "💼 Check the company LinkedIn page and verify employees work there",
+      "🔎 Google the exact job posting text in quotes to find copied scam postings",
+      "⭐ Read company reviews on Glassdoor, Indeed, and Google Reviews",
+      "🤝 Contact the company directly through their official website to confirm the posting",
+      "❌ Never pay for training, equipment, or background checks before starting work"
+    ],
+    "metadata": {
+      "redFlagCount": 0,
+      "positiveCount": 1,
+      "contextPenalty": 43,
+      "contextBonus": 6,
+      "netContextAdjustment": 37,
+      "contextFlags": [
+        "WhatsApp communication mentioned",
+        "Suspiciously brief job description for remote work",
+        "Industry-standard tools mentioned"
+      ],
+      "originalLength": 120,
+      "cleanedLength": 120,
+      "wordCount": 14,
+      "hasEmail": false,
+      "hasPhone": false,
+      "hasURL": true,
+      "hasSalary": false,
+      "hasLocation": true,
+      "hasCompanyName": false,
+      "jobStatusConfidence": "low",
+      "analysisTimestamp": "2026-05-09T22:34:54.145Z"
+    },
+    "originalText": "Job from URL: https://render.com/startups/offers\nRemote position with high pay. Easy requirements. Contact via WhatsApp."
+  },
+  {
+    "id": "anal_1778366079065",
+    "timestamp": "2026-05-09T22:34:39.065Z",
+    "jobTitle": "URL Job Posting",
+    "source": "Website",
+    "status": "suspicious",
+    "statusLabel": "🟡 SUSPICIOUS",
+    "riskScore": 46,
+    "legitimacyScore": 54,
+    "jobStatus": "Unknown",
+    "isAcceptingApplications": true,
+    "redFlags": [],
+    "positiveIndicators": [
+      "Contains detailed job description sections"
+    ],
+    "explanation": "This posting shows 0 concerning indicators requiring careful verification. Proceed only with thorough independent research.",
+    "recommendation": "⚡ PROCEED WITH EXTREME CAUTION. Verify the company through independent sources. Never pay any fees upfront.",
+    "actionItems": [
+      "🔍 Verify the company on their official website (search independently, don't use links in posting)",
+      "💼 Check the company LinkedIn page and verify employees work there",
+      "🔎 Google the exact job posting text in quotes to find copied scam postings",
+      "⚠️ Search \"[company name] scam\" on Google and check ScamPulse, Ripoff Report",
+      "❌ Never pay for training, equipment, or background checks before starting work"
+    ],
+    "metadata": {
+      "redFlagCount": 0,
+      "positiveCount": 1,
+      "contextPenalty": 58,
+      "contextBonus": 6,
+      "netContextAdjustment": 52,
+      "contextFlags": [
+        "WhatsApp communication mentioned",
+        "No official website or online presence mentioned",
+        "Suspiciously brief job description for remote work",
+        "Industry-standard tools mentioned"
+      ],
+      "originalLength": 138,
+      "cleanedLength": 138,
+      "wordCount": 14,
+      "hasEmail": false,
+      "hasPhone": true,
+      "hasURL": true,
+      "hasSalary": false,
+      "hasLocation": true,
+      "hasCompanyName": false,
+      "jobStatusConfidence": "low",
+      "analysisTimestamp": "2026-05-09T22:34:39.064Z"
+    },
+    "originalText": "Job from URL: https://job-boards.greenhouse.io/xai/jobs/5063490007\nRemote position with high pay. Easy requirements. Contact via WhatsApp."
+  },
+  {
+    "id": "anal_1778366027285",
+    "timestamp": "2026-05-09T22:33:47.285Z",
+    "jobTitle": "URL Job Posting",
+    "source": "Website",
+    "status": "suspicious",
+    "statusLabel": "🟡 SUSPICIOUS",
+    "riskScore": 46,
+    "legitimacyScore": 54,
+    "jobStatus": "Unknown",
+    "isAcceptingApplications": true,
+    "redFlags": [],
+    "positiveIndicators": [
+      "Contains detailed job description sections"
+    ],
+    "explanation": "This posting shows 0 concerning indicators requiring careful verification. Proceed only with thorough independent research.",
+    "recommendation": "⚡ PROCEED WITH EXTREME CAUTION. Verify the company through independent sources. Never pay any fees upfront.",
+    "actionItems": [
+      "🔍 Verify the company on their official website (search independently, don't use links in posting)",
+      "💼 Check the company LinkedIn page and verify employees work there",
+      "🔎 Google the exact job posting text in quotes to find copied scam postings",
+      "⚠️ Search \"[company name] scam\" on Google and check ScamPulse, Ripoff Report",
+      "❌ Never pay for training, equipment, or background checks before starting work"
+    ],
+    "metadata": {
+      "redFlagCount": 0,
+      "positiveCount": 1,
+      "contextPenalty": 58,
+      "contextBonus": 6,
+      "netContextAdjustment": 52,
+      "contextFlags": [
+        "WhatsApp communication mentioned",
+        "No official website or online presence mentioned",
+        "Suspiciously brief job description for remote work",
+        "Industry-standard tools mentioned"
+      ],
+      "originalLength": 138,
+      "cleanedLength": 138,
+      "wordCount": 14,
+      "hasEmail": false,
+      "hasPhone": true,
+      "hasURL": true,
+      "hasSalary": false,
+      "hasLocation": true,
+      "hasCompanyName": false,
+      "jobStatusConfidence": "low",
+      "analysisTimestamp": "2026-05-09T22:33:47.281Z"
+    },
+    "originalText": "Job from URL: https://job-boards.greenhouse.io/xai/jobs/5063490007\nRemote position with high pay. Easy requirements. Contact via WhatsApp."
+  },
+  {
+    "id": "anal_1778365982468",
+    "timestamp": "2026-05-09T22:33:02.468Z",
+    "jobTitle": "URL Job Posting",
+    "source": "Website",
+    "status": "suspicious",
+    "statusLabel": "🟡 SUSPICIOUS",
+    "riskScore": 46,
+    "legitimacyScore": 54,
+    "jobStatus": "Unknown",
+    "isAcceptingApplications": true,
+    "redFlags": [],
+    "positiveIndicators": [
+      "Contains detailed job description sections"
+    ],
+    "explanation": "This posting shows 0 concerning indicators requiring careful verification. Proceed only with thorough independent research.",
+    "recommendation": "⚡ PROCEED WITH EXTREME CAUTION. Verify the company through independent sources. Never pay any fees upfront.",
+    "actionItems": [
+      "🔍 Verify the company on their official website (search independently, don't use links in posting)",
+      "💼 Check the company LinkedIn page and verify employees work there",
+      "🔎 Google the exact job posting text in quotes to find copied scam postings",
+      "⚠️ Search \"[company name] scam\" on Google and check ScamPulse, Ripoff Report",
+      "❌ Never pay for training, equipment, or background checks before starting work"
+    ],
+    "metadata": {
+      "redFlagCount": 0,
+      "positiveCount": 1,
+      "contextPenalty": 58,
+      "contextBonus": 6,
+      "netContextAdjustment": 52,
+      "contextFlags": [
+        "WhatsApp communication mentioned",
+        "No official website or online presence mentioned",
+        "Suspiciously brief job description for remote work",
+        "Industry-standard tools mentioned"
+      ],
+      "originalLength": 119,
+      "cleanedLength": 119,
+      "wordCount": 14,
+      "hasEmail": false,
+      "hasPhone": false,
+      "hasURL": true,
+      "hasSalary": false,
+      "hasLocation": true,
+      "hasCompanyName": false,
+      "jobStatusConfidence": "low",
+      "analysisTimestamp": "2026-05-09T22:33:02.466Z"
+    },
+    "originalText": "Job from URL: http://localhost:3000/favicon.ico\nRemote position with high pay. Easy requirements. Contact via WhatsApp."
+  },
+  {
     "id": "anal_1778344560458",
     "timestamp": "2026-05-09T16:36:00.458Z",
     "jobTitle": "URL Job Posting",
