@@ -272,7 +272,7 @@
 
   async function fetchAnalytics() {
     try {
-      const response = await fetch('/analytics');
+      const response = await fetch('/api/analytics');
       if (!response.ok) {
         throw new Error(`HTTP ${response.status}: ${response.statusText}`);
       }
