@@ -1,30 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
-        xmlns:xhtml="http://www.w3.org/1999/xhtml">
-  <!-- ============================================= -->
-  <!-- ONLY HTML PAGES - NO STATIC FILES             -->
-  <!-- ============================================= -->
-  <!-- HOME PAGE (HIGHEST PRIORITY) -->
+        xmlns:xhtml="http://www.w3.org/1999/xhtml"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+
   <url>
     <loc>https://verifyjobs.org/</loc>
     <lastmod>2026-05-11</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://verifyjobs.org/"/>
-    <xhtml:link rel="alternate" hreflang="en-NG" href="https://verifyjobs.org/"/>
-    <xhtml:link rel="alternate" hreflang="en-GB" href="https://verifyjobs.org/"/>
-    <!-- Images are correctly attached to the page they belong on -->
-    <image:image>
-      <image:loc>https://verifyjobs.org/og-image.png</image:loc>
-      <image:title>VerifyJobs - Free Job Scam Detector</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://verifyjobs.org/logo.png</image:loc>
-      <image:title>VerifyJobs Logo</image:title>
-    </image:image>
   </url>
-  <!-- ANALYTICS DASHBOARD -->
   <url>
     <loc>https://verifyjobs.org/analytics.html</loc>
     <lastmod>2026-05-11</lastmod>
@@ -33,34 +17,38 @@
     <image:image>
       <image:loc>https://verifyjobs.org/og-image.png</image:loc>
       <image:title>VerifyJobs Analytics Dashboard</image:title>
+      <image:caption>Real-time job scam intelligence dashboard with ML metrics, A/B tests, and forecasts</image:caption>
     </image:image>
   </url>
-  <!-- ABOUT PAGE -->
   <url>
     <loc>https://verifyjobs.org/about.html</loc>
     <lastmod>2026-05-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
-  <!-- HOW IT WORKS -->
   <url>
     <loc>https://verifyjobs.org/how-it-works.html</loc>
     <lastmod>2026-05-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
-  <!-- REPORT A SCAM -->
   <url>
     <loc>https://verifyjobs.org/report-a-scam.html</loc>
     <lastmod>2026-05-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
-  <!-- PRIVACY POLICY -->
   <url>
     <loc>https://verifyjobs.org/privacy.html</loc>
     <lastmod>2026-05-11</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.4</priority>
   </url>
+  <url>
+    <loc>https://verifyjobs.org/llms.txt</loc>
+    <lastmod>2026-05-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
 </urlset>
