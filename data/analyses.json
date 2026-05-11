@@ -1,5 +1,1485 @@
 [
   {
+    "id": "anal_1778505529093",
+    "timestamp": "2026-05-11T13:18:49.093Z",
+    "jobTitle": "Data Entry",
+    "source": "Whatsapp",
+    "status": "legitimate",
+    "statusLabel": "✅ LIKELY LEGITIMATE",
+    "riskScore": 0,
+    "legitimacyScore": 100,
+    "jobStatus": "Possibly Stale",
+    "jobStatusMeta": {
+      "color": "#ea580c",
+      "icon": "🟠",
+      "badge": "Possibly Stale — Verify Before Applying"
+    },
+    "isAcceptingApplications": true,
+    "jobStatusConfidence": "low",
+    "jobStatusInferred": true,
+    "freshness": {
+      "score": 37,
+      "staleness": 63,
+      "label": "Possibly Stale — Verify Before Applying",
+      "signals": [
+        {
+          "signal": "Very short posting (1 words) — possible placeholder",
+          "weight": 25
+        }
+      ]
+    },
+    "redFlags": [],
+    "positiveIndicators": [],
+    "explanation": "This posting appears relatively safe — no red flags were detected. Always verify company information independently before accepting any offer.",
+    "recommendation": "✓ APPEARS LEGITIMATE. Conduct standard due diligence: confirm the company website, read reviews, and verify the recruiter on LinkedIn.",
+    "actionItems": [
+      "🔍 Verify the company on its official website — search for it independently, don't use links in the posting",
+      "💼 Find the company on LinkedIn and check whether employees list it on their profiles",
+      "🔎 Paste the job title + key phrases in quotes into Google to detect copy-paste scam postings",
+      "⭐ Read company reviews on Glassdoor, Indeed, and Google before accepting any offer",
+      "🤝 Contact the company directly through its official website to confirm this posting is genuine",
+      "❌ Never pay for training, equipment, starter kits, or background checks before your first day of work"
+    ],
+    "metadata": {
+      "redFlagCount": 0,
+      "positiveCount": 0,
+      "contextPenalty": 0,
+      "contextBonus": 0,
+      "netContextAdjustment": 0,
+      "contextFlags": [],
+      "originalLength": 62,
+      "cleanedLength": 62,
+      "wordCount": 1,
+      "hasEmail": false,
+      "hasFreeEmail": false,
+      "hasPhone": false,
+      "hasURL": true,
+      "hasSalary": false,
+      "hasLocation": false,
+      "hasCompanyName": false,
+      "analysisTimestamp": "2026-05-11T13:18:49.085Z"
+    },
+    "originalText": "https://careers.un.org/jobSearchDescription/276853?language=en"
+  },
+  {
+    "id": "anal_1778505497436",
+    "timestamp": "2026-05-11T13:18:17.436Z",
+    "jobTitle": "Appelroth_Erica.pdf",
+    "source": "File Upload",
+    "status": "caution",
+    "statusLabel": "🔵 CAUTION ADVISED",
+    "riskScore": 26,
+    "legitimacyScore": 74,
+    "jobStatus": "Uncertain",
+    "jobStatusMeta": {
+      "color": "#d97706",
+      "icon": "🟡",
+      "badge": "Status Uncertain — Check Directly"
+    },
+    "isAcceptingApplications": true,
+    "jobStatusConfidence": "low",
+    "jobStatusInferred": true,
+    "freshness": {
+      "score": 57,
+      "staleness": 43,
+      "label": "Status Uncertain — Check Directly",
+      "signals": [
+        {
+          "signal": "Detailed posting (5699 words) — well maintained",
+          "weight": -15
+        }
+      ]
+    },
+    "redFlags": [
+      "Requests sensitive financial or identity documents prematurely",
+      "Task-based commission scam pattern (common in WhatsApp scams)",
+      "Common scam job categories (data entry, typing, surveys)"
+    ],
+    "positiveIndicators": [
+      "Mentions standard professional benefits package",
+      "Offers equity or stock options (typical of legitimate companies)",
+      "Mentions formal onboarding or training process",
+      "Requires formal education or professional certifications",
+      "Mentions company founding date or years in business",
+      "Mentions standard confidentiality or NDA requirements"
+    ],
+    "explanation": "This posting has 3 minor concerns. Context flags: Industry-standard tools or platforms referenced. Positive indicators (6) suggest this may be legitimate. Standard due diligence is recommended.",
+    "recommendation": "✓ POTENTIALLY LEGITIMATE. Verify the company on Glassdoor and LinkedIn, and confirm job details through the official company website.",
+    "actionItems": [
+      "🔍 Verify the company on its official website — search for it independently, don't use links in the posting",
+      "💼 Find the company on LinkedIn and check whether employees list it on their profiles",
+      "🔎 Paste the job title + key phrases in quotes into Google to detect copy-paste scam postings",
+      "⭐ Read company reviews on Glassdoor, Indeed, and Google before accepting any offer",
+      "🤝 Contact the company directly through its official website to confirm this posting is genuine",
+      "❌ Never pay for training, equipment, starter kits, or background checks before your first day of work"
+    ],
+    "metadata": {
+      "redFlagCount": 3,
+      "positiveCount": 6,
+      "contextPenalty": 0,
+      "contextBonus": 8,
+      "netContextAdjustment": -8,
+      "contextFlags": [
+        "Industry-standard tools or platforms referenced"
+      ],
+      "originalLength": 42409,
+      "cleanedLength": 40652,
+      "wordCount": 5699,
+      "hasEmail": false,
+      "hasFreeEmail": false,
+      "hasPhone": true,
+      "hasURL": true,
+      "hasSalary": true,
+      "hasLocation": true,
+      "hasCompanyName": true,
+      "analysisTimestamp": "2026-05-11T13:18:17.430Z"
+    },
+    "originalText": "MARKETING PLAN FOR \nA RESTAURANT \nErica Appelroth \n \n \n \n \n \n \n \n \n \n \n \n \n \n \nBachelor’s thesis \nNovember 2015 \nDegree Programme in Tourism \n \n\n \n \nABSTRACT \nTampereen ammattikorkeakoulu \nTampere University of Applied Sciences \nDegree Programme in Tourism \n \n \nAPPELROTH, ERICA:  \nMarketing Plan for a Restaurant  \n \nBachelor's thesis 26 pages, appendices 21 pages  \nNovember 2015 \n  \n \nThe aim of this bachelor's thesis was to create a marketing plan for Dream Hostel & Hotel's \nupcoming restaurant.  Dream  Hostel  &  Hotel  has  not  created  a  marketing  plan  for  the \nrestaurant before. The thesis was commissioned by the company and the obj"
+  },
+  {
+    "id": "anal_1778505478026",
+    "timestamp": "2026-05-11T13:17:58.026Z",
+    "jobTitle": "UN Careers",
+    "source": "URL",
+    "status": "legitimate",
+    "statusLabel": "✅ LIKELY LEGITIMATE",
+    "riskScore": 0,
+    "legitimacyScore": 100,
+    "jobStatus": "Possibly Stale",
+    "jobStatusMeta": {
+      "color": "#ea580c",
+      "icon": "🟠",
+      "badge": "Possibly Stale — Verify Before Applying"
+    },
+    "isAcceptingApplications": true,
+    "jobStatusConfidence": "low",
+    "jobStatusInferred": true,
+    "freshness": {
+      "score": 37,
+      "staleness": 63,
+      "label": "Possibly Stale — Verify Before Applying",
+      "signals": [
+        {
+          "signal": "Very short posting (18 words) — possible placeholder",
+          "weight": 25
+        }
+      ]
+    },
+    "redFlags": [],
+    "positiveIndicators": [],
+    "explanation": "This posting appears relatively safe — no red flags were detected. Always verify company information independently before accepting any offer.",
+    "recommendation": "✓ APPEARS LEGITIMATE. Conduct standard due diligence: confirm the company website, read reviews, and verify the recruiter on LinkedIn.",
+    "actionItems": [
+      "🔍 Verify the company on its official website — search for it independently, don't use links in the posting",
+      "💼 Find the company on LinkedIn and check whether employees list it on their profiles",
+      "🔎 Paste the job title + key phrases in quotes into Google to detect copy-paste scam postings",
+      "⭐ Read company reviews on Glassdoor, Indeed, and Google before accepting any offer",
+      "🤝 Contact the company directly through its official website to confirm this posting is genuine",
+      "❌ Never pay for training, equipment, starter kits, or background checks before your first day of work"
+    ],
+    "metadata": {
+      "redFlagCount": 0,
+      "positiveCount": 0,
+      "contextPenalty": 0,
+      "contextBonus": 0,
+      "netContextAdjustment": 0,
+      "contextFlags": [],
+      "originalLength": 180,
+      "cleanedLength": 180,
+      "wordCount": 18,
+      "hasEmail": false,
+      "hasFreeEmail": false,
+      "hasPhone": false,
+      "hasURL": false,
+      "hasSalary": false,
+      "hasLocation": false,
+      "hasCompanyName": false,
+      "analysisTimestamp": "2026-05-11T13:17:58.020Z"
+    },
+    "originalText": "UN Careers \n \n\n \n\n \n \n \n \n -->\n \n \n \n\n \n\n \n \n \n \n\n \n \n \n \n \n\n \n \n \n\n \n \n \n\n \n\n \n \n \n \n\n \n \n \n -->\n\n \n\n Welcome to the UN Careers website \n \nThis is the main content of our website."
+  },
+  {
+    "id": "anal_1778484529169",
+    "timestamp": "2026-05-11T07:28:49.169Z",
+    "jobTitle": "URL Job Posting",
+    "source": "URL",
+    "status": "legitimate",
+    "statusLabel": "✅ LIKELY LEGITIMATE",
+    "riskScore": 0,
+    "legitimacyScore": 100,
+    "jobStatus": "Possibly Stale",
+    "jobStatusMeta": {
+      "color": "#ea580c",
+      "icon": "🟠",
+      "badge": "Possibly Stale — Verify Before Applying"
+    },
+    "isAcceptingApplications": true,
+    "jobStatusConfidence": "low",
+    "jobStatusInferred": true,
+    "freshness": {
+      "score": 37,
+      "staleness": 63,
+      "label": "Possibly Stale — Verify Before Applying",
+      "signals": [
+        {
+          "signal": "Very short posting (8 words) — possible placeholder",
+          "weight": 25
+        }
+      ]
+    },
+    "redFlags": [],
+    "positiveIndicators": [],
+    "explanation": "This posting appears relatively safe — no red flags were detected. Always verify company information independently before accepting any offer.",
+    "recommendation": "✓ APPEARS LEGITIMATE. Conduct standard due diligence: confirm the company website, read reviews, and verify the recruiter on LinkedIn.",
+    "actionItems": [
+      "🔍 Verify the company on its official website — search for it independently, don't use links in the posting",
+      "💼 Find the company on LinkedIn and check whether employees list it on their profiles",
+      "🔎 Paste the job title + key phrases in quotes into Google to detect copy-paste scam postings",
+      "⭐ Read company reviews on Glassdoor, Indeed, and Google before accepting any offer",
+      "🤝 Contact the company directly through its official website to confirm this posting is genuine",
+      "❌ Never pay for training, equipment, starter kits, or background checks before your first day of work"
+    ],
+    "metadata": {
+      "redFlagCount": 0,
+      "positiveCount": 0,
+      "contextPenalty": 0,
+      "contextBonus": 0,
+      "netContextAdjustment": 0,
+      "contextFlags": [],
+      "originalLength": 642,
+      "cleanedLength": 642,
+      "wordCount": 8,
+      "hasEmail": false,
+      "hasFreeEmail": false,
+      "hasPhone": true,
+      "hasURL": true,
+      "hasSalary": false,
+      "hasLocation": false,
+      "hasCompanyName": false,
+      "analysisTimestamp": "2026-05-11T07:28:49.161Z"
+    },
+    "originalText": "Job posting URL: https://www.glassdoor.co.in/job-listing/senior-cloud-engineer-moniepoint-JV_KO0,21_KE22,32.htm?jl=1010119090065&utm_source=jobalert&utm_medium=email&utm_content=jazero-jobpos1-age10d-1010119090065&utm_campaign=jobAlertZero&tgt=GD_JOB_VIEW&src=GD_JOB_AD&uido=6F268F0060422ACCD678AC5CAA53752F&ao=1136043&jrtk=5-yul1-0-1joau21ock3fq800-66f13130cfcf9af2&cs=1_34607c1e&s=224&t=JA&pos=101&ja=407580231&guid=0000019e15e0e371aed9276961e5add7&jobListingId=1010119090065&vt=e&cb=1778483530036&ctt=1778484480274&srs=EMAIL_JOB_ALERT&gdir=1\nDomain: glassdoor.co.in\nPath: /job-listing/senior-cloud-engineer-moniepoint-JV_KO0,21_KE22,32.htm"
+  },
+  {
+    "id": "anal_1778482888175",
+    "timestamp": "2026-05-11T07:01:28.175Z",
+    "jobTitle": "URL Job Posting",
+    "source": "URL",
+    "status": "very_high_risk",
+    "statusLabel": "🔴 VERY HIGH RISK - Likely Scam",
+    "riskScore": 78,
+    "legitimacyScore": 22,
+    "jobStatus": "Possibly Stale",
+    "jobStatusMeta": {
+      "color": "#ea580c",
+      "icon": "🟠",
+      "badge": "Possibly Stale — Verify Before Applying"
+    },
+    "isAcceptingApplications": true,
+    "jobStatusConfidence": "low",
+    "jobStatusInferred": true,
+    "freshness": {
+      "score": 37,
+      "staleness": 63,
+      "label": "Possibly Stale — Verify Before Applying",
+      "signals": [
+        {
+          "signal": "Very short posting (12 words) — possible placeholder",
+          "weight": 25
+        }
+      ]
+    },
+    "redFlags": [
+      "Requests sensitive financial or identity documents prematurely",
+      "Promises unrealistic easy earnings or wealth"
+    ],
+    "positiveIndicators": [],
+    "explanation": "This posting has 2 serious red flags and matches well-documented employment fraud patterns. The combination of indicators makes this almost certainly a scam.",
+    "recommendation": "🚨 AVOID COMPLETELY. Do not respond, send money, or share personal information. This posting exhibits overwhelming scam indicators.",
+    "actionItems": [
+      "🛑 DO NOT send money, gift cards, or cryptocurrency under any circumstances",
+      "🛑 DO NOT share your bank account, BVN, NIN, or passport details",
+      "📱 Report this posting to the platform where you found it",
+      "🚔 File a report: FTC (USA) · EFCC / NITDA (Nigeria) · Action Fraud (UK)",
+      "⚠️ Search \"[company name] scam\" on Google and check ScamPulse, BBB Scam Tracker",
+      "🔎 Paste the job title + key phrases in quotes into Google to detect copy-paste scam postings",
+      "❌ Never pay for training, equipment, starter kits, or background checks before your first day of work"
+    ],
+    "metadata": {
+      "redFlagCount": 2,
+      "positiveCount": 0,
+      "contextPenalty": 0,
+      "contextBonus": 0,
+      "netContextAdjustment": 0,
+      "contextFlags": [],
+      "originalLength": 487,
+      "cleanedLength": 487,
+      "wordCount": 12,
+      "hasEmail": false,
+      "hasFreeEmail": false,
+      "hasPhone": true,
+      "hasURL": true,
+      "hasSalary": false,
+      "hasLocation": false,
+      "hasCompanyName": false,
+      "analysisTimestamp": "2026-05-11T07:01:28.168Z"
+    },
+    "originalText": "Job posting URL: https://www.glassdoor.co.in/job-listing/machine-learning-engineer-cosmicfusion-labs-JV_KO0,25_KE26,43.htm?jl=1010104077199&cs=1_9a3038f6&s=351&t=FJ&pos=101&src=GD_JOB_AD&guid=0000019e15ca9e5183a5ef8119fbeb09&jobListingId=1010104077199&ea=1&ao=1136043&vt=w&jrtk=5-yul1-0-1joasl7jkh73b800-3d519a51b646c8dc&cb=1778482061076&ctt=1778482844525\nDomain: glassdoor.co.in\nPath: /job-listing/machine-learning-engineer-cosmicfusion-labs-JV_KO0,25_KE26,43.htm\nEasy money earn income"
+  },
+  {
+    "id": "anal_1778481860881",
+    "timestamp": "2026-05-11T06:44:20.881Z",
+    "jobTitle": "UN Careers",
+    "source": "URL",
+    "status": "legitimate",
+    "statusLabel": "✅ LIKELY LEGITIMATE",
+    "riskScore": 0,
+    "legitimacyScore": 100,
+    "jobStatus": "Possibly Stale",
+    "jobStatusMeta": {
+      "color": "#ea580c",
+      "icon": "🟠",
+      "badge": "Possibly Stale — Verify Before Applying"
+    },
+    "isAcceptingApplications": true,
+    "jobStatusConfidence": "low",
+    "jobStatusInferred": true,
+    "freshness": {
+      "score": 37,
+      "staleness": 63,
+      "label": "Possibly Stale — Verify Before Applying",
+      "signals": [
+        {
+          "signal": "Very short posting (18 words) — possible placeholder",
+          "weight": 25
+        }
+      ]
+    },
+    "redFlags": [],
+    "positiveIndicators": [],
+    "explanation": "This posting appears relatively safe — no red flags were detected. Always verify company information independently before accepting any offer.",
+    "recommendation": "✓ APPEARS LEGITIMATE. Conduct standard due diligence: confirm the company website, read reviews, and verify the recruiter on LinkedIn.",
+    "actionItems": [
+      "🔍 Verify the company on its official website — search for it independently, don't use links in the posting",
+      "💼 Find the company on LinkedIn and check whether employees list it on their profiles",
+      "🔎 Paste the job title + key phrases in quotes into Google to detect copy-paste scam postings",
+      "⭐ Read company reviews on Glassdoor, Indeed, and Google before accepting any offer",
+      "🤝 Contact the company directly through its official website to confirm this posting is genuine",
+      "❌ Never pay for training, equipment, starter kits, or background checks before your first day of work"
+    ],
+    "metadata": {
+      "redFlagCount": 0,
+      "positiveCount": 0,
+      "contextPenalty": 0,
+      "contextBonus": 0,
+      "netContextAdjustment": 0,
+      "contextFlags": [],
+      "originalLength": 180,
+      "cleanedLength": 180,
+      "wordCount": 18,
+      "hasEmail": false,
+      "hasFreeEmail": false,
+      "hasPhone": false,
+      "hasURL": false,
+      "hasSalary": false,
+      "hasLocation": false,
+      "hasCompanyName": false,
+      "analysisTimestamp": "2026-05-11T06:44:20.874Z"
+    },
+    "originalText": "UN Careers \n \n\n \n\n \n \n \n \n -->\n \n \n \n\n \n\n \n \n \n \n\n \n \n \n \n \n\n \n \n \n\n \n \n \n\n \n\n \n \n \n \n\n \n \n \n -->\n\n \n\n Welcome to the UN Careers website \n \nThis is the main content of our website."
+  },
+  {
+    "id": "anal_1778476714983",
+    "timestamp": "2026-05-11T05:18:34.983Z",
+    "jobTitle": "Scholarships Cafe- Position Detail",
+    "source": "URL",
+    "status": "caution",
+    "statusLabel": "🔵 CAUTION ADVISED",
+    "riskScore": 34,
+    "legitimacyScore": 66,
+    "jobStatus": "Uncertain",
+    "jobStatusMeta": {
+      "color": "#d97706",
+      "icon": "🟡",
+      "badge": "Status Uncertain — Check Directly"
+    },
+    "isAcceptingApplications": true,
+    "jobStatusConfidence": "low",
+    "jobStatusInferred": true,
+    "freshness": {
+      "score": 49,
+      "staleness": 51,
+      "label": "Status Uncertain — Check Directly",
+      "signals": [
+        {
+          "signal": "Short posting (91 words) — low detail",
+          "weight": 12
+        },
+        {
+          "signal": "Application deadline mentioned — structured posting",
+          "weight": -10
+        }
+      ]
+    },
+    "redFlags": [
+      "Requests sensitive financial or identity documents prematurely"
+    ],
+    "positiveIndicators": [
+      "Requires formal education or professional certifications",
+      "Contains detailed job description sections",
+      "Specifies standard employment type",
+      "Provides clear application deadline"
+    ],
+    "explanation": "This posting has 1 minor concern. Context flags: No official website or online presence mentioned. Positive indicators (4) suggest this may be legitimate. Standard due diligence is recommended.",
+    "recommendation": "✓ POTENTIALLY LEGITIMATE. Verify the company on Glassdoor and LinkedIn, and confirm job details through the official company website.",
+    "actionItems": [
+      "🔍 Verify the company on its official website — search for it independently, don't use links in the posting",
+      "💼 Find the company on LinkedIn and check whether employees list it on their profiles",
+      "🔎 Paste the job title + key phrases in quotes into Google to detect copy-paste scam postings",
+      "⭐ Read company reviews on Glassdoor, Indeed, and Google before accepting any offer",
+      "🤝 Contact the company directly through its official website to confirm this posting is genuine",
+      "❌ Never pay for training, equipment, starter kits, or background checks before your first day of work"
+    ],
+    "metadata": {
+      "redFlagCount": 1,
+      "positiveCount": 4,
+      "contextPenalty": 14,
+      "contextBonus": 0,
+      "netContextAdjustment": 14,
+      "contextFlags": [
+        "No official website or online presence mentioned"
+      ],
+      "originalLength": 2653,
+      "cleanedLength": 2653,
+      "wordCount": 91,
+      "hasEmail": false,
+      "hasFreeEmail": false,
+      "hasPhone": false,
+      "hasURL": false,
+      "hasSalary": false,
+      "hasLocation": false,
+      "hasCompanyName": false,
+      "analysisTimestamp": "2026-05-11T05:18:34.974Z"
+    },
+    "originalText": "Scholarships Cafe- Position Detail \n \n\n \n \n\n \n \n \n \n \n \n \n \n\n \n \n\n \n \n \n \n \n \n \n \n\n \n\n \n\n \n\n \n\n \n\n \n \n \n \n \n \n \n \n \n \n\n \n \n\n \n \n\n \n \n\n \n\n \n\n \n\n \n\n \n\n \n\n \n\n \n\n \n\n \n\n \n\n \n\n \nPhD Studentship: Machine Learning to Unlock the Mysteries of Metallic Phase Transitions, University of Warwick, United Kingdom \n\n \ndv2oyNoo0kRZSoUCoIG5SuwmvbPT3O\n\n \n\n Posted Date: 05/09/2026 \n Expires on: 08/28/2026 \n \n\n \n\n \n\n \n\n \n\n Apply \n \n \n\n \n \n\n \n \n\n \n\n \n\n \nScholarship Description\n\n \n\n About the project:\nMachine Learning to Unlock the C0AdJf5wDTCsAE0zxo9LxcM79z9UKmZAbThcJaUJ0zEqiMIDM0wcuEvHvt3yswRVgPuXXMptKk7wO8jfA7Hk9YhfRdrOHsT1a5QdhQYn30YDu2lQ3wghbXD7gnrRYcvYrcITgoRl"
+  },
+  {
+    "id": "anal_1778447949828",
+    "timestamp": "2026-05-10T21:19:09.828Z",
+    "jobTitle": "URL Job Posting",
+    "source": "URL",
+    "status": "legitimate",
+    "statusLabel": "✅ LIKELY LEGITIMATE",
+    "riskScore": 0,
+    "legitimacyScore": 100,
+    "jobStatus": "Uncertain",
+    "jobStatusMeta": {
+      "color": "#d97706",
+      "icon": "🟡",
+      "badge": "Status Uncertain — Check Directly"
+    },
+    "isAcceptingApplications": true,
+    "jobStatusConfidence": "low",
+    "jobStatusInferred": true,
+    "freshness": {
+      "score": 50,
+      "staleness": 50,
+      "label": "Status Uncertain — Check Directly",
+      "signals": [
+        {
+          "signal": "Very short posting (23 words) — possible placeholder",
+          "weight": 25
+        },
+        {
+          "signal": "Active application call-to-action",
+          "weight": -25
+        }
+      ]
+    },
+    "redFlags": [],
+    "positiveIndicators": [
+      "Directs applicants to official company application portal"
+    ],
+    "explanation": "This posting appears relatively safe — no red flags were detected. Always verify company information independently before accepting any offer.",
+    "recommendation": "✓ APPEARS LEGITIMATE. Conduct standard due diligence: confirm the company website, read reviews, and verify the recruiter on LinkedIn.",
+    "actionItems": [
+      "🔍 Verify the company on its official website — search for it independently, don't use links in the posting",
+      "💼 Find the company on LinkedIn and check whether employees list it on their profiles",
+      "🔎 Paste the job title + key phrases in quotes into Google to detect copy-paste scam postings",
+      "⭐ Read company reviews on Glassdoor, Indeed, and Google before accepting any offer",
+      "🤝 Contact the company directly through its official website to confirm this posting is genuine",
+      "❌ Never pay for training, equipment, starter kits, or background checks before your first day of work"
+    ],
+    "metadata": {
+      "redFlagCount": 0,
+      "positiveCount": 1,
+      "contextPenalty": 0,
+      "contextBonus": 0,
+      "netContextAdjustment": 0,
+      "contextFlags": [],
+      "originalLength": 317,
+      "cleanedLength": 317,
+      "wordCount": 23,
+      "hasEmail": false,
+      "hasFreeEmail": false,
+      "hasPhone": false,
+      "hasURL": true,
+      "hasSalary": false,
+      "hasLocation": false,
+      "hasCompanyName": true,
+      "analysisTimestamp": "2026-05-10T21:19:09.822Z"
+    },
+    "originalText": "Job posting URL: https://www.amazon.jobs/en/jobs/3015604/software-dev-engineer-i-amazon-university-talent-acquisition\nDomain: amazon.jobs\nPath: /en/jobs/3015604/software-dev-engineer-i-amazon-university-talent-acquisition\nPosted on a verified job board platform\nOfficial company careers page\nApply through our website"
+  },
+  {
+    "id": "anal_1778430558178",
+    "timestamp": "2026-05-10T16:29:18.178Z",
+    "jobTitle": "Software Dev Engineer I, Amazon University Talent Acquisition - Job ID: 3015604 | Amazon.jobs",
+    "source": "URL",
+    "status": "suspicious",
+    "statusLabel": "🟡 SUSPICIOUS",
+    "riskScore": 40,
+    "legitimacyScore": 60,
+    "jobStatus": "Open",
+    "jobStatusMeta": {
+      "color": "#1a7a45",
+      "icon": "🟢",
+      "badge": "Accepting Applications"
+    },
+    "isAcceptingApplications": true,
+    "jobStatusConfidence": "medium",
+    "jobStatusInferred": false,
+    "freshness": {
+      "score": 100,
+      "staleness": 0,
+      "label": "Actively Hiring",
+      "signals": [
+        {
+          "signal": "Active application call-to-action",
+          "weight": -25
+        },
+        {
+          "signal": "Active recruitment language in body",
+          "weight": -20
+        },
+        {
+          "signal": "Hiring process described — actively recruiting",
+          "weight": -20
+        },
+        {
+          "signal": "Detailed posting (1299 words) — well maintained",
+          "weight": -15
+        }
+      ]
+    },
+    "redFlags": [
+      "Requests sensitive financial or identity documents prematurely",
+      "Task-based commission scam pattern (common in WhatsApp scams)",
+      "High-pressure urgency tactics to prevent careful consideration"
+    ],
+    "positiveIndicators": [
+      "Includes standard equal opportunity or diversity statements",
+      "Mentions formal onboarding or training process",
+      "Requires formal education or professional certifications",
+      "Contains detailed job description sections",
+      "Provides specific, reasonable salary range",
+      "Specifies standard employment type",
+      "Mentions standard confidentiality or NDA requirements",
+      "Provides clear application deadline"
+    ],
+    "explanation": "This posting shows 3 concerns that warrant careful verification. Context flags: WhatsApp mentioned; Telegram mentioned; Industry-standard tools or platforms referenced. Some legitimate signals (8) are present, but risks remain. Do not proceed without independent research.",
+    "recommendation": "⚡ CAUTION. Verify the company through independent sources before engaging. Never pay upfront fees for training, equipment, or background checks.",
+    "actionItems": [
+      "⚠️ Search \"[company name] scam\" on Google and check ScamPulse, BBB Scam Tracker",
+      "🔍 Verify the company on its official website — search for it independently, don't use links in the posting",
+      "💼 Find the company on LinkedIn and check whether employees list it on their profiles",
+      "🔎 Paste the job title + key phrases in quotes into Google to detect copy-paste scam postings",
+      "❌ Never pay for training, equipment, starter kits, or background checks before your first day of work"
+    ],
+    "metadata": {
+      "redFlagCount": 3,
+      "positiveCount": 8,
+      "contextPenalty": 20,
+      "contextBonus": 18,
+      "netContextAdjustment": 2,
+      "contextFlags": [
+        "WhatsApp mentioned",
+        "Telegram mentioned",
+        "Industry-standard tools or platforms referenced",
+        "Team structure or reporting line described",
+        "Qualifications section present"
+      ],
+      "originalLength": 9344,
+      "cleanedLength": 9344,
+      "wordCount": 1299,
+      "hasEmail": false,
+      "hasFreeEmail": false,
+      "hasPhone": true,
+      "hasURL": true,
+      "hasSalary": true,
+      "hasLocation": true,
+      "hasCompanyName": true,
+      "analysisTimestamp": "2026-05-10T16:29:18.174Z"
+    },
+    "originalText": "Software Dev Engineer I, Amazon University Talent Acquisition - Job ID: 3015604 | Amazon.jobs \n \n \n \n\n Skip to main content \n\n &times; \n\n Home \n\n Teams \n\n Locations \n\n Job categories \n\n My career \n My applications \n\n My profile \n\n Account security \n\n Settings \n\n Sign out \n \n\n Resources \n Accommodations \n\n Benefits \n\n Inclusive experiences \n\n How We Hire \n\n Leadership principles \n\n Working at Amazon \n\n FAQ \n \n\n \n\n \n\nSoftware Dev Engineer I, Amazon University Talent Acquisition\n\nJob ID: 3015604 | ADCI - Karnataka\n\n Apply now \n\n \n\n \n\nDescription\n\nAt Amazon, we hire the best minds in technology to innovate and build on behalf of our customers. Th"
+  },
+  {
+    "id": "anal_1778430419078",
+    "timestamp": "2026-05-10T16:26:59.078Z",
+    "jobTitle": "Software Dev Engineer I, Amazon University Talent Acquisition - Job ID: 3015604 | Amazon.jobs",
+    "source": "URL",
+    "status": "suspicious",
+    "statusLabel": "🟡 SUSPICIOUS",
+    "riskScore": 40,
+    "legitimacyScore": 60,
+    "jobStatus": "Open",
+    "jobStatusMeta": {
+      "color": "#1a7a45",
+      "icon": "🟢",
+      "badge": "Accepting Applications"
+    },
+    "isAcceptingApplications": true,
+    "jobStatusConfidence": "medium",
+    "jobStatusInferred": false,
+    "freshness": {
+      "score": 100,
+      "staleness": 0,
+      "label": "Actively Hiring",
+      "signals": [
+        {
+          "signal": "Active application call-to-action",
+          "weight": -25
+        },
+        {
+          "signal": "Active recruitment language in body",
+          "weight": -20
+        },
+        {
+          "signal": "Hiring process described — actively recruiting",
+          "weight": -20
+        },
+        {
+          "signal": "Detailed posting (1299 words) — well maintained",
+          "weight": -15
+        }
+      ]
+    },
+    "redFlags": [
+      "Requests sensitive financial or identity documents prematurely",
+      "Task-based commission scam pattern (common in WhatsApp scams)",
+      "High-pressure urgency tactics to prevent careful consideration"
+    ],
+    "positiveIndicators": [
+      "Includes standard equal opportunity or diversity statements",
+      "Mentions formal onboarding or training process",
+      "Requires formal education or professional certifications",
+      "Contains detailed job description sections",
+      "Provides specific, reasonable salary range",
+      "Specifies standard employment type",
+      "Mentions standard confidentiality or NDA requirements",
+      "Provides clear application deadline"
+    ],
+    "explanation": "This posting shows 3 concerns that warrant careful verification. Context flags: WhatsApp mentioned; Telegram mentioned; Industry-standard tools or platforms referenced. Some legitimate signals (8) are present, but risks remain. Do not proceed without independent research.",
+    "recommendation": "⚡ CAUTION. Verify the company through independent sources before engaging. Never pay upfront fees for training, equipment, or background checks.",
+    "actionItems": [
+      "⚠️ Search \"[company name] scam\" on Google and check ScamPulse, BBB Scam Tracker",
+      "🔍 Verify the company on its official website — search for it independently, don't use links in the posting",
+      "💼 Find the company on LinkedIn and check whether employees list it on their profiles",
+      "🔎 Paste the job title + key phrases in quotes into Google to detect copy-paste scam postings",
+      "❌ Never pay for training, equipment, starter kits, or background checks before your first day of work"
+    ],
+    "metadata": {
+      "redFlagCount": 3,
+      "positiveCount": 8,
+      "contextPenalty": 20,
+      "contextBonus": 18,
+      "netContextAdjustment": 2,
+      "contextFlags": [
+        "WhatsApp mentioned",
+        "Telegram mentioned",
+        "Industry-standard tools or platforms referenced",
+        "Team structure or reporting line described",
+        "Qualifications section present"
+      ],
+      "originalLength": 9344,
+      "cleanedLength": 9344,
+      "wordCount": 1299,
+      "hasEmail": false,
+      "hasFreeEmail": false,
+      "hasPhone": true,
+      "hasURL": true,
+      "hasSalary": true,
+      "hasLocation": true,
+      "hasCompanyName": true,
+      "analysisTimestamp": "2026-05-10T16:26:59.076Z"
+    },
+    "originalText": "Software Dev Engineer I, Amazon University Talent Acquisition - Job ID: 3015604 | Amazon.jobs \n \n \n \n\n Skip to main content \n\n &times; \n\n Home \n\n Teams \n\n Locations \n\n Job categories \n\n My career \n My applications \n\n My profile \n\n Account security \n\n Settings \n\n Sign out \n \n\n Resources \n Accommodations \n\n Benefits \n\n Inclusive experiences \n\n How We Hire \n\n Leadership principles \n\n Working at Amazon \n\n FAQ \n \n\n \n\n \n\nSoftware Dev Engineer I, Amazon University Talent Acquisition\n\nJob ID: 3015604 | ADCI - Karnataka\n\n Apply now \n\n \n\n \n\nDescription\n\nAt Amazon, we hire the best minds in technology to innovate and build on behalf of our customers. Th"
+  },
+  {
+    "id": "anal_1778430298330",
+    "timestamp": "2026-05-10T16:24:58.330Z",
+    "jobTitle": "ANIEKAN USORO's RESUME_015626.docx",
+    "source": "File Upload",
+    "status": "suspicious",
+    "statusLabel": "🟡 SUSPICIOUS",
+    "riskScore": 38,
+    "legitimacyScore": 62,
+    "jobStatus": "Uncertain",
+    "jobStatusMeta": {
+      "color": "#d97706",
+      "icon": "🟡",
+      "badge": "Status Uncertain — Check Directly"
+    },
+    "isAcceptingApplications": true,
+    "jobStatusConfidence": "low",
+    "jobStatusInferred": true,
+    "freshness": {
+      "score": 57,
+      "staleness": 43,
+      "label": "Status Uncertain — Check Directly",
+      "signals": [
+        {
+          "signal": "Detailed posting (483 words) — well maintained",
+          "weight": -15
+        }
+      ]
+    },
+    "redFlags": [
+      "Requests sensitive financial or identity documents prematurely",
+      "Task-based commission scam pattern (common in WhatsApp scams)"
+    ],
+    "positiveIndicators": [
+      "Uses professional company email domain (not free email)",
+      "Requires formal education or professional certifications",
+      "Mentions standard confidentiality or NDA requirements"
+    ],
+    "explanation": "This posting has 2 minor concerns. Context flags: Industry-standard tools or platforms referenced. Positive indicators (3) suggest this may be legitimate. Standard due diligence is recommended.",
+    "recommendation": "✓ POTENTIALLY LEGITIMATE. Verify the company on Glassdoor and LinkedIn, and confirm job details through the official company website.",
+    "actionItems": [
+      "🔍 Verify the company on its official website — search for it independently, don't use links in the posting",
+      "💼 Find the company on LinkedIn and check whether employees list it on their profiles",
+      "🔎 Paste the job title + key phrases in quotes into Google to detect copy-paste scam postings",
+      "📧 Confirm the email domain matches the company's official website exactly",
+      "⭐ Read company reviews on Glassdoor, Indeed, and Google before accepting any offer",
+      "🤝 Contact the company directly through its official website to confirm this posting is genuine",
+      "❌ Never pay for training, equipment, starter kits, or background checks before your first day of work"
+    ],
+    "metadata": {
+      "redFlagCount": 2,
+      "positiveCount": 3,
+      "contextPenalty": 0,
+      "contextBonus": 8,
+      "netContextAdjustment": -8,
+      "contextFlags": [
+        "Industry-standard tools or platforms referenced"
+      ],
+      "originalLength": 3878,
+      "cleanedLength": 3863,
+      "wordCount": 483,
+      "hasEmail": true,
+      "hasFreeEmail": false,
+      "hasPhone": true,
+      "hasURL": false,
+      "hasSalary": false,
+      "hasLocation": false,
+      "hasCompanyName": true,
+      "analysisTimestamp": "2026-05-10T16:24:58.328Z"
+    },
+    "originalText": "ANIEKAN ASUQUO USORO Lead Baggage Handler, Ibom AirEnugu, Enugu State, Nigeria📞 +234 708 314 5810 | ✉️ aniekan.usoro@ibomair.com  \n\n\n\nPROFESSIONAL SUMMARY\n\nCustomer-focused operations professional with hands-on experience in airline ground operations, administration, and service delivery. Holder of a Higher National Diploma in Public Administration with professional certifications in Human Resources Management and Environmental Health & Safety. Proven ability to lead teams, resolve customer and operational issues, ensure safety compliance, and maintain high service standards in fast-paced environments. Currently a Lead Baggage Handler at Ibo"
+  },
+  {
+    "id": "anal_1778430264405",
+    "timestamp": "2026-05-10T16:24:24.405Z",
+    "jobTitle": "Software Developer",
+    "source": "Website",
+    "status": "legitimate",
+    "statusLabel": "✅ LIKELY LEGITIMATE",
+    "riskScore": 2,
+    "legitimacyScore": 98,
+    "jobStatus": "Uncertain",
+    "jobStatusMeta": {
+      "color": "#d97706",
+      "icon": "🟡",
+      "badge": "Status Uncertain — Check Directly"
+    },
+    "isAcceptingApplications": true,
+    "jobStatusConfidence": "low",
+    "jobStatusInferred": true,
+    "freshness": {
+      "score": 51,
+      "staleness": 49,
+      "label": "Status Uncertain — Check Directly",
+      "signals": [
+        {
+          "signal": "Future-tense role description — actively planning hire",
+          "weight": -15
+        },
+        {
+          "signal": "Short posting (142 words) — low detail",
+          "weight": 12
+        }
+      ]
+    },
+    "redFlags": [],
+    "positiveIndicators": [
+      "Contains detailed job description sections"
+    ],
+    "explanation": "This posting appears relatively safe — no red flags were detected. Always verify company information independently before accepting any offer.",
+    "recommendation": "✓ APPEARS LEGITIMATE. Conduct standard due diligence: confirm the company website, read reviews, and verify the recruiter on LinkedIn.",
+    "actionItems": [
+      "🔍 Verify the company on its official website — search for it independently, don't use links in the posting",
+      "💼 Find the company on LinkedIn and check whether employees list it on their profiles",
+      "🔎 Paste the job title + key phrases in quotes into Google to detect copy-paste scam postings",
+      "⭐ Read company reviews on Glassdoor, Indeed, and Google before accepting any offer",
+      "🤝 Contact the company directly through its official website to confirm this posting is genuine",
+      "❌ Never pay for training, equipment, starter kits, or background checks before your first day of work"
+    ],
+    "metadata": {
+      "redFlagCount": 0,
+      "positiveCount": 1,
+      "contextPenalty": 14,
+      "contextBonus": 6,
+      "netContextAdjustment": 8,
+      "contextFlags": [
+        "No official website or online presence mentioned",
+        "Team structure or reporting line described"
+      ],
+      "originalLength": 973,
+      "cleanedLength": 973,
+      "wordCount": 142,
+      "hasEmail": false,
+      "hasFreeEmail": false,
+      "hasPhone": false,
+      "hasURL": false,
+      "hasSalary": false,
+      "hasLocation": false,
+      "hasCompanyName": false,
+      "analysisTimestamp": "2026-05-10T16:24:24.403Z"
+    },
+    "originalText": "As a Software Dev Engineer I (SDE I) at Amazon, you’ll be at the forefront of innovation, working to solve complex problems that impact millions of customers and sellers globally. You will get the chance to conceive, design, and build new products and services from the ground up in a fast-paced, agile environment.\n\nKey Responsibilities in Amazon Software Job for Freshers:\nCollaborate with experienced cross-disciplinary teams to conceive, design, and launch innovative products and services.\nDesign and build scalable technologies within a large distributed computing environment.\nCreate solutions to run predictions on distributed systems, workin"
+  },
+  {
+    "id": "anal_1778430245676",
+    "timestamp": "2026-05-10T16:24:05.676Z",
+    "jobTitle": "Software Developer",
+    "source": "Website",
+    "status": "high_risk",
+    "statusLabel": "🟠 HIGH RISK",
+    "riskScore": 50,
+    "legitimacyScore": 50,
+    "jobStatus": "Uncertain",
+    "jobStatusMeta": {
+      "color": "#d97706",
+      "icon": "🟡",
+      "badge": "Status Uncertain — Check Directly"
+    },
+    "isAcceptingApplications": true,
+    "jobStatusConfidence": "low",
+    "jobStatusInferred": true,
+    "freshness": {
+      "score": 57,
+      "staleness": 43,
+      "label": "Status Uncertain — Check Directly",
+      "signals": [
+        {
+          "signal": "Future-tense role description — actively planning hire",
+          "weight": -15
+        }
+      ]
+    },
+    "redFlags": [
+      "Requests sensitive financial or identity documents prematurely",
+      "Task-based commission scam pattern (common in WhatsApp scams)"
+    ],
+    "positiveIndicators": [
+      "Contains detailed job description sections",
+      "Provides specific, reasonable salary range",
+      "Mentions standard confidentiality or NDA requirements"
+    ],
+    "explanation": "This posting shows 2 concerns that warrant careful verification. Context flags: No official website or online presence mentioned; Industry-standard tools or platforms referenced; Team structure or reporting line described. Some legitimate signals (3) are present, but risks remain. Do not proceed without independent research.",
+    "recommendation": "⚡ CAUTION. Verify the company through independent sources before engaging. Never pay upfront fees for training, equipment, or background checks.",
+    "actionItems": [
+      "⚠️ Search \"[company name] scam\" on Google and check ScamPulse, BBB Scam Tracker",
+      "🔍 Verify the company on its official website — search for it independently, don't use links in the posting",
+      "💼 Find the company on LinkedIn and check whether employees list it on their profiles",
+      "🔎 Paste the job title + key phrases in quotes into Google to detect copy-paste scam postings",
+      "❌ Never pay for training, equipment, starter kits, or background checks before your first day of work"
+    ],
+    "metadata": {
+      "redFlagCount": 2,
+      "positiveCount": 3,
+      "contextPenalty": 14,
+      "contextBonus": 18,
+      "netContextAdjustment": -4,
+      "contextFlags": [
+        "No official website or online presence mentioned",
+        "Industry-standard tools or platforms referenced",
+        "Team structure or reporting line described",
+        "Qualifications section present"
+      ],
+      "originalLength": 2649,
+      "cleanedLength": 2649,
+      "wordCount": 377,
+      "hasEmail": false,
+      "hasFreeEmail": false,
+      "hasPhone": false,
+      "hasURL": false,
+      "hasSalary": true,
+      "hasLocation": true,
+      "hasCompanyName": true,
+      "analysisTimestamp": "2026-05-10T16:24:05.674Z"
+    },
+    "originalText": "As a Software Dev Engineer I (SDE I) at Amazon, you’ll be at the forefront of innovation, working to solve complex problems that impact millions of customers and sellers globally. You will get the chance to conceive, design, and build new products and services from the ground up in a fast-paced, agile environment.\n\nKey Responsibilities in Amazon Software Job for Freshers:\nCollaborate with experienced cross-disciplinary teams to conceive, design, and launch innovative products and services.\nDesign and build scalable technologies within a large distributed computing environment.\nCreate solutions to run predictions on distributed systems, workin"
+  },
+  {
+    "id": "anal_1778430228337",
+    "timestamp": "2026-05-10T16:23:48.337Z",
+    "jobTitle": "Software Developer",
+    "source": "https://www.jobinsider.in/jobs/amazon-software-developer-job-sde-i-uni-25/",
+    "status": "high_risk",
+    "statusLabel": "🟠 HIGH RISK",
+    "riskScore": 50,
+    "legitimacyScore": 50,
+    "jobStatus": "Uncertain",
+    "jobStatusMeta": {
+      "color": "#d97706",
+      "icon": "🟡",
+      "badge": "Status Uncertain — Check Directly"
+    },
+    "isAcceptingApplications": true,
+    "jobStatusConfidence": "low",
+    "jobStatusInferred": true,
+    "freshness": {
+      "score": 57,
+      "staleness": 43,
+      "label": "Status Uncertain — Check Directly",
+      "signals": [
+        {
+          "signal": "Future-tense role description — actively planning hire",
+          "weight": -15
+        }
+      ]
+    },
+    "redFlags": [
+      "Requests sensitive financial or identity documents prematurely",
+      "Task-based commission scam pattern (common in WhatsApp scams)"
+    ],
+    "positiveIndicators": [
+      "Contains detailed job description sections",
+      "Provides specific, reasonable salary range",
+      "Mentions standard confidentiality or NDA requirements"
+    ],
+    "explanation": "This posting shows 2 concerns that warrant careful verification. Context flags: No official website or online presence mentioned; Industry-standard tools or platforms referenced; Team structure or reporting line described. Some legitimate signals (3) are present, but risks remain. Do not proceed without independent research.",
+    "recommendation": "⚡ CAUTION. Verify the company through independent sources before engaging. Never pay upfront fees for training, equipment, or background checks.",
+    "actionItems": [
+      "⚠️ Search \"[company name] scam\" on Google and check ScamPulse, BBB Scam Tracker",
+      "🔍 Verify the company on its official website — search for it independently, don't use links in the posting",
+      "💼 Find the company on LinkedIn and check whether employees list it on their profiles",
+      "🔎 Paste the job title + key phrases in quotes into Google to detect copy-paste scam postings",
+      "❌ Never pay for training, equipment, starter kits, or background checks before your first day of work"
+    ],
+    "metadata": {
+      "redFlagCount": 2,
+      "positiveCount": 3,
+      "contextPenalty": 14,
+      "contextBonus": 18,
+      "netContextAdjustment": -4,
+      "contextFlags": [
+        "No official website or online presence mentioned",
+        "Industry-standard tools or platforms referenced",
+        "Team structure or reporting line described",
+        "Qualifications section present"
+      ],
+      "originalLength": 2649,
+      "cleanedLength": 2649,
+      "wordCount": 377,
+      "hasEmail": false,
+      "hasFreeEmail": false,
+      "hasPhone": false,
+      "hasURL": false,
+      "hasSalary": true,
+      "hasLocation": true,
+      "hasCompanyName": true,
+      "analysisTimestamp": "2026-05-10T16:23:48.335Z"
+    },
+    "originalText": "As a Software Dev Engineer I (SDE I) at Amazon, you’ll be at the forefront of innovation, working to solve complex problems that impact millions of customers and sellers globally. You will get the chance to conceive, design, and build new products and services from the ground up in a fast-paced, agile environment.\n\nKey Responsibilities in Amazon Software Job for Freshers:\nCollaborate with experienced cross-disciplinary teams to conceive, design, and launch innovative products and services.\nDesign and build scalable technologies within a large distributed computing environment.\nCreate solutions to run predictions on distributed systems, workin"
+  },
+  {
+    "id": "anal_1778429880333",
+    "timestamp": "2026-05-10T16:18:00.333Z",
+    "jobTitle": "Job Application for AI Tutor - Software Engineering Specialist at xAI",
+    "source": "URL",
+    "status": "low_concern",
+    "statusLabel": "🟢 LOW CONCERN",
+    "riskScore": 13,
+    "legitimacyScore": 87,
+    "jobStatus": "Likely Open",
+    "jobStatusMeta": {
+      "color": "#2563eb",
+      "icon": "🔵",
+      "badge": "Likely Still Open"
+    },
+    "isAcceptingApplications": true,
+    "jobStatusConfidence": "medium",
+    "jobStatusInferred": true,
+    "freshness": {
+      "score": 80,
+      "staleness": 20,
+      "label": "Likely Still Open",
+      "signals": [
+        {
+          "signal": "Active application call-to-action",
+          "weight": -25
+        },
+        {
+          "signal": "Hiring process described — actively recruiting",
+          "weight": -20
+        },
+        {
+          "signal": "Detailed posting (856 words) — well maintained",
+          "weight": -15
+        }
+      ]
+    },
+    "redFlags": [
+      "Requests sensitive financial or identity documents prematurely",
+      "Task-based commission scam pattern (common in WhatsApp scams)"
+    ],
+    "positiveIndicators": [
+      "Includes standard equal opportunity or diversity statements",
+      "Mentions standard professional benefits package",
+      "Specifies paid time off benefits",
+      "Describes structured, professional interview process",
+      "Contains detailed job description sections",
+      "Specifies standard employment type",
+      "Mentions standard confidentiality or NDA requirements"
+    ],
+    "explanation": "This posting appears relatively safe — 2 red flags were detected. Multiple positive signals (7) indicate professional legitimacy. Always verify company information independently before accepting any offer.",
+    "recommendation": "✓ APPEARS LEGITIMATE. Conduct standard due diligence: confirm the company website, read reviews, and verify the recruiter on LinkedIn.",
+    "actionItems": [
+      "🔍 Verify the company on its official website — search for it independently, don't use links in the posting",
+      "💼 Find the company on LinkedIn and check whether employees list it on their profiles",
+      "🔎 Paste the job title + key phrases in quotes into Google to detect copy-paste scam postings",
+      "⭐ Read company reviews on Glassdoor, Indeed, and Google before accepting any offer",
+      "🤝 Contact the company directly through its official website to confirm this posting is genuine",
+      "❌ Never pay for training, equipment, starter kits, or background checks before your first day of work"
+    ],
+    "metadata": {
+      "redFlagCount": 2,
+      "positiveCount": 7,
+      "contextPenalty": 14,
+      "contextBonus": 10,
+      "netContextAdjustment": 4,
+      "contextFlags": [
+        "No official website or online presence mentioned",
+        "Team structure or reporting line described",
+        "Qualifications section present"
+      ],
+      "originalLength": 6313,
+      "cleanedLength": 6313,
+      "wordCount": 856,
+      "hasEmail": false,
+      "hasFreeEmail": false,
+      "hasPhone": false,
+      "hasURL": false,
+      "hasSalary": true,
+      "hasLocation": true,
+      "hasCompanyName": true,
+      "analysisTimestamp": "2026-05-10T16:18:00.314Z"
+    },
+    "originalText": "Job Application for AI Tutor - Software Engineering Specialist at xAI \n\n \n\n \n\n Back to jobs \n\nAI Tutor - Software Engineering Specialist\n\n \nRemote\n\n Apply \n\n ABOUT xAI \n\n xAI’s mission is to create AI systems that can accurately understand the universe and aid humanity in its pursuit of knowledge. Our team is small, highly motivated, and focused on engineering excellence. This organization is for individuals who appreciate challenging themselves and thrive on curiosity. We operate with a flat organizational structure. All employees are expected to be hands-on and to contribute directly to the company’s mission. Leadership is given to those wh"
+  },
+  {
+    "id": "anal_1778418500649",
+    "timestamp": "2026-05-10T13:08:20.649Z",
+    "jobTitle": "Job Application for AI Tutor - Software Engineering Specialist at xAI",
+    "source": "URL",
+    "status": "low_concern",
+    "statusLabel": "🟢 LOW CONCERN",
+    "riskScore": 13,
+    "legitimacyScore": 87,
+    "jobStatus": "Likely Open",
+    "jobStatusMeta": {
+      "color": "#2563eb",
+      "icon": "🔵",
+      "badge": "Likely Still Open"
+    },
+    "isAcceptingApplications": true,
+    "jobStatusConfidence": "medium",
+    "jobStatusInferred": true,
+    "freshness": {
+      "score": 80,
+      "staleness": 20,
+      "label": "Likely Still Open",
+      "signals": [
+        {
+          "signal": "Active application call-to-action",
+          "weight": -25
+        },
+        {
+          "signal": "Hiring process described — actively recruiting",
+          "weight": -20
+        },
+        {
+          "signal": "Detailed posting (856 words) — well maintained",
+          "weight": -15
+        }
+      ]
+    },
+    "redFlags": [
+      "Requests sensitive financial or identity documents prematurely",
+      "Task-based commission scam pattern (common in WhatsApp scams)"
+    ],
+    "positiveIndicators": [
+      "Includes standard equal opportunity or diversity statements",
+      "Mentions standard professional benefits package",
+      "Specifies paid time off benefits",
+      "Describes structured, professional interview process",
+      "Contains detailed job description sections",
+      "Specifies standard employment type",
+      "Mentions standard confidentiality or NDA requirements"
+    ],
+    "explanation": "This posting appears relatively safe — 2 red flags were detected. Multiple positive signals (7) indicate professional legitimacy. Always verify company information independently before accepting any offer.",
+    "recommendation": "✓ APPEARS LEGITIMATE. Conduct standard due diligence: confirm the company website, read reviews, and verify the recruiter on LinkedIn.",
+    "actionItems": [
+      "🔍 Verify the company on its official website — search for it independently, don't use links in the posting",
+      "💼 Find the company on LinkedIn and check whether employees list it on their profiles",
+      "🔎 Paste the job title + key phrases in quotes into Google to detect copy-paste scam postings",
+      "⭐ Read company reviews on Glassdoor, Indeed, and Google before accepting any offer",
+      "🤝 Contact the company directly through its official website to confirm this posting is genuine",
+      "❌ Never pay for training, equipment, starter kits, or background checks before your first day of work"
+    ],
+    "metadata": {
+      "redFlagCount": 2,
+      "positiveCount": 7,
+      "contextPenalty": 14,
+      "contextBonus": 10,
+      "netContextAdjustment": 4,
+      "contextFlags": [
+        "No official website or online presence mentioned",
+        "Team structure or reporting line described",
+        "Qualifications section present"
+      ],
+      "originalLength": 6313,
+      "cleanedLength": 6313,
+      "wordCount": 856,
+      "hasEmail": false,
+      "hasFreeEmail": false,
+      "hasPhone": false,
+      "hasURL": false,
+      "hasSalary": true,
+      "hasLocation": true,
+      "hasCompanyName": true,
+      "analysisTimestamp": "2026-05-10T13:08:20.643Z"
+    },
+    "originalText": "Job Application for AI Tutor - Software Engineering Specialist at xAI \n\n \n\n \n\n Back to jobs \n\nAI Tutor - Software Engineering Specialist\n\n \nRemote\n\n Apply \n\n ABOUT xAI \n\n xAI’s mission is to create AI systems that can accurately understand the universe and aid humanity in its pursuit of knowledge. Our team is small, highly motivated, and focused on engineering excellence. This organization is for individuals who appreciate challenging themselves and thrive on curiosity. We operate with a flat organizational structure. All employees are expected to be hands-on and to contribute directly to the company’s mission. Leadership is given to those wh"
+  },
+  {
+    "id": "anal_1778418469517",
+    "timestamp": "2026-05-10T13:07:49.517Z",
+    "jobTitle": "URL Job Posting",
+    "source": "URL",
+    "status": "caution",
+    "statusLabel": "🔵 CAUTION ADVISED",
+    "riskScore": 20,
+    "legitimacyScore": 80,
+    "jobStatus": "Possibly Stale",
+    "jobStatusMeta": {
+      "color": "#ea580c",
+      "icon": "🟠",
+      "badge": "Possibly Stale — Verify Before Applying"
+    },
+    "isAcceptingApplications": true,
+    "jobStatusConfidence": "low",
+    "jobStatusInferred": true,
+    "freshness": {
+      "score": 37,
+      "staleness": 63,
+      "label": "Possibly Stale — Verify Before Applying",
+      "signals": [
+        {
+          "signal": "Very short posting (8 words) — possible placeholder",
+          "weight": 25
+        }
+      ]
+    },
+    "redFlags": [],
+    "positiveIndicators": [],
+    "explanation": "This posting has 0 minor concerns. Context flags: Very short description for a remote/entry-level posting. Standard due diligence is recommended.",
+    "recommendation": "✓ POTENTIALLY LEGITIMATE. Verify the company on Glassdoor and LinkedIn, and confirm job details through the official company website.",
+    "actionItems": [
+      "🔍 Verify the company on its official website — search for it independently, don't use links in the posting",
+      "💼 Find the company on LinkedIn and check whether employees list it on their profiles",
+      "🔎 Paste the job title + key phrases in quotes into Google to detect copy-paste scam postings",
+      "⭐ Read company reviews on Glassdoor, Indeed, and Google before accepting any offer",
+      "🤝 Contact the company directly through its official website to confirm this posting is genuine",
+      "❌ Never pay for training, equipment, starter kits, or background checks before your first day of work"
+    ],
+    "metadata": {
+      "redFlagCount": 0,
+      "positiveCount": 0,
+      "contextPenalty": 20,
+      "contextBonus": 0,
+      "netContextAdjustment": 20,
+      "contextFlags": [
+        "Very short description for a remote/entry-level posting"
+      ],
+      "originalLength": 103,
+      "cleanedLength": 103,
+      "wordCount": 8,
+      "hasEmail": false,
+      "hasFreeEmail": false,
+      "hasPhone": false,
+      "hasURL": true,
+      "hasSalary": false,
+      "hasLocation": true,
+      "hasCompanyName": false,
+      "analysisTimestamp": "2026-05-10T13:07:49.511Z"
+    },
+    "originalText": "Job posting URL: https://x.ai/careers/open-roles?location=remote\nDomain: x.ai\nPath: /careers/open-roles"
+  },
+  {
+    "id": "anal_1778418439414",
+    "timestamp": "2026-05-10T13:07:19.414Z",
+    "jobTitle": "Insurance/Financial Advisor at LEADWAY ASSURANCE LIMITED | Jobberman",
+    "source": "URL",
+    "status": "legitimate",
+    "statusLabel": "✅ LIKELY LEGITIMATE",
+    "riskScore": 7,
+    "legitimacyScore": 93,
+    "jobStatus": "Open",
+    "jobStatusMeta": {
+      "color": "#1a7a45",
+      "icon": "🟢",
+      "badge": "Accepting Applications"
+    },
+    "isAcceptingApplications": true,
+    "jobStatusConfidence": "medium",
+    "jobStatusInferred": false,
+    "freshness": {
+      "score": 70,
+      "staleness": 30,
+      "label": "Likely Still Open",
+      "signals": [
+        {
+          "signal": "Active application call-to-action",
+          "weight": -25
+        },
+        {
+          "signal": "Detailed posting (978 words) — well maintained",
+          "weight": -15
+        }
+      ]
+    },
+    "redFlags": [
+      "Task-based commission scam pattern (common in WhatsApp scams)",
+      "High-pressure urgency tactics to prevent careful consideration"
+    ],
+    "positiveIndicators": [
+      "Uses professional company email domain (not free email)",
+      "Specifies minimum years of experience required",
+      "Contains detailed job description sections",
+      "Specifies standard employment type",
+      "Mentions standard confidentiality or NDA requirements"
+    ],
+    "explanation": "This posting appears relatively safe — 2 red flags were detected. Multiple positive signals (5) indicate professional legitimacy. Always verify company information independently before accepting any offer.",
+    "recommendation": "✓ APPEARS LEGITIMATE. Conduct standard due diligence: confirm the company website, read reviews, and verify the recruiter on LinkedIn.",
+    "actionItems": [
+      "🔍 Verify the company on its official website — search for it independently, don't use links in the posting",
+      "💼 Find the company on LinkedIn and check whether employees list it on their profiles",
+      "🔎 Paste the job title + key phrases in quotes into Google to detect copy-paste scam postings",
+      "📧 Confirm the email domain matches the company's official website exactly",
+      "⭐ Read company reviews on Glassdoor, Indeed, and Google before accepting any offer",
+      "🤝 Contact the company directly through its official website to confirm this posting is genuine",
+      "❌ Never pay for training, equipment, starter kits, or background checks before your first day of work"
+    ],
+    "metadata": {
+      "redFlagCount": 2,
+      "positiveCount": 5,
+      "contextPenalty": 10,
+      "contextBonus": 20,
+      "netContextAdjustment": -10,
+      "contextFlags": [
+        "WhatsApp mentioned",
+        "Industry-standard tools or platforms referenced",
+        "Structured job posting with dedicated sections",
+        "Qualifications section present"
+      ],
+      "originalLength": 11653,
+      "cleanedLength": 11653,
+      "wordCount": 978,
+      "hasEmail": true,
+      "hasFreeEmail": false,
+      "hasPhone": true,
+      "hasURL": true,
+      "hasSalary": false,
+      "hasLocation": true,
+      "hasCompanyName": true,
+      "analysisTimestamp": "2026-05-10T13:07:19.412Z"
+    },
+    "originalText": "Insurance/Financial Advisor at LEADWAY ASSURANCE LIMITED | Jobberman \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n\n \n\n \n \n \n \n \n \n\n \n \n\n \n \n \n \n \n \n \n \n \n \n \n \n \n\n \n \n\n \n\n \n \n\n \n\n \n\n \n \n\n \n\n \n\n \n \n \n {\n const diff = pageYOffset - window.pageYOffset;\n if (Math.abs(diff) >= 5) {\n pageYOffset = window.pageYOffset;\n showFilter = diff > 0;\n }\n }\"\n >\n \n\n \n \n \n \n\n Find a Job\n \n\n \n \n\n \n\n \n\n \n\n \n\n \n\n \n \n \n\n \n \n\n \n \n\n \n \n\n \n\n \n\n \n 1\"\n class=\"cursor-pointer text-xs font-normal leading-4 text-white bg-brand-secondary flex gap-x-1 rounded-full items-center px-2\">\n \n+\n\n \n \n\n \n \n\n \n\n {\n \n const container = $refs['job_function__Panel'];\n if (contai"
+  },
+  {
+    "id": "anal_1778418410558",
+    "timestamp": "2026-05-10T13:06:50.558Z",
+    "jobTitle": "Careers | Render",
+    "source": "URL",
+    "status": "low_concern",
+    "statusLabel": "🟢 LOW CONCERN",
+    "riskScore": 10,
+    "legitimacyScore": 90,
+    "jobStatus": "Uncertain",
+    "jobStatusMeta": {
+      "color": "#d97706",
+      "icon": "🟡",
+      "badge": "Status Uncertain — Check Directly"
+    },
+    "isAcceptingApplications": true,
+    "jobStatusConfidence": "low",
+    "jobStatusInferred": true,
+    "freshness": {
+      "score": 57,
+      "staleness": 43,
+      "label": "Status Uncertain — Check Directly",
+      "signals": [
+        {
+          "signal": "Detailed posting (685 words) — well maintained",
+          "weight": -15
+        }
+      ]
+    },
+    "redFlags": [
+      "Requests sensitive financial or identity documents prematurely"
+    ],
+    "positiveIndicators": [
+      "Mentions standard professional benefits package",
+      "Specifies paid time off benefits",
+      "Offers equity or stock options (typical of legitimate companies)"
+    ],
+    "explanation": "This posting appears relatively safe — 1 red flag was detected. Multiple positive signals (3) indicate professional legitimacy. Always verify company information independently before accepting any offer.",
+    "recommendation": "✓ APPEARS LEGITIMATE. Conduct standard due diligence: confirm the company website, read reviews, and verify the recruiter on LinkedIn.",
+    "actionItems": [
+      "🔍 Verify the company on its official website — search for it independently, don't use links in the posting",
+      "💼 Find the company on LinkedIn and check whether employees list it on their profiles",
+      "🔎 Paste the job title + key phrases in quotes into Google to detect copy-paste scam postings",
+      "⭐ Read company reviews on Glassdoor, Indeed, and Google before accepting any offer",
+      "🤝 Contact the company directly through its official website to confirm this posting is genuine",
+      "❌ Never pay for training, equipment, starter kits, or background checks before your first day of work"
+    ],
+    "metadata": {
+      "redFlagCount": 1,
+      "positiveCount": 3,
+      "contextPenalty": 0,
+      "contextBonus": 0,
+      "netContextAdjustment": 0,
+      "contextFlags": [],
+      "originalLength": 4771,
+      "cleanedLength": 4771,
+      "wordCount": 685,
+      "hasEmail": false,
+      "hasFreeEmail": false,
+      "hasPhone": false,
+      "hasURL": false,
+      "hasSalary": true,
+      "hasLocation": true,
+      "hasCompanyName": true,
+      "analysisTimestamp": "2026-05-10T13:06:50.555Z"
+    },
+    "originalText": "Careers | Render \n \n \n \n\nWe&#x27;re removing seat fees and making pricing better for fast-growing teams \n Learn more \n \n\n Careers \n\n Evolve the cloud. Elevate your craft. \n\n \nWe’re working to empower every developer and business to move fast and focus on what matters most to them. Render is on an ambitious, long-term journey — and we’d love for you to join us.\n \n\n Explore open roles \n\n \n\n \n\n \n\n \n\n \n\n \n\n \n\n \n\nOur operating principles\n\nThese underlying values inform how we make decisions, partner with one another, and ultimately serve our users. They represent the types of attributes and behaviors we value in each other and continuously aspire "
+  },
+  {
+    "id": "anal_1778418345521",
+    "timestamp": "2026-05-10T13:05:45.521Z",
+    "jobTitle": "Software Dev Engineer I, Amazon University Talent Acquisition - Job ID: 3015604 | Amazon.jobs",
+    "source": "URL",
+    "status": "suspicious",
+    "statusLabel": "🟡 SUSPICIOUS",
+    "riskScore": 40,
+    "legitimacyScore": 60,
+    "jobStatus": "Open",
+    "jobStatusMeta": {
+      "color": "#1a7a45",
+      "icon": "🟢",
+      "badge": "Accepting Applications"
+    },
+    "isAcceptingApplications": true,
+    "jobStatusConfidence": "medium",
+    "jobStatusInferred": false,
+    "freshness": {
+      "score": 100,
+      "staleness": 0,
+      "label": "Actively Hiring",
+      "signals": [
+        {
+          "signal": "Active application call-to-action",
+          "weight": -25
+        },
+        {
+          "signal": "Active recruitment language in body",
+          "weight": -20
+        },
+        {
+          "signal": "Hiring process described — actively recruiting",
+          "weight": -20
+        },
+        {
+          "signal": "Detailed posting (1299 words) — well maintained",
+          "weight": -15
+        }
+      ]
+    },
+    "redFlags": [
+      "Requests sensitive financial or identity documents prematurely",
+      "Task-based commission scam pattern (common in WhatsApp scams)",
+      "High-pressure urgency tactics to prevent careful consideration"
+    ],
+    "positiveIndicators": [
+      "Includes standard equal opportunity or diversity statements",
+      "Mentions formal onboarding or training process",
+      "Requires formal education or professional certifications",
+      "Contains detailed job description sections",
+      "Provides specific, reasonable salary range",
+      "Specifies standard employment type",
+      "Mentions standard confidentiality or NDA requirements",
+      "Provides clear application deadline"
+    ],
+    "explanation": "This posting shows 3 concerns that warrant careful verification. Context flags: WhatsApp mentioned; Telegram mentioned; Industry-standard tools or platforms referenced. Some legitimate signals (8) are present, but risks remain. Do not proceed without independent research.",
+    "recommendation": "⚡ CAUTION. Verify the company through independent sources before engaging. Never pay upfront fees for training, equipment, or background checks.",
+    "actionItems": [
+      "⚠️ Search \"[company name] scam\" on Google and check ScamPulse, BBB Scam Tracker",
+      "🔍 Verify the company on its official website — search for it independently, don't use links in the posting",
+      "💼 Find the company on LinkedIn and check whether employees list it on their profiles",
+      "🔎 Paste the job title + key phrases in quotes into Google to detect copy-paste scam postings",
+      "❌ Never pay for training, equipment, starter kits, or background checks before your first day of work"
+    ],
+    "metadata": {
+      "redFlagCount": 3,
+      "positiveCount": 8,
+      "contextPenalty": 20,
+      "contextBonus": 18,
+      "netContextAdjustment": 2,
+      "contextFlags": [
+        "WhatsApp mentioned",
+        "Telegram mentioned",
+        "Industry-standard tools or platforms referenced",
+        "Team structure or reporting line described",
+        "Qualifications section present"
+      ],
+      "originalLength": 9344,
+      "cleanedLength": 9344,
+      "wordCount": 1299,
+      "hasEmail": false,
+      "hasFreeEmail": false,
+      "hasPhone": true,
+      "hasURL": true,
+      "hasSalary": true,
+      "hasLocation": true,
+      "hasCompanyName": true,
+      "analysisTimestamp": "2026-05-10T13:05:45.517Z"
+    },
+    "originalText": "Software Dev Engineer I, Amazon University Talent Acquisition - Job ID: 3015604 | Amazon.jobs \n \n \n \n\n Skip to main content \n\n &times; \n\n Home \n\n Teams \n\n Locations \n\n Job categories \n\n My career \n My applications \n\n My profile \n\n Account security \n\n Settings \n\n Sign out \n \n\n Resources \n Accommodations \n\n Benefits \n\n Inclusive experiences \n\n How We Hire \n\n Leadership principles \n\n Working at Amazon \n\n FAQ \n \n\n \n\n \n\nSoftware Dev Engineer I, Amazon University Talent Acquisition\n\nJob ID: 3015604 | ADCI - Karnataka\n\n Apply now \n\n \n\n \n\nDescription\n\nAt Amazon, we hire the best minds in technology to innovate and build on behalf of our customers. Th"
+  },
+  {
     "id": "anal_1778417522833",
     "timestamp": "2026-05-10T12:52:02.833Z",
     "jobTitle": "Careers at Microsoft",

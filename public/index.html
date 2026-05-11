@@ -5,6 +5,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
+  <!-- Enhanced Content Security Policy -->
+  <meta http-equiv="Content-Security-Policy" content="
+    default-src 'self';
+    script-src 'self' 'unsafe-inline';
+    style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+    font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net;
+    img-src 'self' data: https:;
+    connect-src 'self';
+    frame-ancestors 'none';
+    base-uri 'self';
+    form-action 'self';
+    upgrade-insecure-requests;
+  ">
+
+  <!-- Security Headers -->
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="X-Frame-Options" content="DENY">
+  <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+
   <!-- Primary Meta Tags -->
   <title>VerifyJobs – Free Job Scam Detector | Is This Job Real? Instant Fraud Check</title>
   <meta name="title" content="VerifyJobs – Free Job Scam Detector | Is This Job Real? Instant Fraud Check">
@@ -72,7 +92,7 @@
     "operatingSystem": "All",
     "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
     "creator": { "@type": "Organization", "name": "VerifyJobs", "url": "https://verifyjobs.org" },
-    "softwareVersion": "1.4"
+    "softwareVersion": "2.0"
   }
   </script>
 
@@ -196,6 +216,9 @@
     input:focus, textarea:focus { outline: none; border-color: var(--navy-light); background: white; box-shadow: 0 0 0 3px rgba(42,46,122,0.1); }
     textarea { min-height: 140px; resize: vertical; line-height: 1.55; }
     .row2 { display: grid; grid-template-columns: 1fr; gap: 14px; }
+    input.error, textarea.error { border-color: var(--red); }
+    .error-message { color: var(--red); font-size: 11px; margin-top: 4px; display: none; }
+    .error-message.show { display: block; }
 
     /* ─── UPLOAD ─── */
     .upload-zone { border: 2px dashed var(--border); border-radius: 10px; padding: 2rem 1rem; text-align: center; cursor: pointer; background: #fafbff; transition: all 0.2s; min-height: 160px; display: flex; flex-direction: column; align-items: center; justify-content: center; }
@@ -209,7 +232,7 @@
 
     /* ─── BUTTON ─── */
     .btn { width: 100%; padding: 16px; background: var(--red); color: white; border: none; border-radius: 10px; font-size: 16px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 6px; transition: all 0.2s; font-family: 'DM Sans', sans-serif; letter-spacing: 0.2px; -webkit-tap-highlight-color: transparent; touch-action: manipulation; box-shadow: 0 4px 14px rgba(192,57,43,0.35); min-height: 52px; }
-    .btn:active { background: var(--red-bright); transform: scale(0.98); }
+    .btn:active:not(:disabled) { background: var(--red-bright); transform: scale(0.98); }
     .btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; box-shadow: none; }
 
     /* ─── LOADING ─── */
@@ -217,6 +240,23 @@
     .spinner { width: 40px; height: 40px; border: 3px solid var(--border); border-top-color: var(--navy); border-radius: 50%; animation: spin 0.75s linear infinite; margin: 0 auto 14px; }
     @keyframes spin { to { transform: rotate(360deg); } }
     .loading p { font-size: 13px; color: var(--muted); }
+
+    /* ─── ERROR ALERT ─── */
+    .error-alert { 
+      background: var(--red-pale); 
+      border: 1px solid var(--red); 
+      border-radius: 10px; 
+      padding: 14px 16px; 
+      margin-bottom: 1rem; 
+      display: none; 
+      align-items: flex-start;
+      gap: 10px;
+    }
+    .error-alert.show { display: flex; }
+    .error-alert i { color: var(--red); font-size: 18px; flex-shrink: 0; margin-top: 2px; }
+    .error-alert-content { flex: 1; }
+    .error-alert-title { font-size: 13px; font-weight: 700; color: var(--red); margin-bottom: 4px; }
+    .error-alert-message { font-size: 12px; color: var(--red); line-height: 1.5; }
 
     /* ─── RESULTS ─── */
     .results { display: none; }
@@ -231,48 +271,12 @@
     .v-legitimate { background: var(--green-pale); border-left: 4px solid var(--green); }
     .v-legitimate i, .v-legitimate .verdict-label, .v-legitimate .verdict-sub { color: var(--green); }
 
-    /* ─── JOB STATUS BADGE ─── (NEW v1.4) */
-    .job-status-wrap {
-      margin-bottom: 1rem;
-    }
-    .job-status-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
-      padding: 7px 14px;
-      border-radius: 20px;
-      font-size: 12px;
-      font-weight: 600;
-      border: 1.5px solid currentColor;
-      line-height: 1;
-    }
-    .job-status-pill .js-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: currentColor;
-      flex-shrink: 0;
-    }
-    .job-status-not-accepting {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      margin-left: 8px;
-      font-size: 11px;
-      font-weight: 600;
-      color: var(--red);
-      background: var(--red-pale);
-      border-radius: 10px;
-      padding: 4px 10px;
-    }
-    .job-status-label {
-      font-size: 10px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      color: var(--faint);
-      margin-bottom: 6px;
-    }
+    /* ─── JOB STATUS BADGE ─── */
+    .job-status-wrap { margin-bottom: 1rem; }
+    .job-status-pill { display: inline-flex; align-items: center; gap: 7px; padding: 7px 14px; border-radius: 20px; font-size: 12px; font-weight: 600; border: 1.5px solid currentColor; line-height: 1; }
+    .job-status-pill .js-dot { width: 8px; height: 8px; border-radius: 50%; background: currentColor; flex-shrink: 0; }
+    .job-status-not-accepting { display: inline-flex; align-items: center; gap: 5px; margin-left: 8px; font-size: 11px; font-weight: 600; color: var(--red); background: var(--red-pale); border-radius: 10px; padding: 4px 10px; }
+    .job-status-label { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: var(--faint); margin-bottom: 6px; }
 
     /* ─── SCORES ─── */
     .scores { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 1rem; }
@@ -426,8 +430,17 @@
   <div style="text-align:center">
     <span class="status-badge" role="status">
       <span class="status-dot" aria-hidden="true"></span>
-      Rule Engine v1.4 — Online &amp; Ready
+      Rule Engine v2.0 — Online &amp; Ready
     </span>
+  </div>
+
+  <!-- ERROR ALERT -->
+  <div class="error-alert" id="errorAlert" role="alert" aria-live="assertive">
+    <i class="ti ti-alert-circle" aria-hidden="true"></i>
+    <div class="error-alert-content">
+      <div class="error-alert-title" id="errorTitle">Error</div>
+      <div class="error-alert-message" id="errorMessage"></div>
+    </div>
   </div>
 
   <!-- TOOL -->
@@ -450,7 +463,8 @@
         <div class="row2">
           <div class="field">
             <label for="jt">Job Title</label>
-            <input type="text" id="jt" placeholder="e.g. Remote Data Entry" autocomplete="off" inputmode="text">
+            <input type="text" id="jt" placeholder="e.g. Remote Data Entry" autocomplete="off" inputmode="text" aria-describedby="jt-error">
+            <div class="error-message" id="jt-error"></div>
           </div>
           <div class="field">
             <label for="co">Company Name</label>
@@ -459,7 +473,8 @@
         </div>
         <div class="field">
           <label for="jd">Job Description <span style="color:var(--red)" aria-hidden="true">*</span></label>
-          <textarea id="jd" placeholder="Paste the full job posting here — the more text, the more accurate the analysis…" aria-required="true"></textarea>
+          <textarea id="jd" placeholder="Paste the full job posting here — the more text, the more accurate the analysis…" aria-required="true" aria-describedby="jd-error"></textarea>
+          <div class="error-message" id="jd-error"></div>
         </div>
         <div class="row2">
           <div class="field">
@@ -471,7 +486,7 @@
             <input type="text" id="cnt" placeholder="Phone or email (optional)" autocomplete="off">
           </div>
         </div>
-        <button class="btn" onclick="analyzeText()">
+        <button class="btn" id="analyzeTextBtn" onclick="analyzeText()">
           <i class="ti ti-shield-search" aria-hidden="true"></i> Analyze Job Posting
         </button>
       </div>
@@ -500,28 +515,26 @@
       <div id="pane-url" class="tab-pane" role="tabpanel" aria-labelledby="tab-url">
         <div class="field">
           <label for="jobUrl">Job Posting URL</label>
-          <input type="url" id="jobUrl" placeholder="https://example.com/jobs/12345" inputmode="url" autocomplete="off" autocapitalize="none" spellcheck="false">
-          <p style="font-size:11px;color:var(--faint);margin-top:6px">We'll analyse the URL structure and domain for known scam patterns.</p>
+          <input type="url" id="jobUrl" placeholder="https://example.com/jobs/12345" inputmode="url" autocomplete="off" autocapitalize="none" spellcheck="false" aria-describedby="url-help url-error">
+          <p id="url-help" style="font-size:11px;color:var(--faint);margin-top:6px">We'll analyse the URL structure and domain for known scam patterns.</p>
+          <div class="error-message" id="url-error"></div>
         </div>
-        <button class="btn" onclick="analyzeUrl()">
+        <button class="btn" id="analyzeUrlBtn" onclick="analyzeUrl()">
           <i class="ti ti-shield-search" aria-hidden="true"></i> Analyze URL
         </button>
       </div>
     </div>
 
     <!-- LOADING -->
-    <div class="loading" id="loading" aria-live="polite">
-      <div class="spinner" aria-hidden="true"></div>
+    <div class="loading" id="loading" aria-live="polite" aria-busy="true">
+      <div class="spinner" role="status" aria-label="Loading"></div>
       <p>Scanning for scam indicators…</p>
     </div>
 
     <!-- RESULTS -->
     <div class="results" id="results" role="region" aria-label="Analysis results" aria-live="polite">
       <div id="verdict"></div>
-
-      <!-- ★ NEW: Job Status Badge ★ -->
       <div class="job-status-wrap" id="jobStatusWrap" style="display:none"></div>
-
       <div class="card">
         <div class="scores" id="scores"></div>
         <div id="flagsWrap"></div>
@@ -682,7 +695,7 @@
       <a href="about.html">About</a>
       <a href="how-it-works.html">How It Works</a>
       <a href="report-a-scam.html">Report a Scam</a>
-      <a href="privacy.html">Privacy Policy</a>
+      <a href="analytics.html">Privacy Policy</a>
       <a href="https://justjobs.netlify.app" target="_blank" rel="noopener noreferrer">Job API ↗</a>
     </div>
     <p>© 2025 VerifyJobs.org — Free job scam detector. Not affiliated with any government agency.</p>
@@ -697,29 +710,144 @@
 </div><!-- /.page -->
 
 <script>
-  const API_URL      = '/analyze';
-  const FILE_API_URL = '/analyze-file';
-  const URL_API_URL  = '/analyze-url';
+  'use strict';
 
-  let currentFile = null;
-
-  // ─── JOB STATUS colour map (mirrors JOB_STATUS_META in analyzer.js) ──────────
-  // Kept client-side so the UI works even if the server omits jobStatusMeta.
-  const STATUS_META = {
-    'Open':         { color: '#1a7a45', icon: '🟢', badge: 'Accepting Applications' },
-    'Under Review': { color: '#2563eb', icon: '🔵', badge: 'Applications Under Review' },
-    'Interviewing': { color: '#7c3aed', icon: '🟣', badge: 'Interviewing Candidates' },
-    'Offer Sent':   { color: '#d97706', icon: '🟡', badge: 'Offer Extended' },
-    'Filled':       { color: '#4b5563', icon: '⚫', badge: 'Position Filled' },
-    'Closed':       { color: '#dc2626', icon: '🔴', badge: 'No Longer Accepting Applications' },
-    'On Hold':      { color: '#ea580c', icon: '🟠', badge: 'Hiring Paused' },
-    'Cancelled':    { color: '#991b1b', icon: '🚫', badge: 'Position Cancelled' },
-    'Expired':      { color: '#9ca3af', icon: '⬜', badge: 'Posting Expired' },
-    'Unknown':      { color: '#9ca3af', icon: '❓', badge: 'Status Unknown' },
+  // Configuration
+  const API_CONFIG = {
+    textUrl: '/analyze',
+    fileUrl: '/analyze-file',
+    urlAnalysisUrl: '/analyze-url',
+    timeout: 60000, // 60 seconds
   };
 
-  /* ─── NAV TOGGLE ─── */
-  const navToggle   = document.getElementById('navToggle');
+  // State
+  let currentFile = null;
+  let currentRequest = null;
+
+  // Job status metadata (client-side fallback)
+  const STATUS_META = {
+    'Open': { color: '#1a7a45', icon: '🟢', badge: 'Accepting Applications' },
+    'Under Review': { color: '#2563eb', icon: '🔵', badge: 'Applications Under Review' },
+    'Interviewing': { color: '#7c3aed', icon: '🟣', badge: 'Interviewing Candidates' },
+    'Offer Sent': { color: '#d97706', icon: '🟡', badge: 'Offer Extended' },
+    'Filled': { color: '#4b5563', icon: '⚫', badge: 'Position Filled' },
+    'Closed': { color: '#dc2626', icon: '🔴', badge: 'No Longer Accepting Applications' },
+    'On Hold': { color: '#ea580c', icon: '🟠', badge: 'Hiring Paused' },
+    'Cancelled': { color: '#991b1b', icon: '🚫', badge: 'Position Cancelled' },
+    'Expired': { color: '#9ca3af', icon: '⬜', badge: 'Posting Expired' },
+    'Unknown': { color: '#9ca3af', icon: '❓', badge: 'Status Unknown' },
+  };
+
+  // ───────────────────────────────────────────────────
+  // UTILITIES
+  // ───────────────────────────────────────────────────
+  function showError(title, message) {
+    const alert = document.getElementById('errorAlert');
+    document.getElementById('errorTitle').textContent = title;
+    document.getElementById('errorMessage').textContent = message;
+    alert.classList.add('show');
+    alert.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+    // Auto-hide after 8 seconds
+    setTimeout(() => {
+      alert.classList.remove('show');
+    }, 8000);
+  }
+
+  function hideError() {
+    document.getElementById('errorAlert').classList.remove('show');
+  }
+
+  function setLoading(isLoading) {
+    const loadingEl = document.getElementById('loading');
+    const resultsEl = document.getElementById('results');
+    
+    if (isLoading) {
+      loadingEl.style.display = 'block';
+      resultsEl.style.display = 'none';
+      hideError();
+      loadingEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    } else {
+      loadingEl.style.display = 'none';
+    }
+  }
+
+  function validateText(text) {
+    if (!text || typeof text !== 'string') {
+      return { valid: false, error: 'Job description is required' };
+    }
+    const trimmed = text.trim();
+    if (trimmed.length < 10) {
+      return { valid: false, error: 'Job description is too short (minimum 10 characters)' };
+    }
+    if (trimmed.length > 50000) {
+      return { valid: false, error: 'Job description is too long (maximum 50,000 characters)' };
+    }
+    return { valid: true, value: trimmed };
+  }
+
+  function validateUrl(url) {
+    if (!url || typeof url !== 'string') {
+      return { valid: false, error: 'URL is required' };
+    }
+    const trimmed = url.trim();
+    if (trimmed.length === 0) {
+      return { valid: false, error: 'URL is required' };
+    }
+    if (trimmed.length > 2048) {
+      return { valid: false, error: 'URL is too long' };
+    }
+    // Basic URL validation
+    try {
+      const urlObj = new URL(trimmed.startsWith('http') ? trimmed : `https://${trimmed}`);
+      if (!['http:', 'https:'].includes(urlObj.protocol)) {
+        return { valid: false, error: 'URL must use HTTP or HTTPS protocol' };
+      }
+      return { valid: true, value: urlObj.href };
+    } catch {
+      return { valid: false, error: 'Invalid URL format' };
+    }
+  }
+
+  async function makeRequest(url, options) {
+    // Cancel previous request if exists
+    if (currentRequest) {
+      currentRequest.abort();
+    }
+
+    const controller = new AbortController();
+    currentRequest = controller;
+
+    const timeoutId = setTimeout(() => controller.abort(), API_CONFIG.timeout);
+
+    try {
+      const response = await fetch(url, {
+        ...options,
+        signal: controller.signal,
+      });
+
+      clearTimeout(timeoutId);
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.error || errorData.message || `Server error (${response.status})`);
+      }
+
+      return await response.json();
+    } catch (err) {
+      if (err.name === 'AbortError') {
+        throw new Error('Request timed out. Please try again.');
+      }
+      throw err;
+    } finally {
+      currentRequest = null;
+    }
+  }
+
+  // ───────────────────────────────────────────────────
+  // NAV TOGGLE
+  // ───────────────────────────────────────────────────
+  const navToggle = document.getElementById('navToggle');
   const navDropdown = document.getElementById('navDropdown');
 
   navToggle.addEventListener('click', () => {
@@ -728,6 +856,7 @@
     navToggle.setAttribute('aria-expanded', String(!isOpen));
     navToggle.setAttribute('aria-label', isOpen ? 'Open navigation menu' : 'Close navigation menu');
   });
+
   navDropdown.querySelectorAll('.nav-link').forEach(link => {
     link.addEventListener('click', () => {
       navDropdown.classList.remove('open');
@@ -735,12 +864,14 @@
       navToggle.setAttribute('aria-label', 'Open navigation menu');
     });
   });
+
   document.addEventListener('click', e => {
     if (!navToggle.contains(e.target) && !navDropdown.contains(e.target)) {
       navDropdown.classList.remove('open');
       navToggle.setAttribute('aria-expanded', 'false');
     }
   });
+
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape' && navDropdown.classList.contains('open')) {
       navDropdown.classList.remove('open');
@@ -749,276 +880,404 @@
     }
   });
 
-  /* ─── TABS ─── */
+  // ───────────────────────────────────────────────────
+  // TABS
+  // ───────────────────────────────────────────────────
   function switchTab(name) {
-    document.querySelectorAll('.tab-btn').forEach(b => { b.classList.remove('active'); b.setAttribute('aria-selected', 'false'); });
+    document.querySelectorAll('.tab-btn').forEach(b => {
+      b.classList.remove('active');
+      b.setAttribute('aria-selected', 'false');
+    });
     document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+    
     document.getElementById('tab-' + name).classList.add('active');
     document.getElementById('tab-' + name).setAttribute('aria-selected', 'true');
     document.getElementById('pane-' + name).classList.add('active');
+    
+    hideError();
   }
 
-  /* ─── FAQ ─── */
+  // ───────────────────────────────────────────────────
+  // FAQ
+  // ───────────────────────────────────────────────────
   function toggleFaq(el) {
-    const item   = el.closest('.faq-item');
+    const item = el.closest('.faq-item');
     const isOpen = item.classList.contains('open');
+    
     document.querySelectorAll('.faq-item.open').forEach(i => {
       i.classList.remove('open');
       i.querySelector('.faq-q').setAttribute('aria-expanded', 'false');
     });
-    if (!isOpen) { item.classList.add('open'); el.setAttribute('aria-expanded', 'true'); }
+    
+    if (!isOpen) {
+      item.classList.add('open');
+      el.setAttribute('aria-expanded', 'true');
+    }
   }
+
   document.querySelectorAll('.faq-q').forEach(q => {
-    q.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleFaq(q); } });
+    q.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        toggleFaq(q);
+      }
+    });
   });
 
-  /* ─── FILE UPLOAD ─── */
+  // ───────────────────────────────────────────────────
+  // FILE UPLOAD
+  // ───────────────────────────────────────────────────
   const dropZone = document.getElementById('dropZone');
-  const fileIn   = document.getElementById('fileIn');
+  const fileIn = document.getElementById('fileIn');
 
-  dropZone.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') fileIn.click(); });
-  dropZone.addEventListener('dragover',  e => { e.preventDefault(); dropZone.classList.add('drag'); });
-  dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag'));
-  dropZone.addEventListener('drop', e => {
-    e.preventDefault(); dropZone.classList.remove('drag');
-    if (e.dataTransfer.files[0]) handleFile(e.dataTransfer.files[0]);
+  dropZone.addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      fileIn.click();
+    }
   });
-  fileIn.addEventListener('change', e => { if (e.target.files[0]) handleFile(e.target.files[0]); });
+
+  dropZone.addEventListener('dragover', e => {
+    e.preventDefault();
+    dropZone.classList.add('drag');
+  });
+
+  dropZone.addEventListener('dragleave', () => {
+    dropZone.classList.remove('drag');
+  });
+
+  dropZone.addEventListener('drop', e => {
+    e.preventDefault();
+    dropZone.classList.remove('drag');
+    if (e.dataTransfer.files[0]) {
+      handleFile(e.dataTransfer.files[0]);
+    }
+  });
+
+  fileIn.addEventListener('change', e => {
+    if (e.target.files[0]) {
+      handleFile(e.target.files[0]);
+    }
+  });
 
   function handleFile(file) {
+    const maxSize = 10 * 1024 * 1024; // 10MB
+    const allowedExts = ['.pdf', '.doc', '.docx'];
+    const ext = '.' + file.name.split('.').pop().toLowerCase();
+
+    if (!allowedExts.includes(ext)) {
+      showError('Invalid File Type', 'Please upload a PDF or Word document (.pdf, .doc, .docx)');
+      return;
+    }
+
+    if (file.size > maxSize) {
+      showError('File Too Large', `File size must be under 10 MB. Your file is ${(file.size / 1024 / 1024).toFixed(1)} MB.`);
+      return;
+    }
+
     currentFile = file;
     document.getElementById('fileName').textContent = `${file.name} (${(file.size / 1024).toFixed(1)} KB)`;
     document.getElementById('filePill').classList.add('show');
     document.getElementById('fileBtn').disabled = false;
+    hideError();
   }
 
-  function showLoading() {
-    document.getElementById('loading').style.display = 'block';
-    document.getElementById('results').style.display = 'none';
-    document.getElementById('jobStatusWrap').style.display = 'none';
-    document.getElementById('loading').scrollIntoView({ behavior: 'smooth', block: 'center' });
-  }
-
-  /* ─── ANALYZE TEXT ─── */
+  // ───────────────────────────────────────────────────
+  // ANALYZE TEXT
+  // ───────────────────────────────────────────────────
   async function analyzeText() {
-    const text = document.getElementById('jd').value.trim();
-    if (!text) { alert('Please paste the job description first.'); return; }
-    showLoading();
-    try {
-      const res = await fetch(API_URL, {
-        method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          text,
-          jobTitle: document.getElementById('jt').value.trim() || 'Untitled Job',
-          source:   document.getElementById('src').value.trim() || 'Manual'
-        })
-      });
-      if (!res.ok) throw new Error(`Server error ${res.status}`);
-      showResults(await res.json());
-    } catch (e) { alert('Analysis failed: ' + e.message); }
-    finally { document.getElementById('loading').style.display = 'none'; }
-  }
+    const textInput = document.getElementById('jd');
+    const jobTitleInput = document.getElementById('jt');
+    const sourceInput = document.getElementById('src');
 
-  /* ─── ANALYZE FILE ─── */
-  async function analyzeFile() {
-    if (!currentFile) { alert('Please select a file first.'); return; }
-    showLoading();
-    const fd = new FormData();
-    fd.append('file', currentFile);
-    fd.append('jobTitle', currentFile.name);
-    try {
-      const res = await fetch(FILE_API_URL, { method: 'POST', body: fd });
-      if (!res.ok) throw new Error('File processing failed');
-      showResults(await res.json());
-    } catch (e) { alert('File analysis failed: ' + e.message); }
-    finally { document.getElementById('loading').style.display = 'none'; }
-  }
+    const validation = validateText(textInput.value);
+    if (!validation.valid) {
+      showError('Validation Error', validation.error);
+      textInput.classList.add('error');
+      document.getElementById('jd-error').textContent = validation.error;
+      document.getElementById('jd-error').classList.add('show');
+      textInput.focus();
+      return;
+    }
 
-  /* ─── ANALYZE URL ─── */
-  async function analyzeUrl() {
-    const url = document.getElementById('jobUrl').value.trim();
-    if (!url) { alert('Please enter a URL.'); return; }
-    showLoading();
+    textInput.classList.remove('error');
+    document.getElementById('jd-error').classList.remove('show');
+    setLoading(true);
+
+    const btn = document.getElementById('analyzeTextBtn');
+    btn.disabled = true;
+
     try {
-      const res = await fetch(URL_API_URL, {
+      const result = await makeRequest(API_CONFIG.textUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ url })
+        body: JSON.stringify({
+          text: validation.value,
+          jobTitle: jobTitleInput.value.trim() || 'Untitled Job',
+          source: sourceInput.value.trim() || 'Manual',
+        }),
       });
-      if (!res.ok) throw new Error(`Server error ${res.status}`);
-      showResults(await res.json());
-    } catch (e) { alert('URL analysis failed: ' + e.message); }
-    finally { document.getElementById('loading').style.display = 'none'; }
+
+      showResults(result);
+    } catch (err) {
+      showError('Analysis Failed', err.message);
+    } finally {
+      setLoading(false);
+      btn.disabled = false;
+    }
   }
 
-  /* ─── RENDER RESULTS ─── */
-  function showResults(a) {
- 
-  // ── 1. VERDICT BANNER ────────────────────────────────────────────────────
-  const vMap = {
-    definite_scam:  { cls: 'v-scam',       icon: 'ti-shield-x',       label: 'Definite Scam',    sub: 'Overwhelming fraud indicators detected' },
-    very_high_risk: { cls: 'v-scam',       icon: 'ti-shield-x',       label: 'Very High Risk',   sub: 'Multiple serious scam indicators present' },
-    high_risk:      { cls: 'v-scam',       icon: 'ti-shield-x',       label: 'High Risk',        sub: 'Strong scam indicators found' },
-    suspicious:     { cls: 'v-suspicious', icon: 'ti-alert-triangle', label: 'Suspicious',       sub: 'Several warning signs detected' },
-    caution:        { cls: 'v-suspicious', icon: 'ti-alert-triangle', label: 'Caution Advised',  sub: 'Some concerns detected' },
-    low_concern:    { cls: 'v-legitimate', icon: 'ti-shield-check',   label: 'Low Concern',      sub: 'Minor or no issues found' },
-    legitimate:     { cls: 'v-legitimate', icon: 'ti-shield-check',   label: 'Likely Legitimate', sub: 'No major red flags detected' },
-  };
-  const v = vMap[a.status] || vMap['suspicious'];
-  document.getElementById('verdict').innerHTML = `
-    <div class="verdict ${v.cls}" role="alert">
-      <i class="ti ${v.icon}" aria-hidden="true"></i>
-      <div>
-        <div class="verdict-label">${v.label}</div>
-        <div class="verdict-sub">${v.sub}</div>
-      </div>
-    </div>`;
+  // ───────────────────────────────────────────────────
+  // ANALYZE FILE
+  // ───────────────────────────────────────────────────
+  async function analyzeFile() {
+    if (!currentFile) {
+      showError('No File Selected', 'Please select a file first.');
+      return;
+    }
 
-  // ── 2. JOB STATUS BADGE — always show something meaningful ───────────────
-  const jsWrap  = document.getElementById('jobStatusWrap');
-  const jsMeta  = a.jobStatusMeta || STATUS_META[a.jobStatus] || STATUS_META['Open'];
-  const jsLabel = a.jobStatus     || 'Open';
-  
-  // "Not accepting" warning for definitive closed states
-  const notAcceptingStatuses = ['Filled', 'Closed', 'Expired', 'Cancelled', 'Likely Closed'];
-  const notAccepting = notAcceptingStatuses.includes(jsLabel) || a.isAcceptingApplications === false;
-  
-  const notAcceptingHTML = notAccepting
-    ? `<span class="job-status-not-accepting">
-        <i class="ti ti-ban" aria-hidden="true"></i> Not accepting applications
-      </span>`
-    : '';
-  
-  // Inferred qualifier — shown when freshness algorithm guessed (not explicit text)
-  const inferredNote = a.jobStatusInferred
-    ? `<span style="font-size:10px;color:var(--faint);margin-left:6px;font-weight:400">
-        (inferred from posting signals)
-      </span>`
-    : '';
-  
-  // Freshness signals list — the "why" behind the verdict
-  let freshnessSignalsHTML = '';
-  if (a.freshness?.signals?.length) {
-    const items = a.freshness.signals
-      .map(s => {
-        const isFresh = s.weight < 0;
-        const icon    = isFresh ? 'ti-circle-check' : 'ti-alert-circle';
-        const color   = isFresh ? 'var(--green)'    : '#c07800';
-        return `<div style="display:flex;gap:6px;align-items:flex-start;font-size:11px;color:var(--muted);padding:4px 0;border-bottom:1px solid var(--border)">
-                  <i class="ti ${icon}" style="color:${color};font-size:13px;margin-top:1px;flex-shrink:0"></i>
-                  <span>${s.signal}</span>
-                </div>`;
-      })
-      .join('');
-  
-    // Freshness bar — visual indicator
-    const freshnessScore = a.freshness.freshnessScore ?? 50;
-    const barColor = freshnessScore >= 70 ? 'var(--green)'
-                  : freshnessScore >= 40 ? '#d97706'
-                  : 'var(--red)';
-  
-    freshnessSignalsHTML = `
-      <div style="margin-top:10px">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
-          <span style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--muted)">
-            Posting Freshness
-          </span>
-          <span style="font-size:11px;font-weight:600;color:${barColor}">${freshnessScore}/100</span>
-        </div>
-        <div style="height:6px;background:var(--border);border-radius:3px;overflow:hidden;margin-bottom:10px">
-          <div style="height:100%;width:${freshnessScore}%;background:${barColor};border-radius:3px;transition:width 0.6s ease"></div>
-        </div>
-        <div style="border-top:1px solid var(--border);padding-top:6px">
-          ${items}
+    setLoading(true);
+    const btn = document.getElementById('fileBtn');
+    btn.disabled = true;
+
+    const formData = new FormData();
+    formData.append('file', currentFile);
+    formData.append('jobTitle', currentFile.name);
+
+    try {
+      const result = await makeRequest(API_CONFIG.fileUrl, {
+        method: 'POST',
+        body: formData,
+      });
+
+      showResults(result);
+    } catch (err) {
+      showError('File Analysis Failed', err.message);
+    } finally {
+      setLoading(false);
+      btn.disabled = false;
+    }
+  }
+
+  // ───────────────────────────────────────────────────
+  // ANALYZE URL
+  // ───────────────────────────────────────────────────
+  async function analyzeUrl() {
+    const urlInput = document.getElementById('jobUrl');
+
+    const validation = validateUrl(urlInput.value);
+    if (!validation.valid) {
+      showError('Invalid URL', validation.error);
+      urlInput.classList.add('error');
+      document.getElementById('url-error').textContent = validation.error;
+      document.getElementById('url-error').classList.add('show');
+      urlInput.focus();
+      return;
+    }
+
+    urlInput.classList.remove('error');
+    document.getElementById('url-error').classList.remove('show');
+    setLoading(true);
+
+    const btn = document.getElementById('analyzeUrlBtn');
+    btn.disabled = true;
+
+    try {
+      const result = await makeRequest(API_CONFIG.urlAnalysisUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ url: validation.value }),
+      });
+
+      showResults(result);
+    } catch (err) {
+      showError('URL Analysis Failed', err.message);
+    } finally {
+      setLoading(false);
+      btn.disabled = false;
+    }
+  }
+
+  // ───────────────────────────────────────────────────
+  // RENDER RESULTS
+  // ───────────────────────────────────────────────────
+  function showResults(a) {
+    // Escape HTML to prevent XSS
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    // 1. VERDICT BANNER
+    const vMap = {
+      definite_scam: { cls: 'v-scam', icon: 'ti-shield-x', label: 'Definite Scam', sub: 'Overwhelming fraud indicators detected' },
+      very_high_risk: { cls: 'v-scam', icon: 'ti-shield-x', label: 'Very High Risk', sub: 'Multiple serious scam indicators present' },
+      high_risk: { cls: 'v-scam', icon: 'ti-shield-x', label: 'High Risk', sub: 'Strong scam indicators found' },
+      suspicious: { cls: 'v-suspicious', icon: 'ti-alert-triangle', label: 'Suspicious', sub: 'Several warning signs detected' },
+      caution: { cls: 'v-suspicious', icon: 'ti-alert-triangle', label: 'Caution Advised', sub: 'Some concerns detected' },
+      low_concern: { cls: 'v-legitimate', icon: 'ti-shield-check', label: 'Low Concern', sub: 'Minor or no issues found' },
+      legitimate: { cls: 'v-legitimate', icon: 'ti-shield-check', label: 'Likely Legitimate', sub: 'No major red flags detected' },
+    };
+    const v = vMap[a.status] || vMap['suspicious'];
+    document.getElementById('verdict').innerHTML = `
+      <div class="verdict ${v.cls}" role="alert">
+        <i class="ti ${v.icon}" aria-hidden="true"></i>
+        <div>
+          <div class="verdict-label">${escapeHtml(v.label)}</div>
+          <div class="verdict-sub">${escapeHtml(v.sub)}</div>
         </div>
       </div>`;
-  }
-  
-  // Fetch note for URL analysis
-  const fetchNoteHTML = a.fetchError
-    ? `<div style="font-size:11px;color:var(--faint);margin-top:6px">
-        <i class="ti ti-info-circle" style="font-size:12px"></i>
-        Page could not be fetched — status inferred from URL structure only.
-      </div>`
-    : '';
-  
-  jsWrap.style.display = 'block';
-  jsWrap.innerHTML = `
-    <div class="job-status-label">Position Status</div>
-    <div style="display:flex;align-items:center;flex-wrap:wrap;gap:6px;margin-bottom:${freshnessSignalsHTML ? '10px' : '0'}">
-      <span class="job-status-pill" style="color:${jsMeta.color}">
-        <span class="js-dot"></span>
-        ${jsMeta.icon} ${jsMeta.badge}
-      </span>
-      ${inferredNote}
-      ${notAcceptingHTML}
-    </div>
-    ${freshnessSignalsHTML}
-    ${fetchNoteHTML}`;
 
-  // ── 3. SCORES ─────────────────────────────────────────────────────────────
-  const rC = a.riskScore >= 70 ? 'risk-hi' : a.riskScore >= 45 ? 'risk-mid' : 'risk-lo';
-  const lC = a.legitimacyScore >= 70 ? 'leg-hi' : a.legitimacyScore >= 45 ? 'leg-mid' : 'leg-lo';
-  document.getElementById('scores').innerHTML = `
-    <div class="score-card">
-      <div class="score-label">Risk Score</div>
-      <div class="score-val ${rC}">${a.riskScore}<span>/100</span></div>
-    </div>
-    <div class="score-card">
-      <div class="score-label">Legitimacy</div>
-      <div class="score-val ${lC}">${a.legitimacyScore}<span>/100</span></div>
-    </div>`;
+    // 2. JOB STATUS BADGE
+    const jsWrap = document.getElementById('jobStatusWrap');
+    const jsMeta = a.jobStatusMeta || STATUS_META[a.jobStatus] || STATUS_META['Open'];
+    const jsLabel = a.jobStatus || 'Open';
 
-  // ── 4. RED FLAGS ──────────────────────────────────────────────────────────
-  let fH = '';
-  if (a.redFlags?.length) {
-    fH = `<div class="sec-hdr"><i class="ti ti-flag" aria-hidden="true"></i> Red Flags (${a.redFlags.length})</div>`;
-    a.redFlags.forEach(f => {
-      fH += `<div class="flag-item"><i class="ti ti-alert-circle" aria-hidden="true"></i><span>${f}</span></div>`;
+    const notAcceptingStatuses = ['Filled', 'Closed', 'Expired', 'Cancelled', 'Likely Closed'];
+    const notAccepting = notAcceptingStatuses.includes(jsLabel) || a.isAcceptingApplications === false;
+
+    const notAcceptingHTML = notAccepting
+      ? `<span class="job-status-not-accepting">
+          <i class="ti ti-ban" aria-hidden="true"></i> Not accepting applications
+        </span>`
+      : '';
+
+    const inferredNote = a.jobStatusInferred
+      ? `<span style="font-size:10px;color:var(--faint);margin-left:6px;font-weight:400">
+          (inferred from posting signals)
+        </span>`
+      : '';
+
+    let freshnessSignalsHTML = '';
+    if (a.freshness?.signals?.length) {
+      const items = a.freshness.signals
+        .map(s => {
+          const isFresh = s.weight < 0;
+          const icon = isFresh ? 'ti-circle-check' : 'ti-alert-circle';
+          const color = isFresh ? 'var(--green)' : '#c07800';
+          return `<div style="display:flex;gap:6px;align-items:flex-start;font-size:11px;color:var(--muted);padding:4px 0;border-bottom:1px solid var(--border)">
+                    <i class="ti ${icon}" style="color:${color};font-size:13px;margin-top:1px;flex-shrink:0"></i>
+                    <span>${escapeHtml(s.signal)}</span>
+                  </div>`;
+        })
+        .join('');
+
+      const freshnessScore = a.freshness.freshnessScore ?? 50;
+      const barColor = freshnessScore >= 70 ? 'var(--green)' : freshnessScore >= 40 ? '#d97706' : 'var(--red)';
+
+      freshnessSignalsHTML = `
+        <div style="margin-top:10px">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
+            <span style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--muted)">
+              Posting Freshness
+            </span>
+            <span style="font-size:11px;font-weight:600;color:${barColor}">${freshnessScore}/100</span>
+          </div>
+          <div style="height:6px;background:var(--border);border-radius:3px;overflow:hidden;margin-bottom:10px">
+            <div style="height:100%;width:${freshnessScore}%;background:${barColor};border-radius:3px;transition:width 0.6s ease"></div>
+          </div>
+          <div style="border-top:1px solid var(--border);padding-top:6px">
+            ${items}
+          </div>
+        </div>`;
+    }
+
+    const fetchNoteHTML = a.fetchError
+      ? `<div style="font-size:11px;color:var(--faint);margin-top:6px">
+          <i class="ti ti-info-circle" style="font-size:12px"></i>
+          Page could not be fetched — status inferred from URL structure only.
+        </div>`
+      : '';
+
+    jsWrap.style.display = 'block';
+    jsWrap.innerHTML = `
+      <div class="job-status-label">Position Status</div>
+      <div style="display:flex;align-items:center;flex-wrap:wrap;gap:6px;margin-bottom:${freshnessSignalsHTML ? '10px' : '0'}">
+        <span class="job-status-pill" style="color:${jsMeta.color}">
+          <span class="js-dot"></span>
+          ${jsMeta.icon} ${escapeHtml(jsMeta.badge)}
+        </span>
+        ${inferredNote}
+        ${notAcceptingHTML}
+      </div>
+      ${freshnessSignalsHTML}
+      ${fetchNoteHTML}`;
+
+    // 3. SCORES
+    const rC = a.riskScore >= 70 ? 'risk-hi' : a.riskScore >= 45 ? 'risk-mid' : 'risk-lo';
+    const lC = a.legitimacyScore >= 70 ? 'leg-hi' : a.legitimacyScore >= 45 ? 'leg-mid' : 'leg-lo';
+    document.getElementById('scores').innerHTML = `
+      <div class="score-card">
+        <div class="score-label">Risk Score</div>
+        <div class="score-val ${rC}">${a.riskScore}<span>/100</span></div>
+      </div>
+      <div class="score-card">
+        <div class="score-label">Legitimacy</div>
+        <div class="score-val ${lC}">${a.legitimacyScore}<span>/100</span></div>
+      </div>`;
+
+    // 4. RED FLAGS
+    let fH = '';
+    if (a.redFlags?.length) {
+      fH = `<div class="sec-hdr"><i class="ti ti-flag" aria-hidden="true"></i> Red Flags (${a.redFlags.length})</div>`;
+      a.redFlags.forEach(f => {
+        fH += `<div class="flag-item"><i class="ti ti-alert-circle" aria-hidden="true"></i><span>${escapeHtml(f)}</span></div>`;
+      });
+    }
+    document.getElementById('flagsWrap').innerHTML = fH;
+
+    // 5. POSITIVE INDICATORS
+    let pH = '';
+    if (a.positiveIndicators?.length) {
+      pH = `<div class="sec-hdr" style="margin-top:1rem">
+              <i class="ti ti-check" aria-hidden="true"></i>
+              Positive Signals (${a.positiveIndicators.length})
+            </div>`;
+      a.positiveIndicators.forEach(p => {
+        pH += `<div class="pos-item"><i class="ti ti-circle-check" aria-hidden="true"></i><span>${escapeHtml(p)}</span></div>`;
+      });
+    }
+    document.getElementById('posWrap').innerHTML = pH;
+
+    // 6. ANALYSIS
+    document.getElementById('analysisText').textContent = a.explanation || 'Analysis complete.';
+
+    // 7. RECOMMENDATION + ACTIONS
+    let rH = `
+      <h3><i class="ti ti-clipboard-list" aria-hidden="true"></i> What to do next</h3>
+      <p class="rec-text">${escapeHtml(a.recommendation || '')}</p>`;
+    (a.actionItems || []).forEach(item => {
+      rH += `<div class="action-row"><i class="ti ti-arrow-right" aria-hidden="true"></i><span>${escapeHtml(item)}</span></div>`;
     });
+
+    if (a.note) {
+      rH += `<div class="action-row" style="color:var(--faint);font-size:12px">
+                <i class="ti ti-info-circle" aria-hidden="true"></i>
+                <span>${escapeHtml(a.note)}</span>
+              </div>`;
+    }
+
+    document.getElementById('recWrap').innerHTML = rH;
+
+    // 8. SCROLL TO RESULTS
+    const resultsEl = document.getElementById('results');
+    resultsEl.style.display = 'block';
+    setTimeout(() => resultsEl.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
   }
-  document.getElementById('flagsWrap').innerHTML = fH;
 
-  // ── 5. POSITIVE INDICATORS ────────────────────────────────────────────────
-  let pH = '';
-  if (a.positiveIndicators?.length) {
-    pH = `<div class="sec-hdr" style="margin-top:1rem">
-            <i class="ti ti-check" aria-hidden="true"></i>
-            Positive Signals (${a.positiveIndicators.length})
-          </div>`;
-    a.positiveIndicators.forEach(p => {
-      pH += `<div class="pos-item"><i class="ti ti-circle-check" aria-hidden="true"></i><span>${p}</span></div>`;
-    });
-  }
-  document.getElementById('posWrap').innerHTML = pH;
-
-  // ── 6. ANALYSIS ───────────────────────────────────────────────────────────
-  document.getElementById('analysisText').textContent = a.explanation || 'Analysis complete.';
-
-  // ── 7. RECOMMENDATION + ACTIONS ──────────────────────────────────────────
-  let rH = `
-    <h3><i class="ti ti-clipboard-list" aria-hidden="true"></i> What to do next</h3>
-    <p class="rec-text">${a.recommendation || ''}</p>`;
-  (a.actionItems || []).forEach(item => {
-    rH += `<div class="action-row"><i class="ti ti-arrow-right" aria-hidden="true"></i><span>${item}</span></div>`;
+  // ───────────────────────────────────────────────────
+  // ERROR HANDLING
+  // ───────────────────────────────────────────────────
+  window.addEventListener('error', (event) => {
+    console.error('Global error:', event.error);
+    showError('Unexpected Error', 'Something went wrong. Please refresh the page and try again.');
   });
 
-  // Append fetch note to actions if URL scan had an issue
-  if (a.note) {
-    rH += `<div class="action-row" style="color:var(--faint);font-size:12px">
-              <i class="ti ti-info-circle" aria-hidden="true"></i>
-              <span>${a.note}</span>
-            </div>`;
-  }
-
-  document.getElementById('recWrap').innerHTML = rH;
-
-  // ── 8. SCROLL ─────────────────────────────────────────────────────────────
-  const resultsEl = document.getElementById('results');
-  resultsEl.style.display = 'block';
-  setTimeout(() => resultsEl.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
-  }
-
+  window.addEventListener('unhandledrejection', (event) => {
+    console.error('Unhandled promise rejection:', event.reason);
+    showError('Unexpected Error', 'Something went wrong. Please refresh the page and try again.');
+  });
 </script>
 </body>
 </html>
