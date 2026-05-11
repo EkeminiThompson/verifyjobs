@@ -110,13 +110,6 @@ app.use(cors({
 
 app.use(express.json({ limit: '5mb' }));
 
-// Serve static files from /public
-app.use(
-  express.static(path.join(__dirname, 'public'), {
-    index: false,
-    maxAge: config.nodeEnv === 'production' ? '1d' : 0,
-  })
-);
 // ─────────────────────────────────────────────
 // RATE LIMITING
 // ─────────────────────────────────────────────
@@ -188,12 +181,22 @@ const upload = multer({
 });
 
 // ─────────────────────────────────────────────
-// STATIC ROUTES
+// STATIC FILE SERVING
 // ─────────────────────────────────────────────
 
-// Serve everything inside /public
-app.use(express.static(path.join(__dirname, 'public')));
+// 1. Serve root files (robots.txt, sitemap.xml, llms.txt, structured-data.json, .well-known, etc.)
+app.use(express.static(path.join(__dirname), {
+  index: false,
+  maxAge: config.nodeEnv === 'production' ? '1d' : 0,
+}));
 
+// 2. Serve /public for HTML, CSS, JS, images
+app.use(express.static(path.join(__dirname, 'public'), {
+  index: false,
+  maxAge: config.nodeEnv === 'production' ? '1d' : 0,
+}));
+
+// 3. Health check endpoint
 app.get('/health', (req, res) => {
   res.json({
     status: 'ok',
@@ -208,22 +211,21 @@ app.get('/health', (req, res) => {
   });
 });
 
-// Handle direct HTML file requests
+// 4. Handle direct HTML file requests (from /public)
 app.get('*.html', (req, res) => {
   const filePath = path.join(__dirname, 'public', req.path);
-
   res.sendFile(filePath, (err) => {
     if (err) {
       logger.error('File not found', { path: req.path });
-
-      res
-        .status(404)
-        .sendFile(path.join(__dirname, 'public', 'index.html'));
+      res.status(404).sendFile(path.join(__dirname, 'public', 'index.html'));
     }
   });
 });
 
-ensureStorage();
+// 5. .well-known directory (RFC 8615 - must be accessible)
+app.use('/.well-known', express.static(path.join(__dirname, '.well-known'), {
+  maxAge: '7d',
+}));
 
 // ─────────────────────────────────────────────
 // PDF PARSER

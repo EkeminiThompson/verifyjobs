@@ -1,0 +1,59 @@
+verifyjobs/
+│
+├── server.js                       # Express server (update static config)
+├── package.json
+├── .env
+│
+├── 📁 engine/                      # Backend modules
+│   ├── analyzer.js
+│   ├── analytics.js
+│   ├── rules.js
+│   ├── scorer.js
+│   ├── job-freshness.js
+│   └── storage.js
+│
+├── 📁 data/
+│   └── analyses.json
+│
+├── 📁 public/                      # ✅ ALL HTML files stay here
+│   ├── index.html                  # Main tool
+│   ├── analytics.html              # Dashboard
+│   ├── about.html
+│   ├── how-it-works.html
+│   ├── report-a-scam.html
+│   └── privacy.html
+│
+├── 📁 ml/                          # Python ML scripts (portfolio)
+│   ├── verifyjobs_ml.py
+│   ├── verifyjobs_forecast.py
+│   ├── verifyjobs_recommendations.py
+│   └── requirements.txt
+│
+├── 📁 logs/                        # Winston logs
+│   ├── combined.log
+│   └── error.log
+│
+├── ✅ robots.txt                   # ROOT
+├── ✅ sitemap.xml                  # ROOT
+├── ✅ llms.txt                     # ROOT
+├── ✅ structured-data.json         # ROOT
+├── ✅ openapi.yaml                 # ROOT
+│
+├── 📁 .well-known/                 # ROOT directory (note the dot)
+│   └── ✅ ai-plugin.json           # Inside .well-known/
+│
+├── ✅ favicon.ico                  # ROOT (or /public - both work)
+├── ✅ logo.png                     # ROOT (or /public)
+└── ✅ og-image.png                 # ROOT (or /public)
+
+
+# Should all return 200 OK:
+curl -I http://localhost:3000/robots.txt
+curl -I http://localhost:3000/sitemap.xml  
+curl -I http://localhost:3000/llms.txt
+curl -I http://localhost:3000/structured-data.json
+curl -I http://localhost:3000/.well-known/ai-plugin.json
+
+# Should still serve your HTML:
+curl -I http://localhost:3000/
+curl -I http://localhost:3000/analytics.html

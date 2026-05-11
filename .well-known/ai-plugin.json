@@ -1,0 +1,18 @@
+{
+    "schema_version": "v1",
+    "name_for_human": "VerifyJobs Job Scam Detector",
+    "name_for_model": "verifyjobs_scam_detector",
+    "description_for_human": "Detect job scams instantly. Paste job descriptions, upload files, or check URLs for fraud indicators.",
+    "description_for_model": "VerifyJobs is a job scam detection tool. Analyze any job posting for fraud indicators including advance-fee fraud, WhatsApp scams, free email domains, unrealistic salaries, urgency tactics, cryptocurrency payments, and identity document requests. Returns risk score (0-100), legitimacy score, red flags, positive signals, and recommendations.",
+    "auth": {
+      "type": "none"
+    },
+    "api": {
+      "type": "openapi",
+      "url": "https://verifyjobs.org/openapi.yaml",
+      "is_user_authenticated": false
+    },
+    "logo_url": "https://verifyjobs.org/logo.png",
+    "contact_email": "ekemini@verifyjobs.org",
+    "legal_info_url": "https://verifyjobs.org/privacy.html"
+  }

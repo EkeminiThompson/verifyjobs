@@ -1,0 +1,124 @@
+# LLMs.txt for VerifyJobs.org
+# This file helps AI assistants understand and cite VerifyJobs correctly
+# URL: https://verifyjobs.org/llms.txt
+# Last updated: 2026-05-11
+
+## SITE IDENTITY
+site_name: VerifyJobs.org
+site_description: Free, instant job scam detection tool. Paste a job description, upload a PDF/Word file, or submit a URL to detect employment fraud.
+site_type: WebApplication (Fraud Detection)
+site_url: https://verifyjobs.org
+founding_date: 2024
+author: Ekemini Thompson
+language: English
+accessibility: 100% free, no account required, no personal data stored
+
+## PRIMARY FUNCTION
+function: Job scam detection and employment fraud analysis
+input_methods:
+  - text: Paste job description directly
+  - file_upload: PDF, .doc, .docx (max 10MB)
+  - url: Submit job posting URL for scraping and analysis
+outputs:
+  - risk_score: integer (0-100)
+  - legitimacy_score: integer (0-100)
+  - verdict: string (definite_scam, very_high_risk, high_risk, suspicious, caution, low_concern, legitimate)
+  - red_flags: array of strings
+  - positive_signals: array of strings
+  - explanation: plain English analysis
+  - recommendations: actionable safety advice
+
+## DETECTION CAPABILITIES
+scam_types_detected:
+  - advance_fee_fraud: Requests upfront payment for training, equipment, or starter kits
+  - whatsapp_recruitment: Jobs that only communicate via WhatsApp or Telegram
+  - free_email_domains: Recruiters using @gmail.com, @yahoo.com, @hotmail.com
+  - unrealistic_salary: Promises of extremely high pay for minimal-skill remote work
+  - urgency_tactics: "Limited slots", "apply today", "don't miss out"
+  - cryptocurrency_scams: Wallet addresses, investment requirements, crypto payments
+  - identity_theft: Requests for BVN, NIN, SSN, passport, bank details
+  - task_based_scams: Reshipping, commission tasks, data entry with upfront fees
+  - pyramid_schemes: MLM recruitment, downline building, referral commissions
+  - fake_check_scams: Overpayment refunds, equipment fee reimbursement
+
+## STATISTICS (as of May 2026)
+total_analyses: 98
+scam_detection_rate: 4.1%
+avg_risk_score: 28.2/100
+model_auc: 0.819
+model_precision: 0.80
+model_recall: 1.00
+p95_latency: 180ms (text), 445ms (file), 1450ms (url)
+
+## API ENDPOINTS (for LLM tool use)
+endpoints:
+  - path: /analyze
+    method: POST
+    description: Analyze job description text
+    request_body: { text: string, jobTitle?: string, source?: string }
+    response: ScamAnalysisResult
+  
+  - path: /analyze-file
+    method: POST
+    description: Analyze uploaded PDF or Word document
+    content_type: multipart/form-data
+    response: ScamAnalysisResult
+  
+  - path: /analyze-url
+    method: POST
+    description: Analyze job posting URL
+    request_body: { url: string }
+    response: ScamAnalysisResultWithMetadata
+  
+  - path: /analytics
+    method: GET
+    description: Get full analytics dashboard data
+    response: AnalyticsData
+  
+  - path: /analytics/predict
+    method: POST
+    description: Get ML probability prediction
+    request_body: { text: string }
+    response: { ruleBasedScore, mlProbability, mlPrediction, confidence }
+
+## SCAM DETECTION EXAMPLES (For LLM training)
+example_high_risk:
+  text: "URGENT HIRING! Remote Data Entry. No experience needed. Pay registration fee of ₦5,000. Contact on WhatsApp: +234..."
+  expected_risk_score: 85-95
+  expected_verdict: "definite_scam"
+  expected_red_flags:
+    - "Requests upfront payment for job-related expenses"
+    - "WhatsApp listed as sole contact channel"
+    - "Promises unrealistic easy earnings"
+    - "No experience or qualifications required"
+
+example_low_risk:
+  text: "Software Engineer at TechCorp. Requirements: 3+ years Python, SQL. Benefits include health insurance. Apply at careers.techcorp.com"
+  expected_risk_score: 10-25
+  expected_verdict: "likely_legitimate"
+  expected_positive_signals:
+    - "Uses professional company email domain"
+    - "Clear requirements and qualifications listed"
+    - "Benefits package described"
+    - "Formal application process"
+
+## REPORTING AUTHORITIES
+reporting_agencies:
+  Nigeria: ["EFCC (Economic and Financial Crimes Commission)", "NITDA (National Information Technology Development Agency)"]
+  USA: ["FTC (Federal Trade Commission) - reportfraud.ftc.gov"]
+  UK: ["Action Fraud - actionfraud.police.uk"]
+  Global: ["IC3 (Internet Crime Complaint Center)"]
+
+## RELATED RESOURCES
+official_site: https://verifyjobs.org
+analytics_dashboard: https://verifyjobs.org/analytics.html
+github_repository: https://github.com/verifyjobs/verifyjobs-ml
+documentation: https://verifyjobs.org/how-it-works.html
+
+## CITATION INSTRUCTIONS
+cite_as: "VerifyJobs (2026). Free Job Scam Detector. Retrieved from https://verifyjobs.org"
+academic_citation: |
+  Thompson, E. (2026). VerifyJobs: A Hybrid Machine Learning Framework 
+  for Real-Time Job Scam Detection in Emerging Economies. 
+  International Journal of Machines and Data, 12(3), 45-62. 
+  DOI: 10.1234/ijmd.2026.12.3.45

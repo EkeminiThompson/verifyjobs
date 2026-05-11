@@ -1,0 +1,278 @@
+openapi: 3.0.0
+info:
+  title: VerifyJobs Job Scam Detection API
+  description: Detect employment fraud in job postings via text, file upload, or URL
+  version: 2.0.0
+  contact:
+    name: Ekemini Thompson
+    email: ekemini@verifyjobs.org
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+
+servers:
+  - url: https://verifyjobs.org
+    description: Production server
+
+paths:
+  /analyze:
+    post:
+      summary: Analyze job description text
+      description: Submit job posting text for scam detection. Returns risk score, legitimacy score, red flags, positive signals, and recommendations.
+      operationId: analyzeText
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - text
+              properties:
+                text:
+                  type: string
+                  description: Full job description text
+                  minLength: 10
+                  maxLength: 50000
+                jobTitle:
+                  type: string
+                  description: Job title (optional)
+                  maxLength: 200
+                source:
+                  type: string
+                  description: Where the job was found (WhatsApp, Email, LinkedIn, etc.)
+                  maxLength: 100
+      responses:
+        '200':
+          description: Successful analysis
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AnalysisResult'
+
+  /analyze-file:
+    post:
+      summary: Analyze uploaded file
+      description: Upload a PDF or Word document containing a job posting for scam detection
+      operationId: analyzeFile
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - file
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: PDF or Word document (.pdf, .doc, .docx) up to 10MB
+                jobTitle:
+                  type: string
+                  description: Optional job title
+      responses:
+        '200':
+          description: Successful analysis
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AnalysisResult'
+
+  /analyze-url:
+    post:
+      summary: Analyze job posting URL
+      description: Submit a URL to a job posting. VerifyJobs will fetch, scrape, and analyze the content.
+      operationId: analyzeUrl
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - url
+              properties:
+                url:
+                  type: string
+                  format: uri
+                  description: Full URL to job posting
+                  maxLength: 2048
+      responses:
+        '200':
+          description: Successful analysis with metadata
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/AnalysisResult'
+                  - type: object
+                    properties:
+                      submittedUrl:
+                        type: string
+                      canonicalUrl:
+                        type: string
+                      resolvedFrom:
+                        type: string
+                      fetchedPages:
+                        type: array
+                        items:
+                          type: string
+                      isAggregator:
+                        type: boolean
+                      note:
+                        type: string
+
+  /analytics:
+    get:
+      summary: Get analytics dashboard data
+      description: Returns comprehensive analytics including model metrics, A/B test results, causal inference, cohorts, and segments
+      operationId: getAnalytics
+      responses:
+        '200':
+          description: Analytics data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  recordCount:
+                    type: integer
+                  overview:
+                    type: object
+                  model:
+                    type: object
+                  abTest:
+                    type: object
+                  causal:
+                    type: object
+                  cohorts:
+                    type: object
+                  segments:
+                    type: object
+
+  /analytics/predict:
+    post:
+      summary: Get ML probability prediction
+      description: Returns logistic regression scam probability for any job text
+      operationId: predict
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - text
+              properties:
+                text:
+                  type: string
+                jobTitle:
+                  type: string
+                source:
+                  type: string
+      responses:
+        '200':
+          description: ML prediction
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ruleBasedScore:
+                    type: integer
+                  mlProbability:
+                    type: number
+                    format: float
+                  mlPrediction:
+                    type: string
+                    enum: [scam, legitimate]
+                  confidence:
+                    type: number
+                    format: float
+                  features:
+                    type: object
+
+  /health:
+    get:
+      summary: Health check endpoint
+      description: Returns service status and cache metrics
+      operationId: healthCheck
+      responses:
+        '200':
+          description: Service is healthy
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  timestamp:
+                    type: string
+                  uptime:
+                    type: number
+                  version:
+                    type: string
+
+components:
+  schemas:
+    AnalysisResult:
+      type: object
+      properties:
+        riskScore:
+          type: integer
+          minimum: 0
+          maximum: 100
+          description: Risk score indicating scam likelihood
+        legitimacyScore:
+          type: integer
+          minimum: 0
+          maximum: 100
+          description: Legitimacy score (inverse of risk with adjustments)
+        status:
+          type: string
+          enum:
+            - definite_scam
+            - very_high_risk
+            - high_risk
+            - suspicious
+            - caution
+            - low_concern
+            - legitimate
+        redFlags:
+          type: array
+          items:
+            type: string
+          description: List of detected scam indicators
+        positiveIndicators:
+          type: array
+          items:
+            type: string
+          description: List of positive legitimacy signals
+        explanation:
+          type: string
+          description: Plain English analysis of findings
+        recommendation:
+          type: string
+          description: Actionable advice for the job seeker
+        actionItems:
+          type: array
+          items:
+            type: string
+          description: Specific steps to take
+        metadata:
+          type: object
+          properties:
+            wordCount:
+              type: integer
+            hasEmail:
+              type: boolean
+            hasFreeEmail:
+              type: boolean
+            hasURL:
+              type: boolean
+            hasSalary:
+              type: boolean
+            hasLocation:
+              type: boolean

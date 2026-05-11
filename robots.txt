@@ -1,36 +1,80 @@
-# verifyjobs.org robots.txt
+# robots.txt for VerifyJobs.org
+# Grants access to all AI and search engine crawlers
+# Allows LLM-specific crawlers (GPTBot, ClaudeBot, Google-Extended, etc.)
 
-# Allow all search engines
 User-agent: *
 Allow: /
-Disallow: /analyses
-Disallow: /analyze
-Disallow: /analyze-file
-Disallow: /analyze-url
+Disallow: /api/internal/
+Disallow: /logs/
+Disallow: /private/
+Crawl-delay: 1
 
-# Allow AI/LLM crawlers explicitly
-User-agent: GPTBot
-Allow: /
-
-User-agent: ChatGPT-User
-Allow: /
-
-User-agent: Claude-Web
-Allow: /
-
-User-agent: anthropic-ai
-Allow: /
-
-User-agent: PerplexityBot
-Allow: /
-
+# Google Search (including AI Overviews)
 User-agent: Googlebot
 Allow: /
+Crawl-delay: 1
 
+User-agent: Google-Extended
+Allow: /
+
+# OpenAI GPTBot (powers ChatGPT)
+User-agent: GPTBot
+Allow: /
+Crawl-delay: 2
+
+# Anthropic Claude
+User-agent: ClaudeBot
+Allow: /
+Crawl-delay: 2
+
+# Perplexity AI
+User-agent: PerpetuityBot
+Allow: /
+Crawl-delay: 2
+
+# Bing (includes AI features)
 User-agent: Bingbot
 Allow: /
+Crawl-delay: 1
 
-User-agent: OAI-SearchBot
+User-agent: MicrosoftPreviews
 Allow: /
 
+# DuckDuckGo
+User-agent: DuckDuckBot
+Allow: /
+Crawl-delay: 2
+
+# Apple (Siri, Spotlight)
+User-agent: Applebot
+Allow: /
+Crawl-delay: 2
+
+# Yandex
+User-agent: YandexBot
+Allow: /
+Crawl-delay: 2
+
+# Baidu
+User-agent: Baiduspider
+Allow: /
+Crawl-delay: 2
+
+# Common SEO bots
+User-agent: AhrefsBot
+Allow: /
+Crawl-delay: 2
+
+User-agent: SemrushBot
+Allow: /
+Crawl-delay: 2
+
+User-agent: MJ12bot
+Allow: /
+Crawl-delay: 2
+
+# Site maps
 Sitemap: https://verifyjobs.org/sitemap.xml
+
+# Host directive (for crawlers that support it)
+Host: https://verifyjobs.org
