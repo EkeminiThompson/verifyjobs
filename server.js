@@ -134,7 +134,7 @@ const analyzeLimiter = rateLimit({
   skipSuccessfulRequests: false,
   handler: (req, res) => {
     logger.warn('Analysis rate limit exceeded', { ip: req.ip, path: req.path });
-    res.status(429).json({
+    res.status(429).json({ 
       error: 'Too many analysis requests, please try again later.',
       retryAfter: Math.ceil(config.rateLimitWindow / 1000 / 60),
     });
@@ -184,7 +184,7 @@ const upload = multer({
 // STATIC FILE SERVING
 // ─────────────────────────────────────────────
 
-// 1. Serve root files (robots.txt, sitemap.xml, llms.txt, structured-data.json, etc.)
+// 1. Serve root files (robots.txt, sitemap.xml, llms.txt, structured-data.json, .well-known, etc.)
 app.use(express.static(path.join(__dirname), {
   index: false,
   maxAge: config.nodeEnv === 'production' ? '1d' : 0,
@@ -196,9 +196,7 @@ app.use(express.static(path.join(__dirname, 'public'), {
   maxAge: config.nodeEnv === 'production' ? '1d' : 0,
 }));
 
-// ─────────────────────────────────────────────
-// HEALTH CHECK
-// ─────────────────────────────────────────────
+// 3. Health check endpoint
 app.get('/health', (req, res) => {
   res.json({
     status: 'ok',
@@ -213,27 +211,7 @@ app.get('/health', (req, res) => {
   });
 });
 
-// ─────────────────────────────────────────────
-// EXTENSIONLESS HTML PAGE ROUTES
-// Must be defined BEFORE API routes to avoid conflicts.
-// Each page is served explicitly so /analytics serves analytics.html,
-// not the /api/analytics JSON endpoint.
-// ─────────────────────────────────────────────
-const htmlPages = ['analytics', 'about', 'how-it-works', 'report-a-scam', 'privacy'];
-
-htmlPages.forEach(page => {
-  app.get(`/${page}`, (req, res) => {
-    const filePath = path.join(__dirname, 'public', `${page}.html`);
-    res.sendFile(filePath, (err) => {
-      if (err) {
-        logger.error('HTML page not found', { page, path: filePath });
-        res.status(404).sendFile(path.join(__dirname, 'public', 'index.html'));
-      }
-    });
-  });
-});
-
-// Handle direct .html requests (e.g. /analytics.html still works)
+// 4. Handle direct HTML file requests (from /public)
 app.get('*.html', (req, res) => {
   const filePath = path.join(__dirname, 'public', req.path);
   res.sendFile(filePath, (err) => {
@@ -284,6 +262,7 @@ const CANONICAL_SOURCES = [
 
 const BLOCKED_DOMAINS = [
   'localhost', '127.0.0.1', '0.0.0.0',
+  // Add known malicious domains here
 ];
 
 function isKnownAggregator(hostname) {
@@ -307,17 +286,20 @@ async function isSafeUrl(rawUrl) {
     return false;
   }
 
+  // Protocol check
   if (!['http:', 'https:'].includes(url.protocol)) {
     return false;
   }
 
   const host = url.hostname.toLowerCase();
 
+  // Block known bad domains
   if (BLOCKED_DOMAINS.some(d => host === d || host.endsWith('.' + d))) {
     logger.warn('Blocked domain attempted', { domain: host });
     return false;
   }
 
+  // Private IP patterns
   const privatePatterns = [
     /^localhost$/i,
     /^127\./,
@@ -325,18 +307,20 @@ async function isSafeUrl(rawUrl) {
     /^10\./,
     /^172\.(1[6-9]|2\d|3[01])\./,
     /^192\.168\./,
-    /^169\.254\./,
+    /^169\.254\./, // Link-local
     /^::1$/,
     /^fc00:/,
     /^fe80:/,
     /^fd[0-9a-f]{2}:/i,
   ];
 
+  // Direct IP check
   if (privatePatterns.some(p => p.test(host))) {
     logger.warn('Private IP blocked', { host });
     return false;
   }
 
+  // DNS resolution check (prevent DNS rebinding attacks)
   try {
     const addresses = await dns.resolve4(host);
     for (const addr of addresses) {
@@ -346,7 +330,10 @@ async function isSafeUrl(rawUrl) {
       }
     }
   } catch (err) {
+    // DNS resolution failed - could be temporary, allow but log
     logger.warn('DNS resolution failed', { host, error: err.message });
+    // In production, you might want to reject these
+    // return false;
   }
 
   return true;
@@ -377,6 +364,7 @@ function fetchUrl(rawUrl, redirectsLeft = config.maxRedirects, signal = null) {
         'DNT': '1',
       },
     }, (res) => {
+      // Follow HTTP redirects
       if ([301, 302, 303, 307, 308].includes(res.statusCode)) {
         if (redirectsLeft <= 0) {
           res.resume();
@@ -403,8 +391,9 @@ function fetchUrl(rawUrl, redirectsLeft = config.maxRedirects, signal = null) {
         return reject(new Error(`Unsupported content type: ${ct}`));
       }
 
+      // Content length check
       const contentLength = parseInt(res.headers['content-length'] || '0');
-      if (contentLength > 5 * 1024 * 1024) {
+      if (contentLength > 5 * 1024 * 1024) { // 5MB max
         res.resume();
         return reject(new Error('Response too large'));
       }
@@ -442,6 +431,7 @@ function fetchUrl(rawUrl, redirectsLeft = config.maxRedirects, signal = null) {
       reject(err);
     });
 
+    // Abort signal support
     if (signal) {
       signal.addEventListener('abort', () => {
         req.destroy();
@@ -498,6 +488,7 @@ function htmlToText(html) {
 function extractCanonicalJobUrl(html, pageUrl) {
   const candidates = [];
 
+  // 1. <link rel="canonical">
   const cm = html.match(/<link[^>]+rel=["']canonical["'][^>]+href=["']([^"']+)["']/i) ||
     html.match(/<link[^>]+href=["']([^"']+)["'][^>]+rel=["']canonical["']/i);
   if (cm) {
@@ -507,6 +498,7 @@ function extractCanonicalJobUrl(html, pageUrl) {
     }
   }
 
+  // 2. og:url meta tag
   const og = html.match(/<meta[^>]+property=["']og:url["'][^>]+content=["']([^"']+)["']/i) ||
     html.match(/<meta[^>]+content=["']([^"']+)["'][^>]+property=["']og:url["']/i);
   if (og) {
@@ -516,6 +508,7 @@ function extractCanonicalJobUrl(html, pageUrl) {
     }
   }
 
+  // 3. JSON-LD Schema.org JobPosting
   const jsonLdBlocks = html.match(/<script[^>]+type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi) || [];
   for (const block of jsonLdBlocks) {
     try {
@@ -539,6 +532,7 @@ function extractCanonicalJobUrl(html, pageUrl) {
     }
   }
 
+  // 4. "Apply" button or link
   const applyRegexes = [
     /<a[^>]+href=["']([^"']+)["'][^>]*>\s*(?:<[^>]+>\s*)*apply(?:\s+now|\s+here|\s+online|\s+for\s+this\s+job)?\s*(?:<\/[^>]+>\s*)*<\/a>/gi,
     /<a[^>]*class=["'][^"']*(?:apply|btn-apply|job-apply|apply-btn)[^"']*["'][^>]*href=["']([^"']+)["']/gi,
@@ -557,6 +551,7 @@ function extractCanonicalJobUrl(html, pageUrl) {
     }
   }
 
+  // 5. data-* attributes
   const dataRx = [
     /data-(?:apply-url|apply-link|external-url|source-url|job-url|redirect-url)=["']([^"']+)["']/gi,
     /data-(?:href|link)=["'](https?:\/\/[^"']+)["']/gi,
@@ -572,6 +567,7 @@ function extractCanonicalJobUrl(html, pageUrl) {
     }
   }
 
+  // 6. Redirect/tracking query params
   const redirectRx = [
     /href=["'][^"']*[?&](?:url|to|href|link|target|go)=(https?%3A[^"'&]+)/gi,
     /href=["'][^"']*[?&](?:url|to|href|link|target|go)=(https?:\/\/[^"'&]+)/gi,
@@ -593,6 +589,7 @@ function extractCanonicalJobUrl(html, pageUrl) {
 
   if (!candidates.length) return null;
 
+  // Deduplicate and rank
   const seen = new Set();
   const unique = candidates.filter(c => {
     if (seen.has(c.url)) return false;
@@ -614,7 +611,7 @@ function extractCanonicalJobUrl(html, pageUrl) {
 // ─────────────────────────────────────────────
 async function scrapeAndAnalyze(rawUrl) {
   const abortController = new AbortController();
-  const timeoutId = setTimeout(() => abortController.abort(), 30000);
+  const timeoutId = setTimeout(() => abortController.abort(), 30000); // 30s total timeout
 
   const ctx = {
     submittedUrl: rawUrl,
@@ -629,11 +626,13 @@ async function scrapeAndAnalyze(rawUrl) {
   };
 
   try {
+    // Validate URL safety
     const isSafe = await isSafeUrl(rawUrl);
     if (!isSafe) {
       throw new Error('URL is not allowed (private IP or blocked domain)');
     }
 
+    // Step 1 — fetch the submitted page
     let wrapperHtml = '';
     try {
       const { html } = await fetchUrl(rawUrl, config.maxRedirects, abortController.signal);
@@ -641,6 +640,7 @@ async function scrapeAndAnalyze(rawUrl) {
       ctx.pageTitle = extractPageTitle(html) || ctx.pageTitle;
       ctx.fetchedPages.push(rawUrl);
       ctx.isAggregator = isKnownAggregator(new URL(rawUrl).hostname);
+      
       logger.debug('Fetched wrapper page', { url: rawUrl, length: html.length });
     } catch (err) {
       ctx.fetchError = err.message;
@@ -650,6 +650,8 @@ async function scrapeAndAnalyze(rawUrl) {
     }
 
     const wrapperText = htmlToText(wrapperHtml);
+
+    // Step 2 — find the canonical / real job URL
     const canonical = extractCanonicalJobUrl(wrapperHtml, rawUrl);
 
     if (canonical) {
@@ -657,19 +659,27 @@ async function scrapeAndAnalyze(rawUrl) {
       if (canonicalSafe) {
         ctx.canonicalUrl = canonical.url;
         ctx.resolvedFrom = canonical.strategy;
-        logger.debug('Canonical URL found', { canonical: canonical.url, strategy: canonical.strategy });
 
+        logger.debug('Canonical URL found', { 
+          canonical: canonical.url, 
+          strategy: canonical.strategy 
+        });
+
+        // Step 3 — fetch the real job page
         try {
           const { html: realHtml } = await fetchUrl(canonical.url, config.maxRedirects, abortController.signal);
           const realText = htmlToText(realHtml);
           const realTitle = extractPageTitle(realHtml);
           if (realTitle) ctx.pageTitle = realTitle;
           ctx.fetchedPages.push(canonical.url);
+
+          // Merge: real page first, wrapper appended
           ctx.combinedText = [
             realText.slice(0, 10000),
             '---',
             wrapperText.slice(0, 5000),
           ].join('\n').slice(0, 15000);
+
           logger.debug('Fetched canonical page', { url: canonical.url, length: realHtml.length });
         } catch (err) {
           ctx.canonicalError = err.message;
@@ -681,9 +691,11 @@ async function scrapeAndAnalyze(rawUrl) {
         ctx.combinedText = wrapperText.slice(0, 15000);
       }
     } else {
+      // No canonical found
       ctx.combinedText = wrapperText.slice(0, 15000);
     }
 
+    // Fallback if too thin
     if (ctx.combinedText.trim().length < 50) {
       ctx.combinedText = buildUrlFallbackText(rawUrl);
     }
@@ -741,27 +753,6 @@ function buildNote(ctx) {
 }
 
 // ─────────────────────────────────────────────
-// SOURCE NORMALIZER
-// Fixes inconsistent casing: "whatsapp", "Whatsapp", "WhatsApp" → "WhatsApp"
-// ─────────────────────────────────────────────
-function normalizeSource(source) {
-  if (!source || typeof source !== 'string') return 'Manual';
-  const s = source.trim();
-  const map = {
-    'whatsapp': 'WhatsApp',
-    'linkedin': 'LinkedIn',
-    'file upload': 'File Upload',
-    'url': 'URL',
-    'email': 'Email',
-    'manual': 'Manual',
-    'website': 'Website',
-    'telegram': 'Telegram',
-    'unknown': 'Unknown',
-  };
-  return map[s.toLowerCase()] || s;
-}
-
-// ─────────────────────────────────────────────
 // INPUT VALIDATION MIDDLEWARE
 // ─────────────────────────────────────────────
 function validateTextInput(req, res, next) {
@@ -791,7 +782,7 @@ function validateTextInput(req, res, next) {
   req.validatedInput = {
     text: trimmedText,
     jobTitle: jobTitle?.trim() || 'Untitled Job',
-    source: normalizeSource(source),
+    source: source?.trim() || 'Manual',
   };
 
   next();
@@ -814,7 +805,7 @@ function validateUrlInput(req, res, next) {
 }
 
 // ─────────────────────────────────────────────
-// API — TEXT ANALYSIS
+// API — TEXT
 // ─────────────────────────────────────────────
 app.post('/analyze', validateTextInput, (req, res) => {
   const startTime = Date.now();
@@ -822,41 +813,47 @@ app.post('/analyze', validateTextInput, (req, res) => {
   try {
     const { text, jobTitle, source } = req.validatedInput;
 
+    // Check cache
     if (config.cacheEnabled) {
       const cacheKey = getCacheKey('text', { text, jobTitle, source });
       const cached = analysisCache.get(cacheKey);
       if (cached) {
         logger.info('Cache hit for text analysis', { jobTitle, duration: Date.now() - startTime });
-        return res.json({ ...cached, cached: true, cachedAt: new Date().toISOString() });
+        return res.json({ 
+          ...cached, 
+          cached: true, 
+          cachedAt: new Date().toISOString() 
+        });
       }
     }
 
     const result = analyzeJob(text, jobTitle, source);
 
+    // Cache the result
     if (config.cacheEnabled) {
       const cacheKey = getCacheKey('text', { text, jobTitle, source });
       analysisCache.set(cacheKey, result);
     }
 
-    logger.info('Text analysis completed', {
-      jobTitle,
+    logger.info('Text analysis completed', { 
+      jobTitle, 
       status: result.status,
       riskScore: result.riskScore,
-      duration: Date.now() - startTime,
+      duration: Date.now() - startTime 
     });
 
     res.json(result);
   } catch (err) {
     logger.error('Text analysis error', { error: err.message, stack: err.stack });
-    res.status(500).json({
+    res.status(500).json({ 
       error: 'Analysis failed',
-      message: config.nodeEnv === 'development' ? err.message : 'Internal server error',
+      message: config.nodeEnv === 'development' ? err.message : 'Internal server error'
     });
   }
 });
 
 // ─────────────────────────────────────────────
-// API — FILE ANALYSIS
+// API — FILE
 // ─────────────────────────────────────────────
 app.post('/analyze-file', upload.single('file'), async (req, res) => {
   const startTime = Date.now();
@@ -871,14 +868,17 @@ app.post('/analyze-file', upload.single('file'), async (req, res) => {
     const ext = path.extname(file.originalname).toLowerCase();
     let text = '';
 
-    logger.info('File upload received', {
-      filename: file.originalname,
+    logger.info('File upload received', { 
+      filename: file.originalname, 
       size: file.size,
-      mimetype: file.mimetype,
+      mimetype: file.mimetype 
     });
 
+    // Extract text based on file type
     if (ext === '.pdf') {
-      if (!pdfParse) throw new Error('PDF parser not available on this server');
+      if (!pdfParse) {
+        throw new Error('PDF parser not available on this server');
+      }
       const pdfData = await pdfParse(file.buffer);
       text = pdfData.text || '';
     } else if (ext === '.docx' || ext === '.doc') {
@@ -892,9 +892,9 @@ app.post('/analyze-file', upload.single('file'), async (req, res) => {
     text = text.trim();
 
     if (!text || text.length < 30) {
-      logger.warn('Insufficient text extracted from file', {
+      logger.warn('Insufficient text extracted from file', { 
         filename: file.originalname,
-        extractedLength: text.length,
+        extractedLength: text.length 
       });
       return res.status(400).json({
         error: 'Could not extract enough text from the file',
@@ -903,36 +903,47 @@ app.post('/analyze-file', upload.single('file'), async (req, res) => {
       });
     }
 
+    // Check cache
     if (config.cacheEnabled) {
       const cacheKey = getCacheKey('file', { text, jobTitle });
       const cached = analysisCache.get(cacheKey);
       if (cached) {
         logger.info('Cache hit for file analysis', { filename: file.originalname });
-        return res.json({ ...cached, filename: file.originalname, extractedLength: text.length, cached: true });
+        return res.json({ 
+          ...cached, 
+          filename: file.originalname,
+          extractedLength: text.length,
+          cached: true 
+        });
       }
     }
 
     const result = analyzeJob(text, jobTitle, 'File Upload');
 
+    // Cache the result
     if (config.cacheEnabled) {
       const cacheKey = getCacheKey('file', { text, jobTitle });
       analysisCache.set(cacheKey, result);
     }
 
-    logger.info('File analysis completed', {
+    logger.info('File analysis completed', { 
       filename: file.originalname,
       status: result.status,
       riskScore: result.riskScore,
       extractedLength: text.length,
-      duration: Date.now() - startTime,
+      duration: Date.now() - startTime 
     });
 
-    res.json({ ...result, filename: file.originalname, extractedLength: text.length });
+    res.json({
+      ...result,
+      filename: file.originalname,
+      extractedLength: text.length,
+    });
   } catch (err) {
-    logger.error('File analysis error', {
-      error: err.message,
+    logger.error('File analysis error', { 
+      error: err.message, 
       stack: err.stack,
-      filename: req.file?.originalname,
+      filename: req.file?.originalname 
     });
     res.status(500).json({
       error: 'File processing failed',
@@ -942,28 +953,34 @@ app.post('/analyze-file', upload.single('file'), async (req, res) => {
 });
 
 // ─────────────────────────────────────────────
-// API — URL ANALYSIS
+// API — URL
 // ─────────────────────────────────────────────
 app.post('/analyze-url', validateUrlInput, async (req, res) => {
   const startTime = Date.now();
   const rawUrl = req.validatedUrl;
 
   try {
+    // Validate URL safety
     const isSafe = await isSafeUrl(rawUrl);
     if (!isSafe) {
       logger.warn('Unsafe URL blocked', { url: rawUrl, ip: req.ip });
-      return res.status(400).json({
+      return res.status(400).json({ 
         error: 'Invalid or disallowed URL',
-        message: 'The URL appears to be a private IP address or blocked domain.',
+        message: 'The URL appears to be a private IP address or blocked domain.'
       });
     }
 
+    // Check cache
     if (config.cacheEnabled) {
       const cacheKey = getCacheKey('url', rawUrl);
       const cached = analysisCache.get(cacheKey);
       if (cached) {
         logger.info('Cache hit for URL analysis', { url: rawUrl, duration: Date.now() - startTime });
-        return res.json({ ...cached, cached: true, cachedAt: new Date().toISOString() });
+        return res.json({ 
+          ...cached, 
+          cached: true,
+          cachedAt: new Date().toISOString() 
+        });
       }
     }
 
@@ -985,22 +1002,27 @@ app.post('/analyze-url', validateUrlInput, async (req, res) => {
       note: buildNote(ctx),
     };
 
+    // Cache the result
     if (config.cacheEnabled) {
       const cacheKey = getCacheKey('url', rawUrl);
       analysisCache.set(cacheKey, result);
     }
 
-    logger.info('URL analysis completed', {
+    logger.info('URL analysis completed', { 
       url: rawUrl,
       canonicalUrl: ctx.canonicalUrl,
       status: analysis.status,
       riskScore: analysis.riskScore,
-      duration: Date.now() - startTime,
+      duration: Date.now() - startTime 
     });
 
     res.json(result);
   } catch (err) {
-    logger.error('URL analysis error', { url: rawUrl, error: err.message, stack: err.stack });
+    logger.error('URL analysis error', { 
+      url: rawUrl, 
+      error: err.message, 
+      stack: err.stack 
+    });
     res.status(500).json({
       error: 'URL analysis failed',
       message: config.nodeEnv === 'development' ? err.message : 'Could not analyze the URL',
@@ -1009,13 +1031,15 @@ app.post('/analyze-url', validateUrlInput, async (req, res) => {
 });
 
 // ─────────────────────────────────────────────
-// API — ANALYSES HISTORY
+// API — HISTORY
 // ─────────────────────────────────────────────
 app.get('/analyses', generalLimiter, (req, res) => {
   try {
     const limit = parseInt(req.query.limit) || 50;
     const sanitizedLimit = Math.min(Math.max(limit, 1), 100);
+    
     const analyses = getAllAnalyses(sanitizedLimit);
+    
     logger.info('Analyses history retrieved', { count: analyses.length });
     res.json(analyses);
   } catch (err) {
@@ -1025,11 +1049,11 @@ app.get('/analyses', generalLimiter, (req, res) => {
 });
 
 // ─────────────────────────────────────────────
-// ANALYTICS ENGINE
+// API — ANALYTICS DASHBOARD
 // ─────────────────────────────────────────────
-const {
-  getFullAnalytics,
-  runQuery,
+const { 
+  getFullAnalytics, 
+  runQuery, 
   getModelMetrics,
   runABTest,
   runDifferenceInDifferences,
@@ -1037,50 +1061,60 @@ const {
   getSegmentInsights,
   extractFeatures,
   predictScamProbability,
-  loadAnalyses,
+  loadAnalyses
 } = require('./engine/analytics');
 
-// ─────────────────────────────────────────────
-// API — ANALYTICS (all prefixed /api/analytics)
-// This avoids the GET /analytics route conflicting
-// with the /analytics HTML page served above.
-// ─────────────────────────────────────────────
-
-// Full dashboard data — used by analytics.html via fetch('/api/analytics')
-app.get('/api/analytics', generalLimiter, (req, res) => {
+// Full analytics dashboard data
+app.get('/analytics', generalLimiter, (req, res) => {
   const startTime = Date.now();
+  
   try {
     const analytics = getFullAnalytics();
-    logger.info('Analytics dashboard generated', {
+    
+    logger.info('Analytics dashboard generated', { 
       recordCount: analytics.recordCount || 0,
       duration: Date.now() - startTime,
-      isDemo: analytics.empty || false,
+      isDemo: analytics.empty || false
     });
+    
     res.json(analytics);
   } catch (err) {
-    logger.error('Analytics generation failed', { error: err.message, stack: err.stack });
-    res.status(500).json({
+    logger.error('Analytics generation failed', { 
+      error: err.message, 
+      stack: err.stack 
+    });
+    res.status(500).json({ 
       error: 'Analytics generation failed',
-      message: config.nodeEnv === 'development' ? err.message : 'Internal server error',
+      message: config.nodeEnv === 'development' ? err.message : 'Internal server error'
     });
   }
 });
 
-// SQL-style query
-app.post('/api/analytics/query', generalLimiter, (req, res) => {
+// SQL-style query API
+app.post('/analytics/query', generalLimiter, (req, res) => {
   try {
     const { queryName, params } = req.body;
+    
     if (!queryName || typeof queryName !== 'string') {
-      return res.status(400).json({
+      return res.status(400).json({ 
         error: 'Query name is required',
         availableQueries: [
-          'scam_rate_by_source', 'daily_volume', 'score_distribution',
-          'high_risk_cases', 'top_red_flags', 'rolling_7day',
-        ],
+          'scam_rate_by_source',
+          'daily_volume', 
+          'score_distribution',
+          'high_risk_cases',
+          'top_red_flags',
+          'rolling_7day'
+        ]
       });
     }
+    
     const result = runQuery(queryName, params || {});
-    if (result.error) return res.status(400).json(result);
+    
+    if (result.error) {
+      return res.status(400).json(result);
+    }
+    
     logger.info('Query executed', { queryName, params });
     res.json(result);
   } catch (err) {
@@ -1089,21 +1123,27 @@ app.post('/api/analytics/query', generalLimiter, (req, res) => {
   }
 });
 
-// Real-time ML prediction
-app.post('/api/analytics/predict', generalLimiter, (req, res) => {
+// Model prediction endpoint (for real-time scoring)
+app.post('/analytics/predict', generalLimiter, (req, res) => {
   try {
     const { text, jobTitle, source } = req.body;
+    
     if (!text || typeof text !== 'string') {
       return res.status(400).json({ error: 'Text is required for prediction' });
     }
+    
+    // Run through analyzer to get features
     const analysis = analyzeJob(text, jobTitle || 'Untitled', source || 'API');
     const features = extractFeatures({ result: analysis });
+    
+    // Get ML probability
     const mlProbability = predictScamProbability(features);
+    
     res.json({
       ruleBasedScore: analysis.riskScore,
-      mlProbability,
+      mlProbability: mlProbability,
       mlPrediction: mlProbability >= 0.45 ? 'scam' : 'legitimate',
-      confidence: Math.abs(mlProbability - 0.5) * 2,
+      confidence: Math.abs(mlProbability - 0.5) * 2, // 0-1 scale
       features: {
         redFlagCount: features.redFlagCount,
         positiveCount: features.positiveCount,
@@ -1119,50 +1159,56 @@ app.post('/api/analytics/predict', generalLimiter, (req, res) => {
   }
 });
 
-app.get('/api/analytics/model-metrics', generalLimiter, (req, res) => {
+// Individual metric endpoints for focused queries
+app.get('/analytics/model-metrics', generalLimiter, (req, res) => {
   try {
     const records = loadAnalyses();
-    res.json(getModelMetrics(records));
+    const metrics = getModelMetrics(records);
+    res.json(metrics);
   } catch (err) {
     logger.error('Model metrics failed', { error: err.message });
     res.status(500).json({ error: 'Failed to generate model metrics' });
   }
 });
 
-app.get('/api/analytics/ab-test', generalLimiter, (req, res) => {
+app.get('/analytics/ab-test', generalLimiter, (req, res) => {
   try {
     const records = loadAnalyses();
-    res.json(runABTest(records));
+    const test = runABTest(records);
+    res.json(test);
   } catch (err) {
     logger.error('A/B test failed', { error: err.message });
     res.status(500).json({ error: 'Failed to run A/B test' });
   }
 });
 
-app.get('/api/analytics/causal', generalLimiter, (req, res) => {
+app.get('/analytics/causal', generalLimiter, (req, res) => {
   try {
     const records = loadAnalyses();
-    res.json(runDifferenceInDifferences(records));
+    const causal = runDifferenceInDifferences(records);
+    res.json(causal);
   } catch (err) {
     logger.error('Causal inference failed', { error: err.message });
     res.status(500).json({ error: 'Failed to run causal analysis' });
   }
 });
 
-app.get('/api/analytics/cohorts', generalLimiter, (req, res) => {
+app.get('/analytics/cohorts', generalLimiter, (req, res) => {
   try {
     const records = loadAnalyses();
-    res.json(getCohortAnalysis(records));
+    const cohorts = getCohortAnalysis(records);
+    res.json(cohorts);
   } catch (err) {
     logger.error('Cohort analysis failed', { error: err.message });
     res.status(500).json({ error: 'Failed to run cohort analysis' });
   }
 });
 
-app.get('/api/analytics/segments', generalLimiter, (req, res) => {
+app.get('/analytics/segments', generalLimiter, (req, res) => {
   try {
     const records = loadAnalyses();
-    res.json(getSegmentInsights(records));
+    const segments = getSegmentInsights(records);
+    res.json(segments);
   } catch (err) {
     logger.error('Segment analysis failed', { error: err.message });
     res.status(500).json({ error: 'Failed to run segment analysis' });
@@ -1170,15 +1216,15 @@ app.get('/api/analytics/segments', generalLimiter, (req, res) => {
 });
 
 // ─────────────────────────────────────────────
-// ERROR HANDLING MIDDLEWARE
+// ERROR HANDLING
 // ─────────────────────────────────────────────
 app.use((err, req, res, next) => {
   if (err instanceof multer.MulterError) {
     logger.warn('Multer error', { error: err.message, code: err.code });
     if (err.code === 'LIMIT_FILE_SIZE') {
-      return res.status(400).json({
+      return res.status(400).json({ 
         error: 'File too large',
-        message: `Maximum file size is ${config.maxFileSize / 1024 / 1024}MB`,
+        message: `Maximum file size is ${config.maxFileSize / 1024 / 1024}MB`
       });
     }
     return res.status(400).json({ error: err.message });
@@ -1188,23 +1234,28 @@ app.use((err, req, res, next) => {
     return res.status(400).json({ error: err.message });
   }
 
-  logger.error('Unhandled error', { error: err.message, stack: err.stack, path: req.path });
-  res.status(500).json({
+  logger.error('Unhandled error', { 
+    error: err.message, 
+    stack: err.stack,
+    path: req.path 
+  });
+
+  res.status(500).json({ 
     error: 'Internal server error',
-    message: config.nodeEnv === 'development' ? err.message : 'Something went wrong',
+    message: config.nodeEnv === 'development' ? err.message : 'Something went wrong'
   });
 });
 
 // ─────────────────────────────────────────────
-// CATCH-ALL — serves index.html for all unknown routes
+// CATCH-ALL
 // ─────────────────────────────────────────────
 app.get('*', (req, res) => {
   if (req.path.startsWith('/api/')) {
     return res.status(404).json({ error: 'API endpoint not found' });
   }
+
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
-
 // ─────────────────────────────────────────────
 // GRACEFUL SHUTDOWN
 // ─────────────────────────────────────────────
@@ -1212,12 +1263,15 @@ let server;
 
 function gracefulShutdown(signal) {
   logger.info(`${signal} received, starting graceful shutdown`);
+
   server.close(() => {
     logger.info('HTTP server closed');
     analysisCache.close();
     logger.info('Cache closed');
     process.exit(0);
   });
+
+  // Force shutdown after 10 seconds
   setTimeout(() => {
     logger.error('Forced shutdown after timeout');
     process.exit(1);
@@ -1234,17 +1288,18 @@ server = app.listen(config.port, () => {
     root: __dirname,
     cacheEnabled: config.cacheEnabled,
   });
+  
   console.log(`🚀 VerifyJobs v2.0 on http://localhost:${config.port}`);
   console.log(`📄 Root: ${__dirname}`);
-  console.log(`✅ Health:    http://localhost:${config.port}/health`);
-  console.log(`📊 Analytics: http://localhost:${config.port}/analytics`);
-  console.log(`🔌 API:       http://localhost:${config.port}/api/analytics`);
-  console.log(`🔒 Env:       ${config.nodeEnv}`);
+  console.log(`✅ Health: http://localhost:${config.port}/health`);
+  console.log(`📊 Analytics: http://localhost:${config.port}/analytics.html`);
+  console.log(`🔒 Environment: ${config.nodeEnv}`);
 });
 
 process.on('SIGTERM', () => gracefulShutdown('SIGTERM'));
 process.on('SIGINT', () => gracefulShutdown('SIGINT'));
 
+// Handle uncaught exceptions
 process.on('uncaughtException', (err) => {
   logger.error('Uncaught exception', { error: err.message, stack: err.stack });
   gracefulShutdown('uncaughtException');
@@ -1254,4 +1309,5 @@ process.on('unhandledRejection', (reason, promise) => {
   logger.error('Unhandled rejection', { reason, promise });
 });
 
+// Export for testing
 module.exports = app;
