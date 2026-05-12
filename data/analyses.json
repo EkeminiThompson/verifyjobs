@@ -1,5 +1,90 @@
 [
   {
+    "id": "anal_1778563837142",
+    "timestamp": "2026-05-12T05:30:37.142Z",
+    "jobTitle": "Job Application for Machine Learning Engineer at Moniepoint",
+    "source": "URL",
+    "status": "legitimate",
+    "statusLabel": "✅ LIKELY LEGITIMATE",
+    "riskScore": 0,
+    "legitimacyScore": 100,
+    "jobStatus": "Likely Open",
+    "jobStatusMeta": {
+      "color": "#2563eb",
+      "icon": "🔵",
+      "badge": "Likely Still Open"
+    },
+    "isAcceptingApplications": true,
+    "jobStatusConfidence": "medium",
+    "jobStatusInferred": true,
+    "freshness": {
+      "score": 80,
+      "staleness": 20,
+      "label": "Likely Still Open",
+      "signals": [
+        {
+          "signal": "Active application call-to-action",
+          "weight": -25
+        },
+        {
+          "signal": "Hiring process described — actively recruiting",
+          "weight": -20
+        },
+        {
+          "signal": "Detailed posting (870 words) — well maintained",
+          "weight": -15
+        }
+      ]
+    },
+    "redFlags": [
+      "Requests sensitive financial or identity documents prematurely",
+      "Task-based commission scam pattern (common in WhatsApp scams)",
+      "Non-native English patterns common in overseas scams"
+    ],
+    "positiveIndicators": [
+      "Includes standard equal opportunity or diversity statements",
+      "Mentions standard professional benefits package",
+      "Describes structured, professional interview process",
+      "Mentions formal onboarding or training process",
+      "Requires formal education or professional certifications",
+      "Specifies minimum years of experience required",
+      "Mentions company founding date or years in business",
+      "Mentions standard confidentiality or NDA requirements"
+    ],
+    "explanation": "This posting appears relatively safe — 3 red flags were detected. Multiple positive signals (8) indicate professional legitimacy. Always verify company information independently before accepting any offer.",
+    "recommendation": "✓ APPEARS LEGITIMATE. Conduct standard due diligence: confirm the company website, read reviews, and verify the recruiter on LinkedIn.",
+    "actionItems": [
+      "🔍 Verify the company on its official website — search for it independently, don't use links in the posting",
+      "💼 Find the company on LinkedIn and check whether employees list it on their profiles",
+      "🔎 Paste the job title + key phrases in quotes into Google to detect copy-paste scam postings",
+      "⭐ Read company reviews on Glassdoor, Indeed, and Google before accepting any offer",
+      "🤝 Contact the company directly through its official website to confirm this posting is genuine",
+      "❌ Never pay for training, equipment, starter kits, or background checks before your first day of work"
+    ],
+    "metadata": {
+      "redFlagCount": 3,
+      "positiveCount": 8,
+      "contextPenalty": 0,
+      "contextBonus": 5,
+      "netContextAdjustment": -5,
+      "contextFlags": [
+        "Company founding date mentioned"
+      ],
+      "originalLength": 6113,
+      "cleanedLength": 6113,
+      "wordCount": 870,
+      "hasEmail": false,
+      "hasFreeEmail": false,
+      "hasPhone": false,
+      "hasURL": false,
+      "hasSalary": true,
+      "hasLocation": true,
+      "hasCompanyName": true,
+      "analysisTimestamp": "2026-05-12T05:30:37.135Z"
+    },
+    "originalText": "Job Application for Machine Learning Engineer at Moniepoint \n\n \n\n \n\n Back to jobs \n\nMachine Learning Engineer\n\n \nRemote, Nigeria\n\n Apply \n\n Who we are \n\nMoniepoint Inc. is Africa’s all-in-one financial ecosystem, helping 10 million businesses and individuals access seamless payments, banking, credit, and business management tools since 2019.\n\nAs Nigeria’s largest merchant acquirer, it powers most of the country’s Point of Sale (POS) transactions. Through its subsidiaries, Moniepoint Inc. processes $22 billion monthly for its customers while operating profitably.\n\n About the role : \n\nAt Moniepoint, data is at the core of everything we do. We a"
+  },
+  {
     "id": "anal_1778533719701",
     "timestamp": "2026-05-11T21:08:39.701Z",
     "jobTitle": "Consent Letter for Research Data Collection copy.docx",

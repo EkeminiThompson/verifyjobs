@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>VerifyJobs Blog | Job Scam Detection & Employment Fraud Education</title>
+  <meta name="description" content="Educational articles about job scam detection, remote work fraud, advance-fee schemes, and how to identify fake job offers. Free resources for job seekers worldwide.">
+  <meta name="keywords" content="job scam blog, employment fraud education, work from home scam, data entry scam, advance fee fraud, WhatsApp job scam">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://verifyjobs.org/blog/">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="VerifyJobs Blog | Job Scam Detection & Employment Fraud Education">
+  <meta property="og:description" content="Expert guides on identifying job scams, remote work fraud, and advance-fee schemes. Free resources to protect yourself from employment fraud.">
+  <meta property="og:url" content="https://verifyjobs.org/blog/">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://verifyjobs.org/og-image.png">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="VerifyJobs Blog | Job Scam Detection">
+  <meta name="twitter:description" content="Free educational resources on identifying job scams and employment fraud.">
+
+  <meta name="theme-color" content="#0f1035">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+
+  <style>
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    
+    :root {
+      --navy: #0f1035;
+      --navy-mid: #1c1f5a;
+      --navy-light: #2a2e7a;
+      --red: #c0392b;
+      --red-pale: #fdf0ef;
+      --gold: #f0a500;
+      --gold-pale: #fff8e6;
+      --green: #1a7a45;
+      --green-pale: #eaf6ee;
+      --bg: #f0f2f8;
+      --surface: #ffffff;
+      --border: #dde0f0;
+      --text: #0f1035;
+      --muted: #5a5d80;
+      --faint: #9698b8;
+      --radius: 14px;
+      --shadow: 0 2px 16px rgba(15,16,53,0.08);
+      --nav-h: 56px;
+    }
+
+    html { scroll-behavior: smooth; }
+    
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* NAVIGATION */
+    nav { background: var(--navy); position: sticky; top: 0; z-index: 200; box-shadow: 0 2px 12px rgba(0,0,0,0.18); }
+    .nav-bar { display: flex; align-items: center; justify-content: space-between; height: var(--nav-h); padding: 0 1rem; max-width: 900px; margin: 0 auto; }
+    .nav-logo { font-family: 'Syne', sans-serif; font-size: 17px; font-weight: 800; color: white; text-decoration: none; letter-spacing: -0.3px; }
+    .nav-logo span { color: var(--gold); }
+    .nav-toggle { display: flex; flex-direction: column; justify-content: center; gap: 5px; width: 44px; height: 44px; background: none; border: none; cursor: pointer; border-radius: 8px; -webkit-tap-highlight-color: transparent; }
+    .nav-toggle .bar { display: block; width: 22px; height: 2px; background: white; border-radius: 2px; transition: transform 0.28s, opacity 0.2s; }
+    .nav-toggle[aria-expanded="true"] .bar:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-toggle[aria-expanded="true"] .bar:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .nav-toggle[aria-expanded="true"] .bar:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .nav-dropdown { background: var(--navy-mid); overflow: hidden; max-height: 0; transition: max-height 0.32s, opacity 0.25s; opacity: 0; border-top: 1px solid rgba(255,255,255,0.07); }
+    .nav-dropdown.open { max-height: 420px; opacity: 1; }
+    .nav-dropdown-inner { max-width: 900px; margin: 0 auto; padding: 0.5rem 1rem 1rem; display: flex; flex-direction: column; gap: 2px; }
+    .nav-link { display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.75); text-decoration: none; padding: 12px 14px; border-radius: 10px; transition: all 0.15s; min-height: 48px; }
+    .nav-link i { font-size: 18px; flex-shrink: 0; color: rgba(255,255,255,0.4); }
+    .nav-link:hover { background: rgba(255,255,255,0.08); color: white; }
+    .nav-link.active { background: rgba(255,255,255,0.1); color: white; font-weight: 600; }
+    .nav-link.active i { color: var(--gold); }
+    .nav-link.nav-cta { background: var(--gold); color: var(--navy); font-weight: 700; margin-top: 6px; }
+    .nav-link.nav-cta i { color: var(--navy); }
+    .nav-divider { height: 1px; background: rgba(255,255,255,0.07); margin: 4px 0; }
+
+    /* MAIN CONTENT */
+    .container { max-width: 900px; margin: 0 auto; padding: 2rem 1.5rem; }
+    
+    .hero { margin-bottom: 2rem; }
+    .hero h1 { font-family: 'Syne', sans-serif; font-size: clamp(28px, 6vw, 42px); font-weight: 800; color: var(--navy); margin-bottom: 0.5rem; }
+    .hero h1 span { color: var(--red); }
+    .hero p { font-size: 16px; color: var(--muted); line-height: 1.6; }
+    
+    .featured-badge { display: inline-block; background: var(--gold); color: var(--navy); font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; padding: 4px 10px; border-radius: 20px; margin-bottom: 1rem; }
+
+    /* BLOG GRID */
+    .blog-grid { display: grid; gap: 1.5rem; margin: 2rem 0; }
+    
+    .blog-card { background: var(--surface); border-radius: var(--radius); padding: 1.5rem; box-shadow: var(--shadow); border: 1px solid var(--border); transition: transform 0.2s, box-shadow 0.2s; }
+    .blog-card:hover { transform: translateY(-3px); box-shadow: 0 8px 28px rgba(15,16,53,0.12); }
+    
+    .blog-category { display: inline-block; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; padding: 4px 12px; border-radius: 20px; margin-bottom: 1rem; }
+    .cat-advance-fee { background: var(--red-pale); color: var(--red); }
+    .cat-remote { background: var(--gold-pale); color: #c07800; }
+    .cat-whatsapp { background: #e8f4f8; color: #1a6d8a; }
+    .cat-guide { background: var(--green-pale); color: var(--green); }
+    
+    .blog-card h2 { font-family: 'Syne', sans-serif; font-size: 20px; margin-bottom: 0.75rem; line-height: 1.3; }
+    .blog-card h2 a { color: var(--text); text-decoration: none; transition: color 0.2s; }
+    .blog-card h2 a:hover { color: var(--red); }
+    
+    .blog-meta { font-size: 12px; color: var(--faint); margin-bottom: 0.75rem; display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
+    .blog-meta i { font-size: 14px; vertical-align: middle; }
+    
+    .blog-excerpt { color: var(--muted); line-height: 1.6; margin-bottom: 1rem; font-size: 14px; }
+    
+    .read-more { color: var(--red); font-weight: 600; text-decoration: none; font-size: 13px; display: inline-flex; align-items: center; gap: 4px; transition: gap 0.2s; }
+    .read-more:hover { gap: 8px; }
+    
+    /* NEWSLETTER SECTION */
+    .newsletter { background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%); border-radius: var(--radius); padding: 2rem; margin: 2rem 0; text-align: center; color: white; }
+    .newsletter h3 { font-family: 'Syne', sans-serif; font-size: 22px; margin-bottom: 0.5rem; }
+    .newsletter p { color: rgba(255,255,255,0.7); margin-bottom: 1.5rem; font-size: 14px; }
+    .newsletter input { padding: 12px 16px; border: none; border-radius: 10px; width: 100%; max-width: 300px; font-size: 14px; margin-right: 10px; }
+    .newsletter button { background: var(--gold); color: var(--navy); border: none; padding: 12px 24px; border-radius: 10px; font-weight: 700; cursor: pointer; transition: opacity 0.2s; margin-top: 10px; }
+    .newsletter button:hover { opacity: 0.9; }
+    
+    /* CTA BANNER */
+    .cta-banner { background: var(--surface); border: 2px solid var(--border); border-radius: var(--radius); padding: 1.5rem; text-align: center; margin: 2rem 0; }
+    .cta-banner p { margin-bottom: 1rem; font-weight: 500; }
+    .cta-button { display: inline-block; background: var(--red); color: white; padding: 12px 28px; border-radius: 10px; text-decoration: none; font-weight: 600; transition: background 0.2s; }
+    .cta-button:hover { background: var(--red-bright); }
+    
+    /* FOOTER */
+    footer { text-align: center; font-size: 11px; color: var(--faint); padding: 2rem 1rem 1rem; border-top: 1px solid var(--border); margin-top: 2rem; }
+    .footer-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-bottom: 8px; }
+    footer a { color: var(--navy-light); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+
+    @media (max-width: 640px) {
+      .container { padding: 1.5rem 1rem; }
+      .blog-card { padding: 1.25rem; }
+      .newsletter input { max-width: 100%; margin-bottom: 10px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-bar">
+    <a href="../index.html" class="nav-logo">Verify<span>Jobs</span></a>
+    <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-label="Menu">
+      <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+    </button>
+  </div>
+  <div class="nav-dropdown" id="navDropdown">
+    <div class="nav-dropdown-inner">
+      <a href="../index.html" class="nav-link"><i class="ti ti-home"></i> Home</a>
+      <a href="../about.html" class="nav-link"><i class="ti ti-info-circle"></i> About</a>
+      <a href="../how-it-works.html" class="nav-link"><i class="ti ti-bulb"></i> How It Works</a>
+      <a href="../report-a-scam.html" class="nav-link"><i class="ti ti-flag"></i> Report a Scam</a>
+      <a href="../analytics.html" class="nav-link"><i class="ti ti-chart-bar"></i> Analytics</a>
+      <div class="nav-divider"></div>
+      <a href="index.html" class="nav-link active"><i class="ti ti-article"></i> Blog</a>
+      <div class="nav-divider"></div>
+      <a href="https://justjobs.netlify.app" target="_blank" rel="noopener noreferrer" class="nav-link nav-cta"><i class="ti ti-briefcase"></i> JobAPI for Devs</a>
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+  
+  <div class="hero">
+    <div class="featured-badge">📝 Free Educational Resources</div>
+    <h1>VerifyJobs <span>Blog</span></h1>
+    <p>Expert guides on identifying job scams, remote work fraud, advance-fee schemes, and employment fraud protection. All resources are free — because knowledge is your first line of defense.</p>
+  </div>
+
+  <div class="blog-grid">
+    
+    <!-- FEATURED: How to Know If a Job Is a Scam -->
+    <div class="blog-card">
+      <span class="blog-category cat-guide">📋 COMPLETE GUIDE</span>
+      <h2><a href="how-to-know-if-a-job-is-a-scam.html">How to Know If a Job Is a Scam: 15 Warning Signs & Verification Steps</a></h2>
+      <div class="blog-meta">
+        <span><i class="ti ti-calendar"></i> May 12, 2026</span>
+        <span><i class="ti ti-clock"></i> 10 min read</span>
+        <span><i class="ti ti-star"></i> Essential Guide</span>
+      </div>
+      <p class="blog-excerpt">Learn the 15 definitive red flags of fake job offers, plus a 7-step verification process you can use before applying to any position. Covers advance-fee fraud, WhatsApp scams, identity theft, and more.</p>
+      <a href="how-to-know-if-a-job-is-a-scam.html" class="read-more">Read Full Guide →</a>
+    </div>
+
+    <!-- WhatsApp Job Scams Nigeria -->
+    <div class="blog-card">
+      <span class="blog-category cat-whatsapp">📱 WHATSAPP SCAMS</span>
+      <h2><a href="whatsapp-job-scams-nigeria.html">WhatsApp Job Scams in Nigeria: How to Spot and Avoid Fake Recruitment Messages</a></h2>
+      <div class="blog-meta">
+        <span><i class="ti ti-calendar"></i> May 12, 2026</span>
+        <span><i class="ti ti-clock"></i> 8 min read</span>
+        <span><i class="ti ti-brand-whatsapp"></i> High Risk</span>
+      </div>
+      <p class="blog-excerpt">WhatsApp has become the #1 channel for job scammers targeting Nigerian job seekers. Learn the exact phrases, patterns, and red flags that identify fake recruitment messages — before you reply or pay any fees.</p>
+      <a href="whatsapp-job-scams-nigeria.html" class="read-more">Read Article →</a>
+    </div>
+
+    <!-- Advance Fee Job Fraud -->
+    <div class="blog-card">
+      <span class="blog-category cat-advance-fee">💰 ADVANCE-FEE FRAUD</span>
+      <h2><a href="advance-fee-job-fraud.html">Job Requires Upfront Payment? That's Almost Always a Scam — Here's What to Know</a></h2>
+      <div class="blog-meta">
+        <span><i class="ti ti-calendar"></i> May 12, 2026</span>
+        <span><i class="ti ti-clock"></i> 9 min read</span>
+        <span><i class="ti ti-coin"></i> Critical Warning</span>
+      </div>
+      <p class="blog-excerpt">Any job that asks you to pay before you start — registration fees, training costs, equipment deposits — is almost certainly fraud. This guide covers 12 types of upfront payment scams and how to protect yourself.</p>
+      <a href="advance-fee-job-fraud.html" class="read-more">Read Article →</a>
+    </div>
+
+    <!-- Remote Job Scams -->
+    <div class="blog-card">
+      <span class="blog-category cat-remote">🏠 REMOTE WORK FRAUD</span>
+      <h2><a href="remote-job-scams.html">Remote Job Scams: How to Spot Fake Data Entry & Work-From-Home Frauds</a></h2>
+      <div class="blog-meta">
+        <span><i class="ti ti-calendar"></i> May 12, 2026</span>
+        <span><i class="ti ti-clock"></i> 10 min read</span>
+        <span><i class="ti ti-chart-line"></i> Trending</span>
+      </div>
+      <p class="blog-excerpt">Remote work scams have exploded 312% since 2020. Learn to identify fake data entry jobs, work-from-home frauds, and the 14 warning signs that separate legitimate remote opportunities from scams.</p>
+      <a href="remote-job-scams.html" class="read-more">Read Article →</a>
+    </div>
+
+  </div>
+
+  <!-- CTA Banner -->
+  <div class="cta-banner">
+    <p>🔍 Found a suspicious job posting? Verify it instantly with our free tool.</p>
+    <a href="../index.html" class="cta-button">Analyze a Job Description →</a>
+  </div>
+
+  <!-- About Section -->
+  <div style="background: var(--surface); border-radius: var(--radius); padding: 1.5rem; border: 1px solid var(--border); margin: 2rem 0;">
+    <h3 style="font-family: 'Syne', sans-serif; font-size: 18px; margin-bottom: 1rem;">About VerifyJobs</h3>
+    <p style="font-size: 14px; color: var(--muted); line-height: 1.6; margin-bottom: 1rem;">VerifyJobs.org is a free, instant job scam detection tool. Paste any job description, upload a PDF or Word file, or submit a URL to receive a risk score, red flags, and safety recommendations — no sign-up required.</p>
+    <p style="font-size: 14px; color: var(--muted); line-height: 1.6;">Our detection engine checks over 50 scam indicators including advance-fee fraud, WhatsApp-only recruitment, unrealistic salaries, free email domains, and identity theft requests.</p>
+  </div>
+
+  <!-- Newsletter Signup (Optional - requires backend) -->
+  <div class="newsletter">
+    <h3>Stay Protected</h3>
+    <p>Get new scam alerts and fraud prevention tips delivered to your inbox.</p>
+    <form action="#" method="POST" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;">
+      <input type="email" placeholder="Your email address" required>
+      <button type="submit">Subscribe →</button>
+    </form>
+    <p style="font-size: 11px; margin-top: 1rem; opacity: 0.6;">No spam. Unsubscribe anytime.</p>
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-links">
+    <a href="../index.html">Home</a>
+    <a href="../about.html">About</a>
+    <a href="../how-it-works.html">How It Works</a>
+    <a href="../report-a-scam.html">Report a Scam</a>
+    <a href="../analytics.html">Analytics</a>
+    <a href="index.html">Blog</a>
+    <a href="../privacy.html">Privacy</a>
+  </div>
+  <p>© 2026 VerifyJobs.org — Free job scam detector. Not affiliated with any government agency.</p>
+</footer>
+
+<script>
+  const navToggle = document.getElementById('navToggle');
+  const navDropdown = document.getElementById('navDropdown');
+  
+  navToggle.addEventListener('click', () => {
+    const isOpen = navDropdown.classList.contains('open');
+    navDropdown.classList.toggle('open', !isOpen);
+    navToggle.setAttribute('aria-expanded', String(!isOpen));
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!navToggle.contains(e.target) && !navDropdown.contains(e.target)) {
+      navDropdown.classList.remove('open');
+      navToggle.setAttribute('aria-expanded', 'false');
+    }
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && navDropdown.classList.contains('open')) {
+      navDropdown.classList.remove('open');
+      navToggle.setAttribute('aria-expanded', 'false');
+      navToggle.focus();
+    }
+  });
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Blog",
+  "name": "VerifyJobs Blog",
+  "description": "Educational articles about job scam detection, employment fraud prevention, and remote work safety.",
+  "url": "https://verifyjobs.org/blog/",
+  "publisher": {
+    "@type": "Organization",
+    "name": "VerifyJobs.org",
+    "logo": "https://verifyjobs.org/logo.png"
+  },
+  "blogPost": [
+    {
+      "@type": "BlogPosting",
+      "headline": "How to Know If a Job Is a Scam: 15 Warning Signs & Verification Steps",
+      "url": "https://verifyjobs.org/blog/how-to-know-if-a-job-is-a-scam.html",
+      "datePublished": "2026-05-12"
+    },
+    {
+      "@type": "BlogPosting",
+      "headline": "WhatsApp Job Scams in Nigeria: How to Spot and Avoid Fake Recruitment Messages",
+      "url": "https://verifyjobs.org/blog/whatsapp-job-scams-nigeria.html",
+      "datePublished": "2026-05-12"
+    },
+    {
+      "@type": "BlogPosting",
+      "headline": "Job Requires Upfront Payment? That's Almost Always a Scam",
+      "url": "https://verifyjobs.org/blog/advance-fee-job-fraud.html",
+      "datePublished": "2026-05-12"
+    },
+    {
+      "@type": "BlogPosting",
+      "headline": "Remote Job Scams: How to Spot Fake Data Entry & Work-From-Home Frauds",
+      "url": "https://verifyjobs.org/blog/remote-job-scams.html",
+      "datePublished": "2026-05-12"
+    }
+  ]
+}
+</script>
+</body>
+</html>

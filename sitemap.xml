@@ -1,54 +1,64 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:xhtml="http://www.w3.org/1999/xhtml"
-        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
-
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://verifyjobs.org/</loc>
-    <lastmod>2026-05-11</lastmod>
-    <changefreq>daily</changefreq>
+    <lastmod>2025-05-09</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://verifyjobs.org/analytics.html</loc>
-    <lastmod>2026-05-11</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.9</priority>
-    <image:image>
-      <image:loc>https://verifyjobs.org/og-image.png</image:loc>
-      <image:title>VerifyJobs Analytics Dashboard</image:title>
-      <image:caption>Real-time job scam intelligence dashboard with ML metrics, A/B tests, and forecasts</image:caption>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://verifyjobs.org/about.html</loc>
-    <lastmod>2026-05-11</lastmod>
+    <loc>https://verifyjobs.org/about</loc>
+    <lastmod>2025-05-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://verifyjobs.org/how-it-works.html</loc>
-    <lastmod>2026-05-11</lastmod>
+    <loc>https://verifyjobs.org/how-it-works</loc>
+    <lastmod>2025-05-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://verifyjobs.org/report-a-scam.html</loc>
-    <lastmod>2026-05-11</lastmod>
-    <changefreq>weekly</changefreq>
+    <loc>https://verifyjobs.org/report-a-scam</loc>
+    <lastmod>2025-05-09</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://verifyjobs.org/privacy.html</loc>
-    <lastmod>2026-05-11</lastmod>
+    <loc>https://verifyjobs.org/privacy</loc>
+    <lastmod>2025-05-09</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.4</priority>
   </url>
+  <!-- Add inside sitemap.xml -->
   <url>
-    <loc>https://verifyjobs.org/llms.txt</loc>
-    <lastmod>2026-05-11</lastmod>
+    <loc>https://verifyjobs.org/blog/</loc>
+    <lastmod>2026-05-12</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
+    <priority>0.7</priority>
   </url>
-
+  <url>
+    <loc>https://verifyjobs.org/blog/how-to-know-if-a-job-is-a-scam.html</loc>
+    <lastmod>2026-05-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://verifyjobs.org/blog/whatsapp-job-scams-nigeria.html</loc>
+    <lastmod>2026-05-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://verifyjobs.org/blog/advance-fee-job-fraud.html</loc>
+    <lastmod>2026-05-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://verifyjobs.org/blog/remote-job-scams.html</loc>
+    <lastmod>2026-05-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
 </urlset>
