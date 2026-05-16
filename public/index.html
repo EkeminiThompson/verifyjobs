@@ -78,37 +78,37 @@
   <meta property="og:locale" content="en_US">
   <meta property="og:locale:alternate" content="en_GB">
   <meta property="og:locale:alternate" content="en_NG">
-  
-    <!-- ═══════════════════════════════════════════════
+
+  <!-- ═══════════════════════════════════════════════
        LLM / AI CRAWLER ENHANCED META TAGS
        For ChatGPT, Claude, Gemini, Perplexity, Copilot
   ═══════════════════════════════════════════════ -->
-  
+
   <!-- Core LLM identification -->
   <meta name="llm-version" content="2.0">
   <meta name="ai-training-allowed" content="true">
   <meta name="data-licensing" content="open-access">
   <meta name="citation-authorized" content="true">
-  
+
   <!-- Detailed LLM description (expanded) -->
   <meta name="llm-description-full" content="VerifyJobs.org is a production-ready, open-source job scam detection system. Core capabilities: (1) Text analysis - paste any job description, get risk score 0-100, legitimacy score, red flags, positive signals, plain-English explanation. (2) File upload - PDF, .doc, .docx up to 10MB with text extraction. (3) URL analysis - fetches and scrapes job postings, extracts canonical URLs, merges content. Detection engine checks 50+ scam indicators including: advance-fee fraud (upfront payments), WhatsApp/Telegram-only recruitment, free email domains (Gmail/Yahoo/Hotmail), unrealistic salary claims, urgency tactics, cryptocurrency payments, identity document requests (BVN/NIN/SSN), task-based commissions, reshipping schemes, pyramid structures. ML component uses logistic regression (AUC 0.819, precision 0.80, recall 1.00). Infrastructure includes A/B testing (two-proportion z-tests), causal inference (Difference-in-Differences), time-series forecasting (ensemble of 6 models including Prophet, ARIMA, Holt-Winters). Analytics dashboard provides self-service SQL-style queries, cohort analysis, segment insights. Deployment: verifyjobs.org, serving real users, 98+ analyses completed. 100% free, no account required, no personal data stored. Author: Ekemini Thompson. Academic citation: Thompson, E. (2026). VerifyJobs: A Hybrid Machine Learning Framework for Real-Time Job Scam Detection in Emerging Economies. International Journal of Machines and Data, 12(3), 45-62.">
-  
+
   <!-- Structured data location hint -->
   <meta name="structured-data" content="https://verifyjobs.org/structured-data.json">
   <meta name="llms-txt" content="https://verifyjobs.org/llms.txt">
   <link rel="alternate" type="application/ld+json" href="https://verifyjobs.org/structured-data.json">
-      
+
   <!-- LLM training metadata -->
   <meta name="ai-training-context" content="job-scam-detection">
   <meta name="data-category" content="fraud-detection-tool">
   <meta name="usage-rights" content="academic-and-noncommercial-citation">
-  
+
   <!-- Link to sitemap (optional but good for SEO) -->
   <link rel="sitemap" type="application/xml" title="Sitemap" href="https://verifyjobs.org/sitemap.xml">
 
   <!-- Schema.org type for AI crawlers -->
   <meta property="schema:WebApplication" content="https://verifyjobs.org/#webapp">
-  
+
   <!-- Citation information for academic LLM usage -->
   <meta name="citation_title" content="VerifyJobs: A Hybrid Machine Learning Framework for Real-Time Job Scam Detection in Emerging Economies">
   <meta name="citation_author" content="Thompson, Ekemini">
@@ -119,11 +119,11 @@
   <meta name="citation_firstpage" content="45">
   <meta name="citation_lastpage" content="62">
   <meta name="citation_doi" content="10.1234/ijmd.2026.12.3.45">
-  
+
   <!-- Content type declaration for AI parsers -->
   <meta name="content-type-declaration" content="job-scam-detector-web-application">
   <meta name="output-formats" content="json, html">
-  
+
   <!-- API endpoint hints for LLM tool use -->
   <meta name="api-endpoint-analyze" content="POST /analyze">
   <meta name="api-endpoint-analyze-file" content="POST /analyze-file">
@@ -258,7 +258,10 @@
       "Remote work fraud"
     ],
     "sameAs": [
-      "https://twitter.com/verifyjobs"
+      "https://twitter.com/verifyjobs",
+      "https://github.com/verifyjobs",
+      "https://www.linkedin.com/company/verifyjobs",
+      "https://www.wikidata.org/wiki/Q139818998"
     ],
     "contactPoint": {
       "@type": "ContactPoint",
@@ -492,13 +495,6 @@
     "description": "Main pages on VerifyJobs.org",
     "itemListElement": [
       {
-        "@type": "SiteLinksSearchBox",
-        "target": {
-          "@type": "EntryPoint",
-          "urlTemplate": "https://verifyjobs.org/?q={search_term_string}"
-        }
-      },
-      {
         "@type": "ListItem",
         "position": 1,
         "name": "Job Scam Detector — Home",
@@ -525,6 +521,13 @@
         "name": "Report a Scam",
         "url": "https://verifyjobs.org/report-a-scam.html",
         "description": "Report a fraudulent job posting"
+      },
+      {
+        "@type": "ListItem",
+        "position": 5,
+        "name": "Analytics Dashboard",
+        "url": "https://verifyjobs.org/analytics.html",
+        "description": "View job scam analytics and statistics"
       }
     ]
   }
@@ -597,7 +600,7 @@
     },
     "speakable": {
       "@type": "SpeakableSpecification",
-      "cssSelector": [".hero-sub", ".about-section p", ".analysis-text"]
+      "cssSelector": [".hero-sub", ".about-section p"]
     }
   }
   </script>
@@ -655,17 +658,23 @@
 
     .page { max-width: 680px; margin: 0 auto; padding: 1rem 1rem 3rem; }
 
-    /* NAV */
+    /* ── NAV ── */
     nav { background: var(--navy); position: sticky; top: 0; z-index: 200; box-shadow: 0 2px 12px rgba(0,0,0,0.18); }
     .nav-bar { display: flex; align-items: center; justify-content: space-between; height: var(--nav-h); padding: 0 1rem; max-width: 680px; margin: 0 auto; }
-    .nav-logo { font-family: 'Syne', sans-serif; font-size: 17px; font-weight: 800; color: white; text-decoration: none; flex-shrink: 0; letter-spacing: -0.3px; }
-    .nav-logo span { color: var(--gold); }
+
+    /* Logo — works for both class names */
+    .nav-logo, .nav-brand { font-family: 'Syne', sans-serif; font-size: 17px; font-weight: 800; color: white; text-decoration: none; flex-shrink: 0; letter-spacing: -0.3px; }
+    .nav-logo span, .nav-brand span { color: var(--gold); }
+
+    /* Hamburger */
     .nav-toggle { display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 5px; width: 44px; height: 44px; background: none; border: none; cursor: pointer; border-radius: 8px; -webkit-tap-highlight-color: transparent; transition: background 0.2s; flex-shrink: 0; }
     .nav-toggle:active { background: rgba(255,255,255,0.1); }
     .nav-toggle .bar { display: block; width: 22px; height: 2px; background: white; border-radius: 2px; transition: transform 0.28s cubic-bezier(.4,0,.2,1), opacity 0.2s; transform-origin: center; }
     .nav-toggle[aria-expanded="true"] .bar:nth-child(1) { transform: translateY(7px) rotate(45deg); }
     .nav-toggle[aria-expanded="true"] .bar:nth-child(2) { opacity: 0; transform: scaleX(0); }
     .nav-toggle[aria-expanded="true"] .bar:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* Mobile dropdown */
     .nav-dropdown { background: var(--navy-mid); overflow: hidden; max-height: 0; transition: max-height 0.32s cubic-bezier(.4,0,.2,1), opacity 0.25s; opacity: 0; border-top: 1px solid rgba(255,255,255,0.07); }
     .nav-dropdown.open { max-height: 420px; opacity: 1; }
     .nav-dropdown-inner { max-width: 680px; margin: 0 auto; padding: 0.5rem 1rem 1rem; display: flex; flex-direction: column; gap: 2px; }
@@ -680,14 +689,40 @@
     .nav-link.nav-cta:hover { background: #e09500; color: var(--navy); }
     .nav-divider { height: 1px; background: rgba(255,255,255,0.07); margin: 4px 0; }
 
+    /* Desktop nav — hidden on mobile, shown ≥640px */
+    .nav-desktop { display: none; }
+
+    @media (min-width: 640px) {
+      .nav-toggle { display: none; }
+      .nav-dropdown { display: none !important; }
+      .nav-bar { padding: 0 1.25rem; }
+      .nav-logo, .nav-brand { font-size: 18px; }
+      .nav-desktop {
+        display: flex; gap: 4px; align-items: center;
+      }
+      .nav-desktop a {
+        font-size: 11px; font-weight: 500;
+        color: rgba(255,255,255,0.65); text-decoration: none;
+        padding: 5px 9px; border-radius: 8px; white-space: nowrap;
+        transition: background 0.15s, color 0.15s;
+      }
+      .nav-desktop a.active { background: rgba(255,255,255,0.15); color: white; font-weight: 600; }
+      .nav-desktop a:hover { background: rgba(255,255,255,0.08); color: white; }
+      .nav-desktop .nav-cta { background: var(--gold) !important; color: var(--navy) !important; font-weight: 700 !important; display: flex; align-items: center; gap: 4px; }
+      .nav-desktop .nav-cta:hover { background: #e09500 !important; }
+    }
+
     /* HERO */
     .hero { background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 60%, #1a1060 100%); border-radius: var(--radius); padding: 1.5rem 1.25rem; margin-bottom: 1rem; position: relative; overflow: hidden; }
     .hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 80% 20%, rgba(240,165,0,0.12) 0%, transparent 60%), radial-gradient(ellipse at 10% 80%, rgba(192,57,43,0.15) 0%, transparent 50%); pointer-events: none; }
     .hero-grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px); background-size: 32px 32px; pointer-events: none; }
     .hero-inner { position: relative; z-index: 1; }
     .hero-top { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 1rem; }
+
+    /* ── SHIELD BOX — SVG-based, zero icon-font dependency ── */
     .hero-shield { width: 48px; height: 48px; background: var(--red); border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: 0 4px 16px rgba(192,57,43,0.4); }
-    .hero-shield i { font-size: 22px; color: white; }
+    .hero-shield svg { display: block; }
+
     .hero-eyebrow { font-size: 10px; font-weight: 600; letter-spacing: 1.2px; text-transform: uppercase; color: var(--gold); background: rgba(240,165,0,0.12); border: 1px solid rgba(240,165,0,0.3); border-radius: 20px; padding: 4px 10px; display: inline-block; margin-bottom: 6px; }
     .hero h1 { font-family: 'Syne', sans-serif; font-size: clamp(20px, 6vw, 30px); font-weight: 800; color: white; line-height: 1.2; margin-bottom: 6px; }
     .hero h1 span { color: var(--gold); }
@@ -740,6 +775,7 @@
 
     /* BUTTON */
     .btn { width: 100%; padding: 16px; background: var(--red); color: white; border: none; border-radius: 10px; font-size: 16px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 6px; transition: all 0.2s; font-family: 'DM Sans', sans-serif; letter-spacing: 0.2px; -webkit-tap-highlight-color: transparent; touch-action: manipulation; box-shadow: 0 4px 14px rgba(192,57,43,0.35); min-height: 52px; }
+    .btn:hover:not(:disabled) { background: var(--red-bright); }
     .btn:active:not(:disabled) { background: var(--red-bright); transform: scale(0.98); }
     .btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; box-shadow: none; }
 
@@ -859,11 +895,6 @@
       .promo-banner { flex-direction: row; align-items: center; justify-content: space-between; padding: 1.25rem 1.5rem; }
       .promo-cta { width: auto; flex-shrink: 0; }
     }
-    @media(min-width: 640px){
-      .nav-bar { padding: 0 1.25rem; }
-      .nav-logo { font-size: 18px; }
-      .tips-grid { grid-template-columns: repeat(2, 1fr); }
-    }
     @media(max-width: 380px){
       .hero { padding: 1.25rem 1rem; }
       .hero h1 { font-size: 19px; }
@@ -880,14 +911,29 @@
 
 <a class="skip-link" href="#main-tool">Skip to tool</a>
 
-<!-- NAV -->
+<!-- ── NAV ── -->
 <nav role="navigation" aria-label="Main navigation">
   <div class="nav-bar">
     <a href="/" class="nav-logo" aria-label="VerifyJobs Home">Verify<span>Jobs</span></a>
+
+    <!-- Desktop links (visible ≥640px) -->
+    <div class="nav-desktop">
+      <a href="/" class="active">Home</a>
+      <a href="about.html">About</a>
+      <a href="how-it-works.html">How It Works</a>
+      <a href="report-a-scam.html">Report</a>
+      <a href="https://justjobs.netlify.app" target="_blank" rel="noopener noreferrer" class="nav-cta">
+        <i class="ti ti-briefcase" style="font-size:13px" aria-hidden="true"></i> JobAPI
+      </a>
+    </div>
+
+    <!-- Hamburger (mobile only) -->
     <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="navDropdown" aria-label="Open navigation menu">
       <span class="bar"></span><span class="bar"></span><span class="bar"></span>
     </button>
   </div>
+
+  <!-- Mobile dropdown -->
   <div class="nav-dropdown" id="navDropdown" role="menu">
     <div class="nav-dropdown-inner">
       <a href="/" class="nav-link active" role="menuitem"><i class="ti ti-home" aria-hidden="true"></i> Home</a>
@@ -910,7 +956,17 @@
       <div class="hero-grid" aria-hidden="true"></div>
       <div class="hero-inner">
         <div class="hero-top">
-          <div class="hero-shield" aria-hidden="true"><i class="ti ti-shield-check"></i></div>
+
+          <!-- ── SHIELD LOGO: inline SVG — guaranteed to render regardless of icon font ── -->
+          <div class="hero-shield" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                 stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"
+                 xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              <polyline points="9 12 11 14 15 10"/>
+            </svg>
+          </div>
+
           <div>
             <span class="hero-eyebrow">Free · No Sign-up · Instant</span>
             <h1>Verify<span>Jobs</span>.org</h1>
@@ -1236,7 +1292,7 @@
       <a href="how-it-works.html">How It Works</a>
       <a href="report-a-scam.html">Report a Scam</a>
       <a href="analytics.html">MLAnalytics</a>
-      <a href="blog/index.html">Blog</a>  <!-- ADD THIS -->
+      <a href="blog/index.html">Blog</a>
       <a href="https://justjobs.netlify.app" target="_blank" rel="noopener noreferrer">Job API ↗</a>
     </div>
     <p>© 2025 VerifyJobs.org — Free job scam detector. Not affiliated with any government agency.</p>

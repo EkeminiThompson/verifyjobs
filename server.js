@@ -184,19 +184,78 @@ const upload = multer({
 // STATIC FILE SERVING
 // ─────────────────────────────────────────────
 
-// 1. Serve root files (robots.txt, sitemap.xml, llms.txt, structured-data.json, .well-known, etc.)
-app.use(express.static(path.join(__dirname), {
+// 1. SEO-CRITICAL FILES FIRST (must be before other static middleware)
+app.get('/robots.txt', (req, res) => {
+  res.type('text/plain');
+  res.sendFile(path.join(__dirname, 'robots.txt'), (err) => {
+    if (err) {
+      logger.error('robots.txt not found');
+      res.status(404).send('Not found');
+    }
+  });
+});
+
+app.get('/sitemap.xml', (req, res) => {
+  res.type('application/xml');
+  res.sendFile(path.join(__dirname, 'sitemap.xml'), (err) => {
+    if (err) {
+      logger.error('sitemap.xml not found');
+      res.status(404).send('Not found');
+    }
+  });
+});
+
+app.get('/structured-data.json', (req, res) => {
+  res.type('application/json');
+  res.sendFile(path.join(__dirname, 'structured-data.json'), (err) => {
+    if (err) {
+      logger.error('structured-data.json not found');
+      res.status(404).send('Not found');
+    }
+  });
+});
+
+app.get('/llms.txt', (req, res) => {
+  res.type('text/plain');
+  res.sendFile(path.join(__dirname, 'llms.txt'), (err) => {
+    if (err) {
+      logger.error('llms.txt not found');
+      res.status(404).send('Not found');
+    }
+  });
+});
+
+// Google Search Console verification file
+app.get('/google6c2364060583a1e1.html', (req, res) => {
+  res.type('text/html');
+  res.sendFile(path.join(__dirname, 'google6c2364060583a1e1.html'), (err) => {
+    if (err) {
+      logger.error('Google verification file not found');
+      res.status(404).send('Not found');
+    }
+  });
+});
+
+// 2. Root assets (favicon, og-image, logo, etc.) - NOT recursive
+app.use(express.static(__dirname, {
   index: false,
-  maxAge: config.nodeEnv === 'production' ? '1d' : 0,
+  maxAge: config.nodeEnv === 'production' ? '7d' : 0,
+  dotfiles: 'ignore',
+  extensions: ['png', 'jpg', 'svg', 'ico', 'webp'],
 }));
 
-// 2. Serve /public for HTML, CSS, JS, images
+// 3. Public directory for HTML/CSS/JS
 app.use(express.static(path.join(__dirname, 'public'), {
   index: false,
   maxAge: config.nodeEnv === 'production' ? '1d' : 0,
 }));
 
-// 3. Health check endpoint
+// 4. .well-known directory (RFC 8615)
+app.use('/.well-known', express.static(path.join(__dirname, '.well-known'), {
+  maxAge: '7d',
+}));
+
+// 5. Health check endpoint
 app.get('/health', (req, res) => {
   res.json({
     status: 'ok',
@@ -211,21 +270,27 @@ app.get('/health', (req, res) => {
   });
 });
 
-// 4. Handle direct HTML file requests (from /public)
-app.get('*.html', (req, res) => {
-  const filePath = path.join(__dirname, 'public', req.path);
-  res.sendFile(filePath, (err) => {
+// 6. Homepage - explicitly serve index.html
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'), (err) => {
     if (err) {
-      logger.error('File not found', { path: req.path });
-      res.status(404).sendFile(path.join(__dirname, 'public', 'index.html'));
+      logger.error('index.html not found');
+      res.status(500).send('Server error');
     }
   });
 });
 
-// 5. .well-known directory (RFC 8615 - must be accessible)
-app.use('/.well-known', express.static(path.join(__dirname, '.well-known'), {
-  maxAge: '7d',
-}));
+// 7. Other HTML pages from /public
+app.get('*.html', (req, res) => {
+  const filePath = path.join(__dirname, 'public', req.path);
+  res.sendFile(filePath, (err) => {
+    if (err) {
+      logger.error('HTML file not found', { path: req.path });
+      // Fallback to homepage for SPA behavior
+      res.sendFile(path.join(__dirname, 'public', 'index.html'));
+    }
+  });
+});
 
 // ─────────────────────────────────────────────
 // PDF PARSER

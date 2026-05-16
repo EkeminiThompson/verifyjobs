@@ -1,5 +1,316 @@
 [
   {
+    "id": "anal_1778966585408",
+    "timestamp": "2026-05-16T21:23:05.409Z",
+    "jobTitle": "VerifyJobs – Free Job Scam Detector | Is This Job Real? Instant Fraud Check",
+    "source": "URL",
+    "status": "definite_scam",
+    "statusLabel": "🚨 DEFINITE SCAM",
+    "riskScore": 100,
+    "legitimacyScore": 0,
+    "jobStatus": "Likely Open",
+    "jobStatusMeta": {
+      "color": "#2563eb",
+      "icon": "🔵",
+      "badge": "Likely Still Open"
+    },
+    "isAcceptingApplications": true,
+    "jobStatusConfidence": "medium",
+    "jobStatusInferred": true,
+    "freshness": {
+      "score": 67,
+      "staleness": 33,
+      "label": "Likely Still Open",
+      "signals": [
+        {
+          "signal": "Hiring process described — actively recruiting",
+          "weight": -20
+        },
+        {
+          "signal": "Detailed posting (999 words) — well maintained",
+          "weight": -15
+        }
+      ]
+    },
+    "redFlags": [
+      "Requests cryptocurrency payment or mentions crypto wallets",
+      "Requests sensitive financial or identity documents prematurely",
+      "Classic reshipping or money mule scam pattern",
+      "Requires personal investment or capital contribution",
+      "Multi-level marketing or pyramid scheme indicators",
+      "Unrealistically high daily or weekly pay promises",
+      "Unrealistically high pay in Naira (Nigerian scam indicator)",
+      "Task-based commission scam pattern (common in WhatsApp scams)",
+      "High-pressure urgency tactics to prevent careful consideration",
+      "Uses free personal email domain instead of company domain",
+      "Common scam job categories (data entry, typing, surveys)",
+      "Creates false sense of urgency"
+    ],
+    "positiveIndicators": [
+      "Specifies paid time off benefits",
+      "Describes structured, professional interview process",
+      "Uses professional company email domain (not free email)",
+      "Contains detailed job description sections",
+      "Mentions standard confidentiality or NDA requirements"
+    ],
+    "explanation": "This posting has 12 serious red flags and matches well-documented employment fraud patterns. Context flags: WhatsApp listed as sole contact channel; Telegram mentioned; Industry-standard tools or platforms referenced. The combination of indicators makes this almost certainly a scam.",
+    "recommendation": "🚨 AVOID COMPLETELY. Do not respond, send money, or share personal information. This posting exhibits overwhelming scam indicators.",
+    "actionItems": [
+      "🛑 DO NOT send money, gift cards, or cryptocurrency under any circumstances",
+      "🛑 DO NOT share your bank account, BVN, NIN, or passport details",
+      "📱 Report this posting to the platform where you found it",
+      "🚔 File a report: FTC (USA) · EFCC / NITDA (Nigeria) · Action Fraud (UK)",
+      "⚠️ Search \"[company name] scam\" on Google and check ScamPulse, BBB Scam Tracker",
+      "🔍 Verify the company on its official website — search for it independently, don't use links in the posting",
+      "💼 Find the company on LinkedIn and check whether employees list it on their profiles",
+      "🔎 Paste the job title + key phrases in quotes into Google to detect copy-paste scam postings",
+      "📧 The email domain is a free provider (Gmail/Yahoo/etc.) — legitimate companies use branded email",
+      "❌ Never pay for training, equipment, starter kits, or background checks before your first day of work"
+    ],
+    "metadata": {
+      "redFlagCount": 12,
+      "positiveCount": 5,
+      "contextPenalty": 40,
+      "contextBonus": 14,
+      "netContextAdjustment": 26,
+      "contextFlags": [
+        "WhatsApp listed as sole contact channel",
+        "Telegram mentioned",
+        "Industry-standard tools or platforms referenced",
+        "Team structure or reporting line described"
+      ],
+      "originalLength": 7461,
+      "cleanedLength": 7461,
+      "wordCount": 999,
+      "hasEmail": true,
+      "hasFreeEmail": true,
+      "hasPhone": false,
+      "hasURL": false,
+      "hasSalary": true,
+      "hasLocation": true,
+      "hasCompanyName": true,
+      "analysisTimestamp": "2026-05-16T21:23:05.401Z"
+    },
+    "originalText": "VerifyJobs – Free Job Scam Detector | Is This Job Real? Instant Fraud Check \n \n \n \n \n \n \n \n \n\n \n \n \n \n \n \n \n \n \n\n \n \n \n \n \n \n \n \n \n \n\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n\n \n \n \n \n \n \n \n \n\n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n\n \n \n \n \n \n \n \n \n\n \n \n\n \n \n\n \n \n\n \n \n\n \n \n\n \n \n\n \n \n\n \n \n\n \n \n\n \n \n\n \n\n \n\n \n\n \n \n \n\n Skip to tool \n\n \n \n\n \n \n\n \n \n\n \n \n Rule Engine v2.0 — Online & Ready\n \n \n\n \n \n\n \n \n\n \nError\n\n \n\n \n\n \n\n \n \n\n \n\n \n\n \n Paste Text \n \n \n Upload File \n \n \n Check URL \n \n \n\n \n \n\n \n\n \n\n Job Title \n \n \n\n \n\n \n\n Company Name \n \n \n\n \n\n \n\n Job Description * \n \n \n\n \n\n \n\n \n\n Source \n \n \n\n \n\n Contact Info \n \n \n\n \n\n \n Ana"
+  },
+  {
+    "id": "anal_1778937773393",
+    "timestamp": "2026-05-16T13:22:53.393Z",
+    "jobTitle": "Untitled Job",
+    "source": "Manual",
+    "status": "low_concern",
+    "statusLabel": "🟢 LOW CONCERN",
+    "riskScore": 14,
+    "legitimacyScore": 86,
+    "jobStatus": "Unknown",
+    "jobStatusMeta": {
+      "color": "#9ca3af",
+      "icon": "❓",
+      "badge": "Status Unknown"
+    },
+    "isAcceptingApplications": true,
+    "jobStatusConfidence": "very_low",
+    "jobStatusInferred": true,
+    "freshness": {
+      "score": 100,
+      "staleness": 0,
+      "label": "Status Unknown",
+      "signals": []
+    },
+    "redFlags": [],
+    "positiveIndicators": [],
+    "explanation": "This posting appears relatively safe — no red flags were detected. Always verify company information independently before accepting any offer.",
+    "recommendation": "✓ APPEARS LEGITIMATE. Conduct standard due diligence: confirm the company website, read reviews, and verify the recruiter on LinkedIn.",
+    "actionItems": [
+      "🔍 Verify the company on its official website — search for it independently, don't use links in the posting",
+      "💼 Find the company on LinkedIn and check whether employees list it on their profiles",
+      "🔎 Paste the job title + key phrases in quotes into Google to detect copy-paste scam postings",
+      "⭐ Read company reviews on Glassdoor, Indeed, and Google before accepting any offer",
+      "🤝 Contact the company directly through its official website to confirm this posting is genuine",
+      "❌ Never pay for training, equipment, starter kits, or background checks before your first day of work"
+    ],
+    "metadata": {
+      "redFlagCount": 0,
+      "positiveCount": 0,
+      "contextPenalty": 14,
+      "contextBonus": 0,
+      "netContextAdjustment": 14,
+      "contextFlags": [
+        "No official website or online presence mentioned"
+      ],
+      "originalLength": 13,
+      "cleanedLength": 13,
+      "wordCount": 1,
+      "hasEmail": false,
+      "hasFreeEmail": false,
+      "hasPhone": false,
+      "hasURL": false,
+      "hasSalary": false,
+      "hasLocation": false,
+      "hasCompanyName": false,
+      "analysisTimestamp": "2026-05-16T13:22:53.390Z"
+    },
+    "originalText": "analysis-text"
+  },
+  {
+    "id": "anal_1778937753133",
+    "timestamp": "2026-05-16T13:22:33.133Z",
+    "jobTitle": "ANIEKAN USORO's RESUME_015626.docx",
+    "source": "File Upload",
+    "status": "suspicious",
+    "statusLabel": "🟡 SUSPICIOUS",
+    "riskScore": 38,
+    "legitimacyScore": 62,
+    "jobStatus": "Uncertain",
+    "jobStatusMeta": {
+      "color": "#d97706",
+      "icon": "🟡",
+      "badge": "Status Uncertain — Check Directly"
+    },
+    "isAcceptingApplications": true,
+    "jobStatusConfidence": "low",
+    "jobStatusInferred": true,
+    "freshness": {
+      "score": 57,
+      "staleness": 43,
+      "label": "Status Uncertain — Check Directly",
+      "signals": [
+        {
+          "signal": "Detailed posting (483 words) — well maintained",
+          "weight": -15
+        }
+      ]
+    },
+    "redFlags": [
+      "Requests sensitive financial or identity documents prematurely",
+      "Task-based commission scam pattern (common in WhatsApp scams)"
+    ],
+    "positiveIndicators": [
+      "Uses professional company email domain (not free email)",
+      "Requires formal education or professional certifications",
+      "Mentions standard confidentiality or NDA requirements"
+    ],
+    "explanation": "This posting has 2 minor concerns. Context flags: Industry-standard tools or platforms referenced. Positive indicators (3) suggest this may be legitimate. Standard due diligence is recommended.",
+    "recommendation": "✓ POTENTIALLY LEGITIMATE. Verify the company on Glassdoor and LinkedIn, and confirm job details through the official company website.",
+    "actionItems": [
+      "🔍 Verify the company on its official website — search for it independently, don't use links in the posting",
+      "💼 Find the company on LinkedIn and check whether employees list it on their profiles",
+      "🔎 Paste the job title + key phrases in quotes into Google to detect copy-paste scam postings",
+      "📧 Confirm the email domain matches the company's official website exactly",
+      "⭐ Read company reviews on Glassdoor, Indeed, and Google before accepting any offer",
+      "🤝 Contact the company directly through its official website to confirm this posting is genuine",
+      "❌ Never pay for training, equipment, starter kits, or background checks before your first day of work"
+    ],
+    "metadata": {
+      "redFlagCount": 2,
+      "positiveCount": 3,
+      "contextPenalty": 0,
+      "contextBonus": 8,
+      "netContextAdjustment": -8,
+      "contextFlags": [
+        "Industry-standard tools or platforms referenced"
+      ],
+      "originalLength": 3878,
+      "cleanedLength": 3863,
+      "wordCount": 483,
+      "hasEmail": true,
+      "hasFreeEmail": false,
+      "hasPhone": true,
+      "hasURL": false,
+      "hasSalary": false,
+      "hasLocation": false,
+      "hasCompanyName": true,
+      "analysisTimestamp": "2026-05-16T13:22:33.129Z"
+    },
+    "originalText": "ANIEKAN ASUQUO USORO Lead Baggage Handler, Ibom AirEnugu, Enugu State, Nigeria📞 +234 708 314 5810 | ✉️ aniekan.usoro@ibomair.com  \n\n\n\nPROFESSIONAL SUMMARY\n\nCustomer-focused operations professional with hands-on experience in airline ground operations, administration, and service delivery. Holder of a Higher National Diploma in Public Administration with professional certifications in Human Resources Management and Environmental Health & Safety. Proven ability to lead teams, resolve customer and operational issues, ensure safety compliance, and maintain high service standards in fast-paced environments. Currently a Lead Baggage Handler at Ibo"
+  },
+  {
+    "id": "anal_1778937343597",
+    "timestamp": "2026-05-16T13:15:43.597Z",
+    "jobTitle": "Regional Business Development Officer – Enugu & Eastern Nigeria at The African Medical Centre of Excellence (AMCE) May, 2026 | MyJobMag",
+    "source": "URL",
+    "status": "definite_scam",
+    "statusLabel": "🚨 DEFINITE SCAM",
+    "riskScore": 97,
+    "legitimacyScore": 3,
+    "jobStatus": "Likely Open",
+    "jobStatusMeta": {
+      "color": "#2563eb",
+      "icon": "🔵",
+      "badge": "Likely Still Open"
+    },
+    "isAcceptingApplications": true,
+    "jobStatusConfidence": "medium",
+    "jobStatusInferred": true,
+    "freshness": {
+      "score": 65,
+      "staleness": 35,
+      "label": "Likely Still Open",
+      "signals": [
+        {
+          "signal": "Detailed posting (1658 words) — well maintained",
+          "weight": -15
+        },
+        {
+          "signal": "Future-tense role description — actively planning hire",
+          "weight": -15
+        }
+      ]
+    },
+    "redFlags": [
+      "Requests sensitive financial or identity documents prematurely",
+      "Requires personal investment or capital contribution",
+      "Task-based commission scam pattern (common in WhatsApp scams)",
+      "Uses free personal email domain instead of company domain",
+      "Fake childcare position scam"
+    ],
+    "positiveIndicators": [
+      "Links to official company career or about page",
+      "Mentions standard professional benefits package",
+      "Requires formal education or professional certifications",
+      "Contains detailed job description sections",
+      "Specifies standard employment type",
+      "Mentions standard confidentiality or NDA requirements"
+    ],
+    "explanation": "This posting has 5 serious red flags and matches well-documented employment fraud patterns. Context flags: Specific physical address mentioned; Industry-standard tools or platforms referenced. The combination of indicators makes this almost certainly a scam.",
+    "recommendation": "🚨 AVOID COMPLETELY. Do not respond, send money, or share personal information. This posting exhibits overwhelming scam indicators.",
+    "actionItems": [
+      "🛑 DO NOT send money, gift cards, or cryptocurrency under any circumstances",
+      "🛑 DO NOT share your bank account, BVN, NIN, or passport details",
+      "📱 Report this posting to the platform where you found it",
+      "🚔 File a report: FTC (USA) · EFCC / NITDA (Nigeria) · Action Fraud (UK)",
+      "⚠️ Search \"[company name] scam\" on Google and check ScamPulse, BBB Scam Tracker",
+      "🔍 Verify the company on its official website — search for it independently, don't use links in the posting",
+      "💼 Find the company on LinkedIn and check whether employees list it on their profiles",
+      "🔎 Paste the job title + key phrases in quotes into Google to detect copy-paste scam postings",
+      "📧 The email domain is a free provider (Gmail/Yahoo/etc.) — legitimate companies use branded email",
+      "❌ Never pay for training, equipment, starter kits, or background checks before your first day of work"
+    ],
+    "metadata": {
+      "redFlagCount": 5,
+      "positiveCount": 6,
+      "contextPenalty": 0,
+      "contextBonus": 18,
+      "netContextAdjustment": -18,
+      "contextFlags": [
+        "Specific physical address mentioned",
+        "Industry-standard tools or platforms referenced"
+      ],
+      "originalLength": 14094,
+      "cleanedLength": 13093,
+      "wordCount": 1658,
+      "hasEmail": true,
+      "hasFreeEmail": true,
+      "hasPhone": false,
+      "hasURL": true,
+      "hasSalary": true,
+      "hasLocation": true,
+      "hasCompanyName": true,
+      "analysisTimestamp": "2026-05-16T13:15:43.591Z"
+    },
+    "originalText": "Regional Business Development Officer – Enugu & Eastern Nigeria at The African Medical Centre of Excellence (AMCE) May, 2026 | MyJobMag \r\n \r\n\n\r\n \r\n \r\n \r\n \r\n \r\n \r\n \r\n \r\n \r\n \r\n \r\n \r\n \r\n \r\n \r\n \r\n\r\n\n\r\n\n\r\n \r\n\r\n \r\n \r\n\r\n \r\n\r\n \r\n\r\n \r\n \r\n \r\n\r\n \r\n \r\n \r\n \r\n \r\n\r\n\n\r\n\n\r\n \r\n \r\n \r\n \r\n \r\n \r\n \r\n \r\n \r\n \r\n \n Login \n\r\n \n Signup \n\r\n \n Employers \n\r\n \r\n \r\n \r\n \n\r\n \r\n Nigeria \r\n \r\n \n Ghana \n\r\n \n Kenya \n\r\n \n Nigeria \n\r\n \n South Africa \n\r\n \n UK \n\r\n \r\n \r\n \n\r\n \r\n \r\n \r\n \n\r\n\n\r\n\r\n\n\r\n Jobs \r\n Career Advice \r\n Post Job \r\n\n\r\n\n\r\n \r\n Search for Jobs \r\n \n\r\n \r\n \n\r\n \r\n \r\n \n\r\n \n\r\n \n\n Abia Abuja Adamawa Akwa Ibom Anambra Bauchi Bayelsa Benue Borno Cross River Delta Ebonyi Edo Ekiti En"
+  },
+  {
     "id": "anal_1778429880333",
     "timestamp": "2026-05-10T16:18:00.333Z",
     "jobTitle": "Job Application for AI Tutor - Software Engineering Specialist at xAI",
