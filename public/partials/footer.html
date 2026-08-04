@@ -1,0 +1,80 @@
+<footer role="contentinfo" itemscope itemtype="https://schema.org/WPFooter">
+    <style>
+        footer {
+            text-align: center;
+            font-size: 11px;
+            color: var(--faint, #9698b8);
+            padding: 1.5rem 1rem 0.75rem;
+            line-height: 1.8;
+        }
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 4px 0;
+            margin-bottom: 10px;
+        }
+        .footer-links a {
+            color: var(--navy-light, #2a2e7a);
+            text-decoration: none;
+            padding: 4px 8px;
+            border-radius: 6px;
+            white-space: nowrap;
+            transition: background 0.15s;
+        }
+        .footer-links a:hover {
+            background: rgba(42,46,122,0.08);
+            text-decoration: none;
+        }
+        /* Dot separators between links */
+        .footer-links a + a::before {
+            content: '·';
+            margin-right: 8px;
+            color: var(--faint, #9698b8);
+            pointer-events: none;
+        }
+        footer p {
+            font-size: 11px;
+            color: var(--faint, #9698b8);
+            line-height: 1.7;
+            margin-top: 2px;
+        }
+        footer p a {
+            color: var(--navy-light, #2a2e7a);
+            text-decoration: none;
+        }
+        footer p a:hover { text-decoration: underline; }
+        .footer-report {
+            margin-top: 4px;
+        }
+        /* On very small screens, stack the report links */
+        @media (max-width: 360px) {
+            .footer-links {
+                flex-direction: column;
+                align-items: center;
+                gap: 0;
+            }
+            .footer-links a + a::before {
+                display: none;
+            }
+        }
+    </style>
+
+    <div class="footer-links">
+        <a href="/">Home</a>
+        <a href="/about.html">About</a>
+        <a href="/how-it-works.html">How It Works</a>
+        <a href="/report-a-scam.html">Report a Scam</a>
+        <a href="/privacy.html">Privacy Policy</a>
+        <a href="/analytics.html">Analytics</a>
+        <a href="/blog/index.html">Blog</a>
+        <a href="https://justjobs.netlify.app" target="_blank" rel="noopener noreferrer">Job API ↗</a>
+    </div>
+    <p>© 2026 VerifyJobs.org — Free job scam detector. Not affiliated with any government agency.</p>
+    <p class="footer-report">
+        Report scams to:
+        <a href="https://reportfraud.ftc.gov/" rel="noopener noreferrer" target="_blank">FTC (USA)</a> ·
+        <a href="https://efcc.gov.ng/" rel="noopener noreferrer" target="_blank">EFCC (Nigeria)</a> ·
+        <a href="https://www.actionfraud.police.uk/" rel="noopener noreferrer" target="_blank">Action Fraud (UK)</a>
+    </p>
+</footer>

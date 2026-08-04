@@ -3,33 +3,75 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-
-  <meta http-equiv="Content-Security-Policy" content="
-    default-src 'self';
-    script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net;
-    style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
-    font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net;
-    img-src 'self' data: https:;
-    connect-src 'self';
-    frame-ancestors 'none';
-    base-uri 'self';
-    form-action 'self';
-    upgrade-insecure-requests;
-  ">
-
   <meta http-equiv="X-Content-Type-Options" content="nosniff">
   <meta http-equiv="X-Frame-Options" content="DENY">
-  <meta http-equiv="X-XSS-Protection" content="1; mode=block">
   <meta name="referrer" content="strict-origin-when-cross-origin">
 
   <title>VerifyJobs Analytics – Job Scam Intelligence Dashboard</title>
   <meta name="description" content="Real-time job scam analytics dashboard. Track scam rates, risk scores, A/B test results, ML model performance, and segment insights from VerifyJobs.org.">
-  <meta name="robots" content="index, follow">
+  <meta name="keywords" content="job scam analytics, fraud detection dashboard, scam rate statistics, job scam intelligence, VerifyJobs analytics">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+  <link rel="canonical" href="https://verifyjobs.org/analytics.html">
+  <meta name="revised" content="2026-05-12">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://verifyjobs.org/analytics.html">
+  <meta property="og:title" content="VerifyJobs Analytics – Job Scam Intelligence Dashboard">
+  <meta property="og:description" content="Real-time job scam analytics dashboard. Track scam rates, risk scores, A/B test results, ML model performance, and segment insights from VerifyJobs.org.">
+  <meta property="og:image" content="https://verifyjobs.org/og-image.png">
+  <meta property="og:image:alt" content="VerifyJobs Analytics Dashboard">
+  <meta property="og:site_name" content="VerifyJobs.org">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:locale:alternate" content="en_NG">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@verifyjobs">
+  <meta name="twitter:title" content="VerifyJobs Analytics – Job Scam Intelligence Dashboard">
+  <meta name="twitter:description" content="Real-time analytics for job scam detection, ML performance, A/B tests, and segment insights.">
+  <meta name="twitter:image" content="https://verifyjobs.org/og-image.png">
+
+  <meta name="theme-color" content="#0f1035">
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "@id": "https://verifyjobs.org/analytics.html#webapp",
+    "name": "VerifyJobs Analytics Dashboard",
+    "description": "Real-time job scam analytics dashboard tracking scam rates, ML model performance, A/B test results, and segment insights.",
+    "url": "https://verifyjobs.org/analytics.html",
+    "applicationCategory": "Analytics",
+    "operatingSystem": "All",
+    "browserRequirements": "Requires JavaScript",
+    "publisher": {
+      "@type": "Organization",
+      "@id": "https://verifyjobs.org/#organization"
+    },
+    "isPartOf": { "@id": "https://verifyjobs.org/#website" }
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "@id": "https://verifyjobs.org/#organization",
+    "name": "VerifyJobs",
+    "url": "https://verifyjobs.org",
+    "foundingDate": "2024",
+    "description": "VerifyJobs.org is a free tool that instantly detects job scams and employment fraud. Our analytics dashboard provides real-time intelligence on job scam patterns.",
+    "areaServed": "Worldwide",
+    "sameAs": ["https://twitter.com/verifyjobs"]
+  }
+  </script>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600;700&display=swap">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
 
   <style>
@@ -57,11 +99,27 @@
       --nav-h: 56px;
     }
 
+    html { scroll-behavior: auto; }
+        /* ── Placeholder reservations — prevents layout shift on injection ── */
+    #site-header {
+      display: block;
+      height: 56px;
+      background: var(--navy);
+      flex-shrink: 0;
+    }
+    #site-footer {
+      display: block;
+      min-height: 140px;
+      flex-shrink: 0;
+    }
+
+
     body {
       font-family: 'DM Sans', sans-serif;
       background: var(--bg);
       color: var(--text);
       min-height: 100vh;
+      padding-bottom: env(safe-area-inset-bottom);
       -webkit-font-smoothing: antialiased;
     }
 
@@ -71,34 +129,59 @@
     }
     .skip-link:focus { top: 1rem; }
 
-    .page { max-width: 1400px; margin: 0 auto; padding: 1rem 1rem 3rem; }
-
-    /* NAV */
+    /* Nav styles (needed for injected partial to render correctly) */
     nav { background: var(--navy); position: sticky; top: 0; z-index: 200; box-shadow: 0 2px 12px rgba(0,0,0,0.18); }
     .nav-bar { display: flex; align-items: center; justify-content: space-between; height: var(--nav-h); padding: 0 1rem; max-width: 1400px; margin: 0 auto; }
-    .nav-logo { font-family: 'Syne', sans-serif; font-size: 17px; font-weight: 800; color: white; text-decoration: none; }
-    .nav-logo span { color: var(--gold); }
-    .nav-toggle { display: flex; flex-direction: column; gap: 5px; width: 44px; height: 44px; background: none; border: none; cursor: pointer; border-radius: 8px; }
-    .nav-toggle .bar { width: 22px; height: 2px; background: white; border-radius: 2px; transition: 0.28s; }
+    .nav-logo, .nav-brand { font-family: 'Syne', sans-serif; font-size: 17px; font-weight: 800; color: white; text-decoration: none; flex-shrink: 0; letter-spacing: -0.3px; }
+    .nav-logo span, .nav-brand span { color: var(--gold); }
+    .nav-toggle { display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 5px; width: 44px; height: 44px; background: none; border: none; cursor: pointer; border-radius: 8px; -webkit-tap-highlight-color: transparent; transition: background 0.2s; flex-shrink: 0; }
+    .nav-toggle:active { background: rgba(255,255,255,0.1); }
+    .nav-toggle .bar { display: block; width: 22px; height: 2px; background: white; border-radius: 2px; transition: transform 0.28s cubic-bezier(.4,0,.2,1), opacity 0.2s; transform-origin: center; }
     .nav-toggle[aria-expanded="true"] .bar:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-    .nav-toggle[aria-expanded="true"] .bar:nth-child(2) { opacity: 0; }
+    .nav-toggle[aria-expanded="true"] .bar:nth-child(2) { opacity: 0; transform: scaleX(0); }
     .nav-toggle[aria-expanded="true"] .bar:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-    .nav-dropdown { background: var(--navy-mid); max-height: 0; overflow: hidden; transition: max-height 0.32s; opacity: 0; border-top: 1px solid rgba(255,255,255,0.07); }
+    .nav-dropdown { background: var(--navy-mid); overflow: hidden; max-height: 0; transition: max-height 0.32s cubic-bezier(.4,0,.2,1), opacity 0.25s; opacity: 0; border-top: 1px solid rgba(255,255,255,0.07); }
     .nav-dropdown.open { max-height: 420px; opacity: 1; }
     .nav-dropdown-inner { max-width: 1400px; margin: 0 auto; padding: 0.5rem 1rem 1rem; display: flex; flex-direction: column; gap: 2px; }
-    .nav-link { display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.75); text-decoration: none; padding: 12px 14px; border-radius: 10px; }
-    .nav-link i { font-size: 18px; }
-    .nav-link:hover { background: rgba(255,255,255,0.08); color: white; }
+    .nav-link { display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.75); text-decoration: none; padding: 12px 14px; border-radius: 10px; transition: background 0.15s, color 0.15s; -webkit-tap-highlight-color: transparent; min-height: 48px; }
+    .nav-link i { font-size: 18px; flex-shrink: 0; color: rgba(255,255,255,0.4); transition: color 0.15s; }
+    .nav-link:hover, .nav-link:active { background: rgba(255,255,255,0.08); color: white; }
+    .nav-link:hover i, .nav-link:active i { color: rgba(255,255,255,0.7); }
     .nav-link.active { background: rgba(255,255,255,0.1); color: white; font-weight: 600; }
     .nav-link.active i { color: var(--gold); }
+    .nav-link.nav-cta { background: var(--gold); color: var(--navy); font-weight: 700; margin-top: 6px; }
+    .nav-link.nav-cta i { color: var(--navy); opacity: 0.7; }
+    .nav-link.nav-cta:hover { background: #e09500; color: var(--navy); }
+    .nav-divider { height: 1px; background: rgba(255,255,255,0.07); margin: 4px 0; }
+    .nav-desktop { display: none; }
+    @media (min-width: 640px) {
+      .nav-toggle { display: none; }
+      .nav-dropdown { display: none !important; }
+      .nav-bar { padding: 0 1.25rem; }
+      .nav-logo, .nav-brand { font-size: 18px; }
+      .nav-desktop { display: flex; gap: 4px; align-items: center; }
+      .nav-desktop a { font-size: 11px; font-weight: 500; color: rgba(255,255,255,0.65); text-decoration: none; padding: 5px 9px; border-radius: 8px; white-space: nowrap; transition: background 0.15s, color 0.15s; }
+      .nav-desktop a.active { background: rgba(255,255,255,0.15); color: white; font-weight: 600; }
+      .nav-desktop a:hover { background: rgba(255,255,255,0.08); color: white; }
+      .nav-desktop .nav-cta { background: var(--gold) !important; color: var(--navy) !important; font-weight: 700 !important; display: flex; align-items: center; gap: 4px; }
+      .nav-desktop .nav-cta:hover { background: #e09500 !important; }
+    }
 
-    /* HEADER */
+    /* Footer styles (needed for injected partial to render correctly) */
+    footer { text-align: center; font-size: 11px; color: var(--faint); padding: 2rem 0 0.5rem; margin-top: 1rem; border-top: 1px solid var(--border); }
+    footer a { color: var(--navy-light); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+    .footer-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-bottom: 8px; }
+
+    /* Page styles */
+    .page { max-width: 1400px; margin: 0 auto; padding: 1rem 1rem 3rem; }
+
     .hero { background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 60%, #1a1060 100%); border-radius: var(--radius); padding: 1.5rem 1.25rem; margin-bottom: 1.5rem; position: relative; overflow: hidden; }
-    .hero h1 { font-family: 'Syne', sans-serif; font-size: clamp(20px, 6vw, 30px); font-weight: 800; color: white; margin-bottom: 6px; }
+    .hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 80% 20%, rgba(240,165,0,0.1) 0%, transparent 60%); pointer-events: none; }
+    .hero h1 { font-family: 'Syne', sans-serif; font-size: clamp(20px, 6vw, 30px); font-weight: 800; color: white; margin-bottom: 6px; position: relative; z-index: 1; }
     .hero h1 i { color: var(--gold); margin-right: 8px; }
-    .hero p { font-size: 13px; color: rgba(255,255,255,0.7); }
+    .hero p { font-size: 13px; color: rgba(255,255,255,0.7); position: relative; z-index: 1; }
 
-    /* CARDS */
     .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
     .stat-card { background: var(--surface); border-radius: var(--radius); padding: 1.25rem; box-shadow: var(--shadow); border: 1px solid var(--border); }
     .stat-card .label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: var(--muted); margin-bottom: 8px; }
@@ -137,39 +220,19 @@
 
     .error-alert { background: var(--red-pale); border: 1px solid var(--red); border-radius: 10px; padding: 14px 16px; margin-bottom: 1rem; display: flex; align-items: center; gap: 10px; color: var(--red); font-size: 13px; }
 
-    footer { text-align: center; font-size: 11px; color: var(--faint); padding: 2rem 0 0.5rem; margin-top: 1rem; border-top: 1px solid var(--border); }
-    .footer-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-bottom: 8px; }
-    footer a { color: var(--navy-light); text-decoration: none; }
+    *:focus-visible { outline: 2px solid var(--navy); outline-offset: 2px; }
 
     @media (max-width: 640px) {
       .two-col { grid-template-columns: 1fr; }
       .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .page { padding: 0.75rem 0.75rem 2rem; }
     }
-
-    *:focus-visible { outline: 2px solid var(--navy); outline-offset: 2px; }
   </style>
 </head>
 <body>
 
-<a class="skip-link" href="#main">Skip to dashboard</a>
-
-<nav>
-  <div class="nav-bar">
-    <a href="/" class="nav-logo">Verify<span>Jobs</span></a>
-    <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-label="Menu">
-      <span class="bar"></span><span class="bar"></span><span class="bar"></span>
-    </button>
-  </div>
-  <div class="nav-dropdown" id="navDropdown">
-    <div class="nav-dropdown-inner">
-      <a href="/" class="nav-link"><i class="ti ti-home"></i> Home</a>
-      <a href="analytics.html" class="nav-link active"><i class="ti ti-chart-bar"></i> Analytics</a>
-      <a href="about.html" class="nav-link"><i class="ti ti-info-circle"></i> About</a>
-      <a href="how-it-works.html" class="nav-link"><i class="ti ti-bulb"></i> How It Works</a>
-      <a href="report-a-scam.html" class="nav-link"><i class="ti ti-flag"></i> Report a Scam</a>
-    </div>
-  </div>
-</nav>
+<!-- ── SHARED HEADER (injected by /partials/loader.js) ── -->
+<div id="site-header"></div>
 
 <div class="page" id="main">
   
@@ -254,16 +317,13 @@
 
   </div>
 
-  <footer>
-    <div class="footer-links">
-      <a href="/">Home</a>
-      <a href="analytics.html">Analytics</a>
-      <a href="about.html">About</a>
-      <a href="privacy.html">Privacy</a>
-    </div>
-    <p>© 2025 VerifyJobs.org — Data-driven job scam intelligence</p>
-  </footer>
+  <!-- ── SHARED FOOTER (injected by /partials/loader.js) ── -->
+  <div id="site-footer"></div>
+
 </div>
+
+<!-- ── Shared header/footer loader — must be last script before </body> ── -->
+<script src="/partials/loader.js"></script>
 
 <script>
   'use strict';
@@ -547,17 +607,22 @@
     }
   }
 
-  // NAV TOGGLE
-  const navToggle = document.getElementById('navToggle');
-  const navDropdown = document.getElementById('navDropdown');
-  navToggle.addEventListener('click', () => {
-    const isOpen = navDropdown.classList.contains('open');
-    navDropdown.classList.toggle('open', !isOpen);
-    navToggle.setAttribute('aria-expanded', String(!isOpen));
-  });
-  document.addEventListener('click', e => {
-    if (!navToggle.contains(e.target) && !navDropdown.contains(e.target)) {
-      navDropdown.classList.remove('open');
+  // NAV TOGGLE (now handled by loader.js, but keeping as fallback)
+  document.addEventListener('DOMContentLoaded', () => {
+    const navToggle = document.getElementById('navToggle');
+    const navDropdown = document.getElementById('navDropdown');
+    if (navToggle && navDropdown) {
+      navToggle.addEventListener('click', () => {
+        const isOpen = navDropdown.classList.contains('open');
+        navDropdown.classList.toggle('open', !isOpen);
+        navToggle.setAttribute('aria-expanded', String(!isOpen));
+      });
+      document.addEventListener('click', e => {
+        if (!navToggle.contains(e.target) && !navDropdown.contains(e.target)) {
+          navDropdown.classList.remove('open');
+          navToggle.setAttribute('aria-expanded', 'false');
+        }
+      });
     }
   });
 

@@ -1,35 +1,87 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" prefix="og: https://ogp.me/ns#">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="X-Frame-Options" content="DENY">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+
   <title>Job Requires Upfront Payment? How to Spot Pay-Before-You-Start Scams (2026)</title>
   <meta name="description" content="If a job asks for money upfront, it's almost always a scam. Learn to identify 'pay before you start' fraud, advance-fee schemes, and how to protect yourself from fake employers.">
   <meta name="keywords" content="job requires upfront payment, pay before you start job scam, advance fee fraud, job application fee scam, training fee scam, employment deposit fraud">
-  <meta name="robots" content="index, follow">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
   <link rel="canonical" href="https://verifyjobs.org/blog/advance-fee-job-fraud.html">
+  <meta name="revised" content="2026-05-12">
 
   <!-- Open Graph -->
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://verifyjobs.org/blog/advance-fee-job-fraud.html">
   <meta property="og:title" content="Job Requires Upfront Payment? Complete Guide to Advance-Fee Job Scams">
   <meta property="og:description" content="Never pay to get a job. Learn the 12 warning signs of advance-fee fraud and how scammers trick desperate job seekers.">
-  <meta property="og:url" content="https://verifyjobs.org/blog/advance-fee-job-fraud.html">
-  <meta property="og:type" content="article">
-  <meta property="og:image" content="https://verifyjobs.org/og-advance-fee.jpg">
+  <meta property="og:image" content="https://verifyjobs.org/og-image.png">
+  <meta property="og:image:alt" content="Advance-Fee Job Scam Warning">
+  <meta property="og:site_name" content="VerifyJobs.org">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:locale:alternate" content="en_NG">
   <meta property="article:published_time" content="2026-05-12T10:00:00Z">
+  <meta property="article:modified_time" content="2026-05-12T10:00:00Z">
 
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@verifyjobs">
   <meta name="twitter:title" content="Job Requires Upfront Payment? Don't Pay – Here's Why">
   <meta name="twitter:description" content="Advance-fee job scams explained. Learn exactly how to spot fake employers who demand payment before you start working.">
+  <meta name="twitter:image" content="https://verifyjobs.org/og-image.png">
 
   <meta name="theme-color" content="#0f1035">
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "@id": "https://verifyjobs.org/blog/advance-fee-job-fraud.html#article",
+    "headline": "Job Requires Upfront Payment? Complete Guide to Advance-Fee Job Scams",
+    "description": "Learn to identify pay-before-you-start job scams. Covers 12 types of advance-fee fraud, real victim examples, and exact steps to protect yourself.",
+    "inLanguage": "en",
+    "datePublished": "2026-05-12T10:00:00Z",
+    "dateModified": "2026-05-12T10:00:00Z",
+    "author": {
+      "@type": "Organization",
+      "@id": "https://verifyjobs.org/#organization"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "@id": "https://verifyjobs.org/#organization"
+    },
+    "isPartOf": { "@id": "https://verifyjobs.org/#website" }
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "@id": "https://verifyjobs.org/#organization",
+    "name": "VerifyJobs",
+    "url": "https://verifyjobs.org",
+    "foundingDate": "2024",
+    "description": "VerifyJobs.org is a free tool that instantly detects job scams and employment fraud. Our blog provides educational resources on identifying scams and protecting yourself.",
+    "areaServed": "Worldwide",
+    "sameAs": ["https://twitter.com/verifyjobs"]
+  }
+  </script>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700;900&family=Inter:wght@500;600;700&display=swap">
   <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700;900&family=Inter:wght@500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
 
   <style>
-    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    
     :root {
       --navy:#0f1035; --navy-mid:#1c1f5a; --navy-light:#2a2e7a;
       --red:#c0392b; --red-pale:#fdf0ef; --red-dark:#8b1a1a;
@@ -40,117 +92,154 @@
       --radius:12px; --shadow:0 2px 14px rgba(15,16,53,0.06);
       --nav-h: 56px;
     }
-    html { scroll-behavior:smooth; }
-    body { font-family:'Merriweather',serif; background:var(--bg); color:var(--text); min-height:100vh; line-height:1.8; }
     
+    html { scroll-behavior: auto; }
+    /* ── Placeholder reservations — prevents layout shift on injection ── */
+    #site-header {
+      display: block;
+      height: 56px;
+      background: var(--navy);
+      flex-shrink: 0;
+    }
+    #site-footer {
+      display: block;
+      min-height: 140px;
+      flex-shrink: 0;
+    }
+    
+    body {
+      font-family: 'Merriweather', serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.8;
+      padding-bottom: env(safe-area-inset-bottom);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Nav styles (needed for injected partial to render correctly) */
     nav { background: var(--navy); position: sticky; top: 0; z-index: 200; box-shadow: 0 2px 12px rgba(0,0,0,0.18); }
     .nav-bar { display: flex; align-items: center; justify-content: space-between; height: var(--nav-h); padding: 0 1rem; max-width: 720px; margin: 0 auto; }
-    .nav-logo { font-family: 'Inter', sans-serif; font-size: 17px; font-weight: 700; color: white; text-decoration: none; letter-spacing: -0.3px; }
-    .nav-logo span { color: var(--gold); }
-    .nav-toggle { display: flex; flex-direction: column; justify-content: center; gap: 5px; width: 44px; height: 44px; background: none; border: none; cursor: pointer; border-radius: 8px; }
-    .nav-toggle .bar { display: block; width: 22px; height: 2px; background: white; border-radius: 2px; transition: transform 0.28s, opacity 0.2s; }
+    .nav-logo, .nav-brand { font-family: 'Inter', sans-serif; font-size: 17px; font-weight: 700; color: white; text-decoration: none; flex-shrink: 0; letter-spacing: -0.3px; }
+    .nav-logo span, .nav-brand span { color: var(--gold); }
+    .nav-toggle { display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 5px; width: 44px; height: 44px; background: none; border: none; cursor: pointer; border-radius: 8px; -webkit-tap-highlight-color: transparent; transition: background 0.2s; flex-shrink: 0; }
+    .nav-toggle:active { background: rgba(255,255,255,0.1); }
+    .nav-toggle .bar { display: block; width: 22px; height: 2px; background: white; border-radius: 2px; transition: transform 0.28s cubic-bezier(.4,0,.2,1), opacity 0.2s; transform-origin: center; }
     .nav-toggle[aria-expanded="true"] .bar:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-    .nav-toggle[aria-expanded="true"] .bar:nth-child(2) { opacity: 0; }
+    .nav-toggle[aria-expanded="true"] .bar:nth-child(2) { opacity: 0; transform: scaleX(0); }
     .nav-toggle[aria-expanded="true"] .bar:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-    .nav-dropdown { background: var(--navy-mid); max-height: 0; overflow: hidden; transition: max-height 0.32s, opacity 0.25s; opacity: 0; border-top: 1px solid rgba(255,255,255,0.07); }
+    .nav-dropdown { background: var(--navy-mid); overflow: hidden; max-height: 0; transition: max-height 0.32s cubic-bezier(.4,0,.2,1), opacity 0.25s; opacity: 0; border-top: 1px solid rgba(255,255,255,0.07); }
     .nav-dropdown.open { max-height: 420px; opacity: 1; }
     .nav-dropdown-inner { max-width: 720px; margin: 0 auto; padding: 0.5rem 1rem 1rem; display: flex; flex-direction: column; gap: 2px; }
-    .nav-link { display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.75); text-decoration: none; padding: 12px 14px; border-radius: 10px; transition: all 0.15s; font-family: 'Inter', sans-serif; min-height: 48px; }
-    .nav-link i { font-size: 18px; color: rgba(255,255,255,0.4); }
-    .nav-link:hover { background: rgba(255,255,255,0.08); color: white; }
+    .nav-link { display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.75); text-decoration: none; padding: 12px 14px; border-radius: 10px; transition: background 0.15s, color 0.15s; -webkit-tap-highlight-color: transparent; min-height: 48px; font-family: 'Inter', sans-serif; }
+    .nav-link i { font-size: 18px; flex-shrink: 0; color: rgba(255,255,255,0.4); transition: color 0.15s; }
+    .nav-link:hover, .nav-link:active { background: rgba(255,255,255,0.08); color: white; }
+    .nav-link:hover i, .nav-link:active i { color: rgba(255,255,255,0.7); }
+    .nav-link.active { background: rgba(255,255,255,0.1); color: white; font-weight: 600; }
+    .nav-link.active i { color: var(--gold); }
     .nav-link.nav-cta { background: var(--gold); color: var(--navy); font-weight: 700; margin-top: 6px; }
-    .nav-link.nav-cta:hover { background: #e09500; }
+    .nav-link.nav-cta i { color: var(--navy); opacity: 0.7; }
+    .nav-link.nav-cta:hover { background: #e09500; color: var(--navy); }
+    .nav-divider { height: 1px; background: rgba(255,255,255,0.07); margin: 4px 0; }
+    .nav-desktop { display: none; }
+    @media (min-width: 640px) {
+      .nav-toggle { display: none; }
+      .nav-dropdown { display: none !important; }
+      .nav-bar { padding: 0 1.25rem; }
+      .nav-logo, .nav-brand { font-size: 18px; }
+      .nav-desktop { display: flex; gap: 4px; align-items: center; }
+      .nav-desktop a { font-size: 11px; font-weight: 500; color: rgba(255,255,255,0.65); text-decoration: none; padding: 5px 9px; border-radius: 8px; white-space: nowrap; transition: background 0.15s, color 0.15s; font-family: 'Inter', sans-serif; }
+      .nav-desktop a.active { background: rgba(255,255,255,0.15); color: white; font-weight: 600; }
+      .nav-desktop a:hover { background: rgba(255,255,255,0.08); color: white; }
+      .nav-desktop .nav-cta { background: var(--gold) !important; color: var(--navy) !important; font-weight: 700 !important; display: flex; align-items: center; gap: 4px; }
+      .nav-desktop .nav-cta:hover { background: #e09500 !important; }
+    }
 
-    article { max-width:720px; margin:0 auto; padding:2rem 1rem 4rem; }
-    .back-link { display:inline-flex; align-items:center; gap:8px; font-family:'Inter',sans-serif; font-size:14px; color:var(--navy-light); text-decoration:none; margin-bottom:2rem; padding:8px 16px; border-radius:8px; }
-    .back-link:hover { background:var(--surface); box-shadow:var(--shadow); }
-    
-    .article-header { margin-bottom:2.5rem; }
-    .article-meta { font-family:'Inter',sans-serif; font-size:12px; color:var(--muted); margin-bottom:1rem; display:flex; flex-wrap:wrap; gap:1rem; align-items:center; }
-    .article-meta .badge { background:var(--red-pale); color:var(--red); padding:5px 14px; border-radius:6px; font-weight:700; }
-    
-    h1 { font-family:'Merriweather',serif; font-size:clamp(26px,5.5vw,40px); font-weight:900; line-height:1.2; color:var(--navy); margin-bottom:1rem; }
-    .article-intro { font-size:18px; line-height:1.75; color:var(--muted); margin-bottom:2rem; }
-    
-    .toc { background:var(--surface); border:2px solid var(--border); border-radius:var(--radius); padding:1.5rem; margin:2rem 0; }
-    .toc-title { font-family:'Inter',sans-serif; font-size:13px; font-weight:700; color:var(--navy); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:1rem; display:flex; align-items:center; gap:8px; }
-    .toc ul { list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:8px; }
-    .toc li a { font-family:'Inter',sans-serif; font-size:14px; color:var(--navy-light); text-decoration:none; display:flex; align-items:baseline; gap:10px; padding:8px 12px; border-radius:8px; }
-    .toc li a:hover { background:#f5f6fa; }
-    .toc li a::before { content:'→'; color:var(--gold); font-weight:bold; }
+    /* Footer styles (needed for injected partial to render correctly) */
+    footer { text-align: center; font-size: 11px; color: var(--faint); padding: 2rem 1rem 1rem; border-top: 1px solid var(--border); margin-top: 4rem; }
+    footer a { color: var(--navy-light); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+    .footer-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-bottom: 8px; }
 
-    h2 { font-family:'Merriweather',serif; font-size:clamp(22px,4.5vw,30px); font-weight:900; line-height:1.3; color:var(--navy); margin:3rem 0 1.5rem; scroll-margin-top:80px; }
-    h3 { font-family:'Inter',sans-serif; font-size:20px; font-weight:700; line-height:1.4; color:var(--navy-light); margin:2rem 0 1rem; }
+    /* Article styles */
+    article { max-width: 720px; margin: 0 auto; padding: 2rem 1rem 4rem; }
     
-    p { font-size:17px; line-height:1.8; color:var(--text); margin-bottom:1.25rem; }
+    .back-link { display: inline-flex; align-items: center; gap: 8px; font-family: 'Inter', sans-serif; font-size: 14px; color: var(--navy-light); text-decoration: none; margin-bottom: 2rem; padding: 8px 16px; border-radius: 8px; transition: background 0.15s, box-shadow 0.15s; }
+    .back-link:hover { background: var(--surface); box-shadow: var(--shadow); }
     
-    .red-flag-card { background:var(--surface); border-left:5px solid var(--red); border-radius:0 var(--radius) var(--radius) 0; padding:1.5rem; margin:1.5rem 0; box-shadow:var(--shadow); }
-    .red-flag-title { font-family:'Inter',sans-serif; font-size:18px; font-weight:700; color:var(--red-dark); margin-bottom:8px; display:flex; align-items:center; gap:10px; }
-    .red-flag-title i { font-size:24px; color:var(--red); }
+    .article-header { margin-bottom: 2.5rem; }
+    .article-meta { font-family: 'Inter', sans-serif; font-size: 12px; color: var(--muted); margin-bottom: 1rem; display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; }
+    .article-meta .badge { background: var(--red-pale); color: var(--red); padding: 5px 14px; border-radius: 6px; font-weight: 700; }
     
-    .money-warning { background:linear-gradient(135deg,var(--red-pale) 0%,#ffe0db 100%); border:2px solid var(--red); border-radius:var(--radius); padding:1.75rem; margin:2rem 0; text-align:center; }
-    .money-warning .big-number { font-family:'Inter',sans-serif; font-size:48px; font-weight:800; color:var(--red); margin-bottom:0.5rem; }
-    .money-warning p { margin-bottom:0; color:var(--red-dark); }
+    h1 { font-family: 'Merriweather', serif; font-size: clamp(26px, 5.5vw, 40px); font-weight: 900; line-height: 1.2; color: var(--navy); margin-bottom: 1rem; }
+    .article-intro { font-size: 18px; line-height: 1.75; color: var(--muted); margin-bottom: 2rem; }
     
-    .scam-example { background:#f5f5f5; border-radius:var(--radius); padding:1.25rem; margin:1.5rem 0; font-family:'Inter',sans-serif; border-left:4px solid var(--orange); }
-    .scam-example .quote { font-style:italic; color:var(--muted); margin-bottom:10px; }
-    .scam-example .analysis { font-size:14px; color:var(--red); font-weight:600; }
+    .toc { background: var(--surface); border: 2px solid var(--border); border-radius: var(--radius); padding: 1.5rem; margin: 2rem 0; }
+    .toc-title { font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 700; color: var(--navy); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 1rem; display: flex; align-items: center; gap: 8px; }
+    .toc ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; }
+    .toc li a { font-family: 'Inter', sans-serif; font-size: 14px; color: var(--navy-light); text-decoration: none; display: flex; align-items: baseline; gap: 10px; padding: 8px 12px; border-radius: 8px; transition: background 0.15s; }
+    .toc li a:hover { background: #f5f6fa; }
+    .toc li a::before { content: '→'; color: var(--gold); font-weight: bold; }
+
+    h2 { font-family: 'Merriweather', serif; font-size: clamp(22px, 4.5vw, 30px); font-weight: 900; line-height: 1.3; color: var(--navy); margin: 3rem 0 1.5rem; scroll-margin-top: 80px; }
+    h3 { font-family: 'Inter', sans-serif; font-size: 20px; font-weight: 700; line-height: 1.4; color: var(--navy-light); margin: 2rem 0 1rem; }
     
-    .cta-block { background:linear-gradient(135deg,var(--navy) 0%,var(--navy-mid) 100%); border-radius:var(--radius); padding:2.5rem 2rem; margin:3rem 0; text-align:center; color:white; position:relative; overflow:hidden; }
-    .cta-block::before { content:''; position:absolute; inset:0; background:radial-gradient(circle at 70% 30%,rgba(240,165,0,0.15) 0%,transparent 60%); }
-    .cta-block-content { position:relative; z-index:1; }
-    .cta-block h3 { font-family:'Inter',sans-serif; font-size:24px; font-weight:700; color:white; margin:0 0 1rem; }
-    .cta-block p { font-size:16px; color:rgba(255,255,255,0.85); margin-bottom:1.5rem; }
-    .cta-button { display:inline-block; background:var(--gold); color:var(--navy); font-family:'Inter',sans-serif; font-size:16px; font-weight:700; padding:14px 32px; border-radius:10px; text-decoration:none; transition:all 0.2s; }
-    .cta-button:hover { background:#ffb820; transform:translateY(-2px); }
+    p { font-size: 17px; line-height: 1.8; color: var(--text); margin-bottom: 1.25rem; }
     
-    .comparison-table { width:100%; border-collapse:collapse; margin:1.5rem 0; }
-    .comparison-table th, .comparison-table td { border:1px solid var(--border); padding:12px; text-align:left; vertical-align:top; }
-    .comparison-table th { background:var(--navy); color:white; font-family:'Inter',sans-serif; font-weight:600; }
-    .comparison-table td:first-child { background:var(--red-pale); font-weight:700; color:var(--red); }
-    .comparison-table td:last-child { background:var(--green-pale); }
+    .red-flag-card { background: var(--surface); border-left: 5px solid var(--red); border-radius: 0 var(--radius) var(--radius) 0; padding: 1.5rem; margin: 1.5rem 0; box-shadow: var(--shadow); }
+    .red-flag-title { font-family: 'Inter', sans-serif; font-size: 18px; font-weight: 700; color: var(--red-dark); margin-bottom: 8px; display: flex; align-items: center; gap: 10px; }
+    .red-flag-title i { font-size: 24px; color: var(--red); }
+    .red-flag-card p { margin-bottom: 0; }
     
-    .quick-tip { background:#fff8eb; border-left:4px solid var(--gold); border-radius:0 8px 8px 0; padding:1rem 1.25rem; margin:1.5rem 0; }
-    .quick-tip strong { font-family:'Inter',sans-serif; color:#c07900; display:block; margin-bottom:6px; font-size:14px; }
+    .money-warning { background: linear-gradient(135deg, var(--red-pale) 0%, #ffe0db 100%); border: 2px solid var(--red); border-radius: var(--radius); padding: 1.75rem; margin: 2rem 0; text-align: center; }
+    .money-warning .big-number { font-family: 'Inter', sans-serif; font-size: 48px; font-weight: 800; color: var(--red); margin-bottom: 0.5rem; }
+    .money-warning p { margin-bottom: 0; color: var(--red-dark); }
     
-    ul, ol { margin:1rem 0 1.5rem 1.5rem; }
-    li { font-size:17px; line-height:1.8; margin-bottom:10px; }
-    strong { font-weight:700; color:var(--navy); }
+    .scam-example { background: #f5f5f5; border-radius: var(--radius); padding: 1.25rem; margin: 1.5rem 0; font-family: 'Inter', sans-serif; border-left: 4px solid var(--orange); }
+    .scam-example .quote { font-style: italic; color: var(--muted); margin-bottom: 10px; }
+    .scam-example .analysis { font-size: 14px; color: var(--red); font-weight: 600; }
     
-    footer { text-align:center; font-size:11px; color:var(--faint); padding:2rem 1rem 1rem; border-top:1px solid var(--border); margin-top:4rem; }
-    footer a { color:var(--navy-light); text-decoration:none; }
+    .cta-block { background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%); border-radius: var(--radius); padding: 2.5rem 2rem; margin: 3rem 0; text-align: center; color: white; position: relative; overflow: hidden; }
+    .cta-block::before { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at 70% 30%, rgba(240,165,0,0.15) 0%, transparent 60%); pointer-events: none; }
+    .cta-block-content { position: relative; z-index: 1; }
+    .cta-block h3 { font-family: 'Inter', sans-serif; font-size: 24px; font-weight: 700; color: white; margin: 0 0 1rem; }
+    .cta-block p { font-size: 16px; color: rgba(255,255,255,0.85); margin-bottom: 1.5rem; }
+    .cta-button { display: inline-block; background: var(--gold); color: var(--navy); font-family: 'Inter', sans-serif; font-size: 16px; font-weight: 700; padding: 14px 32px; border-radius: 10px; text-decoration: none; transition: all 0.2s; }
+    .cta-button:hover { background: #ffb820; transform: translateY(-2px); }
     
-    @media(max-width:640px){
-      article { padding:1.5rem 1rem 3rem; }
-      h1 { font-size:26px; }
-      .comparison-table th, .comparison-table td { padding:8px; font-size:13px; }
+    .comparison-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; }
+    .comparison-table th, .comparison-table td { border: 1px solid var(--border); padding: 12px; text-align: left; vertical-align: top; }
+    .comparison-table th { background: var(--navy); color: white; font-family: 'Inter', sans-serif; font-weight: 600; }
+    .comparison-table td:first-child { background: var(--red-pale); font-weight: 700; color: var(--red); }
+    .comparison-table td:last-child { background: var(--green-pale); }
+    
+    .quick-tip { background: #fff8eb; border-left: 4px solid var(--gold); border-radius: 0 8px 8px 0; padding: 1rem 1.25rem; margin: 1.5rem 0; }
+    .quick-tip strong { font-family: 'Inter', sans-serif; color: #c07900; display: block; margin-bottom: 6px; font-size: 14px; }
+    .quick-tip p { margin-bottom: 0; }
+    
+    ul, ol { margin: 1rem 0 1.5rem 1.5rem; }
+    li { font-size: 17px; line-height: 1.8; margin-bottom: 10px; }
+    strong { font-weight: 700; color: var(--navy); }
+
+    *:focus-visible { outline: 2px solid var(--navy); outline-offset: 2px; }
+
+    @media (max-width: 640px) {
+      article { padding: 1.5rem 1rem 3rem; }
+      h1 { font-size: 26px; }
+      .comparison-table th, .comparison-table td { padding: 8px; font-size: 13px; }
+      .cta-block { padding: 1.75rem 1.25rem; }
+      .cta-block h3 { font-size: 20px; }
     }
   </style>
 </head>
 <body>
 
-<nav role="navigation">
-  <div class="nav-bar">
-    <a href="../index.html" class="nav-logo">Verify<span>Jobs</span></a>
-    <button class="nav-toggle" id="navToggle" aria-expanded="false">
-      <span class="bar"></span><span class="bar"></span><span class="bar"></span>
-    </button>
-  </div>
-  <div class="nav-dropdown" id="navDropdown">
-    <div class="nav-dropdown-inner">
-      <a href="../index.html" class="nav-link"><i class="ti ti-home"></i> Home</a>
-      <a href="../about.html" class="nav-link"><i class="ti ti-info-circle"></i> About</a>
-      <a href="../how-it-works.html" class="nav-link"><i class="ti ti-bulb"></i> How It Works</a>
-      <a href="../report-a-scam.html" class="nav-link"><i class="ti ti-flag"></i> Report a Scam</a>
-      <div class="nav-divider" style="height:1px; background:rgba(255,255,255,0.07); margin:4px 0;"></div>
-      <a href="../blog/index.html" class="nav-link"><i class="ti ti-article"></i> Blog</a>
-    </div>
-  </div>
-</nav>
+<!-- ── SHARED HEADER (injected by /partials/loader.js) ── -->
+<div id="site-header"></div>
 
 <article>
-  <a href="../index.html" class="back-link">
-    <i class="ti ti-arrow-left"></i> Back to VerifyJobs
+  <a href="/blog/" class="back-link">
+    <i class="ti ti-arrow-left"></i> Back to Blog
   </a>
 
   <div class="article-header">
@@ -344,7 +433,7 @@
   <p>Here's why legitimate companies don't charge candidates:</p>
 
   <ul>
-    <li><strong>Recruitment is a cost of doing business.</strong> Companies budget for background checks, training, and onboarding. Passing these costs to candidates would signals extreme financial distress or fraud.</li>
+    <li><strong>Recruitment is a cost of doing business.</strong> Companies budget for background checks, training, and onboarding. Passing these costs to candidates would signal extreme financial distress or fraud.</li>
     <li><strong>It's legally questionable.</strong> In many jurisdictions, requiring employees to pay for mandatory training or equipment violates labor laws unless the employee retains ownership. Reputable companies follow the law.</li>
     <li><strong>It creates perverse incentives.</strong> If companies profited from application fees, they'd have no incentive to actually hire anyone. They'd just collect fees indefinitely.</li>
     <li><strong>It would drive away quality candidates.</strong> Skilled professionals would never pay to apply for a job. Only desperate or inexperienced candidates would consider it — which is precisely why scammers target them.</li>
@@ -377,7 +466,7 @@
     <div class="cta-block-content">
       <h3>Don't Risk Another Job Opportunity</h3>
       <p>Before applying, paying, or sharing personal information, analyze the job posting with our free scam detection tool.</p>
-      <a href="../index.html" class="cta-button">Verify Any Job — Free</a>
+      <a href="/" class="cta-button">Verify Any Job — Free</a>
     </div>
   </div>
 
@@ -410,36 +499,17 @@
     <div class="cta-block-content">
       <h3>Verify Before You Apply</h3>
       <p>Use VerifyJobs.org to scan any job posting for scam patterns — completely free, no sign-up required.</p>
-      <a href="../index.html" class="cta-button">Check a Job Description Now</a>
+      <a href="/" class="cta-button">Check a Job Description Now</a>
     </div>
   </div>
 
 </article>
 
-<footer role="contentinfo">
-  <p>© 2026 VerifyJobs.org — Protecting job seekers from advance-fee fraud. <a href="../privacy.html">Privacy</a> | <a href="../about.html">About</a> | <a href="../blog/index.html">Blog</a></p>
-</footer>
+<!-- ── SHARED FOOTER (injected by /partials/loader.js) ── -->
+<div id="site-footer"></div>
 
-<script>
-  const navToggle = document.getElementById('navToggle');
-  const navDropdown = document.getElementById('navDropdown');
-  navToggle.addEventListener('click', () => {
-    const isOpen = navDropdown.classList.contains('open');
-    navDropdown.classList.toggle('open', !isOpen);
-    navToggle.setAttribute('aria-expanded', String(!isOpen));
-  });
-  document.querySelectorAll('.nav-link').forEach(link => {
-    link.addEventListener('click', () => {
-      navDropdown.classList.remove('open');
-      navToggle.setAttribute('aria-expanded', 'false');
-    });
-  });
-  document.addEventListener('click', e => {
-    if (!navToggle.contains(e.target) && !navDropdown.contains(e.target)) {
-      navDropdown.classList.remove('open');
-    }
-  });
-</script>
+<!-- ── Shared header/footer loader — must be last script before </body> ── -->
+<script src="/partials/loader.js"></script>
 
 <script type="application/ld+json">
 {
@@ -449,8 +519,14 @@
   "description": "Learn to identify pay-before-you-start job scams. Covers 12 types of advance-fee fraud, real victim examples, and exact steps to protect yourself.",
   "datePublished": "2026-05-12T10:00:00Z",
   "dateModified": "2026-05-12T10:00:00Z",
-  "author": {"@type": "Organization", "name": "VerifyJobs Research Team"},
-  "publisher": {"@type": "Organization", "name": "VerifyJobs.org", "logo": {"@type": "ImageObject", "url": "https://verifyjobs.org/logo.png"}}
+  "author": {
+    "@type": "Organization",
+    "name": "VerifyJobs Research Team"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "VerifyJobs.org"
+  }
 }
 </script>
 </body>

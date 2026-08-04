@@ -1,0 +1,205 @@
+<style>
+    nav {
+        height: 56px;
+        position: sticky;
+        top: 0;
+        z-index: 200;
+        background: var(--navy, #0f1035);
+        box-shadow: 0 2px 12px rgba(0,0,0,0.18);
+    }
+    .nav-bar {
+        height: 56px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 1rem;
+        max-width: 1400px;
+        margin: 0 auto;
+    }
+    .nav-logo {
+        font-family: 'Syne', sans-serif;
+        font-size: 17px;
+        font-weight: 800;
+        color: white;
+        text-decoration: none;
+        flex-shrink: 0;
+        letter-spacing: -0.3px;
+        /* Ensure tap target is comfortably sized */
+        padding: 8px 0;
+        -webkit-tap-highlight-color: transparent;
+    }
+    .nav-logo span { color: var(--gold, #f0a500); }
+
+    /* ── Hamburger button ── */
+    .nav-toggle {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 5px;
+        width: 44px;
+        height: 44px;
+        min-width: 44px; /* prevent shrink */
+        background: none;
+        border: none;
+        cursor: pointer;
+        border-radius: 8px;
+        -webkit-tap-highlight-color: transparent;
+        flex-shrink: 0;
+        touch-action: manipulation;
+    }
+    .nav-toggle:active { background: rgba(255,255,255,0.1); }
+    .nav-toggle .bar {
+        display: block;
+        width: 22px;
+        height: 2px;
+        background: white;
+        border-radius: 2px;
+        transition: transform 0.28s cubic-bezier(.4,0,.2,1), opacity 0.2s;
+        transform-origin: center;
+    }
+    .nav-toggle[aria-expanded="true"] .bar:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-toggle[aria-expanded="true"] .bar:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .nav-toggle[aria-expanded="true"] .bar:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* ── Mobile dropdown ── */
+    .nav-dropdown {
+        background: var(--navy-mid, #1c1f5a);
+        overflow: hidden;
+        max-height: 0;
+        transition: max-height 0.28s cubic-bezier(.4,0,.2,1), opacity 0.22s;
+        opacity: 0;
+        border-top: 1px solid rgba(255,255,255,0.07);
+    }
+    .nav-dropdown.open {
+        max-height: 480px; /* tall enough for all links */
+        opacity: 1;
+    }
+    .nav-dropdown-inner {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 6px 12px 12px;
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+    }
+    .nav-link {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 14px;
+        font-weight: 500;
+        color: rgba(255,255,255,0.75);
+        text-decoration: none;
+        padding: 11px 14px;
+        border-radius: 10px;
+        -webkit-tap-highlight-color: transparent;
+        /* 44px min touch target */
+        min-height: 44px;
+        touch-action: manipulation;
+        transition: background 0.15s, color 0.15s;
+    }
+    .nav-link i {
+        font-size: 18px;
+        flex-shrink: 0;
+        color: rgba(255,255,255,0.4);
+        transition: color 0.15s;
+        /* ensure icon never clips on small screens */
+        min-width: 20px;
+    }
+    .nav-link:active,
+    .nav-link:hover { background: rgba(255,255,255,0.08); color: white; }
+    .nav-link:active i,
+    .nav-link:hover i { color: rgba(255,255,255,0.7); }
+    .nav-link.active { background: rgba(255,255,255,0.1); color: white; font-weight: 600; }
+    .nav-link.active i { color: var(--gold, #f0a500); }
+    .nav-link.nav-cta {
+        background: var(--gold, #f0a500);
+        color: var(--navy, #0f1035);
+        font-weight: 700;
+        margin-top: 4px;
+        justify-content: center;
+    }
+    .nav-link.nav-cta i { color: var(--navy, #0f1035); opacity: 0.7; min-width: auto; }
+    .nav-link.nav-cta:active { background: #d99400; }
+    .nav-divider {
+        height: 1px;
+        background: rgba(255,255,255,0.07);
+        margin: 3px 0;
+    }
+
+    /* ── Desktop nav (≥640px) ── */
+    .nav-desktop { display: none; }
+
+    @media (min-width: 640px) {
+        .nav-toggle { display: none; }
+        .nav-dropdown { display: none !important; }
+        .nav-bar { padding: 0 1.25rem; }
+        .nav-logo { font-size: 18px; }
+        .nav-desktop {
+            display: flex;
+            gap: 2px;
+            align-items: center;
+        }
+        .nav-desktop a {
+            font-size: 11px;
+            font-weight: 500;
+            color: rgba(255,255,255,0.65);
+            text-decoration: none;
+            padding: 5px 9px;
+            border-radius: 8px;
+            white-space: nowrap;
+            transition: background 0.15s, color 0.15s;
+        }
+        .nav-desktop a.active { background: rgba(255,255,255,0.15); color: white; font-weight: 600; }
+        .nav-desktop a:hover { background: rgba(255,255,255,0.08); color: white; }
+        .nav-desktop .nav-cta {
+            background: var(--gold, #f0a500) !important;
+            color: var(--navy, #0f1035) !important;
+            font-weight: 700 !important;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            margin-left: 4px;
+        }
+        .nav-desktop .nav-cta:hover { background: #d99400 !important; }
+    }
+</style>
+
+<nav role="navigation" aria-label="Main navigation">
+    <div class="nav-bar">
+        <a href="/" class="nav-logo" aria-label="VerifyJobs Home">Verify<span>Jobs</span></a>
+
+        <div class="nav-desktop">
+            <a href="/">Home</a>
+            <a href="/about.html">About</a>
+            <a href="/how-it-works.html">How It Works</a>
+            <a href="/report-a-scam.html">Report</a>
+            <a href="/analytics.html">Analytics</a>
+            <a href="/blog/index.html">Blog</a>
+            <a href="https://justjobs.netlify.app" target="_blank" rel="noopener noreferrer" class="nav-cta">
+                <i class="ti ti-briefcase" style="font-size:13px" aria-hidden="true"></i> JobAPI
+            </a>
+        </div>
+
+        <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="navDropdown" aria-label="Open navigation menu">
+            <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+        </button>
+    </div>
+
+    <div class="nav-dropdown" id="navDropdown" role="menu">
+        <div class="nav-dropdown-inner">
+            <a href="/" class="nav-link" role="menuitem"><i class="ti ti-home" aria-hidden="true"></i> Home</a>
+            <a href="/about.html" class="nav-link" role="menuitem"><i class="ti ti-info-circle" aria-hidden="true"></i> About</a>
+            <a href="/how-it-works.html" class="nav-link" role="menuitem"><i class="ti ti-bulb" aria-hidden="true"></i> How It Works</a>
+            <a href="/report-a-scam.html" class="nav-link" role="menuitem"><i class="ti ti-flag" aria-hidden="true"></i> Report a Scam</a>
+            <a href="/analytics.html" class="nav-link" role="menuitem"><i class="ti ti-chart-bar" aria-hidden="true"></i> Analytics</a>
+            <div class="nav-divider" role="separator"></div>
+            <a href="/blog/index.html" class="nav-link" role="menuitem"><i class="ti ti-article" aria-hidden="true"></i> Blog</a>
+            <div class="nav-divider" role="separator"></div>
+            <a href="https://justjobs.netlify.app" target="_blank" rel="noopener noreferrer" class="nav-link nav-cta" role="menuitem">
+                <i class="ti ti-briefcase" aria-hidden="true"></i> JobAPI for Devs
+            </a>
+        </div>
+    </div>
+</nav>
