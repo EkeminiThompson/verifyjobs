@@ -19,6 +19,9 @@ const winston = require('winston');
 const analyzeJob = require('./engine/analyzer');
 const { ensureStorage, getAllAnalyses } = require('./engine/storage');
 
+// ── CHANGE 1: ML enrichment layer ─────────────────────────────
+const { enrichWithML, checkServerHealth } = require('./engine/ml_scorer');
+
 // ─────────────────────────────────────────────
 // CONFIGURATION
 // ─────────────────────────────────────────────
@@ -134,7 +137,7 @@ const analyzeLimiter = rateLimit({
   skipSuccessfulRequests: false,
   handler: (req, res) => {
     logger.warn('Analysis rate limit exceeded', { ip: req.ip, path: req.path });
-    res.status(429).json({ 
+    res.status(429).json({
       error: 'Too many analysis requests, please try again later.',
       retryAfter: Math.ceil(config.rateLimitWindow / 1000 / 60),
     });
@@ -286,7 +289,6 @@ app.get('*.html', (req, res) => {
   res.sendFile(filePath, (err) => {
     if (err) {
       logger.error('HTML file not found', { path: req.path });
-      // Fallback to homepage for SPA behavior
       res.sendFile(path.join(__dirname, 'public', 'index.html'));
     }
   });
@@ -327,7 +329,6 @@ const CANONICAL_SOURCES = [
 
 const BLOCKED_DOMAINS = [
   'localhost', '127.0.0.1', '0.0.0.0',
-  // Add known malicious domains here
 ];
 
 function isKnownAggregator(hostname) {
@@ -351,20 +352,17 @@ async function isSafeUrl(rawUrl) {
     return false;
   }
 
-  // Protocol check
   if (!['http:', 'https:'].includes(url.protocol)) {
     return false;
   }
 
   const host = url.hostname.toLowerCase();
 
-  // Block known bad domains
   if (BLOCKED_DOMAINS.some(d => host === d || host.endsWith('.' + d))) {
     logger.warn('Blocked domain attempted', { domain: host });
     return false;
   }
 
-  // Private IP patterns
   const privatePatterns = [
     /^localhost$/i,
     /^127\./,
@@ -372,20 +370,18 @@ async function isSafeUrl(rawUrl) {
     /^10\./,
     /^172\.(1[6-9]|2\d|3[01])\./,
     /^192\.168\./,
-    /^169\.254\./, // Link-local
+    /^169\.254\./,
     /^::1$/,
     /^fc00:/,
     /^fe80:/,
     /^fd[0-9a-f]{2}:/i,
   ];
 
-  // Direct IP check
   if (privatePatterns.some(p => p.test(host))) {
     logger.warn('Private IP blocked', { host });
     return false;
   }
 
-  // DNS resolution check (prevent DNS rebinding attacks)
   try {
     const addresses = await dns.resolve4(host);
     for (const addr of addresses) {
@@ -395,10 +391,7 @@ async function isSafeUrl(rawUrl) {
       }
     }
   } catch (err) {
-    // DNS resolution failed - could be temporary, allow but log
     logger.warn('DNS resolution failed', { host, error: err.message });
-    // In production, you might want to reject these
-    // return false;
   }
 
   return true;
@@ -429,7 +422,6 @@ function fetchUrl(rawUrl, redirectsLeft = config.maxRedirects, signal = null) {
         'DNT': '1',
       },
     }, (res) => {
-      // Follow HTTP redirects
       if ([301, 302, 303, 307, 308].includes(res.statusCode)) {
         if (redirectsLeft <= 0) {
           res.resume();
@@ -456,9 +448,8 @@ function fetchUrl(rawUrl, redirectsLeft = config.maxRedirects, signal = null) {
         return reject(new Error(`Unsupported content type: ${ct}`));
       }
 
-      // Content length check
       const contentLength = parseInt(res.headers['content-length'] || '0');
-      if (contentLength > 5 * 1024 * 1024) { // 5MB max
+      if (contentLength > 5 * 1024 * 1024) {
         res.resume();
         return reject(new Error('Response too large'));
       }
@@ -496,7 +487,6 @@ function fetchUrl(rawUrl, redirectsLeft = config.maxRedirects, signal = null) {
       reject(err);
     });
 
-    // Abort signal support
     if (signal) {
       signal.addEventListener('abort', () => {
         req.destroy();
@@ -553,7 +543,6 @@ function htmlToText(html) {
 function extractCanonicalJobUrl(html, pageUrl) {
   const candidates = [];
 
-  // 1. <link rel="canonical">
   const cm = html.match(/<link[^>]+rel=["']canonical["'][^>]+href=["']([^"']+)["']/i) ||
     html.match(/<link[^>]+href=["']([^"']+)["'][^>]+rel=["']canonical["']/i);
   if (cm) {
@@ -563,7 +552,6 @@ function extractCanonicalJobUrl(html, pageUrl) {
     }
   }
 
-  // 2. og:url meta tag
   const og = html.match(/<meta[^>]+property=["']og:url["'][^>]+content=["']([^"']+)["']/i) ||
     html.match(/<meta[^>]+content=["']([^"']+)["'][^>]+property=["']og:url["']/i);
   if (og) {
@@ -573,7 +561,6 @@ function extractCanonicalJobUrl(html, pageUrl) {
     }
   }
 
-  // 3. JSON-LD Schema.org JobPosting
   const jsonLdBlocks = html.match(/<script[^>]+type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi) || [];
   for (const block of jsonLdBlocks) {
     try {
@@ -597,7 +584,6 @@ function extractCanonicalJobUrl(html, pageUrl) {
     }
   }
 
-  // 4. "Apply" button or link
   const applyRegexes = [
     /<a[^>]+href=["']([^"']+)["'][^>]*>\s*(?:<[^>]+>\s*)*apply(?:\s+now|\s+here|\s+online|\s+for\s+this\s+job)?\s*(?:<\/[^>]+>\s*)*<\/a>/gi,
     /<a[^>]*class=["'][^"']*(?:apply|btn-apply|job-apply|apply-btn)[^"']*["'][^>]*href=["']([^"']+)["']/gi,
@@ -616,7 +602,6 @@ function extractCanonicalJobUrl(html, pageUrl) {
     }
   }
 
-  // 5. data-* attributes
   const dataRx = [
     /data-(?:apply-url|apply-link|external-url|source-url|job-url|redirect-url)=["']([^"']+)["']/gi,
     /data-(?:href|link)=["'](https?:\/\/[^"']+)["']/gi,
@@ -632,7 +617,6 @@ function extractCanonicalJobUrl(html, pageUrl) {
     }
   }
 
-  // 6. Redirect/tracking query params
   const redirectRx = [
     /href=["'][^"']*[?&](?:url|to|href|link|target|go)=(https?%3A[^"'&]+)/gi,
     /href=["'][^"']*[?&](?:url|to|href|link|target|go)=(https?:\/\/[^"'&]+)/gi,
@@ -654,7 +638,6 @@ function extractCanonicalJobUrl(html, pageUrl) {
 
   if (!candidates.length) return null;
 
-  // Deduplicate and rank
   const seen = new Set();
   const unique = candidates.filter(c => {
     if (seen.has(c.url)) return false;
@@ -676,7 +659,7 @@ function extractCanonicalJobUrl(html, pageUrl) {
 // ─────────────────────────────────────────────
 async function scrapeAndAnalyze(rawUrl) {
   const abortController = new AbortController();
-  const timeoutId = setTimeout(() => abortController.abort(), 30000); // 30s total timeout
+  const timeoutId = setTimeout(() => abortController.abort(), 30000);
 
   const ctx = {
     submittedUrl: rawUrl,
@@ -691,13 +674,11 @@ async function scrapeAndAnalyze(rawUrl) {
   };
 
   try {
-    // Validate URL safety
     const isSafe = await isSafeUrl(rawUrl);
     if (!isSafe) {
       throw new Error('URL is not allowed (private IP or blocked domain)');
     }
 
-    // Step 1 — fetch the submitted page
     let wrapperHtml = '';
     try {
       const { html } = await fetchUrl(rawUrl, config.maxRedirects, abortController.signal);
@@ -705,7 +686,6 @@ async function scrapeAndAnalyze(rawUrl) {
       ctx.pageTitle = extractPageTitle(html) || ctx.pageTitle;
       ctx.fetchedPages.push(rawUrl);
       ctx.isAggregator = isKnownAggregator(new URL(rawUrl).hostname);
-      
       logger.debug('Fetched wrapper page', { url: rawUrl, length: html.length });
     } catch (err) {
       ctx.fetchError = err.message;
@@ -716,7 +696,6 @@ async function scrapeAndAnalyze(rawUrl) {
 
     const wrapperText = htmlToText(wrapperHtml);
 
-    // Step 2 — find the canonical / real job URL
     const canonical = extractCanonicalJobUrl(wrapperHtml, rawUrl);
 
     if (canonical) {
@@ -725,12 +704,8 @@ async function scrapeAndAnalyze(rawUrl) {
         ctx.canonicalUrl = canonical.url;
         ctx.resolvedFrom = canonical.strategy;
 
-        logger.debug('Canonical URL found', { 
-          canonical: canonical.url, 
-          strategy: canonical.strategy 
-        });
+        logger.debug('Canonical URL found', { canonical: canonical.url, strategy: canonical.strategy });
 
-        // Step 3 — fetch the real job page
         try {
           const { html: realHtml } = await fetchUrl(canonical.url, config.maxRedirects, abortController.signal);
           const realText = htmlToText(realHtml);
@@ -738,7 +713,6 @@ async function scrapeAndAnalyze(rawUrl) {
           if (realTitle) ctx.pageTitle = realTitle;
           ctx.fetchedPages.push(canonical.url);
 
-          // Merge: real page first, wrapper appended
           ctx.combinedText = [
             realText.slice(0, 10000),
             '---',
@@ -756,11 +730,9 @@ async function scrapeAndAnalyze(rawUrl) {
         ctx.combinedText = wrapperText.slice(0, 15000);
       }
     } else {
-      // No canonical found
       ctx.combinedText = wrapperText.slice(0, 15000);
     }
 
-    // Fallback if too thin
     if (ctx.combinedText.trim().length < 50) {
       ctx.combinedText = buildUrlFallbackText(rawUrl);
     }
@@ -870,59 +842,54 @@ function validateUrlInput(req, res, next) {
 }
 
 // ─────────────────────────────────────────────
-// API — TEXT
+// API — TEXT (CHANGE 3: async + enrichWithML)
 // ─────────────────────────────────────────────
-app.post('/analyze', validateTextInput, (req, res) => {
+app.post('/analyze', validateTextInput, async (req, res) => {
   const startTime = Date.now();
-
   try {
     const { text, jobTitle, source } = req.validatedInput;
 
-    // Check cache
     if (config.cacheEnabled) {
       const cacheKey = getCacheKey('text', { text, jobTitle, source });
       const cached = analysisCache.get(cacheKey);
       if (cached) {
         logger.info('Cache hit for text analysis', { jobTitle, duration: Date.now() - startTime });
-        return res.json({ 
-          ...cached, 
-          cached: true, 
-          cachedAt: new Date().toISOString() 
-        });
+        return res.json({ ...cached, cached: true, cachedAt: new Date().toISOString() });
       }
     }
 
-    const result = analyzeJob(text, jobTitle, source);
+    const ruleResult = analyzeJob(text, jobTitle, source);
+    const result     = await enrichWithML(text, ruleResult);
 
-    // Cache the result
     if (config.cacheEnabled) {
       const cacheKey = getCacheKey('text', { text, jobTitle, source });
       analysisCache.set(cacheKey, result);
     }
 
-    logger.info('Text analysis completed', { 
-      jobTitle, 
+    logger.info('Text analysis completed', {
+      jobTitle,
       status: result.status,
       riskScore: result.riskScore,
-      duration: Date.now() - startTime 
+      mlAvailable: result.ml?.available,
+      blendMethod: result.ml?.blendMethod,
+      duration: Date.now() - startTime,
     });
 
     res.json(result);
   } catch (err) {
     logger.error('Text analysis error', { error: err.message, stack: err.stack });
-    res.status(500).json({ 
+    res.status(500).json({
       error: 'Analysis failed',
-      message: config.nodeEnv === 'development' ? err.message : 'Internal server error'
+      message: config.nodeEnv === 'development' ? err.message : 'Internal server error',
     });
   }
 });
 
 // ─────────────────────────────────────────────
-// API — FILE
+// API — FILE (CHANGE 4: async + enrichWithML)
 // ─────────────────────────────────────────────
 app.post('/analyze-file', upload.single('file'), async (req, res) => {
   const startTime = Date.now();
-
   try {
     if (!req.file) {
       return res.status(400).json({ error: 'No file uploaded' });
@@ -933,13 +900,12 @@ app.post('/analyze-file', upload.single('file'), async (req, res) => {
     const ext = path.extname(file.originalname).toLowerCase();
     let text = '';
 
-    logger.info('File upload received', { 
-      filename: file.originalname, 
+    logger.info('File upload received', {
+      filename: file.originalname,
       size: file.size,
-      mimetype: file.mimetype 
+      mimetype: file.mimetype,
     });
 
-    // Extract text based on file type
     if (ext === '.pdf') {
       if (!pdfParse) {
         throw new Error('PDF parser not available on this server');
@@ -948,8 +914,8 @@ app.post('/analyze-file', upload.single('file'), async (req, res) => {
       text = pdfData.text || '';
     } else if (ext === '.docx' || ext === '.doc') {
       const mammoth = require('mammoth');
-      const result = await mammoth.extractRawText({ buffer: file.buffer });
-      text = result.value || '';
+      const extracted = await mammoth.extractRawText({ buffer: file.buffer });
+      text = extracted.value || '';
     } else {
       return res.status(400).json({ error: 'Unsupported file type' });
     }
@@ -957,9 +923,9 @@ app.post('/analyze-file', upload.single('file'), async (req, res) => {
     text = text.trim();
 
     if (!text || text.length < 30) {
-      logger.warn('Insufficient text extracted from file', { 
+      logger.warn('Insufficient text extracted from file', {
         filename: file.originalname,
-        extractedLength: text.length 
+        extractedLength: text.length,
       });
       return res.status(400).json({
         error: 'Could not extract enough text from the file',
@@ -968,47 +934,38 @@ app.post('/analyze-file', upload.single('file'), async (req, res) => {
       });
     }
 
-    // Check cache
     if (config.cacheEnabled) {
       const cacheKey = getCacheKey('file', { text, jobTitle });
       const cached = analysisCache.get(cacheKey);
       if (cached) {
         logger.info('Cache hit for file analysis', { filename: file.originalname });
-        return res.json({ 
-          ...cached, 
-          filename: file.originalname,
-          extractedLength: text.length,
-          cached: true 
-        });
+        return res.json({ ...cached, filename: file.originalname, extractedLength: text.length, cached: true });
       }
     }
 
-    const result = analyzeJob(text, jobTitle, 'File Upload');
+    const ruleResult = analyzeJob(text, jobTitle, 'File Upload');
+    const result     = await enrichWithML(text, ruleResult);
 
-    // Cache the result
     if (config.cacheEnabled) {
       const cacheKey = getCacheKey('file', { text, jobTitle });
       analysisCache.set(cacheKey, result);
     }
 
-    logger.info('File analysis completed', { 
+    logger.info('File analysis completed', {
       filename: file.originalname,
       status: result.status,
       riskScore: result.riskScore,
+      mlAvailable: result.ml?.available,
       extractedLength: text.length,
-      duration: Date.now() - startTime 
+      duration: Date.now() - startTime,
     });
 
-    res.json({
-      ...result,
-      filename: file.originalname,
-      extractedLength: text.length,
-    });
+    res.json({ ...result, filename: file.originalname, extractedLength: text.length });
   } catch (err) {
-    logger.error('File analysis error', { 
-      error: err.message, 
+    logger.error('File analysis error', {
+      error: err.message,
       stack: err.stack,
-      filename: req.file?.originalname 
+      filename: req.file?.originalname,
     });
     res.status(500).json({
       error: 'File processing failed',
@@ -1018,76 +975,68 @@ app.post('/analyze-file', upload.single('file'), async (req, res) => {
 });
 
 // ─────────────────────────────────────────────
-// API — URL
+// API — URL (CHANGE 5: enrichWithML added)
 // ─────────────────────────────────────────────
 app.post('/analyze-url', validateUrlInput, async (req, res) => {
   const startTime = Date.now();
   const rawUrl = req.validatedUrl;
 
   try {
-    // Validate URL safety
     const isSafe = await isSafeUrl(rawUrl);
     if (!isSafe) {
       logger.warn('Unsafe URL blocked', { url: rawUrl, ip: req.ip });
-      return res.status(400).json({ 
+      return res.status(400).json({
         error: 'Invalid or disallowed URL',
-        message: 'The URL appears to be a private IP address or blocked domain.'
+        message: 'The URL appears to be a private IP address or blocked domain.',
       });
     }
 
-    // Check cache
     if (config.cacheEnabled) {
       const cacheKey = getCacheKey('url', rawUrl);
       const cached = analysisCache.get(cacheKey);
       if (cached) {
         logger.info('Cache hit for URL analysis', { url: rawUrl, duration: Date.now() - startTime });
-        return res.json({ 
-          ...cached, 
-          cached: true,
-          cachedAt: new Date().toISOString() 
-        });
+        return res.json({ ...cached, cached: true, cachedAt: new Date().toISOString() });
       }
     }
 
-    const ctx = await scrapeAndAnalyze(rawUrl);
-    const analysis = analyzeJob(ctx.combinedText, ctx.pageTitle, 'URL');
+    const ctx        = await scrapeAndAnalyze(rawUrl);
+    const ruleResult = analyzeJob(ctx.combinedText, ctx.pageTitle, 'URL');
+    const result     = await enrichWithML(ctx.combinedText, ruleResult);
 
-    const result = {
-      ...analysis,
-      submittedUrl: ctx.submittedUrl,
-      canonicalUrl: ctx.canonicalUrl,
-      resolvedFrom: ctx.resolvedFrom,
-      fetchedPages: ctx.fetchedPages,
-      isAggregator: ctx.isAggregator,
-      pageTitle: ctx.pageTitle,
-      fetchSuccess: !ctx.fetchError,
-      fetchError: ctx.fetchError || null,
-      canonicalError: ctx.canonicalError || null,
+    const final = {
+      ...result,
+      submittedUrl:    ctx.submittedUrl,
+      canonicalUrl:    ctx.canonicalUrl,
+      resolvedFrom:    ctx.resolvedFrom,
+      fetchedPages:    ctx.fetchedPages,
+      isAggregator:    ctx.isAggregator,
+      pageTitle:       ctx.pageTitle,
+      fetchSuccess:    !ctx.fetchError,
+      fetchError:      ctx.fetchError || null,
+      canonicalError:  ctx.canonicalError || null,
       extractedLength: ctx.combinedText.length,
-      note: buildNote(ctx),
+      note:            buildNote(ctx),
     };
 
-    // Cache the result
     if (config.cacheEnabled) {
       const cacheKey = getCacheKey('url', rawUrl);
-      analysisCache.set(cacheKey, result);
+      analysisCache.set(cacheKey, final);
     }
 
-    logger.info('URL analysis completed', { 
+    logger.info('URL analysis completed', {
       url: rawUrl,
       canonicalUrl: ctx.canonicalUrl,
-      status: analysis.status,
-      riskScore: analysis.riskScore,
-      duration: Date.now() - startTime 
+      status: final.status,
+      riskScore: final.riskScore,
+      mlAvailable: final.ml?.available,
+      blendMethod: final.ml?.blendMethod,
+      duration: Date.now() - startTime,
     });
 
-    res.json(result);
+    res.json(final);
   } catch (err) {
-    logger.error('URL analysis error', { 
-      url: rawUrl, 
-      error: err.message, 
-      stack: err.stack 
-    });
+    logger.error('URL analysis error', { url: rawUrl, error: err.message, stack: err.stack });
     res.status(500).json({
       error: 'URL analysis failed',
       message: config.nodeEnv === 'development' ? err.message : 'Could not analyze the URL',
@@ -1102,9 +1051,7 @@ app.get('/analyses', generalLimiter, (req, res) => {
   try {
     const limit = parseInt(req.query.limit) || 50;
     const sanitizedLimit = Math.min(Math.max(limit, 1), 100);
-    
     const analyses = getAllAnalyses(sanitizedLimit);
-    
     logger.info('Analyses history retrieved', { count: analyses.length });
     res.json(analyses);
   } catch (err) {
@@ -1116,9 +1063,9 @@ app.get('/analyses', generalLimiter, (req, res) => {
 // ─────────────────────────────────────────────
 // API — ANALYTICS DASHBOARD
 // ─────────────────────────────────────────────
-const { 
-  getFullAnalytics, 
-  runQuery, 
+const {
+  getFullAnalytics,
+  runQuery,
   getModelMetrics,
   runABTest,
   runDifferenceInDifferences,
@@ -1126,60 +1073,42 @@ const {
   getSegmentInsights,
   extractFeatures,
   predictScamProbability,
-  loadAnalyses
+  loadAnalyses,
 } = require('./engine/analytics');
 
-// Full analytics dashboard data
 app.get('/analytics', generalLimiter, (req, res) => {
   const startTime = Date.now();
-  
   try {
     const analytics = getFullAnalytics();
-    
-    logger.info('Analytics dashboard generated', { 
+    logger.info('Analytics dashboard generated', {
       recordCount: analytics.recordCount || 0,
       duration: Date.now() - startTime,
-      isDemo: analytics.empty || false
+      isDemo: analytics.empty || false,
     });
-    
     res.json(analytics);
   } catch (err) {
-    logger.error('Analytics generation failed', { 
-      error: err.message, 
-      stack: err.stack 
-    });
-    res.status(500).json({ 
+    logger.error('Analytics generation failed', { error: err.message, stack: err.stack });
+    res.status(500).json({
       error: 'Analytics generation failed',
-      message: config.nodeEnv === 'development' ? err.message : 'Internal server error'
+      message: config.nodeEnv === 'development' ? err.message : 'Internal server error',
     });
   }
 });
 
-// SQL-style query API
 app.post('/analytics/query', generalLimiter, (req, res) => {
   try {
     const { queryName, params } = req.body;
-    
     if (!queryName || typeof queryName !== 'string') {
-      return res.status(400).json({ 
+      return res.status(400).json({
         error: 'Query name is required',
         availableQueries: [
-          'scam_rate_by_source',
-          'daily_volume', 
-          'score_distribution',
-          'high_risk_cases',
-          'top_red_flags',
-          'rolling_7day'
-        ]
+          'scam_rate_by_source', 'daily_volume', 'score_distribution',
+          'high_risk_cases', 'top_red_flags', 'rolling_7day',
+        ],
       });
     }
-    
     const result = runQuery(queryName, params || {});
-    
-    if (result.error) {
-      return res.status(400).json(result);
-    }
-    
+    if (result.error) return res.status(400).json(result);
     logger.info('Query executed', { queryName, params });
     res.json(result);
   } catch (err) {
@@ -1188,27 +1117,20 @@ app.post('/analytics/query', generalLimiter, (req, res) => {
   }
 });
 
-// Model prediction endpoint (for real-time scoring)
 app.post('/analytics/predict', generalLimiter, (req, res) => {
   try {
     const { text, jobTitle, source } = req.body;
-    
     if (!text || typeof text !== 'string') {
       return res.status(400).json({ error: 'Text is required for prediction' });
     }
-    
-    // Run through analyzer to get features
     const analysis = analyzeJob(text, jobTitle || 'Untitled', source || 'API');
     const features = extractFeatures({ result: analysis });
-    
-    // Get ML probability
     const mlProbability = predictScamProbability(features);
-    
     res.json({
       ruleBasedScore: analysis.riskScore,
-      mlProbability: mlProbability,
+      mlProbability,
       mlPrediction: mlProbability >= 0.45 ? 'scam' : 'legitimate',
-      confidence: Math.abs(mlProbability - 0.5) * 2, // 0-1 scale
+      confidence: Math.abs(mlProbability - 0.5) * 2,
       features: {
         redFlagCount: features.redFlagCount,
         positiveCount: features.positiveCount,
@@ -1224,7 +1146,6 @@ app.post('/analytics/predict', generalLimiter, (req, res) => {
   }
 });
 
-// Individual metric endpoints for focused queries
 app.get('/analytics/model-metrics', generalLimiter, (req, res) => {
   try {
     const records = loadAnalyses();
@@ -1287,9 +1208,9 @@ app.use((err, req, res, next) => {
   if (err instanceof multer.MulterError) {
     logger.warn('Multer error', { error: err.message, code: err.code });
     if (err.code === 'LIMIT_FILE_SIZE') {
-      return res.status(400).json({ 
+      return res.status(400).json({
         error: 'File too large',
-        message: `Maximum file size is ${config.maxFileSize / 1024 / 1024}MB`
+        message: `Maximum file size is ${config.maxFileSize / 1024 / 1024}MB`,
       });
     }
     return res.status(400).json({ error: err.message });
@@ -1299,15 +1220,10 @@ app.use((err, req, res, next) => {
     return res.status(400).json({ error: err.message });
   }
 
-  logger.error('Unhandled error', { 
-    error: err.message, 
-    stack: err.stack,
-    path: req.path 
-  });
-
-  res.status(500).json({ 
+  logger.error('Unhandled error', { error: err.message, stack: err.stack, path: req.path });
+  res.status(500).json({
     error: 'Internal server error',
-    message: config.nodeEnv === 'development' ? err.message : 'Something went wrong'
+    message: config.nodeEnv === 'development' ? err.message : 'Something went wrong',
   });
 });
 
@@ -1318,9 +1234,9 @@ app.get('*', (req, res) => {
   if (req.path.startsWith('/api/')) {
     return res.status(404).json({ error: 'API endpoint not found' });
   }
-
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
+
 // ─────────────────────────────────────────────
 // GRACEFUL SHUTDOWN
 // ─────────────────────────────────────────────
@@ -1328,15 +1244,12 @@ let server;
 
 function gracefulShutdown(signal) {
   logger.info(`${signal} received, starting graceful shutdown`);
-
   server.close(() => {
     logger.info('HTTP server closed');
     analysisCache.close();
     logger.info('Cache closed');
     process.exit(0);
   });
-
-  // Force shutdown after 10 seconds
   setTimeout(() => {
     logger.error('Forced shutdown after timeout');
     process.exit(1);
@@ -1344,7 +1257,7 @@ function gracefulShutdown(signal) {
 }
 
 // ─────────────────────────────────────────────
-// START SERVER
+// START SERVER (CHANGE 2: ML health check)
 // ─────────────────────────────────────────────
 server = app.listen(config.port, () => {
   logger.info('🚀 VerifyJobs v2.0 started', {
@@ -1353,18 +1266,25 @@ server = app.listen(config.port, () => {
     root: __dirname,
     cacheEnabled: config.cacheEnabled,
   });
-  
+
   console.log(`🚀 VerifyJobs v2.0 on http://localhost:${config.port}`);
   console.log(`📄 Root: ${__dirname}`);
   console.log(`✅ Health: http://localhost:${config.port}/health`);
   console.log(`📊 Analytics: http://localhost:${config.port}/analytics.html`);
   console.log(`🔒 Environment: ${config.nodeEnv}`);
+
+  // Warm up ML server connection (non-blocking)
+  if (process.env.ENABLE_ML !== 'false') {
+    checkServerHealth().then(available => {
+      if (available) console.log('🤖 ML inference server: connected');
+      else console.log('⚠️  ML inference server: offline — rule engine only');
+    });
+  }
 });
 
 process.on('SIGTERM', () => gracefulShutdown('SIGTERM'));
-process.on('SIGINT', () => gracefulShutdown('SIGINT'));
+process.on('SIGINT',  () => gracefulShutdown('SIGINT'));
 
-// Handle uncaught exceptions
 process.on('uncaughtException', (err) => {
   logger.error('Uncaught exception', { error: err.message, stack: err.stack });
   gracefulShutdown('uncaughtException');
@@ -1374,5 +1294,4 @@ process.on('unhandledRejection', (reason, promise) => {
   logger.error('Unhandled rejection', { reason, promise });
 });
 
-// Export for testing
 module.exports = app;

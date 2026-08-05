@@ -1,59 +1,103 @@
-verifyjobs/
-│
-├── server.js                       # Express server (update static config)
-├── package.json
+.
 ├── .env
-│
-├── 📁 engine/                      # Backend modules
-│   ├── analyzer.js
-│   ├── analytics.js
-│   ├── rules.js
-│   ├── scorer.js
-│   ├── job-freshness.js
-│   └── storage.js
-│
-├── 📁 data/
-│   └── analyses.json
-│
-├── 📁 public/                      # ✅ ALL HTML files stay here
-│   ├── index.html                  # Main tool
-│   ├── analytics.html              # Dashboard
-│   ├── about.html
-│   ├── how-it-works.html
-│   ├── report-a-scam.html
-│   └── privacy.html
-│
-├── 📁 ml/                          # Python ML scripts (portfolio)
-│   ├── verifyjobs_ml.py
-│   ├── verifyjobs_forecast.py
-│   ├── verifyjobs_recommendations.py
-│   └── requirements.txt
-│
-├── 📁 logs/                        # Winston logs
-│   ├── combined.log
-│   └── error.log
-│
-├── ✅ robots.txt                   # ROOT
-├── ✅ sitemap.xml                  # ROOT
-├── ✅ llms.txt                     # ROOT
-├── ✅ structured-data.json         # ROOT
-├── ✅ openapi.yaml                 # ROOT
-│
-├── 📁 .well-known/                 # ROOT directory (note the dot)
-│   └── ✅ ai-plugin.json           # Inside .well-known/
-│
-├── ✅ favicon.ico                  # ROOT (or /public - both work)
-├── ✅ logo.png                     # ROOT (or /public)
-└── ✅ og-image.png                 # ROOT (or /public)
+├── .gitignore
+├── .well-known
+│   └── ai-plugin.json
+├── README.md
+├── ads.txt
+├── data
+│   └── analyses.json
+├── docs
+│   ├── API_REFERENCE.md
+│   ├── LOOM_SCRIPT.md
+│   └── TECHNICAL_DEEP_DIVE.md
+├── engine
+│   ├── analytics.js
+│   ├── analyzer.js
+│   ├── job-freshness.js
+│   ├── ml_scorer.js
+│   ├── rules.js
+│   ├── scorer.js
+│   └── storage.js
+├── favicon.png
+├── google6c2364060583a1e1.html
+├── llms.txt
+├── logs
+│   ├── combined.log
+│   └── error.log
+├── ml
+│   ├── core
+│   │   └── config.py
+│   ├── requirements.txt
+│   ├── verifyjobs_forecast.py
+│   ├── verifyjobs_ml.py
+│   └── verifyjobs_recommendations.py
+├── ml2
+│   ├── README.md
+│   ├── data
+│   │   ├── kaggle_jobs.csv
+│   │   ├── manual_labels
+│   │   │   └── labels.csv
+│   │   └── processed
+│   │       ├── feature_meta.json
+│   │       ├── test.parquet
+│   │       ├── train.parquet
+│   │       └── val.parquet
+│   ├── ml
+│   │   ├── __init__.py
+│   │   ├── data_prep.py
+│   │   ├── ensemble.py
+│   │   ├── serve.py
+│   │   ├── train_bert.py
+│   │   └── train_xgboost.py
+│   ├── models
+│   │   ├── bert
+│   │   ├── calibration.pkl
+│   │   ├── ensemble_config.json
+│   │   ├── ensemble_meta.pkl
+│   │   ├── xgboost_meta.json
+│   │   └── xgboost_pipeline.pkl
+│   ├── requirements.txt
+│   ├── serve.py
+│   └── server_ml_patch.js
+├── og-report-scam.jpg
+├── openapi.yaml
+├── package-lock.json
+├── package.json
+├── project_structure.txt
+├── public
+│   ├── about.html
+│   ├── analytics.html
+│   ├── apple-touch-icon.png
+│   ├── blog
+│   │   ├── advance-fee-job-fraud.html
+│   │   ├── how-to-know-if-a-job-is-a-scam.html
+│   │   ├── index.html
+│   │   ├── remote-job-scams.html
+│   │   └── whatsapp-job-scams-nigeria.html
+│   ├── favicon.ico
+│   ├── how-it-works.html
+│   ├── index.html
+│   ├── logo.jpg
+│   ├── partials
+│   │   ├── footer.html
+│   │   ├── header.html
+│   │   └── loader.js
+│   ├── privacy.html
+│   └── report-a-scam.html
+├── robots.txt
+├── server.js
+├── site.webmanifest
+├── sitemap.xml
+├── structured-data.json
+├── submission
+│   ├── README.md
+│   ├── notebook.ipynb
+│   ├── presentation.pdf
+│   └── requirements.txt
+└── tests
+    ├── test_analytics.js
+    ├── test_analyzer.js
+    └── test_ml.py
 
-
-# Should all return 200 OK:
-curl -I http://localhost:3000/robots.txt
-curl -I http://localhost:3000/sitemap.xml  
-curl -I http://localhost:3000/llms.txt
-curl -I http://localhost:3000/structured-data.json
-curl -I http://localhost:3000/.well-known/ai-plugin.json
-
-# Should still serve your HTML:
-curl -I http://localhost:3000/
-curl -I http://localhost:3000/analytics.html
+20 directories, 81 files

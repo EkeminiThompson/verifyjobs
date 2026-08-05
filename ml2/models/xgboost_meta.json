@@ -1,0 +1,235 @@
+{
+  "threshold": 0.7541419267654419,
+  "val_metrics": {
+    "auc": 0.9514896510688938,
+    "auprc": 0.8335167996464203,
+    "f1": 0.7863247863247863,
+    "threshold": 0.7541419267654419,
+    "tp": 92,
+    "fp": 27,
+    "tn": 2019,
+    "fn": 23
+  },
+  "test_metrics": {
+    "auc": 0.973969393602319,
+    "auprc": 0.8631097141067672,
+    "f1": 0.7532467532467533,
+    "threshold": 0.7541419267654419,
+    "tp": 87,
+    "fp": 28,
+    "tn": 2018,
+    "fn": 29
+  },
+  "top_features": [
+    {
+      "feature": "social media",
+      "importance": 0.030576320365071297
+    },
+    {
+      "feature": "brands",
+      "importance": 0.023817185312509537
+    },
+    {
+      "feature": "engagement",
+      "importance": 0.019382819533348083
+    },
+    {
+      "feature": "our mission",
+      "importance": 0.017047571018338203
+    },
+    {
+      "feature": "recruitment and",
+      "importance": 0.01585686206817627
+    },
+    {
+      "feature": "london",
+      "importance": 0.013601122424006462
+    },
+    {
+      "feature": "20 years of",
+      "importance": 0.013519435189664364
+    },
+    {
+      "feature": "startup",
+      "importance": 0.012306543998420238
+    },
+    {
+      "feature": "special",
+      "importance": 0.01222755666822195
+    },
+    {
+      "feature": "are encouraged",
+      "importance": 0.011100203730165958
+    },
+    {
+      "feature": "are encouraged to",
+      "importance": 0.009968227706849575
+    },
+    {
+      "feature": "analytics",
+      "importance": 0.009530304931104183
+    },
+    {
+      "feature": "apps",
+      "importance": 0.009342496283352375
+    },
+    {
+      "feature": "ll be",
+      "importance": 0.009297501295804977
+    },
+    {
+      "feature": "1099",
+      "importance": 0.009293896146118641
+    },
+    {
+      "feature": "know",
+      "importance": 0.009118331596255302
+    },
+    {
+      "feature": "the hiring process",
+      "importance": 0.008684029802680016
+    },
+    {
+      "feature": "encouraged to",
+      "importance": 0.008298201486468315
+    },
+    {
+      "feature": "and in",
+      "importance": 0.008238797076046467
+    },
+    {
+      "feature": "right",
+      "importance": 0.008191638626158237
+    },
+    {
+      "feature": "preparing",
+      "importance": 0.008058356121182442
+    },
+    {
+      "feature": "card us",
+      "importance": 0.008004719391465187
+    },
+    {
+      "feature": "candidates in",
+      "importance": 0.007859698496758938
+    },
+    {
+      "feature": "22",
+      "importance": 0.007424601353704929
+    },
+    {
+      "feature": "small business",
+      "importance": 0.006924042943865061
+    },
+    {
+      "feature": "the candidate",
+      "importance": 0.0069056409411132336
+    },
+    {
+      "feature": "ve",
+      "importance": 0.006833376828581095
+    },
+    {
+      "feature": "fun",
+      "importance": 0.006823519244790077
+    },
+    {
+      "feature": "hard",
+      "importance": 0.006823285948485136
+    },
+    {
+      "feature": "focus is to",
+      "importance": 0.0064072939567267895
+    },
+    {
+      "feature": "000 per",
+      "importance": 0.006288229487836361
+    },
+    {
+      "feature": "employer",
+      "importance": 0.0060842568054795265
+    },
+    {
+      "feature": "since",
+      "importance": 0.006046351045370102
+    },
+    {
+      "feature": "founded",
+      "importance": 0.005592207424342632
+    },
+    {
+      "feature": "and we",
+      "importance": 0.005522135179489851
+    },
+    {
+      "feature": "issues",
+      "importance": 0.0052567035891115665
+    },
+    {
+      "feature": "follow up",
+      "importance": 0.005082859192043543
+    },
+    {
+      "feature": "activities and",
+      "importance": 0.005060723051428795
+    },
+    {
+      "feature": "leveraging your career",
+      "importance": 0.005046771373599768
+    },
+    {
+      "feature": "000 employees",
+      "importance": 0.005034883506596088
+    }
+  ],
+  "xgb_params": {
+    "n_estimators": 500,
+    "max_depth": 6,
+    "learning_rate": 0.05,
+    "subsample": 0.8,
+    "colsample_bytree": 0.7,
+    "min_child_weight": 3,
+    "gamma": 0.1,
+    "reg_alpha": 0.1,
+    "reg_lambda": 1.0,
+    "tree_method": "hist",
+    "random_state": 42,
+    "n_jobs": -1,
+    "scale_pos_weight": 17.714285714285715,
+    "eval_metric": "aucpr"
+  },
+  "n_features": 60030,
+  "structural_cols": [
+    "has_salary",
+    "has_company_profile",
+    "has_logo",
+    "has_questions",
+    "telecommuting",
+    "word_count",
+    "char_count",
+    "avg_word_len",
+    "upper_ratio",
+    "exclaim_count",
+    "emoji_count",
+    "digit_ratio",
+    "has_naira",
+    "naira_max_amount",
+    "has_whatsapp",
+    "has_telegram",
+    "has_upfront_fee",
+    "has_crypto",
+    "has_task_pattern",
+    "has_urgency",
+    "has_free_email",
+    "has_no_exp_req",
+    "has_high_salary",
+    "has_interview_proc",
+    "has_ats_platform",
+    "has_company_email",
+    "whatsapp_and_upfront",
+    "task_and_high_salary",
+    "free_email_and_urgency",
+    "no_exp_and_high_salary"
+  ],
+  "tfidf_vocab_size": 60000
+}
