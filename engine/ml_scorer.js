@@ -149,7 +149,7 @@ function blendScores(ruleScore, mlProb, mlConfidence) {
 
   let w = weights[mlConfidence] || weights.medium;
 
-  // If they agree, trust ML a bit more (it confirms what rules say)
+  // If they agree, trust ML a bit more (it confirms what rules say)/
   if (agree) {
     w = { ml: Math.min(w.ml + 0.10, 0.80), rules: Math.max(w.rules - 0.10, 0.20) };
   }
