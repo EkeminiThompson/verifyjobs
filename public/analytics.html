@@ -8,19 +8,33 @@
   <meta name="referrer" content="strict-origin-when-cross-origin">
 
   <title>VerifyJobs Analytics – Job Scam Intelligence Dashboard</title>
-  <meta name="description" content="Real-time job scam analytics dashboard. Track scam rates, risk scores, A/B test results, ML model performance, and segment insights from VerifyJobs.org.">
-  <meta name="keywords" content="job scam analytics, fraud detection dashboard, scam rate statistics, job scam intelligence, VerifyJobs analytics">
+  <meta name="description" content="Real-time job scam analytics dashboard. Track scam rates, risk scores, A/B test results, XGBoost model performance, and segment insights from VerifyJobs.org.">
+  <meta name="keywords" content="job scam analytics, fraud detection dashboard, scam rate statistics, job scam intelligence, VerifyJobs analytics, employment fraud data">
+  <meta name="author" content="Ekemini Thompson">
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
   <link rel="canonical" href="https://verifyjobs.org/analytics.html">
-  <meta name="revised" content="2026-05-12">
+
+  <!-- Dates -->
+  <meta name="date" content="2024-01-01">
+  <meta name="revised" content="2026-08-05">
+
+  <!-- Geo -->
+  <meta name="geo.region" content="NG">
+  <meta name="geo.placename" content="Nigeria">
+  <meta name="language" content="English">
+  <meta name="coverage" content="Worldwide">
+  <meta name="distribution" content="Global">
 
   <!-- Open Graph -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://verifyjobs.org/analytics.html">
   <meta property="og:title" content="VerifyJobs Analytics – Job Scam Intelligence Dashboard">
-  <meta property="og:description" content="Real-time job scam analytics dashboard. Track scam rates, risk scores, A/B test results, ML model performance, and segment insights from VerifyJobs.org.">
-  <meta property="og:image" content="https://verifyjobs.org/og-image.png">
-  <meta property="og:image:alt" content="VerifyJobs Analytics Dashboard">
+  <meta property="og:description" content="Real-time job scam analytics dashboard. Track scam rates, risk scores, A/B test results, XGBoost model performance, and segment insights from VerifyJobs.org.">
+  <meta property="og:image" content="https://verifyjobs.org/og-report-scam.jpg">
+  <meta property="og:image:secure_url" content="https://verifyjobs.org/og-report-scam.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="VerifyJobs Analytics Dashboard — Job Scam Intelligence">
   <meta property="og:site_name" content="VerifyJobs.org">
   <meta property="og:locale" content="en_US">
   <meta property="og:locale:alternate" content="en_NG">
@@ -28,9 +42,11 @@
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:site" content="@verifyjobs">
+  <meta name="twitter:creator" content="@verifyjobs">
   <meta name="twitter:title" content="VerifyJobs Analytics – Job Scam Intelligence Dashboard">
-  <meta name="twitter:description" content="Real-time analytics for job scam detection, ML performance, A/B tests, and segment insights.">
-  <meta name="twitter:image" content="https://verifyjobs.org/og-image.png">
+  <meta name="twitter:description" content="Real-time analytics for job scam detection, XGBoost model performance, A/B tests, and segment insights.">
+  <meta name="twitter:image" content="https://verifyjobs.org/og-report-scam.jpg">
+  <meta name="twitter:image:alt" content="VerifyJobs Analytics Dashboard">
 
   <meta name="theme-color" content="#0f1035">
 
@@ -41,30 +57,38 @@
     "@type": "WebApplication",
     "@id": "https://verifyjobs.org/analytics.html#webapp",
     "name": "VerifyJobs Analytics Dashboard",
-    "description": "Real-time job scam analytics dashboard tracking scam rates, ML model performance, A/B test results, and segment insights.",
+    "description": "Real-time job scam analytics dashboard tracking scam rates, XGBoost model performance, A/B test results, cohort analysis, and segment insights.",
     "url": "https://verifyjobs.org/analytics.html",
     "applicationCategory": "Analytics",
     "operatingSystem": "All",
     "browserRequirements": "Requires JavaScript",
+    "inLanguage": "en",
+    "isAccessibleForFree": true,
+    "dateModified": "2026-08-05",
+    "image": "https://verifyjobs.org/og-report-scam.jpg",
+    "author": {
+      "@type": "Person",
+      "@id": "https://verifyjobs.org/#creator",
+      "name": "Ekemini Thompson"
+    },
     "publisher": {
       "@type": "Organization",
-      "@id": "https://verifyjobs.org/#organization"
+      "@id": "https://verifyjobs.org/#organization",
+      "name": "VerifyJobs",
+      "url": "https://verifyjobs.org",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://verifyjobs.org/logo.jpg"
+      }
     },
-    "isPartOf": { "@id": "https://verifyjobs.org/#website" }
-  }
-  </script>
-
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "@id": "https://verifyjobs.org/#organization",
-    "name": "VerifyJobs",
-    "url": "https://verifyjobs.org",
-    "foundingDate": "2024",
-    "description": "VerifyJobs.org is a free tool that instantly detects job scams and employment fraud. Our analytics dashboard provides real-time intelligence on job scam patterns.",
-    "areaServed": "Worldwide",
-    "sameAs": ["https://twitter.com/verifyjobs"]
+    "isPartOf": { "@id": "https://verifyjobs.org/#website" },
+    "breadcrumb": {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://verifyjobs.org/" },
+        { "@type": "ListItem", "position": 2, "name": "Analytics Dashboard", "item": "https://verifyjobs.org/analytics.html" }
+      ]
+    }
   }
   </script>
 
@@ -100,36 +124,14 @@
     }
 
     html { scroll-behavior: auto; }
-        /* ── Placeholder reservations — prevents layout shift on injection ── */
-    #site-header {
-      display: block;
-      height: 56px;
-      background: var(--navy);
-      flex-shrink: 0;
-    }
-    #site-footer {
-      display: block;
-      min-height: 140px;
-      flex-shrink: 0;
-    }
+    #site-header { display: block; height: 56px; background: var(--navy); flex-shrink: 0; }
+    #site-footer { display: block; min-height: 140px; flex-shrink: 0; }
 
+    body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; padding-bottom: env(safe-area-inset-bottom); -webkit-font-smoothing: antialiased; }
 
-    body {
-      font-family: 'DM Sans', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      min-height: 100vh;
-      padding-bottom: env(safe-area-inset-bottom);
-      -webkit-font-smoothing: antialiased;
-    }
-
-    .skip-link {
-      position: absolute; top: -100px; left: 1rem; background: var(--navy); color: white;
-      padding: 8px 16px; border-radius: 8px; font-size: 13px; z-index: 999;
-    }
+    .skip-link { position: absolute; top: -100px; left: 1rem; background: var(--navy); color: white; padding: 8px 16px; border-radius: 8px; font-size: 13px; z-index: 999; }
     .skip-link:focus { top: 1rem; }
 
-    /* Nav styles (needed for injected partial to render correctly) */
     nav { background: var(--navy); position: sticky; top: 0; z-index: 200; box-shadow: 0 2px 12px rgba(0,0,0,0.18); }
     .nav-bar { display: flex; align-items: center; justify-content: space-between; height: var(--nav-h); padding: 0 1rem; max-width: 1400px; margin: 0 auto; }
     .nav-logo, .nav-brand { font-family: 'Syne', sans-serif; font-size: 17px; font-weight: 800; color: white; text-decoration: none; flex-shrink: 0; letter-spacing: -0.3px; }
@@ -167,20 +169,22 @@
       .nav-desktop .nav-cta:hover { background: #e09500 !important; }
     }
 
-    /* Footer styles (needed for injected partial to render correctly) */
     footer { text-align: center; font-size: 11px; color: var(--faint); padding: 2rem 0 0.5rem; margin-top: 1rem; border-top: 1px solid var(--border); }
     footer a { color: var(--navy-light); text-decoration: none; }
     footer a:hover { text-decoration: underline; }
     .footer-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-bottom: 8px; }
 
-    /* Page styles */
     .page { max-width: 1400px; margin: 0 auto; padding: 1rem 1rem 3rem; }
 
     .hero { background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 60%, #1a1060 100%); border-radius: var(--radius); padding: 1.5rem 1.25rem; margin-bottom: 1.5rem; position: relative; overflow: hidden; }
     .hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 80% 20%, rgba(240,165,0,0.1) 0%, transparent 60%); pointer-events: none; }
-    .hero h1 { font-family: 'Syne', sans-serif; font-size: clamp(20px, 6vw, 30px); font-weight: 800; color: white; margin-bottom: 6px; position: relative; z-index: 1; }
+    .hero-inner { position: relative; z-index: 1; }
+    .hero-breadcrumb { font-size: 11px; color: rgba(255,255,255,0.45); margin-bottom: 10px; }
+    .hero-breadcrumb a { color: rgba(255,255,255,0.5); text-decoration: none; }
+    .hero-breadcrumb a:hover { color: white; }
+    .hero h1 { font-family: 'Syne', sans-serif; font-size: clamp(20px, 6vw, 30px); font-weight: 800; color: white; margin-bottom: 6px; }
     .hero h1 i { color: var(--gold); margin-right: 8px; }
-    .hero p { font-size: 13px; color: rgba(255,255,255,0.7); position: relative; z-index: 1; }
+    .hero p { font-size: 13px; color: rgba(255,255,255,0.7); }
 
     .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
     .stat-card { background: var(--surface); border-radius: var(--radius); padding: 1.25rem; box-shadow: var(--shadow); border: 1px solid var(--border); }
@@ -188,9 +192,6 @@
     .stat-card .value { font-family: 'Syne', sans-serif; font-size: 32px; font-weight: 800; color: var(--navy); }
     .stat-card .unit { font-size: 14px; font-weight: 400; color: var(--faint); }
     .stat-card .trend { font-size: 12px; margin-top: 6px; display: flex; align-items: center; gap: 4px; }
-
-    .section { margin-bottom: 2rem; }
-    .section-title { font-family: 'Syne', sans-serif; font-size: 18px; font-weight: 800; color: var(--navy); margin-bottom: 1rem; display: flex; align-items: center; gap: 10px; border-left: 4px solid var(--gold); padding-left: 12px; }
 
     .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem; box-shadow: var(--shadow); }
     .card-title { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 1rem; display: flex; align-items: center; gap: 8px; text-transform: uppercase; letter-spacing: 0.3px; }
@@ -202,17 +203,12 @@
     .flag-list li span:first-child { color: var(--muted); }
     .flag-list li span:last-child { font-weight: 600; color: var(--navy); }
 
-    .progress-bar { height: 8px; background: var(--border); border-radius: 4px; overflow: hidden; margin: 8px 0; }
-    .progress-fill { height: 100%; border-radius: 4px; transition: width 0.6s ease; }
-
     .badge { display: inline-flex; align-items: center; gap: 4px; padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; }
     .badge-risk { background: var(--red-pale); color: var(--red); }
     .badge-safe { background: var(--green-pale); color: var(--green); }
     .badge-warning { background: var(--gold-pale); color: #8a6000; }
 
     .insight-text { font-size: 13px; color: var(--muted); line-height: 1.6; padding: 12px; background: var(--bg); border-radius: 10px; margin-top: 10px; }
-
-    .chart-container { min-height: 200px; }
 
     .loading-state { display: flex; align-items: center; justify-content: center; padding: 3rem; flex-direction: column; gap: 1rem; }
     .spinner { width: 40px; height: 40px; border: 3px solid var(--border); border-top-color: var(--navy); border-radius: 50%; animation: spin 0.75s linear infinite; }
@@ -231,40 +227,47 @@
 </head>
 <body>
 
+<a class="skip-link" href="#main">Skip to dashboard</a>
+
 <!-- ── SHARED HEADER (injected by /partials/loader.js) ── -->
 <div id="site-header"></div>
 
 <div class="page" id="main">
-  
+
   <div class="hero">
-    <h1><i class="ti ti-chart-bar"></i> Job Scam Intelligence Dashboard</h1>
-    <p>Real-time analytics from job scam detection — ML performance, A/B tests, cohort insights, and segment intelligence.</p>
+    <div class="hero-inner">
+      <nav class="hero-breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a> / <span aria-current="page">Analytics</span>
+      </nav>
+      <h1><i class="ti ti-chart-bar" aria-hidden="true"></i> Job Scam Intelligence Dashboard</h1>
+      <p>Real-time analytics from job scam detection — XGBoost model performance, A/B tests, cohort insights, and segment intelligence.</p>
+    </div>
   </div>
 
-  <div id="errorMsg" class="error-alert" style="display:none">
-    <i class="ti ti-alert-circle"></i>
+  <div id="errorMsg" class="error-alert" role="alert" style="display:none">
+    <i class="ti ti-alert-circle" aria-hidden="true"></i>
     <span id="errorText"></span>
   </div>
 
-  <div id="loadingState" class="loading-state">
-    <div class="spinner"></div>
+  <div id="loadingState" class="loading-state" aria-live="polite" aria-busy="true">
+    <div class="spinner" role="status" aria-label="Loading analytics"></div>
     <p>Loading analytics data...</p>
   </div>
 
-  <div id="dashboardContent" style="display: none;">
-    
+  <main id="dashboardContent" style="display: none;" aria-label="Analytics dashboard">
+
     <!-- KPI ROW -->
     <div class="stats-grid" id="kpiGrid"></div>
 
     <!-- TWO COLUMN: MODEL + SEGMENTS -->
     <div class="two-col">
       <div class="card">
-        <div class="card-title"><i class="ti ti-brain"></i> ML Model Performance</div>
+        <div class="card-title"><i class="ti ti-brain" aria-hidden="true"></i> XGBoost Model Performance</div>
         <div id="modelMetrics"></div>
         <div id="featureImportance"></div>
       </div>
       <div class="card">
-        <div class="card-title"><i class="ti ti-chart-pie"></i> Segment Insights</div>
+        <div class="card-title"><i class="ti ti-chart-pie" aria-hidden="true"></i> Segment Insights</div>
         <div id="segmentInsights"></div>
         <div id="segmentActionable"></div>
       </div>
@@ -273,11 +276,11 @@
     <!-- A/B TEST + CAUSAL -->
     <div class="two-col">
       <div class="card">
-        <div class="card-title"><i class="ti ti-test-pipe"></i> A/B Test: Input Methods</div>
+        <div class="card-title"><i class="ti ti-test-pipe" aria-hidden="true"></i> A/B Test: Input Methods</div>
         <div id="abTestResults"></div>
       </div>
       <div class="card">
-        <div class="card-title"><i class="ti ti-causal"></i> Causal Inference (DiD)</div>
+        <div class="card-title"><i class="ti ti-arrows-diff" aria-hidden="true"></i> Causal Inference (DiD)</div>
         <div id="causalResults"></div>
       </div>
     </div>
@@ -285,11 +288,11 @@
     <!-- COHORTS + TOP RED FLAGS -->
     <div class="two-col">
       <div class="card">
-        <div class="card-title"><i class="ti ti-users"></i> Weekly Cohorts</div>
+        <div class="card-title"><i class="ti ti-users" aria-hidden="true"></i> Weekly Cohorts</div>
         <div id="cohortTable"></div>
       </div>
       <div class="card">
-        <div class="card-title"><i class="ti ti-flag"></i> Most Common Red Flags</div>
+        <div class="card-title"><i class="ti ti-flag" aria-hidden="true"></i> Most Common Red Flags</div>
         <div id="topFlags"></div>
       </div>
     </div>
@@ -297,32 +300,31 @@
     <!-- SCORE DISTRIBUTION + SOURCE BREAKDOWN -->
     <div class="two-col">
       <div class="card">
-        <div class="card-title"><i class="ti ti-chart-histogram"></i> Risk Score Distribution</div>
+        <div class="card-title"><i class="ti ti-chart-histogram" aria-hidden="true"></i> Risk Score Distribution</div>
         <div id="scoreHistogram"></div>
       </div>
       <div class="card">
-        <div class="card-title"><i class="ti ti-device-analytics"></i> Scam Rate by Source</div>
+        <div class="card-title"><i class="ti ti-device-analytics" aria-hidden="true"></i> Scam Rate by Source</div>
         <div id="sourceBreakdown"></div>
       </div>
     </div>
 
     <!-- DAILY VOLUME -->
-    <div class="card">
-      <div class="card-title"><i class="ti ti-calendar-stats"></i> Daily Analysis Volume</div>
+    <div class="card" style="margin-bottom: 1.5rem;">
+      <div class="card-title"><i class="ti ti-calendar-stats" aria-hidden="true"></i> Daily Analysis Volume</div>
       <div id="dailyVolumeChart"></div>
     </div>
 
     <!-- FRESHNESS NOTE -->
-    <div class="insight-text" id="insightNote"></div>
+    <div class="insight-text" id="insightNote" role="note"></div>
 
-  </div>
+  </main>
 
   <!-- ── SHARED FOOTER (injected by /partials/loader.js) ── -->
   <div id="site-footer"></div>
 
 </div>
 
-<!-- ── Shared header/footer loader — must be last script before </body> ── -->
 <script src="/partials/loader.js"></script>
 
 <script>
@@ -333,9 +335,7 @@
   async function fetchAnalytics() {
     try {
       const response = await fetch('/analytics');
-      if (!response.ok) {
-        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-      }
+      if (!response.ok) throw new Error(`HTTP ${response.status}: ${response.statusText}`);
       const data = await response.json();
       analyticsData = data;
       return data;
@@ -351,253 +351,149 @@
     const scamRate = overview.scamRate || (data.isDemo ? 34.2 : 0);
     const avgRisk = overview.avgRiskScore || (data.isDemo ? 42.1 : 0);
     const scamCount = overview.scamCount || (data.isDemo ? 97 : 0);
-
     const kpis = [
       { label: 'Total Analyses', value: total.toLocaleString(), unit: '', trend: null },
       { label: 'Scam Detection Rate', value: scamRate, unit: '%', trend: scamRate > 30 ? '↑ High vigilance' : '↓ Low scam prevalence' },
       { label: 'Avg Risk Score', value: avgRisk, unit: '/100', trend: avgRisk > 50 ? 'Elevated risk' : 'Moderate risk' },
       { label: 'Confirmed Scams', value: scamCount.toLocaleString(), unit: '', trend: null }
     ];
-
-    const grid = document.getElementById('kpiGrid');
-    grid.innerHTML = kpis.map(k => `
+    document.getElementById('kpiGrid').innerHTML = kpis.map(k => `
       <div class="stat-card">
         <div class="label">${k.label}</div>
         <div class="value">${typeof k.value === 'number' ? k.value.toFixed(1) : k.value}<span class="unit">${k.unit}</span></div>
         ${k.trend ? `<div class="trend">${k.trend}</div>` : ''}
-      </div>
-    `).join('');
+      </div>`).join('');
   }
 
   function renderModelMetrics(data) {
     const model = data.model || {};
-    if (model.error) {
-      document.getElementById('modelMetrics').innerHTML = `<div class="insight-text">${model.error}</div>`;
-      return;
-    }
-    const auc = model.auc || 0.87;
-    const f1 = model.bestF1 || 0.79;
-    const prec = model.bestPrecision || 0.83;
-    const rec = model.bestRecall || 0.75;
-    
-    const html = `
-      <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:12px; margin-bottom:16px">
-        <div><span class="badge badge-warning">AUC-ROC</span><div style="font-size:24px; font-weight:800">${(auc*100).toFixed(1)}%</div></div>
-        <div><span class="badge badge-warning">F1 Score</span><div style="font-size:24px; font-weight:800">${(f1*100).toFixed(1)}%</div></div>
+    if (model.error) { document.getElementById('modelMetrics').innerHTML = `<div class="insight-text">${model.error}</div>`; return; }
+    const auc = model.auc || 0.87, f1 = model.bestF1 || 0.79, prec = model.bestPrecision || 0.83, rec = model.bestRecall || 0.75;
+    document.getElementById('modelMetrics').innerHTML = `
+      <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:16px">
+        <div><span class="badge badge-warning">AUC-ROC</span><div style="font-size:24px;font-weight:800">${(auc*100).toFixed(1)}%</div></div>
+        <div><span class="badge badge-warning">F1 Score</span><div style="font-size:24px;font-weight:800">${(f1*100).toFixed(1)}%</div></div>
         <div><span class="badge badge-safe">Precision</span><div>${(prec*100).toFixed(1)}%</div></div>
         <div><span class="badge badge-safe">Recall</span><div>${(rec*100).toFixed(1)}%</div></div>
-      </div>
-    `;
-    document.getElementById('modelMetrics').innerHTML = html;
-    
-    // Feature importance
+      </div>`;
     const features = model.featureImportance || [];
     if (features.length) {
-      const featHtml = `<div style="font-size:12px; font-weight:600; margin-top:12px">Top Features</div>
+      document.getElementById('featureImportance').innerHTML = `<div style="font-size:12px;font-weight:600;margin-top:12px">Top Features</div>
         <ul class="flag-list" style="margin-top:8px">
-          ${features.slice(0,5).map(f => `
-            <li><span>${f.feature}</span><span class="${f.direction === 'risk' ? 'badge-risk' : 'badge-safe'}" style="padding:2px 8px">${f.direction === 'risk' ? '↑ risk' : '↓ safe'}</span></li>
-          `).join('')}
+          ${features.slice(0,5).map(f => `<li><span>${f.feature}</span><span class="${f.direction==='risk'?'badge-risk':'badge-safe'}" style="padding:2px 8px">${f.direction==='risk'?'↑ risk':'↓ safe'}</span></li>`).join('')}
         </ul>`;
-      document.getElementById('featureImportance').innerHTML = featHtml;
     }
   }
 
   function renderSegmentInsights(data) {
-    const segments = data.segments || {};
-    const insights = segments.insights || [];
-    if (!insights.length) {
-      document.getElementById('segmentInsights').innerHTML = '<div class="insight-text">Not enough data for segment analysis</div>';
-      return;
-    }
-    const html = `<ul class="flag-list">
-      ${insights.slice(0,5).map(s => `
-        <li><span>${s.segment}</span><span><strong>${s.scamRate}%</strong> scam rate ${s.vsBase > 0 ? `(+${s.vsBase}pp)` : `(${s.vsBase}pp)`}</span></li>
-      `).join('')}
+    const segments = data.segments || {}, insights = segments.insights || [];
+    if (!insights.length) { document.getElementById('segmentInsights').innerHTML = '<div class="insight-text">Not enough data for segment analysis</div>'; return; }
+    document.getElementById('segmentInsights').innerHTML = `<ul class="flag-list">
+      ${insights.slice(0,5).map(s => `<li><span>${s.segment}</span><span><strong>${s.scamRate}%</strong> scam rate ${s.vsBase>0?`(+${s.vsBase}pp)`:`(${s.vsBase}pp)`}</span></li>`).join('')}
     </ul>`;
-    document.getElementById('segmentInsights').innerHTML = html;
-    if (segments.actionable) {
-      document.getElementById('segmentActionable').innerHTML = `<div class="insight-text" style="margin-top:12px"><i class="ti ti-bulb"></i> ${segments.actionable}</div>`;
-    }
+    if (segments.actionable) document.getElementById('segmentActionable').innerHTML = `<div class="insight-text" style="margin-top:12px"><i class="ti ti-bulb"></i> ${segments.actionable}</div>`;
   }
 
   function renderABTest(data) {
-    const ab = data.abTest || {};
-    const groups = ab.groups || [];
-    if (!groups.length) {
-      document.getElementById('abTestResults').innerHTML = '<div class="insight-text">Insufficient A/B test data</div>';
-      return;
-    }
+    const ab = data.abTest || {}, groups = ab.groups || [];
+    if (!groups.length) { document.getElementById('abTestResults').innerHTML = '<div class="insight-text">Insufficient A/B test data</div>'; return; }
     const test = ab.test || {};
     const sigBadge = test.significant ? '<span class="badge badge-risk">statistically significant</span>' : '<span class="badge badge-warning">not significant</span>';
-    const html = `
-      <ul class="flag-list">
-        ${groups.map(g => `<li><span>${g.name}</span><span>n=${g.n} | scam rate ${g.scamRate}% | avg score ${g.avgScore}</span></li>`).join('')}
-      </ul>
-      ${test.comparison ? `<div class="insight-text" style="margin-top:12px">
-        <strong>${test.comparison}</strong><br>
-        p-value = ${test.pValue || 'N/A'} ${sigBadge}<br>
-        Lift: ${test.lift || 0}%<br>
-        ${test.interpretation || ''}
-      </div>` : ''}
-      ${ab.planning ? `<div class="insight-text" style="margin-top:8px; font-size:11px"><i class="ti ti-chart-infographic"></i> Sample size needed for MDE 10%: ${ab.planning.mde10pct || '—'}</div>` : ''}
-    `;
-    document.getElementById('abTestResults').innerHTML = html;
+    document.getElementById('abTestResults').innerHTML = `
+      <ul class="flag-list">${groups.map(g=>`<li><span>${g.name}</span><span>n=${g.n} | scam rate ${g.scamRate}% | avg score ${g.avgScore}</span></li>`).join('')}</ul>
+      ${test.comparison?`<div class="insight-text" style="margin-top:12px"><strong>${test.comparison}</strong><br>p-value = ${test.pValue||'N/A'} ${sigBadge}<br>Lift: ${test.lift||0}%<br>${test.interpretation||''}</div>`:''}
+      ${ab.planning?`<div class="insight-text" style="margin-top:8px;font-size:11px"><i class="ti ti-chart-infographic"></i> Sample size needed for MDE 10%: ${ab.planning.mde10pct||'—'}</div>`:''}`;
   }
 
   function renderCausal(data) {
     const causal = data.causal || {};
-    if (causal.error) {
-      document.getElementById('causalResults').innerHTML = `<div class="insight-text">${causal.error}</div>`;
-      return;
-    }
+    if (causal.error) { document.getElementById('causalResults').innerHTML = `<div class="insight-text">${causal.error}</div>`; return; }
     const groups = causal.groups || {};
-    const html = `
-      <div style="display:flex; justify-content:space-between; margin-bottom:12px">
-        <div><span class="badge badge-warning">Control (Manual)</span><br>Pre: ${groups.control?.pre || '—'} → Post: ${groups.control?.post || '—'}</div>
-        <div><span class="badge badge-risk">Treatment (URL/File)</span><br>Pre: ${groups.treatment?.pre || '—'} → Post: ${groups.treatment?.post || '—'}</div>
+    document.getElementById('causalResults').innerHTML = `
+      <div style="display:flex;justify-content:space-between;margin-bottom:12px">
+        <div><span class="badge badge-warning">Control (Manual)</span><br>Pre: ${groups.control?.pre||'—'} → Post: ${groups.control?.post||'—'}</div>
+        <div><span class="badge badge-risk">Treatment (URL/File)</span><br>Pre: ${groups.treatment?.pre||'—'} → Post: ${groups.treatment?.post||'—'}</div>
       </div>
-      <div class="insight-text"><i class="ti ti-chart-line"></i> DiD Estimate: <strong>${causal.didEstimate !== null ? causal.didEstimate : 'N/A'}</strong> points</div>
-      <div class="insight-text" style="margin-top:8px; font-size:12px">${causal.interpretation || ''}</div>
-      <div class="insight-text" style="margin-top:8px; font-size:11px">Parallel trends: ${causal.parallelTrendsValid ? '✓ Valid' : '⚠ Check needed'}</div>
-    `;
-    document.getElementById('causalResults').innerHTML = html;
+      <div class="insight-text"><i class="ti ti-chart-line"></i> DiD Estimate: <strong>${causal.didEstimate!==null?causal.didEstimate:'N/A'}</strong> points</div>
+      <div class="insight-text" style="margin-top:8px;font-size:12px">${causal.interpretation||''}</div>
+      <div class="insight-text" style="margin-top:8px;font-size:11px">Parallel trends: ${causal.parallelTrendsValid?'✓ Valid':'⚠ Check needed'}</div>`;
   }
 
   function renderCohorts(data) {
-    const cohorts = data.cohorts || {};
-    const list = cohorts.cohorts || [];
-    if (!list.length) {
-      document.getElementById('cohortTable').innerHTML = '<div class="insight-text">Not enough cohort data</div>';
-      return;
-    }
-    const html = `<ul class="flag-list">
-      ${list.slice(-6).map(c => `<li><span>${c.week}</span><span>n=${c.count} | scam rate ${c.scamRate}% | avg score ${c.avgScore}</span></li>`).join('')}
+    const list = (data.cohorts||{}).cohorts||[];
+    if (!list.length) { document.getElementById('cohortTable').innerHTML = '<div class="insight-text">Not enough cohort data</div>'; return; }
+    document.getElementById('cohortTable').innerHTML = `<ul class="flag-list">
+      ${list.slice(-6).map(c=>`<li><span>${c.week}</span><span>n=${c.count} | scam rate ${c.scamRate}% | avg score ${c.avgScore}</span></li>`).join('')}
     </ul>`;
-    document.getElementById('cohortTable').innerHTML = html;
   }
 
   function renderTopFlags(data) {
-    const queries = data.queries || {};
-    const flags = queries.topRedFlags || [];
-    if (!flags.length) {
-      document.getElementById('topFlags').innerHTML = '<div class="insight-text">No red flag data</div>';
-      return;
-    }
-    const html = `<ul class="flag-list">
-      ${flags.slice(0,6).map(f => `<li><span>${f.flag.length > 50 ? f.flag.slice(0,50)+'…' : f.flag}</span><span>${f.count} (${f.pct}%)</span></li>`).join('')}
+    const flags = (data.queries||{}).topRedFlags||[];
+    if (!flags.length) { document.getElementById('topFlags').innerHTML = '<div class="insight-text">No red flag data</div>'; return; }
+    document.getElementById('topFlags').innerHTML = `<ul class="flag-list">
+      ${flags.slice(0,6).map(f=>`<li><span>${f.flag.length>50?f.flag.slice(0,50)+'…':f.flag}</span><span>${f.count} (${f.pct}%)</span></li>`).join('')}
     </ul>`;
-    document.getElementById('topFlags').innerHTML = html;
   }
 
   function renderScoreHistogram(data) {
-    const queries = data.queries || {};
-    const hist = queries.scoreHistogram || (data.overview?.scoreDistribution || []);
-    if (!hist.length) {
-      document.getElementById('scoreHistogram').innerHTML = '<div class="insight-text">No histogram data</div>';
-      return;
-    }
-    const maxCount = Math.max(...hist.map(h => h.count));
-    const html = `<div style="margin-top:8px">
-      ${hist.map(h => `
-        <div style="display:flex; align-items:center; gap:8px; margin-bottom:6px; font-size:11px">
-          <span style="width:45px; color:var(--muted)">${h.label || h.bin || '0'}</span>
-          <div style="flex:1; background:var(--border); border-radius:4px; height:24px; overflow:hidden">
-            <div style="width:${(h.count / maxCount) * 100}%; background:var(--navy-light); height:100%; border-radius:4px; display:flex; align-items:center; justify-content:flex-end; padding-right:6px; color:white; font-size:10px; font-weight:600">${h.count}</div>
-          </div>
-        </div>
-      `).join('')}
+    const hist = (data.queries||{}).scoreHistogram||(data.overview?.scoreDistribution||[]);
+    if (!hist.length) { document.getElementById('scoreHistogram').innerHTML = '<div class="insight-text">No histogram data</div>'; return; }
+    const maxCount = Math.max(...hist.map(h=>h.count));
+    document.getElementById('scoreHistogram').innerHTML = `<div style="margin-top:8px">
+      ${hist.map(h=>`<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;font-size:11px">
+        <span style="width:45px;color:var(--muted)">${h.label||h.bin||'0'}</span>
+        <div style="flex:1;background:var(--border);border-radius:4px;height:24px;overflow:hidden">
+          <div style="width:${(h.count/maxCount)*100}%;background:var(--navy-light);height:100%;border-radius:4px;display:flex;align-items:center;justify-content:flex-end;padding-right:6px;color:white;font-size:10px;font-weight:600">${h.count}</div>
+        </div></div>`).join('')}
     </div>`;
-    document.getElementById('scoreHistogram').innerHTML = html;
   }
 
   function renderSourceBreakdown(data) {
-    const queries = data.queries || {};
-    const sources = queries.bySource || [];
-    if (!sources.length) {
-      document.getElementById('sourceBreakdown').innerHTML = '<div class="insight-text">No source data</div>';
-      return;
-    }
-    const html = `<ul class="flag-list">
-      ${sources.map(s => `<li><span>${s.source}</span><span>${s.scamRate}% scam · ${s.count} checks</span></li>`).join('')}
+    const sources = (data.queries||{}).bySource||[];
+    if (!sources.length) { document.getElementById('sourceBreakdown').innerHTML = '<div class="insight-text">No source data</div>'; return; }
+    document.getElementById('sourceBreakdown').innerHTML = `<ul class="flag-list">
+      ${sources.map(s=>`<li><span>${s.source}</span><span>${s.scamRate}% scam · ${s.count} checks</span></li>`).join('')}
     </ul>`;
-    document.getElementById('sourceBreakdown').innerHTML = html;
   }
 
   function renderDailyVolume(data) {
-    const queries = data.queries || {};
-    let daily = queries.dailyVolume || [];
+    const daily = (data.queries||{}).dailyVolume||[];
     if (Array.isArray(daily) && daily.length) {
-      const maxVol = Math.max(...daily.map(d => d.count || 0));
-      const html = `<div style="margin-top:8px; overflow-x:auto">
-        <div style="display:flex; gap:4px; min-width:600px">
-          ${daily.slice(-21).map(d => `
-            <div style="flex:1; text-align:center">
-              <div style="height:80px; display:flex; flex-direction:column-reverse; align-items:center">
-                <div style="width:100%; background:var(--red-pale); border-radius:4px; height:${(d.count / maxVol) * 70}px; min-height:2px"></div>
-              </div>
-              <div style="font-size:9px; color:var(--muted); margin-top:4px">${d.date?.slice(5) || ''}</div>
-              <div style="font-size:10px; font-weight:600">${d.count || 0}</div>
-            </div>
-          `).join('')}
-        </div>
-      </div>`;
-      document.getElementById('dailyVolumeChart').innerHTML = html;
-    } else if (typeof daily === 'object' && daily !== null) {
-      const days = Object.keys(daily).slice(-21);
-      const maxVol = Math.max(...days.map(d => daily[d]?.total || daily[d]?.count || 0));
-      const html = `<div style="margin-top:8px; overflow-x:auto">
-        <div style="display:flex; gap:4px; min-width:600px">
-          ${days.map(date => {
-            const val = daily[date]?.total || daily[date]?.count || 0;
-            return `<div style="flex:1; text-align:center">
-              <div style="height:80px; display:flex; flex-direction:column-reverse; align-items:center">
-                <div style="width:100%; background:var(--red-pale); border-radius:4px; height:${(val / maxVol) * 70}px; min-height:2px"></div>
-              </div>
-              <div style="font-size:9px; color:var(--muted); margin-top:4px">${date.slice(5)}</div>
-              <div style="font-size:10px; font-weight:600">${val}</div>
-            </div>`;
-          }).join('')}
-        </div>
-      </div>`;
-      document.getElementById('dailyVolumeChart').innerHTML = html;
+      const maxVol = Math.max(...daily.map(d=>d.count||0));
+      document.getElementById('dailyVolumeChart').innerHTML = `<div style="margin-top:8px;overflow-x:auto"><div style="display:flex;gap:4px;min-width:600px">
+        ${daily.slice(-21).map(d=>`<div style="flex:1;text-align:center">
+          <div style="height:80px;display:flex;flex-direction:column-reverse;align-items:center">
+            <div style="width:100%;background:var(--red-pale);border-radius:4px;height:${(d.count/maxVol)*70}px;min-height:2px"></div>
+          </div>
+          <div style="font-size:9px;color:var(--muted);margin-top:4px">${d.date?.slice(5)||''}</div>
+          <div style="font-size:10px;font-weight:600">${d.count||0}</div>
+        </div>`).join('')}
+      </div></div>`;
     } else {
       document.getElementById('dailyVolumeChart').innerHTML = '<div class="insight-text">No daily volume data</div>';
     }
   }
 
   function renderInsightNote(data) {
-    const isDemo = data.isDemo || false;
-    const note = isDemo 
-      ? '<i class="ti ti-info-circle"></i> Demo mode — showing synthetic data based on typical scam patterns. Real data will appear after job analyses are performed.'
-      : `<i class="ti ti-chart-line"></i> Live analytics based on ${data.recordCount || 0} real job analyses. ML model updates automatically as new data arrives.`;
-    document.getElementById('insightNote').innerHTML = note;
+    const isDemo = data.isDemo||false;
+    document.getElementById('insightNote').innerHTML = isDemo
+      ? '<i class="ti ti-info-circle" aria-hidden="true"></i> Demo mode — showing synthetic data based on typical scam patterns. Real data will appear after job analyses are performed.'
+      : `<i class="ti ti-chart-line" aria-hidden="true"></i> Live analytics based on ${data.recordCount||0} real job analyses. XGBoost model updates automatically as new data arrives.`;
   }
 
   async function loadDashboard() {
     const loading = document.getElementById('loadingState');
     const content = document.getElementById('dashboardContent');
     const errorDiv = document.getElementById('errorMsg');
-    
     loading.style.display = 'flex';
     content.style.display = 'none';
     errorDiv.style.display = 'none';
-
     try {
       const data = await fetchAnalytics();
-      
-      renderKPIs(data);
-      renderModelMetrics(data);
-      renderSegmentInsights(data);
-      renderABTest(data);
-      renderCausal(data);
-      renderCohorts(data);
-      renderTopFlags(data);
-      renderScoreHistogram(data);
-      renderSourceBreakdown(data);
-      renderDailyVolume(data);
-      renderInsightNote(data);
-      
+      renderKPIs(data); renderModelMetrics(data); renderSegmentInsights(data);
+      renderABTest(data); renderCausal(data); renderCohorts(data);
+      renderTopFlags(data); renderScoreHistogram(data); renderSourceBreakdown(data);
+      renderDailyVolume(data); renderInsightNote(data);
       loading.style.display = 'none';
       content.style.display = 'block';
     } catch (err) {
@@ -606,25 +502,6 @@
       document.getElementById('errorText').innerText = `Failed to load analytics: ${err.message}. Make sure the server is running.`;
     }
   }
-
-  // NAV TOGGLE (now handled by loader.js, but keeping as fallback)
-  document.addEventListener('DOMContentLoaded', () => {
-    const navToggle = document.getElementById('navToggle');
-    const navDropdown = document.getElementById('navDropdown');
-    if (navToggle && navDropdown) {
-      navToggle.addEventListener('click', () => {
-        const isOpen = navDropdown.classList.contains('open');
-        navDropdown.classList.toggle('open', !isOpen);
-        navToggle.setAttribute('aria-expanded', String(!isOpen));
-      });
-      document.addEventListener('click', e => {
-        if (!navToggle.contains(e.target) && !navDropdown.contains(e.target)) {
-          navDropdown.classList.remove('open');
-          navToggle.setAttribute('aria-expanded', 'false');
-        }
-      });
-    }
-  });
 
   loadDashboard();
   setInterval(() => { if (document.visibilityState === 'visible') loadDashboard(); }, 120000);

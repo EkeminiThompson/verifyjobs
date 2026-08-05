@@ -17,78 +17,42 @@
 
 'use strict';
 
-const http = require('http');
+const axios = require('axios');
 
 // ── CONFIG ────────────────────────────────────────────────────────────────────
 
-const ML_SERVER = {
-  host:    process.env.ML_HOST    || 'localhost',
-  port:    parseInt(process.env.ML_PORT || '8001'),
-  timeout: parseInt(process.env.ML_TIMEOUT || '5000'),  // 5s max wait
-};
+const ML_SERVER_URL =
+  process.env.ML_SERVER_URL ||
+  'http://localhost:8001';
+
+const ML_TIMEOUT =
+  parseInt(process.env.ML_TIMEOUT || '5000');
 
 // Cached server availability (avoid hammering a dead server)
 let _serverAvailable = null;      // null = unknown, true/false = checked
 let _lastHealthCheck = 0;
 const HEALTH_CHECK_INTERVAL = 30_000;  // re-check every 30 seconds
 
-// ── HTTP HELPER ───────────────────────────────────────────────────────────────
+// ── HTTP HELPERS ──────────────────────────────────────────────────────────────
 
-function httpPost(path, body) {
-  return new Promise((resolve, reject) => {
-    const payload = JSON.stringify(body);
-    const options = {
-      hostname: ML_SERVER.host,
-      port:     ML_SERVER.port,
-      path,
-      method:  'POST',
-      headers: {
-        'Content-Type':   'application/json',
-        'Content-Length': Buffer.byteLength(payload),
-      },
-      timeout: ML_SERVER.timeout,
-    };
-
-    const req = http.request(options, (res) => {
-      const chunks = [];
-      res.on('data', chunk => chunks.push(chunk));
-      res.on('end', () => {
-        try {
-          resolve(JSON.parse(Buffer.concat(chunks).toString()));
-        } catch (e) {
-          reject(new Error('Invalid JSON from ML server'));
-        }
-      });
-    });
-
-    req.on('timeout', () => { req.destroy(); reject(new Error('ML server timeout')); });
-    req.on('error',   (e) => reject(e));
-    req.write(payload);
-    req.end();
-  });
+async function httpPost(path, body) {
+  const response = await axios.post(
+    `${ML_SERVER_URL}${path}`,
+    body,
+    {
+      timeout: ML_TIMEOUT,
+      headers: { 'Content-Type': 'application/json' },
+    }
+  );
+  return response.data;
 }
 
-function httpGet(path) {
-  return new Promise((resolve, reject) => {
-    const options = {
-      hostname: ML_SERVER.host,
-      port:     ML_SERVER.port,
-      path,
-      method:   'GET',
-      timeout:  2000,
-    };
-    const req = http.request(options, (res) => {
-      const chunks = [];
-      res.on('data', chunk => chunks.push(chunk));
-      res.on('end', () => {
-        try { resolve(JSON.parse(Buffer.concat(chunks).toString())); }
-        catch (e) { reject(e); }
-      });
-    });
-    req.on('timeout', () => { req.destroy(); reject(new Error('timeout')); });
-    req.on('error', reject);
-    req.end();
-  });
+async function httpGet(path) {
+  const response = await axios.get(
+    `${ML_SERVER_URL}${path}`,
+    { timeout: 2000 }
+  );
+  return response.data;
 }
 
 // ── SERVER HEALTH CHECK ───────────────────────────────────────────────────────
@@ -121,9 +85,9 @@ async function checkServerHealth() {
 
 const HARD_FLOOR_RULES = [
   {
-    name:      'upfront_fee',
-    pattern:   /pay\s+(registration|fee|upfront|deposit|training|equipment)|registration\s+fee|activation\s+fee/i,
-    minScore:  68,
+    name:     'upfront_fee',
+    pattern:  /pay\s+(registration|fee|upfront|deposit|training|equipment)|registration\s+fee|activation\s+fee/i,
+    minScore: 68,
   },
   {
     name:     'crypto_payment',
@@ -346,25 +310,25 @@ async function enrichWithML(text, ruleResult) {
     ...ruleResult,
 
     // Override the top-level score fields with blended values
-    riskScore:      finalScore,
+    riskScore:       finalScore,
     legitimacyScore: Math.max(0, 100 - finalScore),
-    status:         scoreToStatus(finalScore),
-    statusLabel:    scoreToLabel(finalScore),
+    status:          scoreToStatus(finalScore),
+    statusLabel:     scoreToLabel(finalScore),
 
     // ML enrichment block (available to frontend if needed)
     ml: {
-      available:      mlData.mlAvailable,
-      score:          mlData.mlScore,
-      probability:    mlData.mlProb,
-      confidence:     mlData.mlConfidence,
-      prediction:     mlData.prediction,
-      useBert:        mlData.useBert,
-      blendMethod:    mlData.method,
-      blendWeights:   mlData.blendWeights,
+      available:       mlData.mlAvailable,
+      score:           mlData.mlScore,
+      probability:     mlData.mlProb,
+      confidence:      mlData.mlConfidence,
+      prediction:      mlData.prediction,
+      useBert:         mlData.useBert,
+      blendMethod:     mlData.method,
+      blendWeights:    mlData.blendWeights,
       floorsTriggered: mlData.floorsTriggered,
-      signalsFired:   mlData.signalsFired,
-      latencyMs:      mlData.latencyMs,
-      ruleScore:      ruleResult.riskScore,
+      signalsFired:    mlData.signalsFired,
+      latencyMs:       mlData.latencyMs,
+      ruleScore:       ruleResult.riskScore,
       finalScore,
     },
   };
