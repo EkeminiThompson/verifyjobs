@@ -1,10 +1,5 @@
-# VerifyJobs ML — Python Dependencies
+# VerifyJobs ML — XGBoost Only
 # Install: pip install -r requirements.txt --break-system-packages
-#
-# Or with conda:
-#   conda create -n verifyjobs python=3.11
-#   conda activate verifyjobs
-#   pip install -r requirements.txt
 
 # Core ML
 numpy>=1.24.0
@@ -13,25 +8,10 @@ scikit-learn>=1.4.0
 xgboost>=2.0.0
 scipy>=1.11.0
 
-# Transformer (BERT) — only needed for train_bert.py and serve.py BERT path
-# Comment out if running XGBoost-only on Codespaces
-torch>=2.1.0
-transformers>=4.40.0
-
 # Data storage
-pyarrow>=14.0.0      # parquet read/write
+pyarrow>=14.0.0
 
 # Inference server
 fastapi>=0.110.0
 uvicorn[standard]>=0.27.0
 pydantic>=2.5.0
-
-# Hyperparameter tuning (optional — only needed with --tune flag)
-optuna>=3.5.0
-
-# Calibration / isotonic regression is in scikit-learn (no extra install)
-
-# Dev / notebook
-jupyter>=1.0.0       # optional, for exploration
-matplotlib>=3.7.0    # optional, for plots
-seaborn>=0.13.0      # optional, for confusion matrix plots
