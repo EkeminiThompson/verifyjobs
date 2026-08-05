@@ -63,7 +63,7 @@ async function checkServerHealth() {
     return _serverAvailable;
   }
   try {
-    await httpGet('/health');
+    await httpGet('/ml-health');
     if (!_serverAvailable) {
       console.log('[ML] ✅ ML inference server connected');
     }
@@ -279,10 +279,13 @@ async function getMLScore(text, ruleScore) {
  *   const result     = await enrichWithML(text, ruleResult);
  *   res.json(result);
  */
+/**
+ * Enrich the full analyzeJob() result with ML scoring.
+ * Drop-in wrapper around the rule engine output.
+ */
 async function enrichWithML(text, ruleResult) {
   const mlData = await getMLScore(text, ruleResult.riskScore);
 
-  // Map final score back to status string (same thresholds as scorer.js)
   function scoreToStatus(s) {
     if (s >= 80) return 'definite_scam';
     if (s >= 65) return 'very_high_risk';
@@ -303,7 +306,52 @@ async function enrichWithML(text, ruleResult) {
     return '✅ LIKELY LEGITIMATE';
   }
 
+  // Generate consistent explanation + recommendation based on final score
+  function getConsistentText(score, originalExplanation, originalRecommendation, redFlags = []) {
+    if (score < 50) {
+      return {
+        explanation: originalExplanation,
+        recommendation: originalRecommendation,
+      };
+    }
+
+    const flagCount = redFlags.length;
+    const hasFlags = flagCount > 0;
+
+    let explanation = '';
+    let recommendation = '';
+
+    if (score >= 80) {
+      explanation = hasFlags
+        ? `This posting shows multiple clear scam patterns (${flagCount} red flags detected). The combination of signals is strongly associated with employment fraud. Do not send any money, documents, or personal information.`
+        : `This posting contains strong indicators of employment fraud. The overall risk level is very high. Do not proceed or share any personal details.`;
+
+      recommendation = '⚠ DEFINITE HIGH RISK — Treat this as a scam. Do not apply, pay anything, or send documents. Verify the company independently only if you have a strong reason to believe it is genuine.';
+    } else if (score >= 65) {
+      explanation = hasFlags
+        ? `Several serious warning signs were found (${flagCount} red flags). While not 100% conclusive, the pattern is commonly seen in fake job offers. Exercise extreme caution.`
+        : `Multiple concerning signals were detected. This posting carries a high risk of being fraudulent. Proceed only after thorough independent verification.`;
+
+      recommendation = '⚠ VERY HIGH RISK — Do not send money or sensitive documents. Contact the company through their official website (not links in the posting) before taking any further steps.';
+    } else {
+      // 50–64
+      explanation = hasFlags
+        ? `Some concerning elements were detected (${flagCount} red flags). The posting is not clearly a scam, but the risk is elevated enough to warrant careful checking.`
+        : `A few risk indicators are present. The posting may still be legitimate, but extra verification is strongly recommended before applying.`;
+
+      recommendation = '⚠ CAUTION ADVISED — Verify the company on its official website and LinkedIn, and never pay for training, equipment, or background checks upfront.';
+    }
+
+    return { explanation, recommendation };
+  }
+
   const finalScore = mlData.finalScore;
+  const consistent = getConsistentText(
+    finalScore,
+    ruleResult.explanation,
+    ruleResult.recommendation,
+    ruleResult.redFlags || []
+  );
 
   return {
     // Original rule result (fully preserved)
@@ -315,7 +363,11 @@ async function enrichWithML(text, ruleResult) {
     status:          scoreToStatus(finalScore),
     statusLabel:     scoreToLabel(finalScore),
 
-    // ML enrichment block (available to frontend if needed)
+    // Force consistent wording
+    explanation:     consistent.explanation,
+    recommendation:  consistent.recommendation,
+
+    // ML enrichment block
     ml: {
       available:       mlData.mlAvailable,
       score:           mlData.mlScore,
