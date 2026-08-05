@@ -1,194 +1,85 @@
 {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "WebApplication",
-        "@id": "https://verifyjobs.org/#webapp",
-        "name": "VerifyJobs Job Scam Detector",
-        "alternateName": ["VerifyJobs", "VerifyJobs.org", "Job Scam Checker", "Verify Jobs"],
-        "url": "https://verifyjobs.org",
-        "description": "Free instant job scam detection tool. Paste a job description, upload a PDF or Word file, or enter a URL to receive a risk score (0–100), legitimacy score, red flags, positive signals, and safety recommendations. Checks 50+ fraud indicators including advance-fee fraud, WhatsApp scams, fake remote jobs, and cryptocurrency recruitment scams.",
-        "applicationCategory": "SecurityApplication",
-        "applicationSubCategory": "FraudDetection",
-        "operatingSystem": "All modern web browsers",
-        "browserRequirements": "Requires JavaScript. Compatible with Chrome, Firefox, Safari, Edge.",
-        "inLanguage": ["en-US", "en-GB", "en-NG"],
-        "isAccessibleForFree": true,
-        "isFamilyFriendly": true,
-        "offers": {
-          "@type": "Offer",
-          "price": "0",
-          "priceCurrency": "USD",
-          "availability": "https://schema.org/InStock",
-          "description": "Completely free to use, no account required, no personal data stored",
-          "priceValidUntil": "2030-12-31",
-          "eligibleRegion": {
-            "@type": "Place",
-            "address": {
-              "@type": "PostalAddress",
-              "addressCountry": "Worldwide"
-            }
-          }
-        },
-        "aggregateRating": {
-          "@type": "AggregateRating",
-          "ratingValue": "4.8",
-          "ratingCount": "312",
-          "reviewCount": "312",
-          "bestRating": "5",
-          "worstRating": "1",
-          "itemReviewed": {
-            "@type": "WebApplication",
-            "name": "VerifyJobs Job Scam Detector"
-          }
-        },
-        "softwareVersion": "2.0",
-        "datePublished": "2024-01-01",
-        "dateModified": "2026-05-11",
-        "featureList": [
-          "Paste job description text for instant analysis (10-50,000 characters)",
-          "Upload PDF or Word documents up to 10MB",
-          "Analyze job posting URLs with canonical extraction",
-          "Risk score from 0 to 100 with color-coded severity",
-          "Legitimacy score from 0 to 100",
-          "50+ scam indicator checks including 10 primary categories",
-          "WhatsApp job scam detection with pattern matching",
-          "Cryptocurrency recruitment scam detection",
-          "Advance-fee fraud detection",
-          "Identity theft request detection (BVN, NIN, SSN)",
-          "No account or sign-up required",
-          "No personal data stored or retained",
-          "Real-time analytics dashboard",
-          "A/B testing infrastructure",
-          "Causal inference (Difference-in-Differences)",
-          "Time-series forecasting ensemble"
-        ],
-        "screenshot": "https://verifyjobs.org/og-image.png",
-        "creator": {
-          "@id": "https://verifyjobs.org/#organization"
-        },
-        "author": {
-          "@id": "https://verifyjobs.org/#creator"
-        },
-        "copyrightHolder": {
-          "@id": "https://verifyjobs.org/#organization"
-        },
-        "copyrightYear": "2026",
-        "audience": {
-          "@type": "Audience",
-          "audienceType": "Job seekers, remote workers, freelancers, employees, recruitment professionals",
-          "geographicArea": {
-            "@type": "Place",
-            "address": {
-              "@type": "PostalAddress",
-              "addressCountry": "Worldwide"
-            }
-          }
-        },
-        "potentialAction": [
-          {
-            "@type": "UseAction",
-            "target": "https://verifyjobs.org/#main-tool",
-            "name": "Analyze a job posting for scams"
-          },
-          {
-            "@type": "SearchAction",
-            "target": {
-              "@type": "EntryPoint",
-              "urlTemplate": "https://verifyjobs.org/?q={search_term_string}"
-            },
-            "query-input": "required name=search_term_string"
-          }
-        ]
-      },
-      {
-        "@type": "Organization",
-        "@id": "https://verifyjobs.org/#organization",
-        "name": "VerifyJobs",
-        "legalName": "VerifyJobs.org",
-        "url": "https://verifyjobs.org",
-        "logo": {
-          "@type": "ImageObject",
-          "url": "https://verifyjobs.org/logo.png",
-          "width": 512,
-          "height": 512,
-          "caption": "VerifyJobs - Free Job Scam Detector Logo"
-        },
-        "image": "https://verifyjobs.org/og-image.png",
-        "description": "VerifyJobs.org is an independent, free tool that detects job scams and employment fraud. It is not affiliated with any government agency. The tool was created to protect job seekers in emerging economies from advance-fee fraud, WhatsApp recruitment scams, and other employment fraud schemes.",
-        "foundingDate": "2024",
-        "foundingLocation": {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "@id": "https://verifyjobs.org/#webapp",
+      "name": "VerifyJobs Job Scam Detector",
+      "alternateName": ["VerifyJobs", "VerifyJobs.org", "Job Scam Checker", "Verify Jobs"],
+      "url": "https://verifyjobs.org",
+      "description": "Free instant job scam detection tool. Paste a job description, upload a PDF or Word file, or enter a URL to receive a risk score (0–100), legitimacy score, red flags, positive signals, and safety recommendations. Checks 50+ fraud indicators including advance-fee fraud, WhatsApp scams, fake remote jobs, and cryptocurrency recruitment scams.",
+      "applicationCategory": "SecurityApplication",
+      "applicationSubCategory": "FraudDetection",
+      "operatingSystem": "All modern web browsers",
+      "browserRequirements": "Requires JavaScript. Compatible with Chrome, Firefox, Safari, Edge.",
+      "inLanguage": ["en-US", "en-GB", "en-NG"],
+      "isAccessibleForFree": true,
+      "isFamilyFriendly": true,
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock",
+        "description": "Completely free to use, no account required, no personal data stored",
+        "priceValidUntil": "2030-12-31",
+        "eligibleRegion": {
           "@type": "Place",
           "address": {
             "@type": "PostalAddress",
-            "addressCountry": "Nigeria"
+            "addressCountry": "Worldwide"
           }
-        },
-        "areaServed": "Worldwide",
-        "knowsAbout": [
-          "Job scam detection",
-          "Employment fraud identification",
-          "Fake job posting analysis",
-          "WhatsApp job scam patterns",
-          "Advance-fee fraud detection",
-          "Cryptocurrency recruitment scams",
-          "Remote work fraud detection",
-          "Identity theft prevention",
-          "Task-based scam detection",
-          "Pyramid scheme identification"
-        ],
-        "sameAs": [
-          "https://twitter.com/verifyjobs",
-          "https://github.com/verifyjobs"
-        ],
-        "contactPoint": {
-          "@type": "ContactPoint",
-          "contactType": "customer support",
-          "url": "https://verifyjobs.org/report-a-scam.html",
-          "availableLanguage": ["English", "Nigerian English"],
-          "contactOption": "https://verifyjobs.org/report-a-scam.html",
-          "email": "support@verifyjobs.org"
-        },
-        "founder": {
-          "@id": "https://verifyjobs.org/#creator"
-        },
-        "award": "Best Open Source Fraud Detection Tool 2025",
-        "duns": "",
-        "brand": {
-          "@type": "Brand",
-          "name": "VerifyJobs",
-          "logo": "https://verifyjobs.org/logo.png"
         }
       },
-      {
-        "@type": "Person",
-        "@id": "https://verifyjobs.org/#creator",
-        "name": "Ekemini Thompson",
-        "jobTitle": "Data Scientist & ML Engineer",
-        "alumniOf": "",
-        "knowsAbout": ["Machine Learning", "Data Science", "Fraud Detection", "Natural Language Processing", "Time Series Forecasting", "A/B Testing", "Causal Inference"],
-        "url": "https://github.com/ekemini-thompson",
-        "image": "",
-        "sameAs": [
-          "https://github.com/ekemini-thompson",
-          "https://linkedin.com/in/ekemini-thompson"
-        ]
+      "softwareVersion": "2.0",
+      "datePublished": "2024-01-01",
+      "dateModified": "2026-08-05",
+      "featureList": [
+        "Paste job description text for instant analysis (10-50,000 characters)",
+        "Upload PDF or Word documents up to 10MB",
+        "Analyze job posting URLs with canonical extraction",
+        "Risk score from 0 to 100 with color-coded severity",
+        "Legitimacy score from 0 to 100",
+        "50+ scam indicator checks including 10 primary categories",
+        "WhatsApp job scam detection with pattern matching",
+        "Cryptocurrency recruitment scam detection",
+        "Advance-fee fraud detection",
+        "Identity theft request detection (BVN, NIN, SSN)",
+        "No account or sign-up required",
+        "No personal data stored or retained",
+        "Real-time analytics dashboard",
+        "A/B testing infrastructure",
+        "Causal inference (Difference-in-Differences)",
+        "Time-series forecasting ensemble"
+      ],
+      "screenshot": "https://verifyjobs.org/og-report-scam.jpg",
+      "creator": {
+        "@id": "https://verifyjobs.org/#organization"
       },
-      {
-        "@type": "WebSite",
-        "@id": "https://verifyjobs.org/#website",
-        "name": "VerifyJobs.org",
-        "url": "https://verifyjobs.org",
-        "description": "Free job scam detector — verify any job offer instantly. Protect yourself from employment fraud, WhatsApp scams, and advance-fee fraud.",
-        "inLanguage": "en",
-        "publisher": {
-          "@id": "https://verifyjobs.org/#organization"
+      "author": {
+        "@id": "https://verifyjobs.org/#creator"
+      },
+      "copyrightHolder": {
+        "@id": "https://verifyjobs.org/#organization"
+      },
+      "copyrightYear": "2026",
+      "audience": {
+        "@type": "Audience",
+        "audienceType": "Job seekers, remote workers, freelancers, employees, recruitment professionals",
+        "geographicArea": {
+          "@type": "Place",
+          "address": {
+            "@type": "PostalAddress",
+            "addressCountry": "Worldwide"
+          }
+        }
+      },
+      "potentialAction": [
+        {
+          "@type": "UseAction",
+          "target": "https://verifyjobs.org/#main-tool",
+          "name": "Analyze a job posting for scams"
         },
-        "copyrightYear": "2026",
-        "copyrightHolder": {
-          "@id": "https://verifyjobs.org/#organization"
-        },
-        "potentialAction": {
+        {
           "@type": "SearchAction",
           "target": {
             "@type": "EntryPoint",
@@ -196,250 +87,356 @@
           },
           "query-input": "required name=search_term_string"
         }
+      ]
+    },
+    {
+      "@type": "Organization",
+      "@id": "https://verifyjobs.org/#organization",
+      "name": "VerifyJobs",
+      "legalName": "VerifyJobs.org",
+      "url": "https://verifyjobs.org",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://verifyjobs.org/logo.jpg",
+        "width": 512,
+        "height": 512,
+        "caption": "VerifyJobs - Free Job Scam Detector Logo"
       },
-      {
-        "@type": "FAQPage",
-        "@id": "https://verifyjobs.org/#faq",
-        "name": "Job Scam Detection Frequently Asked Questions",
-        "description": "Comprehensive answers to common questions about job scams, how to detect them, and how VerifyJobs works.",
-        "mainEntity": [
-          {
-            "@type": "Question",
-            "name": "How do I know if a job offer is a scam?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Key warning signs include: being asked to pay before you start (advance-fee fraud), a salary that sounds too high for the effort required, contact only through WhatsApp or a personal email address like Gmail or Yahoo, no verifiable company website, and being offered the job without a proper interview. Use VerifyJobs — paste the posting and get an instant risk score from 0 to 100."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Is VerifyJobs completely free?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Yes — VerifyJobs is 100% free, always. No account, email address, or credit card is required. Just paste a job description, upload a PDF or Word file, or enter a URL and get your result instantly. No personal data is stored."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "What does the job scam risk score mean?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "The risk score runs from 0 to 100. A score of 70 or above means the posting has multiple serious scam indicators — avoid it. 45–69 is suspicious and warrants careful independent research before proceeding. Below 45 suggests lower risk, though always verify any job opportunity independently before accepting an offer or sharing personal data."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Can I check a WhatsApp job message for scams?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Yes. Copy the full WhatsApp message text, paste it into the 'Paste Text' tab on VerifyJobs.org, and set the Source field to 'WhatsApp'. The detection engine specifically identifies patterns common in WhatsApp job scams, including upfront payment requests, unrealistic salaries, and free email addresses."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "What should I do if a job posting is flagged as a scam?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Do not send any money or share bank details, BVN, NIN, or passport information. Cut off contact immediately. Report to your country's agency: EFCC or NITDA in Nigeria, the FTC in the USA, or Action Fraud in the UK. Screenshot all evidence before blocking the sender."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "What types of job scams does VerifyJobs detect?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "VerifyJobs detects: advance-fee fraud (paying for training or equipment), WhatsApp-only recruitment scams, reshipping scams, check-cashing schemes, pyramid schemes disguised as employment, data entry scams with upfront fees, cryptocurrency investment recruitment, fake remote assistant positions, and any job that uses free email domains, urgency language, or requests for sensitive personal documents before a formal interview."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "What file types does VerifyJobs support for upload?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "VerifyJobs supports PDF files (.pdf) and Microsoft Word documents (.doc and .docx) up to 10 MB. You can also paste job description text directly or submit a URL for analysis."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "How accurate is the VerifyJobs job scam detector?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "VerifyJobs uses a rule-based detection engine that checks over 50 scam indicators. In production testing with 98 real analyses, the system achieved AUC-ROC of 0.819, precision of 0.80, and recall of 1.00. It is highly accurate at identifying common fraud patterns. It should be used as one tool in your decision-making process alongside your own research."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Can VerifyJobs detect cryptocurrency job scams?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Yes. VerifyJobs specifically detects crypto-related scam indicators including wallet addresses, investment requirements, cryptocurrency payment mentions, and MLM-style recruitment language commonly used in crypto job scams."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Does VerifyJobs store my data or job descriptions?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "The tool does not store personal data. Analyses are stored anonymously for analytics purposes only (risk scores, flag counts, etc.). No job descriptions, personal identifiers, or uploaded files are retained. You can use the tool completely anonymously."
-            }
-          }
-        ]
-      },
-      {
-        "@type": "HowTo",
-        "@id": "https://verifyjobs.org/#howto",
-        "name": "How to Check If a Job Is a Scam Using VerifyJobs",
-        "description": "Follow these simple steps to instantly detect whether a job posting is fraudulent using VerifyJobs. Get a risk score, red flags, and safety advice in seconds — free, no sign-up required.",
-        "totalTime": "PT30S",
-        "estimatedCost": {
-          "@type": "MonetaryAmount",
-          "currency": "USD",
-          "value": "0"
-        },
-        "tool": {
-          "@type": "HowToTool",
-          "name": "VerifyJobs.org job scam detector web application",
-          "url": "https://verifyjobs.org"
-        },
-        "step": [
-          {
-            "@type": "HowToStep",
-            "position": 1,
-            "name": "Open VerifyJobs.org",
-            "text": "Go to https://verifyjobs.org in any modern web browser. No account creation or email sign-up is required.",
-            "url": "https://verifyjobs.org/"
-          },
-          {
-            "@type": "HowToStep",
-            "position": 2,
-            "name": "Choose your input method",
-            "text": "Select one of three input methods: 'Paste Text' to copy-paste the job description, 'Upload File' to submit a PDF or Word document, or 'Check URL' to analyze a job posting link directly.",
-            "url": "https://verifyjobs.org/#main-tool"
-          },
-          {
-            "@type": "HowToStep",
-            "position": 3,
-            "name": "Submit for analysis",
-            "text": "Click the 'Analyze Job Posting' button. VerifyJobs scans the content against over 50 scam indicators and returns results in seconds.",
-            "url": "https://verifyjobs.org/#main-tool"
-          },
-          {
-            "@type": "HowToStep",
-            "position": 4,
-            "name": "Review your results",
-            "text": "Read your risk score (0–100), legitimacy score (0–100), list of detected red flags, positive signals, and the plain-English explanation and recommendation.",
-            "url": "https://verifyjobs.org/#main-tool"
-          },
-          {
-            "@type": "HowToStep",
-            "position": 5,
-            "name": "Take appropriate action",
-            "text": "If the job is flagged as a scam, do not send any money or personal documents. Report the scam to the appropriate authorities (EFCC in Nigeria, FTC in USA, Action Fraud in UK).",
-            "url": "https://verifyjobs.org/report-a-scam.html"
-          }
-        ]
-      },
-      {
-        "@type": "BreadcrumbList",
-        "@id": "https://verifyjobs.org/#breadcrumb",
-        "itemListElement": [
-          {
-            "@type": "ListItem",
-            "position": 1,
-            "name": "Home",
-            "item": "https://verifyjobs.org/"
-          },
-          {
-            "@type": "ListItem",
-            "position": 2,
-            "name": "Job Scam Detection Tool",
-            "item": "https://verifyjobs.org/#main-tool"
-          },
-          {
-            "@type": "ListItem",
-            "position": 3,
-            "name": "Analytics Dashboard",
-            "item": "https://verifyjobs.org/analytics.html"
-          }
-        ]
-      },
-      {
-        "@type": "ItemList",
-        "@id": "https://verifyjobs.org/#sitelinks",
-        "name": "VerifyJobs Main Pages",
-        "description": "Important pages on VerifyJobs.org for quick navigation",
-        "itemListElement": [
-          {
-            "@type": "SiteLinksSearchBox",
-            "target": {
-              "@type": "EntryPoint",
-              "urlTemplate": "https://verifyjobs.org/?q={search_term_string}"
-            }
-          },
-          {
-            "@type": "ListItem",
-            "position": 1,
-            "name": "Job Scam Detector — Home",
-            "url": "https://verifyjobs.org/",
-            "description": "Free instant job scam detection tool"
-          },
-          {
-            "@type": "ListItem",
-            "position": 2,
-            "name": "About VerifyJobs",
-            "url": "https://verifyjobs.org/about.html",
-            "description": "About the VerifyJobs scam detection tool"
-          },
-          {
-            "@type": "ListItem",
-            "position": 3,
-            "name": "How It Works",
-            "url": "https://verifyjobs.org/how-it-works.html",
-            "description": "Technical explanation of how VerifyJobs detects job scams"
-          },
-          {
-            "@type": "ListItem",
-            "position": 4,
-            "name": "Report a Scam",
-            "url": "https://verifyjobs.org/report-a-scam.html",
-            "description": "Report a fraudulent job posting to authorities"
-          },
-          {
-            "@type": "ListItem",
-            "position": 5,
-            "name": "ML Analytics Dashboard",
-            "url": "https://verifyjobs.org/analytics.html",
-            "description": "Real-time analytics and model performance metrics"
-          }
-        ]
-      },
-      {
-        "@type": "TechArticle",
-        "@id": "https://verifyjobs.org/#article",
-        "name": "VerifyJobs: Technical Architecture and ML Framework",
-        "headline": "A Hybrid Machine Learning Framework for Real-Time Job Scam Detection in Emerging Economies",
-        "description": "Technical deep dive into VerifyJobs' detection engine, logistic regression implementation, A/B testing infrastructure, causal inference, and time-series forecasting.",
-        "author": {
-          "@id": "https://verifyjobs.org/#creator"
-        },
-        "publisher": {
-          "@id": "https://verifyjobs.org/#organization"
-        },
-        "datePublished": "2026-05-11",
-        "dateModified": "2026-05-11",
-        "articleBody": "VerifyJobs implements a hybrid detection system combining rule-based pattern matching (50+ scam indicators) with logistic regression classification. Feature extraction transforms unstructured job text into 15-dimensional vectors including: normalized risk score, red flag count, positive signal count, free email detection, URL presence, salary mention, word count, and context penalty. The logistic regression model achieves AUC-ROC 0.819, precision 0.80, and recall 1.00 on production data. The system includes A/B testing infrastructure (two-proportion z-tests with power analysis), causal inference via Difference-in-Differences, and time-series forecasting ensembles.",
-        "articleSection": "Machine Learning, Fraud Detection, Natural Language Processing"
-      },
-      {
-        "@type": "SoftwareSourceCode",
-        "@id": "https://verifyjobs.org/#sourcecode",
-        "name": "VerifyJobs Source Code",
-        "description": "Open source implementation of VerifyJobs job scam detection system",
-        "codeRepository": "https://github.com/verifyjobs/verifyjobs-ml",
-        "programmingLanguage": ["JavaScript", "Python"],
-        "targetProduct": {
-          "@id": "https://verifyjobs.org/#webapp"
+      "image": "https://verifyjobs.org/og-report-scam.jpg",
+      "description": "VerifyJobs.org is an independent, free tool that detects job scams and employment fraud. It is not affiliated with any government agency. The tool was created to protect job seekers in emerging economies from advance-fee fraud, WhatsApp recruitment scams, and other employment fraud schemes.",
+      "foundingDate": "2024",
+      "foundingLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressCountry": "Nigeria"
         }
+      },
+      "areaServed": "Worldwide",
+      "knowsAbout": [
+        "Job scam detection",
+        "Employment fraud identification",
+        "Fake job posting analysis",
+        "WhatsApp job scam patterns",
+        "Advance-fee fraud detection",
+        "Cryptocurrency recruitment scams",
+        "Remote work fraud detection",
+        "Identity theft prevention",
+        "Task-based scam detection",
+        "Pyramid scheme identification"
+      ],
+      "sameAs": [
+        "https://twitter.com/verifyjobs",
+        "https://github.com/verifyjobs"
+      ],
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "customer support",
+        "url": "https://verifyjobs.org/report-a-scam.html",
+        "availableLanguage": ["English", "Nigerian English"],
+        "email": "support@verifyjobs.org"
+      },
+      "founder": {
+        "@id": "https://verifyjobs.org/#creator"
+      },
+      "brand": {
+        "@type": "Brand",
+        "name": "VerifyJobs",
+        "logo": "https://verifyjobs.org/logo.jpg"
       }
-    ]
-  }
+    },
+    {
+      "@type": "Person",
+      "@id": "https://verifyjobs.org/#creator",
+      "name": "Ekemini Thompson",
+      "jobTitle": "Data Scientist & ML Engineer",
+      "knowsAbout": [
+        "Machine Learning",
+        "Data Science",
+        "Fraud Detection",
+        "Natural Language Processing",
+        "Time Series Forecasting",
+        "A/B Testing",
+        "Causal Inference"
+      ],
+      "url": "https://github.com/ekemini-thompson",
+      "sameAs": [
+        "https://github.com/ekemini-thompson",
+        "https://linkedin.com/in/ekemini-thompson"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://verifyjobs.org/#website",
+      "name": "VerifyJobs.org",
+      "url": "https://verifyjobs.org",
+      "description": "Free job scam detector — verify any job offer instantly. Protect yourself from employment fraud, WhatsApp scams, and advance-fee fraud.",
+      "inLanguage": "en",
+      "publisher": {
+        "@id": "https://verifyjobs.org/#organization"
+      },
+      "copyrightYear": "2026",
+      "copyrightHolder": {
+        "@id": "https://verifyjobs.org/#organization"
+      },
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": "https://verifyjobs.org/?q={search_term_string}"
+        },
+        "query-input": "required name=search_term_string"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://verifyjobs.org/#faq",
+      "name": "Job Scam Detection Frequently Asked Questions",
+      "description": "Comprehensive answers to common questions about job scams, how to detect them, and how VerifyJobs works.",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How do I know if a job offer is a scam?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Key warning signs include: being asked to pay before you start (advance-fee fraud), a salary that sounds too high for the effort required, contact only through WhatsApp or a personal email address like Gmail or Yahoo, no verifiable company website, and being offered the job without a proper interview. Use VerifyJobs — paste the posting and get an instant risk score from 0 to 100."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is VerifyJobs completely free?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes — VerifyJobs is 100% free, always. No account, email address, or credit card is required. Just paste a job description, upload a PDF or Word file, or enter a URL and get your result instantly. No personal data is stored."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What does the job scam risk score mean?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The risk score runs from 0 to 100. A score of 70 or above means the posting has multiple serious scam indicators — avoid it. 45–69 is suspicious and warrants careful independent research before proceeding. Below 45 suggests lower risk, though always verify any job opportunity independently before accepting an offer or sharing personal data."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I check a WhatsApp job message for scams?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Copy the full WhatsApp message text, paste it into the Paste Text tab on VerifyJobs.org, and set the Source field to WhatsApp. The detection engine specifically identifies patterns common in WhatsApp job scams, including upfront payment requests, unrealistic salaries, and free email addresses."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What should I do if a job posting is flagged as a scam?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Do not send any money or share bank details, BVN, NIN, or passport information. Cut off contact immediately. Report to your country's agency: EFCC or NITDA in Nigeria, the FTC in the USA, or Action Fraud in the UK. Screenshot all evidence before blocking the sender."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What types of job scams does VerifyJobs detect?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "VerifyJobs detects: advance-fee fraud (paying for training or equipment), WhatsApp-only recruitment scams, reshipping scams, check-cashing schemes, pyramid schemes disguised as employment, data entry scams with upfront fees, cryptocurrency investment recruitment, fake remote assistant positions, and any job that uses free email domains, urgency language, or requests for sensitive personal documents before a formal interview."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What file types does VerifyJobs support for upload?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "VerifyJobs supports PDF files (.pdf) and Microsoft Word documents (.doc and .docx) up to 10 MB. You can also paste job description text directly or submit a URL for analysis."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How accurate is the VerifyJobs job scam detector?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "VerifyJobs uses a rule-based detection engine that checks over 50 scam indicators. The ML component achieves AUC-ROC of 0.819, precision of 0.80, and recall of 1.00 on production data. It should be used as one tool in your decision-making process alongside your own research."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can VerifyJobs detect cryptocurrency job scams?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. VerifyJobs specifically detects crypto-related scam indicators including wallet addresses, investment requirements, cryptocurrency payment mentions, and MLM-style recruitment language commonly used in crypto job scams."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does VerifyJobs store my data or job descriptions?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The tool does not store personal data. Analyses are stored anonymously for analytics purposes only (risk scores, flag counts, etc.). No job descriptions, personal identifiers, or uploaded files are retained. You can use the tool completely anonymously."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "HowTo",
+      "@id": "https://verifyjobs.org/#howto",
+      "name": "How to Check If a Job Is a Scam Using VerifyJobs",
+      "description": "Follow these simple steps to instantly detect whether a job posting is fraudulent using VerifyJobs. Get a risk score, red flags, and safety advice in seconds — free, no sign-up required.",
+      "totalTime": "PT30S",
+      "estimatedCost": {
+        "@type": "MonetaryAmount",
+        "currency": "USD",
+        "value": "0"
+      },
+      "tool": {
+        "@type": "HowToTool",
+        "name": "VerifyJobs.org job scam detector",
+        "url": "https://verifyjobs.org"
+      },
+      "step": [
+        {
+          "@type": "HowToStep",
+          "position": 1,
+          "name": "Open VerifyJobs.org",
+          "text": "Go to https://verifyjobs.org in any modern web browser. No account creation or email sign-up is required.",
+          "url": "https://verifyjobs.org/"
+        },
+        {
+          "@type": "HowToStep",
+          "position": 2,
+          "name": "Choose your input method",
+          "text": "Select one of three input methods: Paste Text to copy-paste the job description, Upload File to submit a PDF or Word document, or Check URL to analyze a job posting link directly.",
+          "url": "https://verifyjobs.org/#main-tool"
+        },
+        {
+          "@type": "HowToStep",
+          "position": 3,
+          "name": "Submit for analysis",
+          "text": "Click the Analyze Job Posting button. VerifyJobs scans the content against over 50 scam indicators and returns results in seconds.",
+          "url": "https://verifyjobs.org/#main-tool"
+        },
+        {
+          "@type": "HowToStep",
+          "position": 4,
+          "name": "Review your results",
+          "text": "Read your risk score (0–100), legitimacy score (0–100), list of detected red flags, positive signals, and the plain-English explanation and recommendation.",
+          "url": "https://verifyjobs.org/#main-tool"
+        },
+        {
+          "@type": "HowToStep",
+          "position": 5,
+          "name": "Take appropriate action",
+          "text": "If the job is flagged as a scam, do not send any money or personal documents. Report the scam to the appropriate authorities: EFCC in Nigeria, FTC in USA, Action Fraud in UK.",
+          "url": "https://verifyjobs.org/report-a-scam.html"
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://verifyjobs.org/#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://verifyjobs.org/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Job Scam Detection Tool",
+          "item": "https://verifyjobs.org/#main-tool"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Analytics Dashboard",
+          "item": "https://verifyjobs.org/analytics.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "name": "Blog",
+          "item": "https://verifyjobs.org/blog/"
+        }
+      ]
+    },
+    {
+      "@type": "ItemList",
+      "@id": "https://verifyjobs.org/#sitelinks",
+      "name": "VerifyJobs Main Pages",
+      "description": "Important pages on VerifyJobs.org for quick navigation",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Job Scam Detector — Home",
+          "url": "https://verifyjobs.org/",
+          "description": "Free instant job scam detection tool"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "About VerifyJobs",
+          "url": "https://verifyjobs.org/about.html",
+          "description": "About the VerifyJobs scam detection tool"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "How It Works",
+          "url": "https://verifyjobs.org/how-it-works.html",
+          "description": "Technical explanation of how VerifyJobs detects job scams"
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "name": "Report a Scam",
+          "url": "https://verifyjobs.org/report-a-scam.html",
+          "description": "Report a fraudulent job posting to authorities"
+        },
+        {
+          "@type": "ListItem",
+          "position": 5,
+          "name": "ML Analytics Dashboard",
+          "url": "https://verifyjobs.org/analytics.html",
+          "description": "Real-time analytics and model performance metrics"
+        },
+        {
+          "@type": "ListItem",
+          "position": 6,
+          "name": "Blog",
+          "url": "https://verifyjobs.org/blog/",
+          "description": "Guides and articles on detecting job scams and employment fraud"
+        }
+      ]
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://verifyjobs.org/#article",
+      "name": "VerifyJobs: Technical Architecture and ML Framework",
+      "headline": "A Hybrid Machine Learning Framework for Real-Time Job Scam Detection in Emerging Economies",
+      "description": "Technical deep dive into VerifyJobs detection engine, XGBoost implementation, A/B testing infrastructure, causal inference, and time-series forecasting.",
+      "author": {
+        "@id": "https://verifyjobs.org/#creator"
+      },
+      "publisher": {
+        "@id": "https://verifyjobs.org/#organization"
+      },
+      "datePublished": "2026-05-11",
+      "dateModified": "2026-08-05",
+      "articleBody": "VerifyJobs implements a hybrid detection system combining rule-based pattern matching (50+ scam indicators) with XGBoost classification. Feature extraction transforms unstructured job text into vectors including normalized risk score, red flag count, positive signal count, free email detection, URL presence, salary mention, word count, and context penalty. The XGBoost model achieves AUC-ROC 0.819, precision 0.80, and recall 1.00 on production data. The system includes A/B testing infrastructure (two-proportion z-tests with power analysis), causal inference via Difference-in-Differences, and time-series forecasting ensembles.",
+      "articleSection": "Machine Learning, Fraud Detection, Natural Language Processing"
+    },
+    {
+      "@type": "SoftwareSourceCode",
+      "@id": "https://verifyjobs.org/#sourcecode",
+      "name": "VerifyJobs Source Code",
+      "description": "Open source implementation of VerifyJobs job scam detection system",
+      "codeRepository": "https://github.com/verifyjobs/verifyjobs-ml",
+      "programmingLanguage": ["JavaScript", "Python"],
+      "targetProduct": {
+        "@id": "https://verifyjobs.org/#webapp"
+      }
+    }
+  ]
+}

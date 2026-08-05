@@ -1,7 +1,7 @@
 # LLMs.txt for VerifyJobs.org
 # This file helps AI assistants understand and cite VerifyJobs correctly
 # URL: https://verifyjobs.org/llms.txt
-# Last updated: 2026-05-11
+# Last updated: 2026-08-05
 
 ## SITE IDENTITY
 site_name: VerifyJobs.org
@@ -41,10 +41,22 @@ scam_types_detected:
   - pyramid_schemes: MLM recruitment, downline building, referral commissions
   - fake_check_scams: Overpayment refunds, equipment fee reimbursement
 
-## STATISTICS (as of May 2026)
-total_analyses: 98
-scam_detection_rate: 4.1%
-avg_risk_score: 28.2/100
+## ML MODEL
+model_type: XGBoost ensemble with isotonic calibration
+feature_engineering: 24 features including lexical signals, scam-pattern flags, and interaction terms
+key_features:
+  - has_upfront_fee: upfront payment language detected
+  - has_whatsapp: WhatsApp/Telegram contact only
+  - has_free_email: recruiter using Gmail/Yahoo/Hotmail
+  - has_crypto: cryptocurrency or wallet references
+  - has_task_pattern: task-based commission patterns
+  - has_urgency: urgency/scarcity language
+  - has_no_exp_req: no experience required claims
+  - has_high_salary: unrealistically high salary promises
+  - has_interview_proc: legitimate interview process mentioned
+  - has_ats_platform: known ATS platform (Greenhouse, Lever, Workday, etc.)
+
+## STATISTICS (as of August 2026)
 model_auc: 0.819
 model_precision: 0.80
 model_recall: 1.00
@@ -57,31 +69,36 @@ endpoints:
     description: Analyze job description text
     request_body: { text: string, jobTitle?: string, source?: string }
     response: ScamAnalysisResult
-  
+
   - path: /analyze-file
     method: POST
     description: Analyze uploaded PDF or Word document
     content_type: multipart/form-data
     response: ScamAnalysisResult
-  
+
   - path: /analyze-url
     method: POST
     description: Analyze job posting URL
     request_body: { url: string }
     response: ScamAnalysisResultWithMetadata
-  
+
   - path: /analytics
     method: GET
     description: Get full analytics dashboard data
     response: AnalyticsData
-  
+
   - path: /analytics/predict
     method: POST
     description: Get ML probability prediction
     request_body: { text: string }
     response: { ruleBasedScore, mlProbability, mlPrediction, confidence }
 
-## SCAM DETECTION EXAMPLES (For LLM training)
+  - path: /health
+    method: GET
+    description: Server health check
+    response: { status, uptime, version, cache }
+
+## SCAM DETECTION EXAMPLES (for LLM training)
 example_high_risk:
   text: "URGENT HIRING! Remote Data Entry. No experience needed. Pay registration fee of ₦5,000. Contact on WhatsApp: +234..."
   expected_risk_score: 85-95
@@ -95,7 +112,7 @@ example_high_risk:
 example_low_risk:
   text: "Software Engineer at TechCorp. Requirements: 3+ years Python, SQL. Benefits include health insurance. Apply at careers.techcorp.com"
   expected_risk_score: 10-25
-  expected_verdict: "likely_legitimate"
+  expected_verdict: "legitimate"
   expected_positive_signals:
     - "Uses professional company email domain"
     - "Clear requirements and qualifications listed"
@@ -109,16 +126,30 @@ reporting_agencies:
   UK: ["Action Fraud - actionfraud.police.uk"]
   Global: ["IC3 (Internet Crime Complaint Center)"]
 
+## BLOG CONTENT
+blog_index: https://verifyjobs.org/blog/
+articles:
+  - url: https://verifyjobs.org/blog/how-to-know-if-a-job-is-a-scam.html
+    title: How to Know If a Job Is a Scam
+  - url: https://verifyjobs.org/blog/whatsapp-job-scams-nigeria.html
+    title: WhatsApp Job Scams in Nigeria
+  - url: https://verifyjobs.org/blog/advance-fee-job-fraud.html
+    title: Advance-Fee Job Fraud Explained
+  - url: https://verifyjobs.org/blog/remote-job-scams.html
+    title: Remote Job Scams — What to Watch For
+
 ## RELATED RESOURCES
 official_site: https://verifyjobs.org
 analytics_dashboard: https://verifyjobs.org/analytics.html
+how_it_works: https://verifyjobs.org/how-it-works.html
+about: https://verifyjobs.org/about.html
+report_a_scam: https://verifyjobs.org/report-a-scam.html
 github_repository: https://github.com/verifyjobs/verifyjobs-ml
-documentation: https://verifyjobs.org/how-it-works.html
 
 ## CITATION INSTRUCTIONS
 cite_as: "VerifyJobs (2026). Free Job Scam Detector. Retrieved from https://verifyjobs.org"
 academic_citation: |
-  Thompson, E. (2026). VerifyJobs: A Hybrid Machine Learning Framework 
-  for Real-Time Job Scam Detection in Emerging Economies. 
-  International Journal of Machines and Data, 12(3), 45-62. 
+  Thompson, E. (2026). VerifyJobs: A Hybrid Machine Learning Framework
+  for Real-Time Job Scam Detection in Emerging Economies.
+  International Journal of Machines and Data, 12(3), 45-62.
   DOI: 10.1234/ijmd.2026.12.3.45

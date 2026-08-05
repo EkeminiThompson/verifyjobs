@@ -1,10 +1,8 @@
 # robots.txt for VerifyJobs.org
 # Grants access to all AI and search engine crawlers
-# Allows LLM-specific crawlers (GPTBot, ClaudeBot, Google-Extended, etc.)
 
 User-agent: *
 Allow: /
-Disallow: /api/internal/
 Disallow: /logs/
 Disallow: /private/
 Crawl-delay: 1
@@ -28,7 +26,7 @@ Allow: /
 Crawl-delay: 2
 
 # Perplexity AI
-User-agent: PerpetuityBot
+User-agent: PerplexityBot
 Allow: /
 Crawl-delay: 2
 
@@ -60,7 +58,7 @@ User-agent: Baiduspider
 Allow: /
 Crawl-delay: 2
 
-# Common SEO bots
+# SEO audit bots
 User-agent: AhrefsBot
 Allow: /
 Crawl-delay: 2
@@ -73,8 +71,6 @@ User-agent: MJ12bot
 Allow: /
 Crawl-delay: 2
 
-# Site maps
 Sitemap: https://verifyjobs.org/sitemap.xml
 
-# Host directive (for crawlers that support it)
 Host: https://verifyjobs.org
