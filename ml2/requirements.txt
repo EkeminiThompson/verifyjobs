@@ -1,5 +1,5 @@
-# VerifyJobs ML — XGBoost Only
-# Install: pip install -r requirements.txt --break-system-packages
+# VerifyJobs ML
+# Install: pip install -r requirements.txt
 
 # Core ML
 numpy>=1.24.0
@@ -7,6 +7,10 @@ pandas>=2.0.0
 scikit-learn>=1.4.0
 xgboost>=2.0.0
 scipy>=1.11.0
+
+# Deep Learning
+torch>=2.7.0
+transformers>=4.53.0
 
 # Data storage
 pyarrow>=14.0.0
