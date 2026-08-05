@@ -31,7 +31,7 @@ const ML_TIMEOUT =
 // Cached server availability (avoid hammering a dead server)
 let _serverAvailable = null;      // null = unknown, true/false = checked
 let _lastHealthCheck = 0;
-const HEALTH_CHECK_INTERVAL = 30_000;  // re-check every 30 seconds
+const HEALTH_CHECK_INTERVAL = 60_000;  // re-check every 30 seconds
 
 // ── HTTP HELPERS ──────────────────────────────────────────────────────────────
 
@@ -63,7 +63,7 @@ async function checkServerHealth() {
     return _serverAvailable;
   }
   try {
-    await httpGet('/ml-health');
+    await httpGet('/health');
     if (!_serverAvailable) {
       console.log('[ML] ✅ ML inference server connected');
     }
