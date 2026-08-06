@@ -194,32 +194,98 @@ const KNOWN_AGGREGATORS = [
 ];
 
 const CANONICAL_SOURCES = [
-  // Existing
-  'linkedin.com', 'indeed.com', 'glassdoor.com', 'monster.com',
-  'ziprecruiter.com', 'lever.co', 'greenhouse.io', 'workday.com',
-  'bamboohr.com', 'ashbyhq.com', 'myworkdayjobs.com', 'icims.com',
-  'taleo.net', 'smartrecruiters.com', 'jobvite.com',
-  'amazon.jobs', 'careers.google.com', 'jobs.apple.com',
-  'jobs.microsoft.com', 'meta.com', 'careers.meta.com',
+  // Major job boards
+  'linkedin.com',
+  'indeed.com',
+  'glassdoor.com',
+  'monster.com',
+  'ziprecruiter.com',
+  'simplyhired.com',
+  'careerbuilder.com',
+  'dice.com',
+  'wellfound.com',          // formerly AngelList
+  'otta.com',
+  'hired.com',
+  'builtin.com',
+  'weworkremotely.com',
+  'remoteok.com',
+  'flexjobs.com',
+  'handshake.com',
 
-  // Add these (UN / major enterprise ATS)
-  'oraclecloud.com',          // covers *.fa.*.oraclecloud.com
-  'undp.org',
+  // Core ATS platforms
+  'lever.co',
+  'greenhouse.io',          // boards.greenhouse.io, job-boards.greenhouse.io
+  'workday.com',
+  'myworkdayjobs.com',      // *.wdN.myworkdayjobs.com
+  'bamboohr.com',
+  'ashbyhq.com',            // jobs.ashbyhq.com
+  'icims.com',
+  'taleo.net',              // Oracle Taleo
+  'smartrecruiters.com',
+  'jobvite.com',
+  'successfactors.com',
+  'successfactors.eu',
+  'brassring.com',          // IBM Kenexa / BrassRing
+  'ultipro.com',            // UKG
+  'phenompeople.com',
+  'applytojob.com',         // JazzHR
+  'recruitee.com',
+  'personio.com',
+  'teamtailor.com',
+  'workable.com',           // apply.workable.com
+  'oraclecloud.com',        // *.fa.*.oraclecloud.com (Oracle HCM)
+  'avature.net',
+  'eightfold.ai',
+  'pinpointhq.com',
+  'comeet.co',
+  'jazzhr.com',
+  'breezy.hr',
+  'rippling.com',
+  'adp.com',                // myjobs.adp.com
+  'jobs2web.com',           // older SuccessFactors RMK
+
+  // Big tech / major company career sites
+  'amazon.jobs',
+  'careers.google.com',
+  'jobs.apple.com',
+  'jobs.microsoft.com',
+  'meta.com',
+  'careers.meta.com',
+  'careers.microsoft.com',
+  'careers.salesforce.com',
+  'careers.adobe.com',
+  'careers.ibm.com',
+  'careers.oracle.com',
+  'jobs.oracle.com',
+  'careers.nvidia.com',
+  'careers.intel.com',
+  'careers.cisco.com',
+  'careers.tesla.com',
+  'careers.uber.com',
+  'careers.airbnb.com',
+  'careers.netflix.com',
+  'careers.spotify.com',
+  'careers.stripe.com',
+
+  // UN / international organizations
   'un.org',
+  'careers.un.org',
+  'undp.org',
   'unicef.org',
   'who.int',
   'worldbank.org',
   'imf.org',
-  'successfactors.com',
-  'successfactors.eu',
-  'brassring.com',
-  'ultipro.com',
-  'phenompeople.com',
-  'jobvite.com',
-  'applytojob.com',
-  'recruitee.com',
-  'personio.com',
-  'teamtailor.com',
+  'unhcr.org',
+  'wfp.org',
+  'ilo.org',
+  'unesco.org',
+  'unfpa.org',
+  'unops.org',
+  'fao.org',
+  'ifad.org',
+  'unwomen.org',
+  'unodc.org',
+  'ohchr.org',
 ];
 
 const BLOCKED_DOMAINS = [
@@ -1158,7 +1224,7 @@ app.post('/analyze-url', validateUrlInput, async (req, res) => {
       extractedLength: ctx.combinedText.length,
       note:            buildNote(ctx),
     };
-    
+
     if (config.cacheEnabled) {
       const cacheKey = getCacheKey('url', rawUrl);
       analysisCache.set(cacheKey, final);
