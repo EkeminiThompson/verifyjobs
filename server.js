@@ -18,8 +18,6 @@ const winston = require('winston');
 
 const analyzeJob = require('./engine/analyzer');
 const { ensureStorage, getAllAnalyses } = require('./engine/storage');
-
-// ── CHANGE 1: ML enrichment layer ─────────────────────────────
 const { enrichWithML, checkServerHealth } = require('./engine/ml_scorer');
 
 // ─────────────────────────────────────────────
@@ -87,14 +85,13 @@ analysisCache.on('expired', (key) => {
 // ─────────────────────────────────────────────
 const app = express();
 
-// Trust proxy (required for rate limiting behind reverse proxy)
 app.set('trust proxy', 1);
 
 // ─────────────────────────────────────────────
 // SECURITY MIDDLEWARE
 // ─────────────────────────────────────────────
 app.use(helmet({
-  contentSecurityPolicy: false, // Handled in HTML
+  contentSecurityPolicy: false,
   hsts: {
     maxAge: 31536000,
     includeSubDomains: true,
@@ -182,154 +179,6 @@ const upload = multer({
     }
   },
 });
-
-// ─────────────────────────────────────────────
-// STATIC FILE SERVING
-// ─────────────────────────────────────────────
-
-// 1. SEO-CRITICAL FILES FIRST (must be before other static middleware)
-app.get('/robots.txt', (req, res) => {
-  res.type('text/plain');
-  res.sendFile(path.join(__dirname, 'robots.txt'), (err) => {
-    if (err) {
-      logger.error('robots.txt not found');
-      res.status(404).send('Not found');
-    }
-  });
-});
-
-app.get('/sitemap.xml', (req, res) => {
-  res.type('application/xml');
-  res.sendFile(path.join(__dirname, 'sitemap.xml'), (err) => {
-    if (err) {
-      logger.error('sitemap.xml not found');
-      res.status(404).send('Not found');
-    }
-  });
-});
-
-app.get('/structured-data.json', (req, res) => {
-  res.type('application/json');
-  res.sendFile(path.join(__dirname, 'structured-data.json'), (err) => {
-    if (err) {
-      logger.error('structured-data.json not found');
-      res.status(404).send('Not found');
-    }
-  });
-});
-
-app.get('/llms.txt', (req, res) => {
-  res.type('text/plain');
-  res.sendFile(path.join(__dirname, 'llms.txt'), (err) => {
-    if (err) {
-      logger.error('llms.txt not found');
-      res.status(404).send('Not found');
-    }
-  });
-});
-
-// Google Search Console verification file
-app.get('/google6c2364060583a1e1.html', (req, res) => {
-  res.type('text/html');
-  res.sendFile(path.join(__dirname, 'google6c2364060583a1e1.html'), (err) => {
-    if (err) {
-      logger.error('Google verification file not found');
-      res.status(404).send('Not found');
-    }
-  });
-});
-
-// 2. Root assets (favicon, og-image, logo, etc.) - NOT recursive
-app.use(express.static(__dirname, {
-  index: false,
-  maxAge: config.nodeEnv === 'production' ? '7d' : 0,
-  dotfiles: 'ignore',
-  extensions: ['png', 'jpg', 'svg', 'ico', 'webp'],
-}));
-
-// 3. Public directory for HTML/CSS/JS
-app.use(express.static(path.join(__dirname, 'public'), {
-  index: false,
-  maxAge: config.nodeEnv === 'production' ? '1d' : 0,
-}));
-
-// 4. .well-known directory (RFC 8615)
-app.use('/.well-known', express.static(path.join(__dirname, '.well-known'), {
-  maxAge: '7d',
-}));
-
-// 5. Health check endpoint
-app.get('/health', (req, res) => {
-  res.json({
-    status: 'ok',
-    timestamp: new Date().toISOString(),
-    uptime: process.uptime(),
-    version: '2.0',
-    cache: {
-      enabled: config.cacheEnabled,
-      keys: analysisCache.keys().length,
-      stats: analysisCache.getStats(),
-    },
-  });
-});
-
-// 6. Homepage - explicitly serve index.html
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'), (err) => {
-    if (err) {
-      logger.error('index.html not found');
-      res.status(500).send('Server error');
-    }
-  });
-});
-
-// ─────────────────────────────────────────────
-// 7. HTML PAGES - Blog & Page Handler
-// ─────────────────────────────────────────────
-app.get(/^\/[^.]*\.html?$|^\/[a-zA-Z0-9\-_\/]+$/, (req, res) => {
-  let fileName = req.path;
-  const fs = require('fs');
-  
-  // Remove trailing slash
-  if (fileName.endsWith('/') && fileName.length > 1) {
-    fileName = fileName.slice(0, -1);
-  }
-  
-  // Add .html if no extension
-  if (!path.extname(fileName)) {
-    fileName += '.html';
-  }
-  
-  // Build full path
-  const cleanPath = fileName.startsWith('/') ? fileName.slice(1) : fileName;
-  const fullPath = path.join(__dirname, 'public', cleanPath);
-  
-  // Check if file exists
-  if (fs.existsSync(fullPath)) {
-    res.sendFile(fullPath);
-  } else {
-    // Try /blog/index.html for /blog
-    if (!path.extname(req.path)) {
-      const indexPath = path.join(__dirname, 'public', req.path, 'index.html');
-      if (fs.existsSync(indexPath)) {
-        return res.sendFile(indexPath);
-      }
-    }
-    // Fallback to root index.html
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
-  }
-});
-
-// ─────────────────────────────────────────────
-// PDF PARSER
-// ─────────────────────────────────────────────
-let pdfParse;
-try {
-  pdfParse = require('pdf-parse');
-  logger.info('✅ pdf-parse loaded');
-} catch (e) {
-  logger.error('❌ pdf-parse unavailable', { error: e.message });
-}
 
 // ─────────────────────────────────────────────
 // DOMAIN LISTS
@@ -868,226 +717,7 @@ function validateUrlInput(req, res, next) {
 }
 
 // ─────────────────────────────────────────────
-// API — TEXT (CHANGE 3: async + enrichWithML)
-// ─────────────────────────────────────────────
-app.post('/analyze', validateTextInput, async (req, res) => {
-  const startTime = Date.now();
-  try {
-    const { text, jobTitle, source } = req.validatedInput;
-
-    if (config.cacheEnabled) {
-      const cacheKey = getCacheKey('text', { text, jobTitle, source });
-      const cached = analysisCache.get(cacheKey);
-      if (cached) {
-        logger.info('Cache hit for text analysis', { jobTitle, duration: Date.now() - startTime });
-        return res.json({ ...cached, cached: true, cachedAt: new Date().toISOString() });
-      }
-    }
-
-    const ruleResult = analyzeJob(text, jobTitle, source);
-    const result     = await enrichWithML(text, ruleResult);
-
-    if (config.cacheEnabled) {
-      const cacheKey = getCacheKey('text', { text, jobTitle, source });
-      analysisCache.set(cacheKey, result);
-    }
-
-    logger.info('Text analysis completed', {
-      jobTitle,
-      status: result.status,
-      riskScore: result.riskScore,
-      mlAvailable: result.ml?.available,
-      blendMethod: result.ml?.blendMethod,
-      duration: Date.now() - startTime,
-    });
-
-    res.json(result);
-  } catch (err) {
-    logger.error('Text analysis error', { error: err.message, stack: err.stack });
-    res.status(500).json({
-      error: 'Analysis failed',
-      message: config.nodeEnv === 'development' ? err.message : 'Internal server error',
-    });
-  }
-});
-
-// ─────────────────────────────────────────────
-// API — FILE (CHANGE 4: async + enrichWithML)
-// ─────────────────────────────────────────────
-app.post('/analyze-file', upload.single('file'), async (req, res) => {
-  const startTime = Date.now();
-  try {
-    if (!req.file) {
-      return res.status(400).json({ error: 'No file uploaded' });
-    }
-
-    const file = req.file;
-    const jobTitle = req.body.jobTitle?.trim() || file.originalname;
-    const ext = path.extname(file.originalname).toLowerCase();
-    let text = '';
-
-    logger.info('File upload received', {
-      filename: file.originalname,
-      size: file.size,
-      mimetype: file.mimetype,
-    });
-
-    if (ext === '.pdf') {
-      if (!pdfParse) {
-        throw new Error('PDF parser not available on this server');
-      }
-      const pdfData = await pdfParse(file.buffer);
-      text = pdfData.text || '';
-    } else if (ext === '.docx' || ext === '.doc') {
-      const mammoth = require('mammoth');
-      const extracted = await mammoth.extractRawText({ buffer: file.buffer });
-      text = extracted.value || '';
-    } else {
-      return res.status(400).json({ error: 'Unsupported file type' });
-    }
-
-    text = text.trim();
-
-    if (!text || text.length < 30) {
-      logger.warn('Insufficient text extracted from file', {
-        filename: file.originalname,
-        extractedLength: text.length,
-      });
-      return res.status(400).json({
-        error: 'Could not extract enough text from the file',
-        message: 'Please ensure the file contains readable text, or paste the content manually.',
-        extractedLength: text.length,
-      });
-    }
-
-    if (config.cacheEnabled) {
-      const cacheKey = getCacheKey('file', { text, jobTitle });
-      const cached = analysisCache.get(cacheKey);
-      if (cached) {
-        logger.info('Cache hit for file analysis', { filename: file.originalname });
-        return res.json({ ...cached, filename: file.originalname, extractedLength: text.length, cached: true });
-      }
-    }
-
-    const ruleResult = analyzeJob(text, jobTitle, 'File Upload');
-    const result     = await enrichWithML(text, ruleResult);
-
-    if (config.cacheEnabled) {
-      const cacheKey = getCacheKey('file', { text, jobTitle });
-      analysisCache.set(cacheKey, result);
-    }
-
-    logger.info('File analysis completed', {
-      filename: file.originalname,
-      status: result.status,
-      riskScore: result.riskScore,
-      mlAvailable: result.ml?.available,
-      extractedLength: text.length,
-      duration: Date.now() - startTime,
-    });
-
-    res.json({ ...result, filename: file.originalname, extractedLength: text.length });
-  } catch (err) {
-    logger.error('File analysis error', {
-      error: err.message,
-      stack: err.stack,
-      filename: req.file?.originalname,
-    });
-    res.status(500).json({
-      error: 'File processing failed',
-      message: config.nodeEnv === 'development' ? err.message : 'Could not process the file',
-    });
-  }
-});
-
-// ─────────────────────────────────────────────
-// API — URL (CHANGE 5: enrichWithML added)
-// ─────────────────────────────────────────────
-app.post('/analyze-url', validateUrlInput, async (req, res) => {
-  const startTime = Date.now();
-  const rawUrl = req.validatedUrl;
-
-  try {
-    const isSafe = await isSafeUrl(rawUrl);
-    if (!isSafe) {
-      logger.warn('Unsafe URL blocked', { url: rawUrl, ip: req.ip });
-      return res.status(400).json({
-        error: 'Invalid or disallowed URL',
-        message: 'The URL appears to be a private IP address or blocked domain.',
-      });
-    }
-
-    if (config.cacheEnabled) {
-      const cacheKey = getCacheKey('url', rawUrl);
-      const cached = analysisCache.get(cacheKey);
-      if (cached) {
-        logger.info('Cache hit for URL analysis', { url: rawUrl, duration: Date.now() - startTime });
-        return res.json({ ...cached, cached: true, cachedAt: new Date().toISOString() });
-      }
-    }
-
-    const ctx        = await scrapeAndAnalyze(rawUrl);
-    const ruleResult = analyzeJob(ctx.combinedText, ctx.pageTitle, 'URL');
-    const result     = await enrichWithML(ctx.combinedText, ruleResult);
-
-    const final = {
-      ...result,
-      submittedUrl:    ctx.submittedUrl,
-      canonicalUrl:    ctx.canonicalUrl,
-      resolvedFrom:    ctx.resolvedFrom,
-      fetchedPages:    ctx.fetchedPages,
-      isAggregator:    ctx.isAggregator,
-      pageTitle:       ctx.pageTitle,
-      fetchSuccess:    !ctx.fetchError,
-      fetchError:      ctx.fetchError || null,
-      canonicalError:  ctx.canonicalError || null,
-      extractedLength: ctx.combinedText.length,
-      note:            buildNote(ctx),
-    };
-
-    if (config.cacheEnabled) {
-      const cacheKey = getCacheKey('url', rawUrl);
-      analysisCache.set(cacheKey, final);
-    }
-
-    logger.info('URL analysis completed', {
-      url: rawUrl,
-      canonicalUrl: ctx.canonicalUrl,
-      status: final.status,
-      riskScore: final.riskScore,
-      mlAvailable: final.ml?.available,
-      blendMethod: final.ml?.blendMethod,
-      duration: Date.now() - startTime,
-    });
-
-    res.json(final);
-  } catch (err) {
-    logger.error('URL analysis error', { url: rawUrl, error: err.message, stack: err.stack });
-    res.status(500).json({
-      error: 'URL analysis failed',
-      message: config.nodeEnv === 'development' ? err.message : 'Could not analyze the URL',
-    });
-  }
-});
-
-// ─────────────────────────────────────────────
-// API — HISTORY
-// ─────────────────────────────────────────────
-app.get('/analyses', generalLimiter, (req, res) => {
-  try {
-    const limit = parseInt(req.query.limit) || 50;
-    const sanitizedLimit = Math.min(Math.max(limit, 1), 100);
-    const analyses = getAllAnalyses(sanitizedLimit);
-    logger.info('Analyses history retrieved', { count: analyses.length });
-    res.json(analyses);
-  } catch (err) {
-    logger.error('Failed to retrieve analyses', { error: err.message });
-    res.status(500).json({ error: 'Failed to retrieve analyses' });
-  }
-});
-
-// ─────────────────────────────────────────────
-// API — ANALYTICS DASHBOARD
+// ANALYTICS MODULE
 // ─────────────────────────────────────────────
 const {
   getFullAnalytics,
@@ -1102,6 +732,81 @@ const {
   loadAnalyses,
 } = require('./engine/analytics');
 
+// ─────────────────────────────────────────────
+// SEO-CRITICAL STATIC FILES
+// Must be first — before all other routes
+// ─────────────────────────────────────────────
+app.get('/robots.txt', (req, res) => {
+  res.type('text/plain');
+  res.sendFile(path.join(__dirname, 'robots.txt'), (err) => {
+    if (err) { logger.error('robots.txt not found'); res.status(404).send('Not found'); }
+  });
+});
+
+app.get('/sitemap.xml', (req, res) => {
+  res.type('application/xml');
+  res.sendFile(path.join(__dirname, 'sitemap.xml'), (err) => {
+    if (err) { logger.error('sitemap.xml not found'); res.status(404).send('Not found'); }
+  });
+});
+
+app.get('/structured-data.json', (req, res) => {
+  res.type('application/json');
+  res.sendFile(path.join(__dirname, 'structured-data.json'), (err) => {
+    if (err) { logger.error('structured-data.json not found'); res.status(404).send('Not found'); }
+  });
+});
+
+app.get('/llms.txt', (req, res) => {
+  res.type('text/plain');
+  res.sendFile(path.join(__dirname, 'llms.txt'), (err) => {
+    if (err) { logger.error('llms.txt not found'); res.status(404).send('Not found'); }
+  });
+});
+
+app.get('/google6c2364060583a1e1.html', (req, res) => {
+  res.type('text/html');
+  res.sendFile(path.join(__dirname, 'google6c2364060583a1e1.html'), (err) => {
+    if (err) { logger.error('Google verification file not found'); res.status(404).send('Not found'); }
+  });
+});
+
+// ─────────────────────────────────────────────
+// API ROUTES
+// ALL API routes must be registered BEFORE express.static
+// to prevent analytics.html from shadowing GET /analytics
+// ─────────────────────────────────────────────
+
+// Health check
+app.get('/health', (req, res) => {
+  res.json({
+    status: 'ok',
+    timestamp: new Date().toISOString(),
+    uptime: process.uptime(),
+    version: '2.0',
+    cache: {
+      enabled: config.cacheEnabled,
+      keys: analysisCache.keys().length,
+      stats: analysisCache.getStats(),
+    },
+  });
+});
+
+// Analyses history
+app.get('/analyses', generalLimiter, (req, res) => {
+  try {
+    const limit = parseInt(req.query.limit) || 50;
+    const sanitizedLimit = Math.min(Math.max(limit, 1), 100);
+    const analyses = getAllAnalyses(sanitizedLimit);
+    logger.info('Analyses history retrieved', { count: analyses.length });
+    res.json(analyses);
+  } catch (err) {
+    logger.error('Failed to retrieve analyses', { error: err.message });
+    res.status(500).json({ error: 'Failed to retrieve analyses' });
+  }
+});
+
+// Analytics dashboard — must be before express.static or analytics.html wins
 app.get('/analytics', generalLimiter, (req, res) => {
   const startTime = Date.now();
   try {
@@ -1227,6 +932,281 @@ app.get('/analytics/segments', generalLimiter, (req, res) => {
   }
 });
 
+// Analyze — text
+app.post('/analyze', validateTextInput, async (req, res) => {
+  const startTime = Date.now();
+  try {
+    const { text, jobTitle, source } = req.validatedInput;
+
+    if (config.cacheEnabled) {
+      const cacheKey = getCacheKey('text', { text, jobTitle, source });
+      const cached = analysisCache.get(cacheKey);
+      if (cached) {
+        logger.info('Cache hit for text analysis', { jobTitle, duration: Date.now() - startTime });
+        return res.json({ ...cached, cached: true, cachedAt: new Date().toISOString() });
+      }
+    }
+
+    const ruleResult = analyzeJob(text, jobTitle, source);
+    const result     = await enrichWithML(text, ruleResult);
+
+    if (config.cacheEnabled) {
+      const cacheKey = getCacheKey('text', { text, jobTitle, source });
+      analysisCache.set(cacheKey, result);
+    }
+
+    logger.info('Text analysis completed', {
+      jobTitle,
+      status: result.status,
+      riskScore: result.riskScore,
+      mlAvailable: result.ml?.available,
+      blendMethod: result.ml?.blendMethod,
+      duration: Date.now() - startTime,
+    });
+
+    res.json(result);
+  } catch (err) {
+    logger.error('Text analysis error', { error: err.message, stack: err.stack });
+    res.status(500).json({
+      error: 'Analysis failed',
+      message: config.nodeEnv === 'development' ? err.message : 'Internal server error',
+    });
+  }
+});
+
+// Analyze — file
+app.post('/analyze-file', upload.single('file'), async (req, res) => {
+  const startTime = Date.now();
+  try {
+    if (!req.file) {
+      return res.status(400).json({ error: 'No file uploaded' });
+    }
+
+    const file = req.file;
+    const jobTitle = req.body.jobTitle?.trim() || file.originalname;
+    const ext = path.extname(file.originalname).toLowerCase();
+    let text = '';
+
+    logger.info('File upload received', {
+      filename: file.originalname,
+      size: file.size,
+      mimetype: file.mimetype,
+    });
+
+    if (ext === '.pdf') {
+      if (!pdfParse) {
+        throw new Error('PDF parser not available on this server');
+      }
+      const pdfData = await pdfParse(file.buffer);
+      text = pdfData.text || '';
+    } else if (ext === '.docx' || ext === '.doc') {
+      const mammoth = require('mammoth');
+      const extracted = await mammoth.extractRawText({ buffer: file.buffer });
+      text = extracted.value || '';
+    } else {
+      return res.status(400).json({ error: 'Unsupported file type' });
+    }
+
+    text = text.trim();
+
+    if (!text || text.length < 30) {
+      logger.warn('Insufficient text extracted from file', {
+        filename: file.originalname,
+        extractedLength: text.length,
+      });
+      return res.status(400).json({
+        error: 'Could not extract enough text from the file',
+        message: 'Please ensure the file contains readable text, or paste the content manually.',
+        extractedLength: text.length,
+      });
+    }
+
+    if (config.cacheEnabled) {
+      const cacheKey = getCacheKey('file', { text, jobTitle });
+      const cached = analysisCache.get(cacheKey);
+      if (cached) {
+        logger.info('Cache hit for file analysis', { filename: file.originalname });
+        return res.json({ ...cached, filename: file.originalname, extractedLength: text.length, cached: true });
+      }
+    }
+
+    const ruleResult = analyzeJob(text, jobTitle, 'File Upload');
+    const result     = await enrichWithML(text, ruleResult);
+
+    if (config.cacheEnabled) {
+      const cacheKey = getCacheKey('file', { text, jobTitle });
+      analysisCache.set(cacheKey, result);
+    }
+
+    logger.info('File analysis completed', {
+      filename: file.originalname,
+      status: result.status,
+      riskScore: result.riskScore,
+      mlAvailable: result.ml?.available,
+      extractedLength: text.length,
+      duration: Date.now() - startTime,
+    });
+
+    res.json({ ...result, filename: file.originalname, extractedLength: text.length });
+  } catch (err) {
+    logger.error('File analysis error', {
+      error: err.message,
+      stack: err.stack,
+      filename: req.file?.originalname,
+    });
+    res.status(500).json({
+      error: 'File processing failed',
+      message: config.nodeEnv === 'development' ? err.message : 'Could not process the file',
+    });
+  }
+});
+
+// Analyze — URL
+app.post('/analyze-url', validateUrlInput, async (req, res) => {
+  const startTime = Date.now();
+  const rawUrl = req.validatedUrl;
+
+  try {
+    const isSafe = await isSafeUrl(rawUrl);
+    if (!isSafe) {
+      logger.warn('Unsafe URL blocked', { url: rawUrl, ip: req.ip });
+      return res.status(400).json({
+        error: 'Invalid or disallowed URL',
+        message: 'The URL appears to be a private IP address or blocked domain.',
+      });
+    }
+
+    if (config.cacheEnabled) {
+      const cacheKey = getCacheKey('url', rawUrl);
+      const cached = analysisCache.get(cacheKey);
+      if (cached) {
+        logger.info('Cache hit for URL analysis', { url: rawUrl, duration: Date.now() - startTime });
+        return res.json({ ...cached, cached: true, cachedAt: new Date().toISOString() });
+      }
+    }
+
+    const ctx        = await scrapeAndAnalyze(rawUrl);
+    const ruleResult = analyzeJob(ctx.combinedText, ctx.pageTitle, 'URL');
+    const result     = await enrichWithML(ctx.combinedText, ruleResult);
+
+    const final = {
+      ...result,
+      submittedUrl:    ctx.submittedUrl,
+      canonicalUrl:    ctx.canonicalUrl,
+      resolvedFrom:    ctx.resolvedFrom,
+      fetchedPages:    ctx.fetchedPages,
+      isAggregator:    ctx.isAggregator,
+      pageTitle:       ctx.pageTitle,
+      fetchSuccess:    !ctx.fetchError,
+      fetchError:      ctx.fetchError || null,
+      canonicalError:  ctx.canonicalError || null,
+      extractedLength: ctx.combinedText.length,
+      note:            buildNote(ctx),
+    };
+
+    if (config.cacheEnabled) {
+      const cacheKey = getCacheKey('url', rawUrl);
+      analysisCache.set(cacheKey, final);
+    }
+
+    logger.info('URL analysis completed', {
+      url: rawUrl,
+      canonicalUrl: ctx.canonicalUrl,
+      status: final.status,
+      riskScore: final.riskScore,
+      mlAvailable: final.ml?.available,
+      blendMethod: final.ml?.blendMethod,
+      duration: Date.now() - startTime,
+    });
+
+    res.json(final);
+  } catch (err) {
+    logger.error('URL analysis error', { url: rawUrl, error: err.message, stack: err.stack });
+    res.status(500).json({
+      error: 'URL analysis failed',
+      message: config.nodeEnv === 'development' ? err.message : 'Could not analyze the URL',
+    });
+  }
+});
+
+// ─────────────────────────────────────────────
+// STATIC FILE SERVING
+// After all API routes — prevents html files shadowing API paths
+// ─────────────────────────────────────────────
+
+// Root assets (favicon, og-image, logo, etc.)
+app.use(express.static(__dirname, {
+  index: false,
+  maxAge: config.nodeEnv === 'production' ? '7d' : 0,
+  dotfiles: 'ignore',
+  extensions: ['png', 'jpg', 'svg', 'ico', 'webp'],
+}));
+
+// Public directory for HTML/CSS/JS
+app.use(express.static(path.join(__dirname, 'public'), {
+  index: false,
+  maxAge: config.nodeEnv === 'production' ? '1d' : 0,
+}));
+
+// .well-known directory (RFC 8615)
+app.use('/.well-known', express.static(path.join(__dirname, '.well-known'), {
+  maxAge: '7d',
+}));
+
+// ─────────────────────────────────────────────
+// HOMEPAGE
+// ─────────────────────────────────────────────
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'), (err) => {
+    if (err) {
+      logger.error('index.html not found');
+      res.status(500).send('Server error');
+    }
+  });
+});
+
+// ─────────────────────────────────────────────
+// HTML PAGE HANDLER — catch-all, must be last
+// ─────────────────────────────────────────────
+app.get(/^\/[^.]*\.html?$|^\/[a-zA-Z0-9\-_\/]+$/, (req, res) => {
+  let fileName = req.path;
+  const fs = require('fs');
+
+  if (fileName.endsWith('/') && fileName.length > 1) {
+    fileName = fileName.slice(0, -1);
+  }
+
+  if (!path.extname(fileName)) {
+    fileName += '.html';
+  }
+
+  const cleanPath = fileName.startsWith('/') ? fileName.slice(1) : fileName;
+  const fullPath = path.join(__dirname, 'public', cleanPath);
+
+  if (fs.existsSync(fullPath)) {
+    res.sendFile(fullPath);
+  } else {
+    if (!path.extname(req.path)) {
+      const indexPath = path.join(__dirname, 'public', req.path, 'index.html');
+      if (fs.existsSync(indexPath)) {
+        return res.sendFile(indexPath);
+      }
+    }
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+  }
+});
+
+// ─────────────────────────────────────────────
+// PDF PARSER
+// ─────────────────────────────────────────────
+let pdfParse;
+try {
+  pdfParse = require('pdf-parse');
+  logger.info('✅ pdf-parse loaded');
+} catch (e) {
+  logger.error('❌ pdf-parse unavailable', { error: e.message });
+}
+
 // ─────────────────────────────────────────────
 // ERROR HANDLING
 // ─────────────────────────────────────────────
@@ -1254,9 +1234,9 @@ app.use((err, req, res, next) => {
 });
 
 // ─────────────────────────────────────────────
-// CATCH-ALL
+// CATCH-ALL 404
 // ─────────────────────────────────────────────
-app.get('*', (req, res) => {
+app.use('*', (req, res) => {
   if (req.path.startsWith('/api/')) {
     return res.status(404).json({ error: 'API endpoint not found' });
   }
@@ -1283,7 +1263,7 @@ function gracefulShutdown(signal) {
 }
 
 // ─────────────────────────────────────────────
-// START SERVER (CHANGE 2: ML health check)
+// START SERVER
 // ─────────────────────────────────────────────
 server = app.listen(config.port, () => {
   logger.info('🚀 VerifyJobs v2.0 started', {
@@ -1299,7 +1279,6 @@ server = app.listen(config.port, () => {
   console.log(`📊 Analytics: http://localhost:${config.port}/analytics.html`);
   console.log(`🔒 Environment: ${config.nodeEnv}`);
 
-  // Warm up ML server connection (non-blocking)
   if (process.env.ENABLE_ML !== 'false') {
     checkServerHealth().then(available => {
       if (available) console.log('🤖 ML inference server: connected');
