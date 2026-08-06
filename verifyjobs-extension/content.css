@@ -1,0 +1,48 @@
+#verifyjobs-fab {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 2147483646;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 18px;
+  background: linear-gradient(135deg, #0f766e 0%, #0d9488 100%);
+  color: white;
+  border: none;
+  border-radius: 999px;
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  box-shadow: 0 4px 20px rgba(13, 148, 136, 0.45);
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+#verifyjobs-fab:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 24px rgba(13, 148, 136, 0.55);
+}
+
+#verifyjobs-fab:active {
+  transform: translateY(0);
+}
+
+#verifyjobs-fab.loading {
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+#verifyjobs-fab svg {
+  flex-shrink: 0;
+}
+
+@media (max-width: 600px) {
+  #verifyjobs-fab span {
+    display: none;
+  }
+  #verifyjobs-fab {
+    padding: 14px;
+    border-radius: 50%;
+  }
+}

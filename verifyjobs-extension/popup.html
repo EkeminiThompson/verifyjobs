@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VerifyJobs</title>
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <div class="header">
+    <div class="logo">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+        <path d="M9 12l2 2 4-4"/>
+        <circle cx="12" cy="12" r="10"/>
+      </svg>
+      <span>VerifyJobs</span>
+    </div>
+    <button id="settingsBtn" title="Settings" aria-label="Settings">⚙</button>
+  </div>
+
+  <div id="inputSection" class="section">
+    <div class="tabs">
+      <button class="tab active" data-tab="text">Paste Text</button>
+      <button class="tab" data-tab="url">URL</button>
+      <button class="tab" data-tab="page">This Page</button>
+    </div>
+
+    <div id="textPanel" class="panel active">
+      <textarea id="jobText" placeholder="Paste the full job description or WhatsApp/Telegram message here…" rows="6"></textarea>
+      <input id="jobTitle" type="text" placeholder="Job title (optional)" />
+    </div>
+
+    <div id="urlPanel" class="panel">
+      <input id="jobUrl" type="url" placeholder="https://…" />
+    </div>
+
+    <div id="pagePanel" class="panel">
+      <p class="hint">Analyzes the current tab’s URL or visible job content.</p>
+    </div>
+
+    <button id="analyzeBtn" class="primary">Analyze Job</button>
+  </div>
+
+  <div id="loadingSection" class="section hidden">
+    <div class="spinner"></div>
+    <p>Scanning with hybrid AI + rules…</p>
+  </div>
+
+  <div id="resultSection" class="section hidden">
+    <div class="score-row">
+      <div class="score-box" id="riskBox">
+        <div class="score-label">Risk</div>
+        <div class="score-value" id="riskScore">—</div>
+      </div>
+      <div class="score-box" id="legitBox">
+        <div class="score-label">Legitimacy</div>
+        <div class="score-value" id="legitScore">—</div>
+      </div>
+    </div>
+
+    <div id="statusBadge" class="status-badge">—</div>
+    <p id="recommendation" class="recommendation"></p>
+
+    <div id="redFlags" class="flags-section hidden">
+      <h3>🚩 Red Flags</h3>
+      <ul id="redFlagsList"></ul>
+    </div>
+
+    <div id="positiveSignals" class="flags-section hidden">
+      <h3>✅ Positive Signals</h3>
+      <ul id="positiveList"></ul>
+    </div>
+
+    <div id="metaInfo" class="meta"></div>
+
+    <button id="newCheckBtn" class="secondary">Check another</button>
+  </div>
+
+  <div id="errorSection" class="section hidden">
+    <div class="error-box">
+      <strong>Error</strong>
+      <p id="errorMessage"></p>
+    </div>
+    <button id="retryBtn" class="secondary">Try again</button>
+  </div>
+
+  <footer>
+    <a href="https://verifyjobs.org" target="_blank" rel="noopener">verifyjobs.org</a>
+    · Free · No data stored
+  </footer>
+
+  <script src="popup.js"></script>
+</body>
+</html>

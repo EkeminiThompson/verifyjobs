@@ -194,12 +194,32 @@ const KNOWN_AGGREGATORS = [
 ];
 
 const CANONICAL_SOURCES = [
+  // Existing
   'linkedin.com', 'indeed.com', 'glassdoor.com', 'monster.com',
   'ziprecruiter.com', 'lever.co', 'greenhouse.io', 'workday.com',
   'bamboohr.com', 'ashbyhq.com', 'myworkdayjobs.com', 'icims.com',
   'taleo.net', 'smartrecruiters.com', 'jobvite.com',
   'amazon.jobs', 'careers.google.com', 'jobs.apple.com',
   'jobs.microsoft.com', 'meta.com', 'careers.meta.com',
+
+  // Add these (UN / major enterprise ATS)
+  'oraclecloud.com',          // covers *.fa.*.oraclecloud.com
+  'undp.org',
+  'un.org',
+  'unicef.org',
+  'who.int',
+  'worldbank.org',
+  'imf.org',
+  'successfactors.com',
+  'successfactors.eu',
+  'brassring.com',
+  'ultipro.com',
+  'phenompeople.com',
+  'jobvite.com',
+  'applytojob.com',
+  'recruitee.com',
+  'personio.com',
+  'teamtailor.com',
 ];
 
 const BLOCKED_DOMAINS = [
@@ -212,10 +232,9 @@ function isKnownAggregator(hostname) {
 }
 
 function isCanonicalSource(hostname) {
-  const h = hostname.replace(/^www\./, '');
+  const h = hostname.replace(/^www\./, '').toLowerCase();
   return CANONICAL_SOURCES.some(d => h === d || h.endsWith('.' + d));
 }
-
 // ─────────────────────────────────────────────
 // ENHANCED SAFETY CHECK WITH DNS RESOLUTION
 // ─────────────────────────────────────────────
@@ -1088,7 +1107,43 @@ app.post('/analyze-url', validateUrlInput, async (req, res) => {
     const ctx        = await scrapeAndAnalyze(rawUrl);
     const ruleResult = analyzeJob(ctx.combinedText, ctx.pageTitle, 'URL');
     const result     = await enrichWithML(ctx.combinedText, ruleResult);
-
+    
+    // ========== ADD THE BLOCK HERE ==========
+    const hostname = (() => {
+      try { return new URL(ctx.submittedUrl || rawUrl).hostname.toLowerCase(); }
+      catch { return ''; }
+    })();
+    
+    const isTrusted = isCanonicalSource(hostname);
+    
+    if (isTrusted) {
+      // Strong positive signal for official career systems
+      result.positiveIndicators = result.positiveIndicators || [];
+      result.positiveIndicators.unshift(
+        `Official career portal domain (${hostname})`
+      );
+    
+      // If the scraper got almost no text, it is almost certainly a JS-rendered ATS page
+      if ((ctx.combinedText || '').trim().split(/\s+/).length < 40) {
+        result.redFlags = (result.redFlags || []).filter(f =>
+          !/short|placeholder|very short/i.test(typeof f === 'string' ? f : f.signal || f.label || '')
+        );
+    
+        // Pull the risk score down significantly
+        result.riskScore = Math.min(result.riskScore, 25);
+        result.legitimacyScore = Math.max(result.legitimacyScore || 0, 75);
+        result.status = 'likely_legitimate';
+        result.statusLabel = '✅ Likely Legitimate (Trusted Career Portal)';
+        result.explanation = 'This job is hosted on a known official career system (Oracle Cloud / Workday / Greenhouse / etc.). Short extracted text is normal for these JavaScript-heavy portals and is not treated as a scam signal.';
+        result.recommendation = 'This appears to be a genuine posting on an official career portal. Still verify the specific vacancy and never pay any fees.';
+      } else {
+        // Even with full text, give a legitimacy boost
+        result.riskScore = Math.max(0, result.riskScore - 25);
+        result.legitimacyScore = Math.min(100, (result.legitimacyScore || 0) + 25);
+      }
+    }
+    // ========== END OF BLOCK ==========
+    
     const final = {
       ...result,
       submittedUrl:    ctx.submittedUrl,
@@ -1103,7 +1158,7 @@ app.post('/analyze-url', validateUrlInput, async (req, res) => {
       extractedLength: ctx.combinedText.length,
       note:            buildNote(ctx),
     };
-
+    
     if (config.cacheEnabled) {
       const cacheKey = getCacheKey('url', rawUrl);
       analysisCache.set(cacheKey, final);
