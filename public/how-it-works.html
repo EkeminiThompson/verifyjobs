@@ -1,395 +1,313 @@
 <!DOCTYPE html>
-<html lang="en" prefix="og: https://ogp.me/ns#">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <meta http-equiv="X-Content-Type-Options" content="nosniff">
-  <meta http-equiv="X-Frame-Options" content="DENY">
-  <meta name="referrer" content="strict-origin-when-cross-origin">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-Content-Type-Options" content="nosniff">
+<meta http-equiv="X-Frame-Options" content="DENY">
+<title>How VerifyJobs Works — Job Scam Detection Explained</title>
+<meta name="description" content="Learn exactly how VerifyJobs detects job scams — our hybrid rule engine + ML model, risk score calculation, 50+ indicators checked, and what each verdict means.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://verifyjobs.org/how-it-works.html">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://verifyjobs.org/how-it-works.html">
+<meta property="og:title" content="How VerifyJobs Works — Job Scam Detection Explained">
+<meta property="og:image" content="https://verifyjobs.org/og-image.png">
+<meta property="og:site_name" content="VerifyJobs.org">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@verifyjobs">
+<meta name="twitter:image" content="https://verifyjobs.org/og-image.png">
+<meta name="theme-color" content="#ffffff">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Google+Sans+Display:wght@400;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --black:#202124; --grey1:#3c4043; --grey2:#5f6368; --grey3:#9aa0a6;
+  --grey4:#dadce0; --grey5:#f1f3f4; --grey6:#f8f9fa; --white:#ffffff;
+  --red:#d93025; --blue:#1a73e8; --green:#188038; --amber:#e37400;
+  --sans:'Google Sans','Product Sans',-apple-system,'Helvetica Neue',Arial,sans-serif;
+  --display:'Google Sans Display','Google Sans',-apple-system,'Helvetica Neue',Arial,sans-serif;
+  --body:'Roboto',-apple-system,'Helvetica Neue',Arial,sans-serif;
+}
+html { background: var(--white); }
+body { font-family: var(--body); color: var(--black); background: var(--white); -webkit-font-smoothing: antialiased; }
+.nav { position: sticky; top: 0; z-index: 100; background: var(--white); border-bottom: 1px solid var(--grey4); height: 64px; display: flex; align-items: center; padding: 0 24px; }
+.nav-inner { width: 100%; max-width: 1280px; margin: 0 auto; display: flex; align-items: center; }
+.wordmark { font-family: var(--sans); font-size: 22px; font-weight: 400; color: var(--black); text-decoration: none; letter-spacing: -0.3px; margin-right: 32px; }
+.wordmark b { font-weight: 700; }
+.nav-links { display: flex; align-items: center; gap: 4px; flex: 1; }
+.nav-links a { font-family: var(--sans); font-size: 14px; font-weight: 500; color: var(--grey2); text-decoration: none; padding: 8px 12px; border-radius: 24px; transition: background 0.15s, color 0.15s; }
+.nav-links a:hover { background: var(--grey5); color: var(--black); }
+.nav-links a.active { color: var(--blue); background: #e8f0fe; }
+.nav-right { margin-left: auto; }
+.nav-chip { font-family: var(--sans); font-size: 12px; font-weight: 500; color: var(--grey2); background: var(--grey5); border: 1px solid var(--grey4); border-radius: 20px; padding: 5px 12px; }
+.nav-chip span { color: var(--green); font-weight: 600; }
 
-  <title>How VerifyJobs Works – Job Scam Detection Explained</title>
-  <meta name="description" content="Learn exactly how VerifyJobs detects job scams — our rule engine, risk score calculation, 50+ indicators checked, and what each verdict means for your safety.">
-  <meta name="keywords" content="how VerifyJobs works, job scam detection engine, risk score job scam, fake job detector, employment fraud checker, scam detection tool Nigeria">
-  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
-  <link rel="canonical" href="https://verifyjobs.org/how-it-works.html">
-  <meta name="revised" content="2026-05-10">
+.page { max-width: 1280px; margin: 0 auto; padding: 0 24px 80px; }
+.page-hero { padding: 64px 0 48px; border-bottom: 1px solid var(--grey4); margin-bottom: 56px; }
+.breadcrumb { font-family: var(--sans); font-size: 13px; color: var(--grey3); margin-bottom: 20px; display: flex; align-items: center; gap: 8px; }
+.breadcrumb a { color: var(--grey2); text-decoration: none; }
+.breadcrumb a:hover { color: var(--black); }
+.page-h1 { font-family: var(--display); font-size: clamp(32px, 4.5vw, 52px); font-weight: 400; color: var(--black); line-height: 1.1; letter-spacing: -0.5px; margin-bottom: 16px; }
+.page-h1 em { font-style: normal; font-weight: 700; }
+.page-deck { font-family: var(--body); font-size: 16px; color: var(--grey1); line-height: 1.75; max-width: 640px; }
 
-  <meta property="og:type" content="article">
-  <meta property="og:url" content="https://verifyjobs.org/how-it-works.html">
-  <meta property="og:title" content="How VerifyJobs Works – Job Scam Detection Explained">
-  <meta property="og:description" content="See exactly how VerifyJobs detects job scams — the rule engine, risk score, and what each verdict means. Free, instant, no sign-up.">
-  <meta property="og:image" content="https://verifyjobs.org/og-image.png">
-  <meta property="og:image:alt" content="How VerifyJobs Works - Job Scam Detection">
-  <meta property="og:site_name" content="VerifyJobs.org">
-  <meta property="og:locale" content="en_US">
-  <meta property="og:locale:alternate" content="en_NG">
+.layout { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 24px; }
+.c-card { background: var(--white); border: 1px solid var(--grey4); border-radius: 12px; padding: 32px; margin-bottom: 20px; }
+.c-card.full { grid-column: span 2; }
+.c-card-title { font-family: var(--display); font-size: 20px; font-weight: 400; color: var(--black); margin-bottom: 14px; }
+.c-card-p { font-family: var(--body); font-size: 14px; color: var(--grey1); line-height: 1.8; margin-bottom: 12px; }
+.c-card-p:last-child { margin-bottom: 0; }
 
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:site" content="@verifyjobs">
-  <meta name="twitter:title" content="How VerifyJobs Works – Job Scam Detection Explained">
-  <meta name="twitter:description" content="See exactly how VerifyJobs detects job scams — the rule engine, risk score, and what each verdict means.">
-  <meta name="twitter:image" content="https://verifyjobs.org/og-image.png">
+/* Steps */
+.step-row { display: flex; gap: 20px; align-items: flex-start; padding: 20px 0; border-bottom: 1px solid var(--grey5); }
+.step-row:last-child { border: none; padding-bottom: 0; }
+.step-n { width: 36px; height: 36px; border-radius: 50%; background: var(--black); color: var(--white); font-family: var(--sans); font-size: 14px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; }
+.step-title { font-family: var(--sans); font-size: 15px; font-weight: 700; color: var(--black); margin-bottom: 6px; }
+.step-p { font-family: var(--body); font-size: 14px; color: var(--grey1); line-height: 1.72; }
 
-  <meta name="theme-color" content="#0f1035">
+/* Score bands */
+.band { display: flex; gap: 16px; align-items: flex-start; padding: 16px; border-radius: 8px; margin-bottom: 8px; }
+.band:last-child { margin-bottom: 0; }
+.band-red { background: #fce8e6; }
+.band-amber { background: #fef7e0; }
+.band-green { background: #e6f4ea; }
+.band-score { font-family: var(--display); font-size: 22px; font-weight: 700; min-width: 64px; line-height: 1; margin-top: 2px; }
+.band-red .band-score { color: var(--red); }
+.band-amber .band-score { color: var(--amber); }
+.band-green .band-score { color: var(--green); }
+.band-label { font-family: var(--sans); font-size: 14px; font-weight: 700; color: var(--black); margin-bottom: 4px; }
+.band-p { font-family: var(--body); font-size: 13px; color: var(--grey1); line-height: 1.65; }
 
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "HowTo",
-    "@id": "https://verifyjobs.org/how-it-works.html#howto",
-    "name": "How VerifyJobs Detects Job Scams",
-    "description": "Step-by-step guide on how VerifyJobs analyzes job postings to detect scams using a rule-based engine with 50+ indicators.",
-    "inLanguage": "en",
-    "datePublished": "2024-01-01",
-    "dateModified": "2026-05-10",
-    "publisher": {
-      "@type": "Organization",
-      "@id": "https://verifyjobs.org/#organization"
-    },
-    "isPartOf": { "@id": "https://verifyjobs.org/#website" },
-    "step": [
-      {
-        "@type": "HowToStep",
-        "position": 1,
-        "name": "Submit the job posting",
-        "text": "Paste the description text, upload a PDF or Word document, or enter the URL of the posting."
-      },
-      {
-        "@type": "HowToStep",
-        "position": 2,
-        "name": "Text is extracted and normalised",
-        "text": "For files, we extract raw text using a PDF parser or Word document reader. For URLs, we analyse the domain and structure."
-      },
-      {
-        "@type": "HowToStep",
-        "position": 3,
-        "name": "50+ rule checks run in parallel",
-        "text": "Our engine scans the text against a library of weighted rules — each one corresponding to a known scam pattern."
-      },
-      {
-        "@type": "HowToStep",
-        "position": 4,
-        "name": "Scores are calculated and a verdict is assigned",
-        "text": "Risk and legitimacy scores are calculated on a 0–100 scale. The final verdict is determined by the balance of both scores."
-      },
-      {
-        "@type": "HowToStep",
-        "position": 5,
-        "name": "You get a full report with specific evidence",
-        "text": "The result shows your scores, every specific red flag found, positive signals, and a plain-English explanation."
-      }
-    ]
-  }
-  </script>
+/* Indicators */
+.ind-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 4px; }
+.ind-item { display: flex; gap: 10px; align-items: center; padding: 10px 12px; background: var(--grey6); border-radius: 8px; font-family: var(--body); font-size: 13px; color: var(--grey1); }
+.ind-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--red); flex-shrink: 0; }
 
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "@id": "https://verifyjobs.org/#organization",
-    "name": "VerifyJobs",
-    "url": "https://verifyjobs.org",
-    "foundingDate": "2024",
-    "description": "VerifyJobs.org is a free tool that instantly detects job scams and employment fraud. Our rule-based engine checks 50+ indicators in seconds.",
-    "areaServed": "Worldwide",
-    "knowsAbout": ["Job scam detection", "Employment fraud", "WhatsApp job scams", "Advance-fee fraud", "Fake job postings"],
-    "sameAs": ["https://twitter.com/verifyjobs"]
-  }
-  </script>
+/* Methods */
+.method-row { display: flex; gap: 20px; align-items: flex-start; padding: 18px 0; border-bottom: 1px solid var(--grey5); }
+.method-row:last-child { border: none; padding-bottom: 0; }
+.method-icon { width: 40px; height: 40px; background: var(--grey5); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.method-icon svg { color: var(--grey2); }
+.method-title { font-family: var(--sans); font-size: 15px; font-weight: 700; color: var(--black); margin-bottom: 5px; }
+.method-p { font-family: var(--body); font-size: 14px; color: var(--grey1); line-height: 1.7; }
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap">
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+.cta-block { background: var(--black); border-radius: 16px; padding: 48px 40px; text-align: center; margin-top: 48px; }
+.cta-block-h { font-family: var(--display); font-size: 28px; font-weight: 400; color: var(--white); margin-bottom: 10px; }
+.cta-block-p { font-family: var(--body); font-size: 14px; color: rgba(255,255,255,0.6); margin-bottom: 24px; line-height: 1.65; }
+.btn-cta { display: inline-flex; align-items: center; gap: 8px; background: var(--blue); color: var(--white); font-family: var(--sans); font-size: 14px; font-weight: 700; padding: 14px 28px; border-radius: 100px; text-decoration: none; transition: background 0.15s; }
+.btn-cta:hover { background: #1557b0; }
 
-  <style>
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-    :root {
-      --navy:#0f1035; --navy-mid:#1c1f5a; --navy-light:#2a2e7a;
-      --red:#c0392b; --red-pale:#fdf0ef;
-      --gold:#f0a500; --gold-pale:#fff8e6;
-      --green:#1a7a45; --green-pale:#eaf6ee;
-      --bg:#f0f2f8; --surface:#fff; --border:#dde0f0;
-      --text:#0f1035; --muted:#5a5d80; --faint:#9698b8;
-      --radius:14px; --shadow:0 2px 16px rgba(15,16,53,0.08);
-      --nav-h: 56px;
-    }
-    html { scroll-behavior: auto; } /* was smooth — changed to auto to prevent scroll-animation shake */
-    body { font-family:'DM Sans',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; padding-bottom: env(safe-area-inset-bottom); -webkit-font-smoothing: antialiased; }
-    .page { max-width:680px; margin:0 auto; padding:1rem 1rem 3rem; }
+.footer { border-top: 1px solid var(--grey4); padding: 24px; margin-top: 80px; }
+.footer-inner { max-width: 1280px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+.footer-links { display: flex; gap: 20px; flex-wrap: wrap; }
+.footer-links a { font-family: var(--body); font-size: 13px; color: var(--grey2); text-decoration: none; }
+.footer-links a:hover { color: var(--black); }
+.footer-copy { font-family: var(--body); font-size: 13px; color: var(--grey3); }
 
-    /* ── placeholder header (exact height, navy bg, flex-shrink:0) ── */
-    #site-header {
-      display: block;
-      height: 56px;        /* exact, not min-height */
-      background: var(--navy);
-      flex-shrink: 0;
-    }
-    /* ── placeholder footer (min-height, flex-shrink:0) ── */
-    #site-footer {
-      display: block;
-      min-height: 140px;
-      flex-shrink: 0;
-    }
+@media(max-width:900px) { .layout { grid-template-columns: 1fr; } .c-card.full { grid-column: span 1; } .ind-grid { grid-template-columns: 1fr; } }
+@media(max-width:560px) { .nav-links { display: none; }
+  .nav-hamburger { display: flex; } .page { padding: 0 16px 48px; } .page-hero { padding: 40px 0 32px; margin-bottom: 32px; } .cta-block { padding: 32px 20px; } }
+*:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
 
-    /* Nav styles (needed for injected partial to render correctly) */
-    nav { background: var(--navy); position: sticky; top: 0; z-index: 200; box-shadow: 0 2px 12px rgba(0,0,0,0.18); }
-    .nav-bar { display: flex; align-items: center; justify-content: space-between; height: var(--nav-h); padding: 0 1rem; max-width: 680px; margin: 0 auto; }
-    .nav-logo, .nav-brand { font-family: 'Syne', sans-serif; font-size: 17px; font-weight: 800; color: white; text-decoration: none; flex-shrink: 0; letter-spacing: -0.3px; }
-    .nav-logo span, .nav-brand span { color: var(--gold); }
-    .nav-toggle { display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 5px; width: 44px; height: 44px; background: none; border: none; cursor: pointer; border-radius: 8px; -webkit-tap-highlight-color: transparent; transition: background 0.2s; flex-shrink: 0; }
-    .nav-toggle:active { background: rgba(255,255,255,0.1); }
-    .nav-toggle .bar { display: block; width: 22px; height: 2px; background: white; border-radius: 2px; transition: transform 0.28s cubic-bezier(.4,0,.2,1), opacity 0.2s; transform-origin: center; }
-    .nav-toggle[aria-expanded="true"] .bar:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-    .nav-toggle[aria-expanded="true"] .bar:nth-child(2) { opacity: 0; transform: scaleX(0); }
-    .nav-toggle[aria-expanded="true"] .bar:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-    .nav-dropdown { background: var(--navy-mid); overflow: hidden; max-height: 0; transition: max-height 0.32s cubic-bezier(.4,0,.2,1), opacity 0.25s; opacity: 0; border-top: 1px solid rgba(255,255,255,0.07); }
-    .nav-dropdown.open { max-height: 420px; opacity: 1; }
-    .nav-dropdown-inner { max-width: 680px; margin: 0 auto; padding: 0.5rem 1rem 1rem; display: flex; flex-direction: column; gap: 2px; }
-    .nav-link { display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.75); text-decoration: none; padding: 12px 14px; border-radius: 10px; transition: background 0.15s, color 0.15s; -webkit-tap-highlight-color: transparent; min-height: 48px; }
-    .nav-link i { font-size: 18px; flex-shrink: 0; color: rgba(255,255,255,0.4); transition: color 0.15s; }
-    .nav-link:hover, .nav-link:active { background: rgba(255,255,255,0.08); color: white; }
-    .nav-link:hover i, .nav-link:active i { color: rgba(255,255,255,0.7); }
-    .nav-link.active { background: rgba(255,255,255,0.1); color: white; font-weight: 600; }
-    .nav-link.active i { color: var(--gold); }
-    .nav-link.nav-cta { background: var(--gold); color: var(--navy); font-weight: 700; margin-top: 6px; }
-    .nav-link.nav-cta i { color: var(--navy); opacity: 0.7; }
-    .nav-link.nav-cta:hover { background: #e09500; color: var(--navy); }
-    .nav-divider { height: 1px; background: rgba(255,255,255,0.07); margin: 4px 0; }
-    .nav-desktop { display: none; }
-    @media (min-width: 640px) {
-      .nav-toggle { display: none; }
-      .nav-dropdown { display: none !important; }
-      .nav-bar { padding: 0 1.25rem; }
-      .nav-logo, .nav-brand { font-size: 18px; }
-      .nav-desktop { display: flex; gap: 4px; align-items: center; }
-      .nav-desktop a { font-size: 11px; font-weight: 500; color: rgba(255,255,255,0.65); text-decoration: none; padding: 5px 9px; border-radius: 8px; white-space: nowrap; transition: background 0.15s, color 0.15s; }
-      .nav-desktop a.active { background: rgba(255,255,255,0.15); color: white; font-weight: 600; }
-      .nav-desktop a:hover { background: rgba(255,255,255,0.08); color: white; }
-      .nav-desktop .nav-cta { background: var(--gold) !important; color: var(--navy) !important; font-weight: 700 !important; display: flex; align-items: center; gap: 4px; }
-      .nav-desktop .nav-cta:hover { background: #e09500 !important; }
-    }
+/* ─── MOBILE NAV ─── */
+.nav-hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 36px;
+  height: 36px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 8px;
+  margin-left: 8px;
+  -webkit-tap-highlight-color: transparent;
+}
+.nav-hamburger span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: var(--black);
+  border-radius: 2px;
+  transition: transform 0.2s, opacity 0.2s;
+}
+.nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-hamburger.open span:nth-child(2) { opacity: 0; }
+.nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-    /* Footer styles (needed for injected partial to render correctly) */
-    footer { text-align:center; font-size:11px; color:var(--faint); padding:1.5rem 0 0.5rem; line-height:2; }
-    footer a { color:var(--navy-light); text-decoration:none; }
-    footer a:hover { text-decoration:underline; }
-    .footer-links { display:flex; flex-wrap:wrap; justify-content:center; gap:12px; margin-bottom:8px; }
+.mobile-menu {
+  display: none;
+  position: fixed;
+  top: 64px;
+  left: 0; right: 0;
+  background: var(--white);
+  border-bottom: 1px solid var(--grey4);
+  z-index: 99;
+  padding: 8px 16px 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+.mobile-menu.open { display: block; }
+.mobile-menu a {
+  display: block;
+  font-family: var(--sans);
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--grey1);
+  text-decoration: none;
+  padding: 12px 8px;
+  border-bottom: 1px solid var(--grey5);
+}
+.mobile-menu a:last-child { border-bottom: none; }
+.mobile-menu a:hover { color: var(--black); }
+.mobile-menu a.active { color: var(--blue); }
 
-    /* Page styles */
-    .page-hero { background:linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 60%, #1a1060 100%); border-radius:var(--radius); padding:2rem 1.5rem; margin-bottom:1.25rem; position:relative; overflow:hidden; }
-    .page-hero::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse at 80% 20%, rgba(240,165,0,0.1) 0%, transparent 60%); pointer-events:none; }
-    .page-hero-grid { position:absolute; inset:0; background-image:linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg,rgba(255,255,255,0.03) 1px, transparent 1px); background-size:32px 32px; pointer-events:none; }
-    .page-hero-inner { position:relative; z-index:1; }
-    .page-breadcrumb { font-size:11px; color:rgba(255,255,255,0.45); margin-bottom:10px; }
-    .page-breadcrumb a { color:rgba(255,255,255,0.5); text-decoration:none; }
-    .page-breadcrumb a:hover { color:white; }
-    .page-hero h1 { font-family:'Syne',sans-serif; font-size:clamp(22px,5vw,28px); font-weight:800; color:white; margin-bottom:8px; }
-    .page-hero p { font-size:13px; color:rgba(255,255,255,0.65); line-height:1.65; max-width:480px; }
-
-    .flag-strip { height:5px; border-radius:3px; margin-bottom:1.25rem; background:repeating-linear-gradient(90deg,var(--red) 0,var(--red) 50%,#fff 50%,#fff 100%); background-size:16px 100%; }
-
-    .card { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:1.5rem; margin-bottom:1rem; box-shadow:var(--shadow); }
-    .card h2 { font-family:'Syne',sans-serif; font-size:17px; font-weight:800; color:var(--navy); margin-bottom:0.75rem; display:flex; align-items:center; gap:8px; }
-    .card h2 i { font-size:20px; color:var(--red); flex-shrink:0; }
-    .card p { font-size:13px; color:var(--muted); line-height:1.8; margin-bottom:10px; }
-    .card p:last-child { margin-bottom:0; }
-
-    .steps { display:flex; flex-direction:column; gap:0; }
-    .step { display:flex; gap:14px; padding:14px 0; border-bottom:1px solid var(--border); }
-    .step:last-child { border:none; padding-bottom:0; }
-    .step-num { width:32px; height:32px; border-radius:50%; background:var(--navy); color:white; font-family:'Syne',sans-serif; font-size:14px; font-weight:800; display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:2px; }
-    .step-body strong { display:block; font-size:14px; font-weight:700; color:var(--text); margin-bottom:4px; }
-    .step-body p { font-size:13px; color:var(--muted); line-height:1.65; margin:0; }
-
-    .score-bands { display:flex; flex-direction:column; gap:8px; margin-top:0.75rem; }
-    .band { display:flex; align-items:center; gap:12px; padding:10px 14px; border-radius:10px; }
-    .band-hi { background:var(--red-pale); }
-    .band-mid { background:var(--gold-pale); }
-    .band-lo { background:var(--green-pale); }
-    .band-num { font-family:'Syne',sans-serif; font-size:16px; font-weight:800; min-width:60px; }
-    .band-hi .band-num { color:var(--red); }
-    .band-mid .band-num { color:#8a6000; }
-    .band-lo .band-num { color:var(--green); }
-    .band-label { font-size:13px; font-weight:600; }
-    .band-hi .band-label { color:var(--red); }
-    .band-mid .band-label { color:#8a6000; }
-    .band-lo .band-label { color:var(--green); }
-    .band-desc { font-size:12px; color:var(--muted); line-height:1.5; }
-
-    .indicators { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:0.75rem; }
-    .ind-item { background:#f5f6fc; border-radius:10px; padding:10px 12px; display:flex; align-items:flex-start; gap:8px; }
-    .ind-item i { font-size:15px; color:var(--red); flex-shrink:0; margin-top:2px; }
-    .ind-item span { font-size:12px; color:var(--muted); line-height:1.5; }
-
-    .method-row { display:flex; align-items:flex-start; gap:12px; padding:12px 0; border-bottom:1px solid var(--border); }
-    .method-row:last-child { border:none; }
-    .method-icon { width:38px; height:38px; border-radius:10px; background:var(--navy); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
-    .method-icon i { font-size:18px; color:var(--gold); }
-    .method-body strong { display:block; font-size:13px; font-weight:700; color:var(--text); margin-bottom:3px; }
-    .method-body p { font-size:12px; color:var(--muted); line-height:1.6; margin:0; }
-
-    .cta-card { background:linear-gradient(135deg,var(--navy),var(--navy-mid)); border-radius:var(--radius); padding:1.5rem; text-align:center; margin-top:1rem; }
-    .cta-card h3 { font-family:'Syne',sans-serif; font-size:17px; font-weight:800; color:white; margin-bottom:8px; }
-    .cta-card p { font-size:13px; color:rgba(255,255,255,0.65); margin-bottom:1.25rem; line-height:1.6; }
-    .cta-btn { display:inline-flex; align-items:center; gap:8px; background:var(--red); color:white; padding:12px 24px; border-radius:10px; font-size:14px; font-weight:700; text-decoration:none; transition:opacity 0.15s; font-family:'DM Sans',sans-serif; }
-    .cta-btn:hover { opacity:0.88; }
-
-    *:focus-visible { outline: 2px solid var(--navy); outline-offset: 2px; }
-
-    @media(max-width:480px){
-      .indicators { grid-template-columns:1fr; }
-    }
-  </style>
+</style>
 </head>
 <body>
 
-<!-- ── SHARED HEADER (placeholder) ── -->
-<div id="site-header"></div>
-
-<div class="page">
-
-  <div class="page-hero">
-    <div class="page-hero-grid" aria-hidden="true"></div>
-    <div class="page-hero-inner">
-      <div class="page-breadcrumb"><a href="/">Home</a> / How It Works</div>
-      <h1>How VerifyJobs Works</h1>
-      <p>Our rule-based engine checks over 50 scam indicators in seconds and returns a clear risk score, verdict, and action plan — with no AI black box and no registration required.</p>
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="wordmark" href="/"><b>Verify</b>Jobs</a>
+        <div class="nav-links">
+      <a href="/">Home</a>
+      <a href="/analytics.html">Analytics</a>
+      <a href="/how-it-works.html" class="active">How it works</a>
+      <a href="/about.html">About</a>
+      <a href="/report-a-scam.html">Report a scam</a>
+      <a href="/blog/index.html">Blog</a>
     </div>
+    <div class="nav-right">
+      <button class="nav-hamburger" id="navHamburger" aria-label="Open navigation" aria-expanded="false" aria-controls="mobileMenu">
+        <span></span><span></span><span></span>
+      </button><div class="nav-chip">Engine <span>● online</span></div></div>
   </div>
-
-  <div class="flag-strip" aria-hidden="true"></div>
-
-  <!-- STEP BY STEP -->
-  <div class="card">
-    <h2><i class="ti ti-list-numbers"></i> The Process, Step by Step</h2>
-    <div class="steps">
-      <div class="step">
-        <div class="step-num">1</div>
-        <div class="step-body">
-          <strong>You submit the job posting</strong>
-          <p>Paste the description text, upload a PDF or Word document, or enter the URL of the posting. All three methods feed into the same analysis engine.</p>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">2</div>
-        <div class="step-body">
-          <strong>Text is extracted and normalised</strong>
-          <p>For files, we extract raw text using a PDF parser or Word document reader. For URLs, we analyse the domain and structure. All text is cleaned and standardised before analysis.</p>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">3</div>
-        <div class="step-body">
-          <strong>50+ rule checks run in parallel</strong>
-          <p>Our engine scans the text against a library of weighted rules — each one corresponding to a known scam pattern. Each rule that matches adds to the risk score; each positive signal (like a professional email domain or detailed job requirements) adds to the legitimacy score.</p>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">4</div>
-        <div class="step-body">
-          <strong>Scores are calculated and a verdict is assigned</strong>
-          <p>Risk and legitimacy scores are calculated on a 0–100 scale. The final verdict — Scam, Suspicious, Caution, or Legitimate — is determined by the balance of both scores against defined thresholds.</p>
-        </div>
-      </div>
-      <div class="step">
-        <div class="step-num">5</div>
-        <div class="step-body">
-          <strong>You get a full report with specific evidence</strong>
-          <p>The result shows your scores, every specific red flag found (quoted from the text where possible), positive signals, a plain-English explanation, and a list of recommended next steps tailored to the verdict.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- SCORE BANDS -->
-  <div class="card">
-    <h2><i class="ti ti-gauge"></i> Understanding the Risk Score</h2>
-    <p>The risk score measures how many and how severe the scam indicators are in the posting. It runs from 0 (no indicators) to 100 (maximum indicators). Here's what each band means:</p>
-    <div class="score-bands">
-      <div class="band band-hi">
-        <div class="band-num">70–100</div>
-        <div>
-          <div class="band-label">High Risk / Likely Scam</div>
-          <p class="band-desc">Multiple serious indicators detected. Do not proceed. Do not pay or share any personal or financial information.</p>
-        </div>
-      </div>
-      <div class="band band-mid">
-        <div class="band-num">45–69</div>
-        <div>
-          <div class="band-label">Suspicious / Caution Advised</div>
-          <p class="band-desc">Several warning signs present. Research the company thoroughly and verify the contact independently before responding.</p>
-        </div>
-      </div>
-      <div class="band band-lo">
-        <div class="band-num">0–44</div>
-        <div>
-          <div class="band-label">Lower Risk / Likely Legitimate</div>
-          <p class="band-desc">Few or no major red flags. Still do your own due diligence — verify the company exists and confirm the contact details through official channels.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- INDICATORS -->
-  <div class="card">
-    <h2><i class="ti ti-list-check"></i> What We Check (50+ Indicators)</h2>
-    <p>Every analysis runs these checks, each weighted by how strongly it correlates with fraud:</p>
-    <div class="indicators">
-      <div class="ind-item"><i class="ti ti-coin"></i><span>Upfront payment requests</span></div>
-      <div class="ind-item"><i class="ti ti-mail"></i><span>Free email domains (Gmail, Yahoo)</span></div>
-      <div class="ind-item"><i class="ti ti-trending-up"></i><span>Unrealistic salary claims</span></div>
-      <div class="ind-item"><i class="ti ti-clock"></i><span>Urgency and pressure language</span></div>
-      <div class="ind-item"><i class="ti ti-brand-whatsapp"></i><span>WhatsApp-only contact</span></div>
-      <div class="ind-item"><i class="ti ti-id"></i><span>Early personal document requests</span></div>
-      <div class="ind-item"><i class="ti ti-currency-bitcoin"></i><span>Cryptocurrency payment references</span></div>
-      <div class="ind-item"><i class="ti ti-lock"></i><span>Vague or missing company details</span></div>
-      <div class="ind-item"><i class="ti ti-file-off"></i><span>No formal interview mentioned</span></div>
-      <div class="ind-item"><i class="ti ti-link-off"></i><span>Suspicious or mismatched URLs</span></div>
-      <div class="ind-item"><i class="ti ti-grammar"></i><span>Poor grammar / spelling patterns</span></div>
-      <div class="ind-item"><i class="ti ti-topology-star"></i><span>Multi-level referral schemes</span></div>
-    </div>
-  </div>
-
-  <!-- INPUT METHODS -->
-  <div class="card">
-    <h2><i class="ti ti-input-search"></i> Three Ways to Submit</h2>
-    <div class="method-row">
-      <div class="method-icon"><i class="ti ti-file-text"></i></div>
-      <div class="method-body">
-        <strong>Paste Text</strong>
-        <p>Copy any job description — from WhatsApp, email, a website, or anywhere — and paste it directly. Optionally add the job title, company, and source for a more accurate analysis.</p>
-      </div>
-    </div>
-    <div class="method-row">
-      <div class="method-icon"><i class="ti ti-upload"></i></div>
-      <div class="method-body">
-        <strong>Upload a File</strong>
-        <p>Upload a PDF or Word document (.pdf, .doc, .docx) up to 10 MB. We extract the text automatically and run the full analysis on the content.</p>
-      </div>
-    </div>
-    <div class="method-row">
-      <div class="method-icon"><i class="ti ti-link"></i></div>
-      <div class="method-body">
-        <strong>Check a URL</strong>
-        <p>Submit the URL of a job posting. We analyse the domain, subdomain structure, and URL patterns against known scam domains and suspicious URL conventions.</p>
-      </div>
-    </div>
-  </div>
-
-  <div class="cta-card">
-    <h3>Try it now — free, instant, no sign-up</h3>
-    <p>Paste a job description and get your risk score in seconds.</p>
-    <a href="/" class="cta-btn"><i class="ti ti-shield-search"></i> Analyze a Job Posting</a>
-  </div>
-
-  <!-- ── SHARED FOOTER (placeholder) ── -->
-  <div id="site-footer"></div>
-
+</nav>
+<div class="mobile-menu" id="mobileMenu" role="navigation" aria-label="Mobile navigation">
+  <a href="/">Home</a>
+  <a href="/analytics.html">Analytics</a>
+  <a href="/how-it-works.html" class="active">How it works</a>
+  <a href="/about.html">About</a>
+  <a href="/report-a-scam.html">Report a scam</a>
+  <a href="/blog/index.html">Blog</a>
 </div>
 
-<!-- ── Shared header/footer loader — must be last script before </body> ── -->
-<script src="/partials/loader.js"></script>
+<div class="page">
+  <div class="page-hero">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="/">Home</a><span>›</span><span>How it works</span>
+    </nav>
+    <h1 class="page-h1">Detection explained,<br><em>step by step</em></h1>
+    <p class="page-deck">Our hybrid engine checks over 50 scam indicators alongside a machine learning model in seconds — returning a clear risk score, verdict, and action plan. No AI black box. No registration.</p>
+  </div>
+
+  <main>
+
+    <div class="layout">
+      <div class="c-card" style="grid-column:span 2">
+        <div class="c-card-title">The process, step by step</div>
+        <div>
+          <div class="step-row">
+            <div class="step-n">1</div>
+            <div><div class="step-title">You submit the job posting</div><p class="step-p">Paste the description text, upload a PDF or Word document, or enter the URL of the posting. All three feed into the same analysis engine.</p></div>
+          </div>
+          <div class="step-row">
+            <div class="step-n">2</div>
+            <div><div class="step-title">Text is extracted and normalised</div><p class="step-p">For files, we extract raw text using a PDF parser or Word document reader. For URLs, we fetch and scrape the page. All text is cleaned and standardised before analysis.</p></div>
+          </div>
+          <div class="step-row">
+            <div class="step-n">3</div>
+            <div><div class="step-title">50+ rule checks run in parallel</div><p class="step-p">Our engine scans the text against a library of weighted rules — each one corresponding to a known scam pattern. Each matching rule adds to the risk score; each positive signal (professional email domain, detailed requirements) adds to the legitimacy score.</p></div>
+          </div>
+          <div class="step-row">
+            <div class="step-n">4</div>
+            <div><div class="step-title">ML model scores the text</div><p class="step-p">An AI model (XGBoost + BERT) analyses the cleaned text for subtler signals the rules alone might miss. The AI score is blended with the rule score using confidence-weighted averaging.</p></div>
+          </div>
+          <div class="step-row">
+            <div class="step-n">5</div>
+            <div><div class="step-title">You get a full report with specific evidence</div><p class="step-p">The result shows your risk score (0–100), legitimacy score, every specific red flag found, positive signals, a plain-English explanation, and recommended next steps tailored to the verdict.</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="layout">
+      <div class="c-card">
+        <div class="c-card-title">Understanding the risk score</div>
+        <p class="c-card-p">The risk score runs from 0 (no indicators) to 100 (maximum indicators). Here's what each band means:</p>
+        <div style="margin-top:16px">
+          <div class="band band-red">
+            <div class="band-score">70–100</div>
+            <div><div class="band-label">High risk — likely scam</div><p class="band-p">Multiple serious indicators detected. Do not proceed. Do not pay or share any personal or financial information.</p></div>
+          </div>
+          <div class="band band-amber">
+            <div class="band-score">45–69</div>
+            <div><div class="band-label">Suspicious — caution advised</div><p class="band-p">Several warning signs present. Research the company thoroughly and verify the contact independently before responding.</p></div>
+          </div>
+          <div class="band band-green">
+            <div class="band-score">0–44</div>
+            <div><div class="band-label">Lower risk — likely legitimate</div><p class="band-p">Few or no major red flags. Still do your own due diligence and confirm contact details through official channels.</p></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="c-card">
+        <div class="c-card-title">What we check (50+ indicators)</div>
+        <p class="c-card-p">Every analysis runs these checks, each weighted by how strongly it correlates with fraud:</p>
+        <div class="ind-grid">
+          <div class="ind-item"><span class="ind-dot"></span>Upfront payment requests</div>
+          <div class="ind-item"><span class="ind-dot"></span>Free email domains (Gmail, Yahoo)</div>
+          <div class="ind-item"><span class="ind-dot"></span>Unrealistic salary claims</div>
+          <div class="ind-item"><span class="ind-dot"></span>Urgency and pressure language</div>
+          <div class="ind-item"><span class="ind-dot"></span>WhatsApp-only contact</div>
+          <div class="ind-item"><span class="ind-dot"></span>Early personal document requests</div>
+          <div class="ind-item"><span class="ind-dot"></span>Cryptocurrency payment references</div>
+          <div class="ind-item"><span class="ind-dot"></span>Vague or missing company details</div>
+          <div class="ind-item"><span class="ind-dot"></span>No formal interview mentioned</div>
+          <div class="ind-item"><span class="ind-dot"></span>Suspicious or mismatched URLs</div>
+          <div class="ind-item"><span class="ind-dot"></span>Poor grammar / spelling patterns</div>
+          <div class="ind-item"><span class="ind-dot"></span>Multi-level referral schemes</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="c-card">
+      <div class="c-card-title">Three ways to submit</div>
+      <div class="method-row">
+        <div class="method-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+        <div><div class="method-title">Paste Text</div><p class="method-p">Copy any job description — from WhatsApp, email, a website, or anywhere — and paste it directly. Optionally add the job title, company, and source for a more accurate analysis.</p></div>
+      </div>
+      <div class="method-row">
+        <div class="method-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 16 12 12 8 16"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"/></svg></div>
+        <div><div class="method-title">Upload a File</div><p class="method-p">Upload a PDF or Word document (.pdf, .doc, .docx) up to 10 MB. We extract the text automatically and run the full analysis on the content.</p></div>
+      </div>
+      <div class="method-row">
+        <div class="method-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></div>
+        <div><div class="method-title">Check a URL</div><p class="method-p">Submit the URL of a job posting. We fetch the page, extract content, analyse the domain and URL patterns against known scam domains, and check for the canonical employer source.</p></div>
+      </div>
+    </div>
+
+    <div class="cta-block">
+      <div class="cta-block-h">Try it now — free, instant, no sign-up</div>
+      <p class="cta-block-p">Paste a job description and get your risk score in seconds.</p>
+      <a href="/" class="btn-cta">Analyse a job posting</a>
+    </div>
+
+  </main>
+</div>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-links">
+      <a href="/">Home</a><a href="/analytics.html">Analytics</a><a href="/how-it-works.html">How it works</a>
+      <a href="/about.html">About</a><a href="/report-a-scam.html">Report a scam</a><a href="/privacy.html">Privacy</a><a href="/blog/index.html">Blog</a>
+    </div>
+    <div class="footer-copy">© 2026 VerifyJobs.org — Free · No account · No data stored</div>
+  </div>
+</footer>
 </body>
 </html>
