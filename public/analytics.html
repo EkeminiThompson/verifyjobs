@@ -1,510 +1,454 @@
 <!DOCTYPE html>
-<html lang="en" prefix="og: https://ogp.me/ns#">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <meta http-equiv="X-Content-Type-Options" content="nosniff">
-  <meta http-equiv="X-Frame-Options" content="DENY">
-  <meta name="referrer" content="strict-origin-when-cross-origin">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-Content-Type-Options" content="nosniff">
+<meta http-equiv="X-Frame-Options" content="DENY">
+<title>Analytics — Job Scam Intelligence Dashboard — VerifyJobs</title>
+<meta name="description" content="Real-time job scam analytics: AI model performance, A/B tests, cohort insights, segment intelligence, and daily analysis volume.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://verifyjobs.org/analytics.html">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://verifyjobs.org/analytics.html">
+<meta property="og:title" content="Analytics — Job Scam Intelligence Dashboard">
+<meta property="og:image" content="https://verifyjobs.org/og-report-scam.jpg">
+<meta property="og:site_name" content="VerifyJobs.org">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@verifyjobs">
+<meta name="theme-color" content="#ffffff">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Google+Sans+Display:wght@400;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --black:#202124; --grey1:#3c4043; --grey2:#5f6368; --grey3:#9aa0a6;
+  --grey4:#dadce0; --grey5:#f1f3f4; --grey6:#f8f9fa; --white:#ffffff;
+  --red:#d93025; --blue:#1a73e8; --green:#188038; --amber:#e37400;
+  --sans:'Google Sans','Product Sans',-apple-system,'Helvetica Neue',Arial,sans-serif;
+  --display:'Google Sans Display','Google Sans',-apple-system,'Helvetica Neue',Arial,sans-serif;
+  --body:'Roboto',-apple-system,'Helvetica Neue',Arial,sans-serif;
+}
+html { background: var(--white); }
+body { font-family: var(--body); color: var(--black); background: var(--white); -webkit-font-smoothing: antialiased; }
+.nav { position: sticky; top: 0; z-index: 100; background: var(--white); border-bottom: 1px solid var(--grey4); height: 64px; display: flex; align-items: center; padding: 0 24px; }
+.nav-inner { width: 100%; max-width: 1280px; margin: 0 auto; display: flex; align-items: center; }
+.wordmark { font-family: var(--sans); font-size: 22px; font-weight: 400; color: var(--black); text-decoration: none; letter-spacing: -0.3px; margin-right: 32px; }
+.wordmark b { font-weight: 700; }
+.nav-links { display: flex; align-items: center; gap: 4px; flex: 1; }
+.nav-links a { font-family: var(--sans); font-size: 14px; font-weight: 500; color: var(--grey2); text-decoration: none; padding: 8px 12px; border-radius: 24px; transition: background 0.15s, color 0.15s; }
+.nav-links a:hover { background: var(--grey5); color: var(--black); }
+.nav-links a.active { color: var(--blue); background: #e8f0fe; }
+.nav-right { margin-left: auto; }
+.nav-chip { font-family: var(--sans); font-size: 12px; font-weight: 500; color: var(--grey2); background: var(--grey5); border: 1px solid var(--grey4); border-radius: 20px; padding: 5px 12px; }
+.nav-chip span { color: var(--green); font-weight: 600; }
 
-  <title>VerifyJobs Analytics – Job Scam Intelligence Dashboard</title>
-  <meta name="description" content="Real-time job scam analytics dashboard. Track scam rates, risk scores, A/B test results, XGBoost model performance, and segment insights from VerifyJobs.org.">
-  <meta name="keywords" content="job scam analytics, fraud detection dashboard, scam rate statistics, job scam intelligence, VerifyJobs analytics, employment fraud data">
-  <meta name="author" content="Ekemini Thompson">
-  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
-  <link rel="canonical" href="https://verifyjobs.org/analytics.html">
+.page { max-width: 1280px; margin: 0 auto; padding: 0 24px 80px; }
+.page-hero { padding: 64px 0 48px; border-bottom: 1px solid var(--grey4); margin-bottom: 48px; }
+.breadcrumb { font-family: var(--sans); font-size: 13px; color: var(--grey3); margin-bottom: 20px; display: flex; align-items: center; gap: 8px; }
+.breadcrumb a { color: var(--grey2); text-decoration: none; }
+.breadcrumb a:hover { color: var(--black); }
+.page-h1 { font-family: var(--display); font-size: clamp(32px, 4.5vw, 52px); font-weight: 400; color: var(--black); line-height: 1.1; letter-spacing: -0.5px; margin-bottom: 16px; }
+.page-h1 em { font-style: normal; font-weight: 700; }
+.page-deck { font-family: var(--body); font-size: 16px; color: var(--grey1); line-height: 1.75; max-width: 640px; }
 
-  <!-- Dates -->
-  <meta name="date" content="2024-01-01">
-  <meta name="revised" content="2026-08-05">
+/* Loading */
+.loading-state { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 80px 24px; gap: 16px; }
+.g-spinner { width: 40px; height: 40px; border: 3px solid var(--grey4); border-top-color: var(--blue); border-radius: 50%; animation: spin 0.7s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.loading-state p { font-family: var(--sans); font-size: 14px; color: var(--grey2); }
 
-  <!-- Geo -->
-  <meta name="geo.region" content="NG">
-  <meta name="geo.placename" content="Nigeria">
-  <meta name="language" content="English">
-  <meta name="coverage" content="Worldwide">
-  <meta name="distribution" content="Global">
+/* Error */
+.error-bar { display: none; background: #fce8e6; border: 1px solid #f5c6c6; border-radius: 8px; padding: 14px 16px; margin-bottom: 24px; font-family: var(--body); font-size: 14px; color: #c5221f; }
+.error-bar.show { display: block; }
 
-  <!-- Open Graph -->
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://verifyjobs.org/analytics.html">
-  <meta property="og:title" content="VerifyJobs Analytics – Job Scam Intelligence Dashboard">
-  <meta property="og:description" content="Real-time job scam analytics dashboard. Track scam rates, risk scores, A/B test results, XGBoost model performance, and segment insights from VerifyJobs.org.">
-  <meta property="og:image" content="https://verifyjobs.org/og-report-scam.jpg">
-  <meta property="og:image:secure_url" content="https://verifyjobs.org/og-report-scam.jpg">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="VerifyJobs Analytics Dashboard — Job Scam Intelligence">
-  <meta property="og:site_name" content="VerifyJobs.org">
-  <meta property="og:locale" content="en_US">
-  <meta property="og:locale:alternate" content="en_NG">
+/* KPI grid */
+.kpi-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 1px; background: var(--grey4); border: 1px solid var(--grey4); border-radius: 16px; overflow: hidden; margin-bottom: 24px; }
+.kpi-cell { background: var(--white); padding: 24px 20px; }
+.kpi-label { font-family: var(--sans); font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; color: var(--grey3); margin-bottom: 8px; }
+.kpi-val { font-family: var(--display); font-size: 32px; font-weight: 700; color: var(--black); line-height: 1; }
+.kpi-val .unit { font-size: 16px; font-weight: 400; color: var(--grey3); }
+.kpi-trend { font-family: var(--body); font-size: 12px; color: var(--grey2); margin-top: 4px; }
 
-  <!-- Twitter -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:site" content="@verifyjobs">
-  <meta name="twitter:creator" content="@verifyjobs">
-  <meta name="twitter:title" content="VerifyJobs Analytics – Job Scam Intelligence Dashboard">
-  <meta name="twitter:description" content="Real-time analytics for job scam detection, XGBoost model performance, A/B tests, and segment insights.">
-  <meta name="twitter:image" content="https://verifyjobs.org/og-report-scam.jpg">
-  <meta name="twitter:image:alt" content="VerifyJobs Analytics Dashboard">
+/* Dashboard grid */
+.dash-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; }
+.dash-1 { margin-bottom: 20px; }
+.d-card { background: var(--white); border: 1px solid var(--grey4); border-radius: 12px; padding: 24px; }
+.d-card-title { font-family: var(--sans); font-size: 14px; font-weight: 700; color: var(--black); margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+.d-card-title-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--blue); flex-shrink: 0; }
 
-  <meta name="theme-color" content="#0f1035">
+/* Data table rows */
+.data-row { display: flex; justify-content: space-between; align-items: center; padding: 9px 0; border-bottom: 1px solid var(--grey5); font-family: var(--body); font-size: 13px; }
+.data-row:last-child { border: none; }
+.data-row-label { color: var(--grey2); }
+.data-row-val { font-weight: 500; color: var(--black); }
 
-  <!-- Structured Data -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebApplication",
-    "@id": "https://verifyjobs.org/analytics.html#webapp",
-    "name": "VerifyJobs Analytics Dashboard",
-    "description": "Real-time job scam analytics dashboard tracking scam rates, XGBoost model performance, A/B test results, cohort analysis, and segment insights.",
-    "url": "https://verifyjobs.org/analytics.html",
-    "applicationCategory": "Analytics",
-    "operatingSystem": "All",
-    "browserRequirements": "Requires JavaScript",
-    "inLanguage": "en",
-    "isAccessibleForFree": true,
-    "dateModified": "2026-08-05",
-    "image": "https://verifyjobs.org/og-report-scam.jpg",
-    "author": {
-      "@type": "Person",
-      "@id": "https://verifyjobs.org/#creator",
-      "name": "Ekemini Thompson"
-    },
-    "publisher": {
-      "@type": "Organization",
-      "@id": "https://verifyjobs.org/#organization",
-      "name": "VerifyJobs",
-      "url": "https://verifyjobs.org",
-      "logo": {
-        "@type": "ImageObject",
-        "url": "https://verifyjobs.org/logo.jpg"
-      }
-    },
-    "isPartOf": { "@id": "https://verifyjobs.org/#website" },
-    "breadcrumb": {
-      "@type": "BreadcrumbList",
-      "itemListElement": [
-        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://verifyjobs.org/" },
-        { "@type": "ListItem", "position": 2, "name": "Analytics Dashboard", "item": "https://verifyjobs.org/analytics.html" }
-      ]
-    }
-  }
-  </script>
+/* Badges */
+.badge { display: inline-flex; align-items: center; padding: 3px 8px; border-radius: 100px; font-family: var(--sans); font-size: 11px; font-weight: 600; }
+.badge-red { background: #fce8e6; color: var(--red); }
+.badge-green { background: #e6f4ea; color: var(--green); }
+.badge-amber { background: #fef7e0; color: var(--amber); }
+.badge-blue { background: #e8f0fe; color: var(--blue); }
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600;700&display=swap">
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+/* Insight text */
+.insight { background: var(--grey6); border: 1px solid var(--grey4); border-radius: 8px; padding: 12px 14px; font-family: var(--body); font-size: 13px; color: var(--grey1); line-height: 1.65; margin-top: 12px; }
 
-  <style>
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+/* Mini stat */
+.mini-stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+.mini-stat { background: var(--grey6); border-radius: 8px; padding: 14px; }
+.mini-stat-val { font-family: var(--display); font-size: 24px; font-weight: 700; color: var(--black); line-height: 1; margin-bottom: 2px; }
+.mini-stat-lbl { font-family: var(--body); font-size: 11px; color: var(--grey2); }
 
-    :root {
-      --navy: #0f1035;
-      --navy-mid: #1c1f5a;
-      --navy-light: #2a2e7a;
-      --red: #c0392b;
-      --red-bright: #e74c3c;
-      --red-pale: #fdf0ef;
-      --gold: #f0a500;
-      --gold-pale: #fff8e6;
-      --green: #1a7a45;
-      --green-pale: #eaf6ee;
-      --bg: #f0f2f8;
-      --surface: #ffffff;
-      --border: #dde0f0;
-      --text: #0f1035;
-      --muted: #5a5d80;
-      --faint: #9698b8;
-      --radius: 14px;
-      --shadow: 0 2px 16px rgba(15,16,53,0.08);
-      --nav-h: 56px;
-    }
+.note-bar { background: var(--grey6); border: 1px solid var(--grey4); border-radius: 8px; padding: 12px 16px; font-family: var(--body); font-size: 13px; color: var(--grey2); line-height: 1.65; margin-top: 8px; }
 
-    html { scroll-behavior: auto; }
-    #site-header { display: block; height: 56px; background: var(--navy); flex-shrink: 0; }
-    #site-footer { display: block; min-height: 140px; flex-shrink: 0; }
+.footer { border-top: 1px solid var(--grey4); padding: 24px; margin-top: 80px; }
+.footer-inner { max-width: 1280px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+.footer-links { display: flex; gap: 20px; flex-wrap: wrap; }
+.footer-links a { font-family: var(--body); font-size: 13px; color: var(--grey2); text-decoration: none; }
+.footer-links a:hover { color: var(--black); }
+.footer-copy { font-family: var(--body); font-size: 13px; color: var(--grey3); }
 
-    body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; padding-bottom: env(safe-area-inset-bottom); -webkit-font-smoothing: antialiased; }
+@media(max-width:960px) { .kpi-grid { grid-template-columns: 1fr 1fr; } .dash-2 { grid-template-columns: 1fr; } }
+@media(max-width:560px) { .nav-links { display: none; }
+  .nav-hamburger { display: flex; } .page { padding: 0 16px 48px; } .page-hero { padding: 40px 0 32px; margin-bottom: 32px; } .kpi-grid { grid-template-columns: 1fr; } .mini-stat-grid { grid-template-columns: 1fr 1fr; } }
+*:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
 
-    .skip-link { position: absolute; top: -100px; left: 1rem; background: var(--navy); color: white; padding: 8px 16px; border-radius: 8px; font-size: 13px; z-index: 999; }
-    .skip-link:focus { top: 1rem; }
+/* ─── MOBILE NAV ─── */
+.nav-hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 36px;
+  height: 36px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 8px;
+  margin-left: 8px;
+  -webkit-tap-highlight-color: transparent;
+}
+.nav-hamburger span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: var(--black);
+  border-radius: 2px;
+  transition: transform 0.2s, opacity 0.2s;
+}
+.nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-hamburger.open span:nth-child(2) { opacity: 0; }
+.nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-    nav { background: var(--navy); position: sticky; top: 0; z-index: 200; box-shadow: 0 2px 12px rgba(0,0,0,0.18); }
-    .nav-bar { display: flex; align-items: center; justify-content: space-between; height: var(--nav-h); padding: 0 1rem; max-width: 1400px; margin: 0 auto; }
-    .nav-logo, .nav-brand { font-family: 'Syne', sans-serif; font-size: 17px; font-weight: 800; color: white; text-decoration: none; flex-shrink: 0; letter-spacing: -0.3px; }
-    .nav-logo span, .nav-brand span { color: var(--gold); }
-    .nav-toggle { display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 5px; width: 44px; height: 44px; background: none; border: none; cursor: pointer; border-radius: 8px; -webkit-tap-highlight-color: transparent; transition: background 0.2s; flex-shrink: 0; }
-    .nav-toggle:active { background: rgba(255,255,255,0.1); }
-    .nav-toggle .bar { display: block; width: 22px; height: 2px; background: white; border-radius: 2px; transition: transform 0.28s cubic-bezier(.4,0,.2,1), opacity 0.2s; transform-origin: center; }
-    .nav-toggle[aria-expanded="true"] .bar:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-    .nav-toggle[aria-expanded="true"] .bar:nth-child(2) { opacity: 0; transform: scaleX(0); }
-    .nav-toggle[aria-expanded="true"] .bar:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-    .nav-dropdown { background: var(--navy-mid); overflow: hidden; max-height: 0; transition: max-height 0.32s cubic-bezier(.4,0,.2,1), opacity 0.25s; opacity: 0; border-top: 1px solid rgba(255,255,255,0.07); }
-    .nav-dropdown.open { max-height: 420px; opacity: 1; }
-    .nav-dropdown-inner { max-width: 1400px; margin: 0 auto; padding: 0.5rem 1rem 1rem; display: flex; flex-direction: column; gap: 2px; }
-    .nav-link { display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.75); text-decoration: none; padding: 12px 14px; border-radius: 10px; transition: background 0.15s, color 0.15s; -webkit-tap-highlight-color: transparent; min-height: 48px; }
-    .nav-link i { font-size: 18px; flex-shrink: 0; color: rgba(255,255,255,0.4); transition: color 0.15s; }
-    .nav-link:hover, .nav-link:active { background: rgba(255,255,255,0.08); color: white; }
-    .nav-link:hover i, .nav-link:active i { color: rgba(255,255,255,0.7); }
-    .nav-link.active { background: rgba(255,255,255,0.1); color: white; font-weight: 600; }
-    .nav-link.active i { color: var(--gold); }
-    .nav-link.nav-cta { background: var(--gold); color: var(--navy); font-weight: 700; margin-top: 6px; }
-    .nav-link.nav-cta i { color: var(--navy); opacity: 0.7; }
-    .nav-link.nav-cta:hover { background: #e09500; color: var(--navy); }
-    .nav-divider { height: 1px; background: rgba(255,255,255,0.07); margin: 4px 0; }
-    .nav-desktop { display: none; }
-    @media (min-width: 640px) {
-      .nav-toggle { display: none; }
-      .nav-dropdown { display: none !important; }
-      .nav-bar { padding: 0 1.25rem; }
-      .nav-logo, .nav-brand { font-size: 18px; }
-      .nav-desktop { display: flex; gap: 4px; align-items: center; }
-      .nav-desktop a { font-size: 11px; font-weight: 500; color: rgba(255,255,255,0.65); text-decoration: none; padding: 5px 9px; border-radius: 8px; white-space: nowrap; transition: background 0.15s, color 0.15s; }
-      .nav-desktop a.active { background: rgba(255,255,255,0.15); color: white; font-weight: 600; }
-      .nav-desktop a:hover { background: rgba(255,255,255,0.08); color: white; }
-      .nav-desktop .nav-cta { background: var(--gold) !important; color: var(--navy) !important; font-weight: 700 !important; display: flex; align-items: center; gap: 4px; }
-      .nav-desktop .nav-cta:hover { background: #e09500 !important; }
-    }
+.mobile-menu {
+  display: none;
+  position: fixed;
+  top: 64px;
+  left: 0; right: 0;
+  background: var(--white);
+  border-bottom: 1px solid var(--grey4);
+  z-index: 99;
+  padding: 8px 16px 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+.mobile-menu.open { display: block; }
+.mobile-menu a {
+  display: block;
+  font-family: var(--sans);
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--grey1);
+  text-decoration: none;
+  padding: 12px 8px;
+  border-bottom: 1px solid var(--grey5);
+}
+.mobile-menu a:last-child { border-bottom: none; }
+.mobile-menu a:hover { color: var(--black); }
+.mobile-menu a.active { color: var(--blue); }
 
-    footer { text-align: center; font-size: 11px; color: var(--faint); padding: 2rem 0 0.5rem; margin-top: 1rem; border-top: 1px solid var(--border); }
-    footer a { color: var(--navy-light); text-decoration: none; }
-    footer a:hover { text-decoration: underline; }
-    .footer-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-bottom: 8px; }
-
-    .page { max-width: 1400px; margin: 0 auto; padding: 1rem 1rem 3rem; }
-
-    .hero { background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 60%, #1a1060 100%); border-radius: var(--radius); padding: 1.5rem 1.25rem; margin-bottom: 1.5rem; position: relative; overflow: hidden; }
-    .hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 80% 20%, rgba(240,165,0,0.1) 0%, transparent 60%); pointer-events: none; }
-    .hero-inner { position: relative; z-index: 1; }
-    .hero-breadcrumb { font-size: 11px; color: rgba(255,255,255,0.45); margin-bottom: 10px; }
-    .hero-breadcrumb a { color: rgba(255,255,255,0.5); text-decoration: none; }
-    .hero-breadcrumb a:hover { color: white; }
-    .hero h1 { font-family: 'Syne', sans-serif; font-size: clamp(20px, 6vw, 30px); font-weight: 800; color: white; margin-bottom: 6px; }
-    .hero h1 i { color: var(--gold); margin-right: 8px; }
-    .hero p { font-size: 13px; color: rgba(255,255,255,0.7); }
-
-    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
-    .stat-card { background: var(--surface); border-radius: var(--radius); padding: 1.25rem; box-shadow: var(--shadow); border: 1px solid var(--border); }
-    .stat-card .label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: var(--muted); margin-bottom: 8px; }
-    .stat-card .value { font-family: 'Syne', sans-serif; font-size: 32px; font-weight: 800; color: var(--navy); }
-    .stat-card .unit { font-size: 14px; font-weight: 400; color: var(--faint); }
-    .stat-card .trend { font-size: 12px; margin-top: 6px; display: flex; align-items: center; gap: 4px; }
-
-    .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem; box-shadow: var(--shadow); }
-    .card-title { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 1rem; display: flex; align-items: center; gap: 8px; text-transform: uppercase; letter-spacing: 0.3px; }
-
-    .two-col { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 1.25rem; margin-bottom: 1.5rem; }
-
-    .flag-list { list-style: none; }
-    .flag-list li { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--border); font-size: 12px; }
-    .flag-list li span:first-child { color: var(--muted); }
-    .flag-list li span:last-child { font-weight: 600; color: var(--navy); }
-
-    .badge { display: inline-flex; align-items: center; gap: 4px; padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; }
-    .badge-risk { background: var(--red-pale); color: var(--red); }
-    .badge-safe { background: var(--green-pale); color: var(--green); }
-    .badge-warning { background: var(--gold-pale); color: #8a6000; }
-
-    .insight-text { font-size: 13px; color: var(--muted); line-height: 1.6; padding: 12px; background: var(--bg); border-radius: 10px; margin-top: 10px; }
-
-    .loading-state { display: flex; align-items: center; justify-content: center; padding: 3rem; flex-direction: column; gap: 1rem; }
-    .spinner { width: 40px; height: 40px; border: 3px solid var(--border); border-top-color: var(--navy); border-radius: 50%; animation: spin 0.75s linear infinite; }
-    @keyframes spin { to { transform: rotate(360deg); } }
-
-    .error-alert { background: var(--red-pale); border: 1px solid var(--red); border-radius: 10px; padding: 14px 16px; margin-bottom: 1rem; display: flex; align-items: center; gap: 10px; color: var(--red); font-size: 13px; }
-
-    *:focus-visible { outline: 2px solid var(--navy); outline-offset: 2px; }
-
-    @media (max-width: 640px) {
-      .two-col { grid-template-columns: 1fr; }
-      .stats-grid { grid-template-columns: repeat(2, 1fr); }
-      .page { padding: 0.75rem 0.75rem 2rem; }
-    }
-  </style>
+</style>
 </head>
 <body>
 
-<a class="skip-link" href="#main">Skip to dashboard</a>
-
-<!-- ── SHARED HEADER (injected by /partials/loader.js) ── -->
-<div id="site-header"></div>
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="wordmark" href="/"><b>Verify</b>Jobs</a>
+        <div class="nav-links">
+      <a href="/">Home</a>
+      <a href="/analytics.html" class="active">Analytics</a>
+      <a href="/how-it-works.html">How it works</a>
+      <a href="/about.html">About</a>
+      <a href="/report-a-scam.html">Report a scam</a>
+      <a href="/blog/index.html">Blog</a>
+    </div>
+    <div class="nav-right">
+      <button class="nav-hamburger" id="navHamburger" aria-label="Open navigation" aria-expanded="false" aria-controls="mobileMenu">
+        <span></span><span></span><span></span>
+      </button><div class="nav-chip">Engine <span>● online</span></div></div>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobileMenu" role="navigation" aria-label="Mobile navigation">
+  <a href="/">Home</a>
+  <a href="/analytics.html" class="active">Analytics</a>
+  <a href="/how-it-works.html">How it works</a>
+  <a href="/about.html">About</a>
+  <a href="/report-a-scam.html">Report a scam</a>
+  <a href="/blog/index.html">Blog</a>
+</div>
 
 <div class="page" id="main">
-
-  <div class="hero">
-    <div class="hero-inner">
-      <nav class="hero-breadcrumb" aria-label="Breadcrumb">
-        <a href="/">Home</a> / <span aria-current="page">Analytics</span>
-      </nav>
-      <h1><i class="ti ti-chart-bar" aria-hidden="true"></i> Job Scam Intelligence Dashboard</h1>
-      <p>Real-time analytics from job scam detection — XGBoost model performance, A/B tests, cohort insights, and segment intelligence.</p>
-    </div>
+  <div class="page-hero">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="/">Home</a><span>›</span><span>Analytics</span>
+    </nav>
+    <h1 class="page-h1">Job scam<br><em>intelligence dashboard</em></h1>
+    <p class="page-deck">Real-time analytics from job scam detection — AI model performance, A/B tests, cohort insights, and segment intelligence.</p>
   </div>
 
-  <div id="errorMsg" class="error-alert" role="alert" style="display:none">
-    <i class="ti ti-alert-circle" aria-hidden="true"></i>
-    <span id="errorText"></span>
+  <div class="error-bar" id="errorMsg" role="alert"><span id="errorText"></span></div>
+
+  <div class="loading-state" id="loadingState" aria-live="polite" aria-busy="true">
+    <div class="g-spinner" role="status" aria-label="Loading analytics"></div>
+    <p>Loading analytics data…</p>
   </div>
 
-  <div id="loadingState" class="loading-state" aria-live="polite" aria-busy="true">
-    <div class="spinner" role="status" aria-label="Loading analytics"></div>
-    <p>Loading analytics data...</p>
-  </div>
+  <main id="dashboardContent" style="display:none" aria-label="Analytics dashboard">
 
-  <main id="dashboardContent" style="display: none;" aria-label="Analytics dashboard">
+    <div class="kpi-grid" id="kpiGrid"></div>
 
-    <!-- KPI ROW -->
-    <div class="stats-grid" id="kpiGrid"></div>
-
-    <!-- TWO COLUMN: MODEL + SEGMENTS -->
-    <div class="two-col">
-      <div class="card">
-        <div class="card-title"><i class="ti ti-brain" aria-hidden="true"></i> XGBoost Model Performance</div>
+    <div class="dash-2">
+      <div class="d-card">
+        <div class="d-card-title"><span class="d-card-title-dot"></span> AI Model Performance</div>
         <div id="modelMetrics"></div>
         <div id="featureImportance"></div>
       </div>
-      <div class="card">
-        <div class="card-title"><i class="ti ti-chart-pie" aria-hidden="true"></i> Segment Insights</div>
+      <div class="d-card">
+        <div class="d-card-title"><span class="d-card-title-dot"></span> Segment Insights</div>
         <div id="segmentInsights"></div>
         <div id="segmentActionable"></div>
       </div>
     </div>
 
-    <!-- A/B TEST + CAUSAL -->
-    <div class="two-col">
-      <div class="card">
-        <div class="card-title"><i class="ti ti-test-pipe" aria-hidden="true"></i> A/B Test: Input Methods</div>
+    <div class="dash-2">
+      <div class="d-card">
+        <div class="d-card-title"><span class="d-card-title-dot"></span> A/B Test — Input Methods</div>
         <div id="abTestResults"></div>
       </div>
-      <div class="card">
-        <div class="card-title"><i class="ti ti-arrows-diff" aria-hidden="true"></i> Causal Inference (DiD)</div>
+      <div class="d-card">
+        <div class="d-card-title"><span class="d-card-title-dot"></span> Causal Inference (DiD)</div>
         <div id="causalResults"></div>
       </div>
     </div>
 
-    <!-- COHORTS + TOP RED FLAGS -->
-    <div class="two-col">
-      <div class="card">
-        <div class="card-title"><i class="ti ti-users" aria-hidden="true"></i> Weekly Cohorts</div>
+    <div class="dash-2">
+      <div class="d-card">
+        <div class="d-card-title"><span class="d-card-title-dot"></span> Weekly Cohorts</div>
         <div id="cohortTable"></div>
       </div>
-      <div class="card">
-        <div class="card-title"><i class="ti ti-flag" aria-hidden="true"></i> Most Common Red Flags</div>
+      <div class="d-card">
+        <div class="d-card-title"><span class="d-card-title-dot"></span> Most Common Red Flags</div>
         <div id="topFlags"></div>
       </div>
     </div>
 
-    <!-- SCORE DISTRIBUTION + SOURCE BREAKDOWN -->
-    <div class="two-col">
-      <div class="card">
-        <div class="card-title"><i class="ti ti-chart-histogram" aria-hidden="true"></i> Risk Score Distribution</div>
+    <div class="dash-2">
+      <div class="d-card">
+        <div class="d-card-title"><span class="d-card-title-dot"></span> Risk Score Distribution</div>
         <div id="scoreHistogram"></div>
       </div>
-      <div class="card">
-        <div class="card-title"><i class="ti ti-device-analytics" aria-hidden="true"></i> Scam Rate by Source</div>
+      <div class="d-card">
+        <div class="d-card-title"><span class="d-card-title-dot"></span> Scam Rate by Source</div>
         <div id="sourceBreakdown"></div>
       </div>
     </div>
 
-    <!-- DAILY VOLUME -->
-    <div class="card" style="margin-bottom: 1.5rem;">
-      <div class="card-title"><i class="ti ti-calendar-stats" aria-hidden="true"></i> Daily Analysis Volume</div>
+    <div class="dash-1 d-card">
+      <div class="d-card-title"><span class="d-card-title-dot"></span> Daily Analysis Volume</div>
       <div id="dailyVolumeChart"></div>
     </div>
 
-    <!-- FRESHNESS NOTE -->
-    <div class="insight-text" id="insightNote" role="note"></div>
+    <div class="note-bar" id="insightNote" role="note"></div>
 
   </main>
-
-  <!-- ── SHARED FOOTER (injected by /partials/loader.js) ── -->
-  <div id="site-footer"></div>
-
 </div>
 
-<script src="/partials/loader.js"></script>
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-links">
+      <a href="/">Home</a><a href="/analytics.html">Analytics</a><a href="/how-it-works.html">How it works</a>
+      <a href="/about.html">About</a><a href="/report-a-scam.html">Report a scam</a><a href="/privacy.html">Privacy</a><a href="/blog/index.html">Blog</a>
+    </div>
+    <div class="footer-copy">© 2026 VerifyJobs.org — Free · No account · No data stored</div>
+  </div>
+</footer>
 
 <script>
-  'use strict';
+'use strict';
+let analyticsData = null;
 
-  let analyticsData = null;
+async function fetchAnalytics() {
+  const r = await fetch('/analytics');
+  if (!r.ok) throw new Error(`HTTP ${r.status}: ${r.statusText}`);
+  return await r.json();
+}
 
-  async function fetchAnalytics() {
-    try {
-      const response = await fetch('/analytics');
-      if (!response.ok) throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-      const data = await response.json();
-      analyticsData = data;
-      return data;
-    } catch (err) {
-      console.error('Analytics fetch error:', err);
-      throw err;
-    }
-  }
+function esc(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
 
-  function renderKPIs(data) {
-    const overview = data.overview || {};
-    const total = data.recordCount || overview.total || 0;
-    const scamRate = overview.scamRate || (data.isDemo ? 34.2 : 0);
-    const avgRisk = overview.avgRiskScore || (data.isDemo ? 42.1 : 0);
-    const scamCount = overview.scamCount || (data.isDemo ? 97 : 0);
-    const kpis = [
-      { label: 'Total Analyses', value: total.toLocaleString(), unit: '', trend: null },
-      { label: 'Scam Detection Rate', value: scamRate, unit: '%', trend: scamRate > 30 ? '↑ High vigilance' : '↓ Low scam prevalence' },
-      { label: 'Avg Risk Score', value: avgRisk, unit: '/100', trend: avgRisk > 50 ? 'Elevated risk' : 'Moderate risk' },
-      { label: 'Confirmed Scams', value: scamCount.toLocaleString(), unit: '', trend: null }
-    ];
-    document.getElementById('kpiGrid').innerHTML = kpis.map(k => `
-      <div class="stat-card">
-        <div class="label">${k.label}</div>
-        <div class="value">${typeof k.value === 'number' ? k.value.toFixed(1) : k.value}<span class="unit">${k.unit}</span></div>
-        ${k.trend ? `<div class="trend">${k.trend}</div>` : ''}
-      </div>`).join('');
-  }
+function renderKPIs(data) {
+  const o = data.overview || {};
+  const total = data.recordCount || o.total || 0;
+  const scamRate = o.scamRate || (data.isDemo ? 34.2 : 0);
+  const avgRisk = o.avgRiskScore || (data.isDemo ? 42.1 : 0);
+  const kpis = [
+    { label: 'Total Analyses', value: total, unit: '' },
+    { label: 'Scam Rate', value: scamRate.toFixed(1), unit: '%' },
+    { label: 'Avg Risk Score', value: avgRisk.toFixed(1), unit: '/100' },
+    { label: 'Engine Status', value: 'Live', unit: '' },
+  ];
+  document.getElementById('kpiGrid').innerHTML = kpis.map(k => `
+    <div class="kpi-cell">
+      <div class="kpi-label">${esc(k.label)}</div>
+      <div class="kpi-val">${esc(String(k.value))}<span class="unit">${esc(k.unit)}</span></div>
+    </div>`).join('');
+}
 
-  function renderModelMetrics(data) {
-    const model = data.model || {};
-    if (model.error) { document.getElementById('modelMetrics').innerHTML = `<div class="insight-text">${model.error}</div>`; return; }
-    const auc = model.auc || 0.87, f1 = model.bestF1 || 0.79, prec = model.bestPrecision || 0.83, rec = model.bestRecall || 0.75;
-    document.getElementById('modelMetrics').innerHTML = `
-      <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:16px">
-        <div><span class="badge badge-warning">AUC-ROC</span><div style="font-size:24px;font-weight:800">${(auc*100).toFixed(1)}%</div></div>
-        <div><span class="badge badge-warning">F1 Score</span><div style="font-size:24px;font-weight:800">${(f1*100).toFixed(1)}%</div></div>
-        <div><span class="badge badge-safe">Precision</span><div>${(prec*100).toFixed(1)}%</div></div>
-        <div><span class="badge badge-safe">Recall</span><div>${(rec*100).toFixed(1)}%</div></div>
-      </div>`;
-    const features = model.featureImportance || [];
-    if (features.length) {
-      document.getElementById('featureImportance').innerHTML = `<div style="font-size:12px;font-weight:600;margin-top:12px">Top Features</div>
-        <ul class="flag-list" style="margin-top:8px">
-          ${features.slice(0,5).map(f => `<li><span>${f.feature}</span><span class="${f.direction==='risk'?'badge-risk':'badge-safe'}" style="padding:2px 8px">${f.direction==='risk'?'↑ risk':'↓ safe'}</span></li>`).join('')}
-        </ul>`;
-    }
-  }
-
-  function renderSegmentInsights(data) {
-    const segments = data.segments || {}, insights = segments.insights || [];
-    if (!insights.length) { document.getElementById('segmentInsights').innerHTML = '<div class="insight-text">Not enough data for segment analysis</div>'; return; }
-    document.getElementById('segmentInsights').innerHTML = `<ul class="flag-list">
-      ${insights.slice(0,5).map(s => `<li><span>${s.segment}</span><span><strong>${s.scamRate}%</strong> scam rate ${s.vsBase>0?`(+${s.vsBase}pp)`:`(${s.vsBase}pp)`}</span></li>`).join('')}
-    </ul>`;
-    if (segments.actionable) document.getElementById('segmentActionable').innerHTML = `<div class="insight-text" style="margin-top:12px"><i class="ti ti-bulb"></i> ${segments.actionable}</div>`;
-  }
-
-  function renderABTest(data) {
-    const ab = data.abTest || {}, groups = ab.groups || [];
-    if (!groups.length) { document.getElementById('abTestResults').innerHTML = '<div class="insight-text">Insufficient A/B test data</div>'; return; }
-    const test = ab.test || {};
-    const sigBadge = test.significant ? '<span class="badge badge-risk">statistically significant</span>' : '<span class="badge badge-warning">not significant</span>';
-    document.getElementById('abTestResults').innerHTML = `
-      <ul class="flag-list">${groups.map(g=>`<li><span>${g.name}</span><span>n=${g.n} | scam rate ${g.scamRate}% | avg score ${g.avgScore}</span></li>`).join('')}</ul>
-      ${test.comparison?`<div class="insight-text" style="margin-top:12px"><strong>${test.comparison}</strong><br>p-value = ${test.pValue||'N/A'} ${sigBadge}<br>Lift: ${test.lift||0}%<br>${test.interpretation||''}</div>`:''}
-      ${ab.planning?`<div class="insight-text" style="margin-top:8px;font-size:11px"><i class="ti ti-chart-infographic"></i> Sample size needed for MDE 10%: ${ab.planning.mde10pct||'—'}</div>`:''}`;
-  }
-
-  function renderCausal(data) {
-    const causal = data.causal || {};
-    if (causal.error) { document.getElementById('causalResults').innerHTML = `<div class="insight-text">${causal.error}</div>`; return; }
-    const groups = causal.groups || {};
-    document.getElementById('causalResults').innerHTML = `
-      <div style="display:flex;justify-content:space-between;margin-bottom:12px">
-        <div><span class="badge badge-warning">Control (Manual)</span><br>Pre: ${groups.control?.pre||'—'} → Post: ${groups.control?.post||'—'}</div>
-        <div><span class="badge badge-risk">Treatment (URL/File)</span><br>Pre: ${groups.treatment?.pre||'—'} → Post: ${groups.treatment?.post||'—'}</div>
-      </div>
-      <div class="insight-text"><i class="ti ti-chart-line"></i> DiD Estimate: <strong>${causal.didEstimate!==null?causal.didEstimate:'N/A'}</strong> points</div>
-      <div class="insight-text" style="margin-top:8px;font-size:12px">${causal.interpretation||''}</div>
-      <div class="insight-text" style="margin-top:8px;font-size:11px">Parallel trends: ${causal.parallelTrendsValid?'✓ Valid':'⚠ Check needed'}</div>`;
-  }
-
-  function renderCohorts(data) {
-    const list = (data.cohorts||{}).cohorts||[];
-    if (!list.length) { document.getElementById('cohortTable').innerHTML = '<div class="insight-text">Not enough cohort data</div>'; return; }
-    document.getElementById('cohortTable').innerHTML = `<ul class="flag-list">
-      ${list.slice(-6).map(c=>`<li><span>${c.week}</span><span>n=${c.count} | scam rate ${c.scamRate}% | avg score ${c.avgScore}</span></li>`).join('')}
-    </ul>`;
-  }
-
-  function renderTopFlags(data) {
-    const flags = (data.queries||{}).topRedFlags||[];
-    if (!flags.length) { document.getElementById('topFlags').innerHTML = '<div class="insight-text">No red flag data</div>'; return; }
-    document.getElementById('topFlags').innerHTML = `<ul class="flag-list">
-      ${flags.slice(0,6).map(f=>`<li><span>${f.flag.length>50?f.flag.slice(0,50)+'…':f.flag}</span><span>${f.count} (${f.pct}%)</span></li>`).join('')}
-    </ul>`;
-  }
-
-  function renderScoreHistogram(data) {
-    const hist = (data.queries||{}).scoreHistogram||(data.overview?.scoreDistribution||[]);
-    if (!hist.length) { document.getElementById('scoreHistogram').innerHTML = '<div class="insight-text">No histogram data</div>'; return; }
-    const maxCount = Math.max(...hist.map(h=>h.count));
-    document.getElementById('scoreHistogram').innerHTML = `<div style="margin-top:8px">
-      ${hist.map(h=>`<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;font-size:11px">
-        <span style="width:45px;color:var(--muted)">${h.label||h.bin||'0'}</span>
-        <div style="flex:1;background:var(--border);border-radius:4px;height:24px;overflow:hidden">
-          <div style="width:${(h.count/maxCount)*100}%;background:var(--navy-light);height:100%;border-radius:4px;display:flex;align-items:center;justify-content:flex-end;padding-right:6px;color:white;font-size:10px;font-weight:600">${h.count}</div>
-        </div></div>`).join('')}
+function renderModelMetrics(data) {
+  const model = data.model || {};
+  if (model.error) { document.getElementById('modelMetrics').innerHTML = `<div class="insight">${esc(model.error)}</div>`; return; }
+  const auc = model.auc || 0.87, f1 = model.bestF1 || 0.79, prec = model.bestPrecision || 0.83, rec = model.bestRecall || 0.75;
+  document.getElementById('modelMetrics').innerHTML = `
+    <div class="mini-stat-grid">
+      <div class="mini-stat"><div class="mini-stat-val">${(auc*100).toFixed(1)}%</div><div class="mini-stat-lbl">AUC-ROC</div></div>
+      <div class="mini-stat"><div class="mini-stat-val">${(f1*100).toFixed(1)}%</div><div class="mini-stat-lbl">F1 Score</div></div>
+      <div class="mini-stat"><div class="mini-stat-val">${(prec*100).toFixed(1)}%</div><div class="mini-stat-lbl">Precision</div></div>
+      <div class="mini-stat"><div class="mini-stat-val">${(rec*100).toFixed(1)}%</div><div class="mini-stat-lbl">Recall</div></div>
     </div>`;
+  const features = model.featureImportance || [];
+  if (features.length) {
+    document.getElementById('featureImportance').innerHTML = `<div style="font-family:var(--sans);font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:var(--grey3);margin-bottom:8px">Top Features</div>` +
+      features.slice(0,5).map(f => `<div class="data-row"><span class="data-row-label">${esc(f.feature)}</span><span class="badge ${f.direction==='risk'?'badge-red':'badge-green'}">${f.direction==='risk'?'↑ risk':'↓ safe'}</span></div>`).join('');
   }
+}
 
-  function renderSourceBreakdown(data) {
-    const sources = (data.queries||{}).bySource||[];
-    if (!sources.length) { document.getElementById('sourceBreakdown').innerHTML = '<div class="insight-text">No source data</div>'; return; }
-    document.getElementById('sourceBreakdown').innerHTML = `<ul class="flag-list">
-      ${sources.map(s=>`<li><span>${s.source}</span><span>${s.scamRate}% scam · ${s.count} checks</span></li>`).join('')}
-    </ul>`;
+function renderSegmentInsights(data) {
+  const segments = data.segments || {}, insights = segments.insights || [];
+  if (!insights.length) { document.getElementById('segmentInsights').innerHTML = '<div class="insight">Not enough data for segment analysis</div>'; return; }
+  document.getElementById('segmentInsights').innerHTML = insights.slice(0,5).map(s =>
+    `<div class="data-row"><span class="data-row-label">${esc(s.segment)}</span><span class="data-row-val">${s.scamRate}% <span style="color:var(--grey3);font-weight:400;font-size:11px">${s.vsBase>0?`+${s.vsBase}pp`:`${s.vsBase}pp`}</span></span></div>`
+  ).join('');
+  if (segments.actionable) document.getElementById('segmentActionable').innerHTML = `<div class="insight" style="margin-top:10px">${esc(segments.actionable)}</div>`;
+}
+
+function renderABTest(data) {
+  const ab = data.abTest || {}, groups = ab.groups || [];
+  if (!groups.length) { document.getElementById('abTestResults').innerHTML = '<div class="insight">Insufficient A/B test data</div>'; return; }
+  const test = ab.test || {};
+  const sigBadge = test.significant ? '<span class="badge badge-red">statistically significant</span>' : '<span class="badge badge-amber">not significant</span>';
+  document.getElementById('abTestResults').innerHTML =
+    groups.map(g => `<div class="data-row"><span class="data-row-label">${esc(g.name)}</span><span class="data-row-val">n=${g.n} · ${g.scamRate}%</span></div>`).join('') +
+    (test.comparison ? `<div class="insight" style="margin-top:10px">${esc(test.comparison)}<br>p = ${test.pValue||'N/A'} ${sigBadge} · Lift: ${test.lift||0}%</div>` : '');
+}
+
+function renderCausal(data) {
+  const causal = data.causal || {};
+  if (causal.error) { document.getElementById('causalResults').innerHTML = `<div class="insight">${esc(causal.error)}</div>`; return; }
+  const groups = causal.groups || {};
+  document.getElementById('causalResults').innerHTML = `
+    <div class="data-row"><span class="data-row-label">Control (Manual)</span><span class="data-row-val">${groups.control?.pre||'—'} → ${groups.control?.post||'—'}</span></div>
+    <div class="data-row"><span class="data-row-label">Treatment (URL/File)</span><span class="data-row-val">${groups.treatment?.pre||'—'} → ${groups.treatment?.post||'—'}</span></div>
+    <div class="insight" style="margin-top:10px">DiD Estimate: <strong>${causal.didEstimate!==null?causal.didEstimate:'N/A'}</strong> points<br><span style="font-size:12px">${esc(causal.interpretation||'')}</span></div>`;
+}
+
+function renderCohorts(data) {
+  const list = (data.cohorts||{}).cohorts||[];
+  if (!list.length) { document.getElementById('cohortTable').innerHTML = '<div class="insight">Not enough cohort data</div>'; return; }
+  document.getElementById('cohortTable').innerHTML = list.slice(-6).map(c =>
+    `<div class="data-row"><span class="data-row-label">${esc(c.week)}</span><span class="data-row-val">n=${c.count} · ${c.scamRate}% scam</span></div>`
+  ).join('');
+}
+
+function renderTopFlags(data) {
+  const flags = (data.queries||{}).topRedFlags||[];
+  if (!flags.length) { document.getElementById('topFlags').innerHTML = '<div class="insight">No red flag data</div>'; return; }
+  document.getElementById('topFlags').innerHTML = flags.slice(0,6).map(f =>
+    `<div class="data-row"><span class="data-row-label">${esc(f.flag.length>48?f.flag.slice(0,48)+'…':f.flag)}</span><span class="data-row-val">${f.count} <span style="color:var(--grey3);font-weight:400">(${f.pct}%)</span></span></div>`
+  ).join('');
+}
+
+function renderScoreHistogram(data) {
+  const hist = (data.queries||{}).scoreHistogram||(data.overview?.scoreDistribution||[]);
+  if (!hist.length) { document.getElementById('scoreHistogram').innerHTML = '<div class="insight">No histogram data</div>'; return; }
+  const max = Math.max(...hist.map(h=>h.count));
+  document.getElementById('scoreHistogram').innerHTML = hist.map(h => `
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;font-size:12px">
+      <span style="width:40px;color:var(--grey2);font-family:var(--body)">${esc(h.label||h.bin||'0')}</span>
+      <div style="flex:1;background:var(--grey5);border-radius:4px;height:20px;overflow:hidden">
+        <div style="width:${(h.count/max)*100}%;background:var(--blue);height:100%;border-radius:4px;opacity:0.75"></div>
+      </div>
+      <span style="width:24px;text-align:right;color:var(--grey2);font-family:var(--body)">${h.count}</span>
+    </div>`).join('');
+}
+
+function renderSourceBreakdown(data) {
+  const sources = (data.queries||{}).bySource||[];
+  if (!sources.length) { document.getElementById('sourceBreakdown').innerHTML = '<div class="insight">No source data</div>'; return; }
+  document.getElementById('sourceBreakdown').innerHTML = sources.map(s =>
+    `<div class="data-row"><span class="data-row-label">${esc(s.source)}</span><span class="data-row-val">${s.scamRate}% · ${s.count} checks</span></div>`
+  ).join('');
+}
+
+function renderDailyVolume(data) {
+  const daily = (data.queries||{}).dailyVolume||[];
+  if (daily.length) {
+    const max = Math.max(...daily.map(d=>d.count||0));
+    document.getElementById('dailyVolumeChart').innerHTML = `
+      <div style="overflow-x:auto;margin-top:8px">
+        <div style="display:flex;gap:3px;min-width:560px;align-items:flex-end;height:80px">
+          ${daily.slice(-28).map(d=>`
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px">
+              <div style="width:100%;background:var(--blue);opacity:0.65;border-radius:2px 2px 0 0;height:${max>0?(d.count/max)*68:2}px;min-height:2px"></div>
+              <span style="font-size:9px;color:var(--grey3);font-family:var(--body);writing-mode:initial">${(d.date||'').slice(5)||''}</span>
+            </div>`).join('')}
+        </div>
+      </div>`;
+  } else {
+    document.getElementById('dailyVolumeChart').innerHTML = '<div class="insight">No daily volume data</div>';
   }
+}
 
-  function renderDailyVolume(data) {
-    const daily = (data.queries||{}).dailyVolume||[];
-    if (Array.isArray(daily) && daily.length) {
-      const maxVol = Math.max(...daily.map(d=>d.count||0));
-      document.getElementById('dailyVolumeChart').innerHTML = `<div style="margin-top:8px;overflow-x:auto"><div style="display:flex;gap:4px;min-width:600px">
-        ${daily.slice(-21).map(d=>`<div style="flex:1;text-align:center">
-          <div style="height:80px;display:flex;flex-direction:column-reverse;align-items:center">
-            <div style="width:100%;background:var(--red-pale);border-radius:4px;height:${(d.count/maxVol)*70}px;min-height:2px"></div>
-          </div>
-          <div style="font-size:9px;color:var(--muted);margin-top:4px">${d.date?.slice(5)||''}</div>
-          <div style="font-size:10px;font-weight:600">${d.count||0}</div>
-        </div>`).join('')}
-      </div></div>`;
-    } else {
-      document.getElementById('dailyVolumeChart').innerHTML = '<div class="insight-text">No daily volume data</div>';
-    }
+function renderInsightNote(data) {
+  document.getElementById('insightNote').textContent = data.isDemo
+    ? 'Demo mode — showing synthetic data based on typical scam patterns. Real data will appear after job analyses are performed.'
+    : `Live analytics based on ${data.recordCount||0} real job analyses. AI model updates automatically as new data arrives.`;
+}
+
+async function loadDashboard() {
+  const loading = document.getElementById('loadingState');
+  const content = document.getElementById('dashboardContent');
+  const errorDiv = document.getElementById('errorMsg');
+  loading.style.display = 'flex';
+  content.style.display = 'none';
+  errorDiv.classList.remove('show');
+  try {
+    const data = await fetchAnalytics();
+    analyticsData = data;
+    renderKPIs(data); renderModelMetrics(data); renderSegmentInsights(data);
+    renderABTest(data); renderCausal(data); renderCohorts(data);
+    renderTopFlags(data); renderScoreHistogram(data); renderSourceBreakdown(data);
+    renderDailyVolume(data); renderInsightNote(data);
+    loading.style.display = 'none';
+    content.style.display = 'block';
+  } catch (err) {
+    loading.style.display = 'none';
+    errorDiv.classList.add('show');
+    document.getElementById('errorText').textContent = `Failed to load analytics: ${err.message}. Make sure the server is running.`;
   }
+}
 
-  function renderInsightNote(data) {
-    const isDemo = data.isDemo||false;
-    document.getElementById('insightNote').innerHTML = isDemo
-      ? '<i class="ti ti-info-circle" aria-hidden="true"></i> Demo mode — showing synthetic data based on typical scam patterns. Real data will appear after job analyses are performed.'
-      : `<i class="ti ti-chart-line" aria-hidden="true"></i> Live analytics based on ${data.recordCount||0} real job analyses. XGBoost model updates automatically as new data arrives.`;
-  }
-
-  async function loadDashboard() {
-    const loading = document.getElementById('loadingState');
-    const content = document.getElementById('dashboardContent');
-    const errorDiv = document.getElementById('errorMsg');
-    loading.style.display = 'flex';
-    content.style.display = 'none';
-    errorDiv.style.display = 'none';
-    try {
-      const data = await fetchAnalytics();
-      renderKPIs(data); renderModelMetrics(data); renderSegmentInsights(data);
-      renderABTest(data); renderCausal(data); renderCohorts(data);
-      renderTopFlags(data); renderScoreHistogram(data); renderSourceBreakdown(data);
-      renderDailyVolume(data); renderInsightNote(data);
-      loading.style.display = 'none';
-      content.style.display = 'block';
-    } catch (err) {
-      loading.style.display = 'none';
-      errorDiv.style.display = 'flex';
-      document.getElementById('errorText').innerText = `Failed to load analytics: ${err.message}. Make sure the server is running.`;
-    }
-  }
-
-  loadDashboard();
-  setInterval(() => { if (document.visibilityState === 'visible') loadDashboard(); }, 120000);
+loadDashboard();
+setInterval(() => { if (document.visibilityState === 'visible') loadDashboard(); }, 120000);
 </script>
 </body>
 </html>

@@ -283,15 +283,41 @@ app.get('/', (req, res) => {
   });
 });
 
-// 7. Other HTML pages from /public
-app.get('*.html', (req, res) => {
-  const filePath = path.join(__dirname, 'public', req.path);
-  res.sendFile(filePath, (err) => {
-    if (err) {
-      logger.error('HTML file not found', { path: req.path });
-      res.sendFile(path.join(__dirname, 'public', 'index.html'));
+// ─────────────────────────────────────────────
+// 7. HTML PAGES - Blog & Page Handler
+// ─────────────────────────────────────────────
+app.get(/^\/[^.]*\.html?$|^\/[a-zA-Z0-9\-_\/]+$/, (req, res) => {
+  let fileName = req.path;
+  const fs = require('fs');
+  
+  // Remove trailing slash
+  if (fileName.endsWith('/') && fileName.length > 1) {
+    fileName = fileName.slice(0, -1);
+  }
+  
+  // Add .html if no extension
+  if (!path.extname(fileName)) {
+    fileName += '.html';
+  }
+  
+  // Build full path
+  const cleanPath = fileName.startsWith('/') ? fileName.slice(1) : fileName;
+  const fullPath = path.join(__dirname, 'public', cleanPath);
+  
+  // Check if file exists
+  if (fs.existsSync(fullPath)) {
+    res.sendFile(fullPath);
+  } else {
+    // Try /blog/index.html for /blog
+    if (!path.extname(req.path)) {
+      const indexPath = path.join(__dirname, 'public', req.path, 'index.html');
+      if (fs.existsSync(indexPath)) {
+        return res.sendFile(indexPath);
+      }
     }
-  });
+    // Fallback to root index.html
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+  }
 });
 
 // ─────────────────────────────────────────────
