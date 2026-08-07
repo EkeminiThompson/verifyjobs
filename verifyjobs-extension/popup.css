@@ -241,3 +241,17 @@ footer a {
   text-decoration: none;
 }
 footer a:hover { text-decoration: underline; }
+
+.file-drop {
+  display: block;
+  border: 2px dashed #cbd5e1;
+  border-radius: 10px;
+  padding: 18px 12px;
+  text-align: center;
+  cursor: pointer;
+  background: #f8fafc;
+  margin-bottom: 8px;
+}
+.file-drop:hover { border-color: #1a73e8; background: #f0f5ff; }
+.file-drop input[type=file] { display: none; }
+.file-drop span { font-size: 13px; color: #475569; word-break: break-all; }

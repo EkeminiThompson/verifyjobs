@@ -18,6 +18,7 @@
 'use strict';
 
 const axios = require('axios');
+const { buildDecision } = require('./decision');
 
 // ── CONFIG ────────────────────────────────────────────────────────────────────
 
@@ -353,7 +354,7 @@ async function enrichWithML(text, ruleResult) {
     ruleResult.redFlags || []
   );
 
-  return {
+  const enriched = {
     // Original rule result (fully preserved)
     ...ruleResult,
 
@@ -384,6 +385,11 @@ async function enrichWithML(text, ruleResult) {
       finalScore,
     },
   };
+
+  // Rebuild decision against the final blended score so verdict matches the score
+  enriched.decision = buildDecision(enriched, text);
+
+  return enriched;
 }
 
 module.exports = { getMLScore, enrichWithML, checkServerHealth };

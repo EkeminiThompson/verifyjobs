@@ -72,6 +72,18 @@ async function runAnalysis(prePayload = null) {
       }
       if (!/^https?:\/\//i.test(url)) url = "https://" + url;
       payload = { type: "url", url };
+    } else if (currentTab === "file") {
+      const fileInput = $("#jobFile");
+      const file = fileInput?.files?.[0];
+      if (!file) {
+        showError("Please choose a PDF, Word document, or image.");
+        return;
+      }
+      if (file.size > 10 * 1024 * 1024) {
+        showError("File too large (max 10 MB).");
+        return;
+      }
+      payload = { type: "file", file };
     } else if (currentTab === "page") {
       // Get current tab URL
       const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
@@ -154,7 +166,7 @@ function renderResult(data) {
   }
 
   // Positive signals
-  const positives = data.positiveSignals || data.positive_signals || data.positives || [];
+  const positives = data.positiveIndicators || data.positiveSignals || data.positive_signals || data.positives || [];
   const posSection = $("#positiveSignals");
   const posList = $("#positiveList");
   posList.innerHTML = "";
@@ -194,6 +206,8 @@ function resetUI() {
   $("#jobText").value = "";
   $("#jobTitle").value = "";
   $("#jobUrl").value = "";
+  if ($("#jobFile")) $("#jobFile").value = "";
+  if ($("#fileLabel")) $("#fileLabel").textContent = "PDF, Word, or image (jpg/png/webp)";
 }
 
 function truncate(str, len) {

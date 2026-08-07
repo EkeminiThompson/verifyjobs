@@ -22,6 +22,7 @@
     <div class="tabs">
       <button class="tab active" data-tab="text">Paste Text</button>
       <button class="tab" data-tab="url">URL</button>
+      <button class="tab" data-tab="file">File / Image</button>
       <button class="tab" data-tab="page">This Page</button>
     </div>
 
@@ -32,6 +33,14 @@
 
     <div id="urlPanel" class="panel">
       <input id="jobUrl" type="url" placeholder="https://…" />
+    </div>
+
+    <div id="filePanel" class="panel">
+      <label class="file-drop" for="jobFile">
+        <input type="file" id="jobFile" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.webp,image/*" />
+        <span id="fileLabel">PDF, Word, or image (jpg/png/webp)</span>
+      </label>
+      <p class="hint">Images are scanned with OCR on the server. Max 10 MB.</p>
     </div>
 
     <div id="pagePanel" class="panel">

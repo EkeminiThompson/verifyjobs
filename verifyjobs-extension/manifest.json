@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "VerifyJobs – Job Scam Checker",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "description": "Instantly check any job posting for scams. Powered by VerifyJobs hybrid AI + rules engine. Results appear in the popup without leaving the page.",
   "homepage_url": "https://verifyjobs.org",
   "permissions": [

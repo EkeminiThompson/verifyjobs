@@ -24,39 +24,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Google+Sans+Display:wght@400;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/shared.css">
 <style>
-*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-:root {
-  --black:#202124; --grey1:#3c4043; --grey2:#5f6368; --grey3:#9aa0a6;
-  --grey4:#dadce0; --grey5:#f1f3f4; --grey6:#f8f9fa; --white:#ffffff;
-  --red:#d93025; --blue:#1a73e8; --green:#188038; --amber:#e37400;
-  --sans:'Google Sans','Product Sans',-apple-system,'Helvetica Neue',Arial,sans-serif;
-  --display:'Google Sans Display','Google Sans',-apple-system,'Helvetica Neue',Arial,sans-serif;
-  --body:'Roboto',-apple-system,'Helvetica Neue',Arial,sans-serif;
-}
-html { background: var(--white); }
-body { font-family: var(--body); font-size: 16px; color: var(--black); background: var(--white); -webkit-font-smoothing: antialiased; }
-.nav { position: sticky; top: 0; z-index: 100; background: var(--white); border-bottom: 1px solid var(--grey4); height: 64px; display: flex; align-items: center; padding: 0 24px; }
-.nav-inner { width: 100%; max-width: 1280px; margin: 0 auto; display: flex; align-items: center; }
-.wordmark { font-family: var(--sans); font-size: 22px; font-weight: 400; color: var(--black); text-decoration: none; letter-spacing: -0.3px; margin-right: 32px; flex-shrink: 0; }
-.wordmark b { font-weight: 700; }
-.nav-links { display: flex; align-items: center; gap: 4px; flex: 1; }
-.nav-links a { font-family: var(--sans); font-size: 14px; font-weight: 500; color: var(--grey2); text-decoration: none; padding: 8px 12px; border-radius: 24px; transition: background 0.15s, color 0.15s; white-space: nowrap; }
-.nav-links a:hover { background: var(--grey5); color: var(--black); }
-.nav-links a.active { color: var(--blue); background: #e8f0fe; }
-.nav-right { margin-left: auto; }
-.nav-chip { font-family: var(--sans); font-size: 12px; font-weight: 500; color: var(--grey2); background: var(--grey5); border: 1px solid var(--grey4); border-radius: 20px; padding: 5px 12px; }
-.nav-chip span { color: var(--green); font-weight: 600; }
-
 .page { max-width: 1280px; margin: 0 auto; padding: 0 24px 80px; }
-.page-hero { padding: 64px 0 48px; border-bottom: 1px solid var(--grey4); margin-bottom: 56px; }
-.breadcrumb { font-family: var(--sans); font-size: 13px; color: var(--grey3); margin-bottom: 20px; display: flex; align-items: center; gap: 8px; }
-.breadcrumb a { color: var(--grey2); text-decoration: none; }
-.breadcrumb a:hover { color: var(--black); }
-.page-h1 { font-family: var(--display); font-size: clamp(32px, 4.5vw, 52px); font-weight: 400; color: var(--black); line-height: 1.1; letter-spacing: -0.5px; margin-bottom: 16px; }
-.page-h1 em { font-style: normal; font-weight: 700; }
-.page-deck { font-family: var(--body); font-size: 16px; color: var(--grey1); line-height: 1.75; max-width: 640px; }
-
 .stats-strip { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; background: var(--grey4); border: 1px solid var(--grey4); border-radius: 16px; overflow: hidden; margin-bottom: 56px; }
 .stat-cell { background: var(--white); padding: 28px 24px; text-align: center; }
 .stat-cell-n { font-family: var(--display); font-size: 36px; font-weight: 700; color: var(--black); display: block; line-height: 1; margin-bottom: 6px; }
@@ -93,72 +63,8 @@ body { font-family: var(--body); font-size: 16px; color: var(--black); backgroun
 .btn-cta { display: inline-flex; align-items: center; gap: 8px; background: var(--blue); color: var(--white); font-family: var(--sans); font-size: 14px; font-weight: 700; padding: 14px 28px; border-radius: 100px; text-decoration: none; transition: background 0.15s; }
 .btn-cta:hover { background: #1557b0; }
 
-.footer { border-top: 1px solid var(--grey4); padding: 24px; margin-top: 80px; }
-.footer-inner { max-width: 1280px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
-.footer-links { display: flex; gap: 20px; flex-wrap: wrap; }
-.footer-links a { font-family: var(--body); font-size: 13px; color: var(--grey2); text-decoration: none; }
-.footer-links a:hover { color: var(--black); }
-.footer-copy { font-family: var(--body); font-size: 13px; color: var(--grey3); }
-
 @media(max-width:768px) { .stats-strip,.metric-row { grid-template-columns: 1fr 1fr; } .values-grid { grid-template-columns: 1fr; } }
-@media(max-width:560px) { .nav-links { display: none; }
-  .nav-hamburger { display: flex; } .page { padding: 0 16px 48px; } .page-hero { padding: 40px 0 32px; margin-bottom: 32px; } .stats-strip,.country-grid,.metric-row { grid-template-columns: 1fr; } .cta-block { padding: 32px 20px; } }
-*:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
-
-/* ─── MOBILE NAV ─── */
-.nav-hamburger {
-  display: none;
-  flex-direction: column;
-  justify-content: center;
-  gap: 5px;
-  width: 36px;
-  height: 36px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 4px;
-  border-radius: 8px;
-  margin-left: 8px;
-  -webkit-tap-highlight-color: transparent;
-}
-.nav-hamburger span {
-  display: block;
-  width: 22px;
-  height: 2px;
-  background: var(--black);
-  border-radius: 2px;
-  transition: transform 0.2s, opacity 0.2s;
-}
-.nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-.nav-hamburger.open span:nth-child(2) { opacity: 0; }
-.nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-
-.mobile-menu {
-  display: none;
-  position: fixed;
-  top: 64px;
-  left: 0; right: 0;
-  background: var(--white);
-  border-bottom: 1px solid var(--grey4);
-  z-index: 99;
-  padding: 8px 16px 16px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-}
-.mobile-menu.open { display: block; }
-.mobile-menu a {
-  display: block;
-  font-family: var(--sans);
-  font-size: 15px;
-  font-weight: 500;
-  color: var(--grey1);
-  text-decoration: none;
-  padding: 12px 8px;
-  border-bottom: 1px solid var(--grey5);
-}
-.mobile-menu a:last-child { border-bottom: none; }
-.mobile-menu a:hover { color: var(--black); }
-.mobile-menu a.active { color: var(--blue); }
-
+@media(max-width:560px) { .page { padding: 0 16px 48px; } .stats-strip,.country-grid,.metric-row { grid-template-columns: 1fr; } .cta-block { padding: 32px 20px; } }
 </style>
 </head>
 <body>
@@ -169,6 +75,7 @@ body { font-family: var(--body); font-size: 16px; color: var(--black); backgroun
         <div class="nav-links">
       <a href="/">Home</a>
       <a href="/analytics.html">Analytics</a>
+      <a href="/extension.html">Chrome Extension</a>
       <a href="/how-it-works.html">How it works</a>
       <a href="/about.html" class="active">About</a>
       <a href="/report-a-scam.html">Report a scam</a>
@@ -185,6 +92,7 @@ body { font-family: var(--body); font-size: 16px; color: var(--black); backgroun
 <div class="mobile-menu" id="mobileMenu" role="navigation" aria-label="Mobile navigation">
   <a href="/">Home</a>
   <a href="/analytics.html">Analytics</a>
+  <a href="/extension.html">Chrome Extension</a>
   <a href="/how-it-works.html">How it works</a>
   <a href="/about.html" class="active">About</a>
   <a href="/report-a-scam.html">Report a scam</a>
@@ -271,11 +179,11 @@ body { font-family: var(--body); font-size: 16px; color: var(--black); backgroun
 <footer class="footer">
   <div class="footer-inner">
     <div class="footer-links">
-      <a href="/">Home</a><a href="/analytics.html">Analytics</a><a href="/how-it-works.html">How it works</a>
-      <a href="/about.html">About</a><a href="/report-a-scam.html">Report a scam</a><a href="/privacy.html">Privacy</a><a href="/blog/index.html">Blog</a>
+      <a href="/">Home</a><a href="/analytics.html">Analytics</a><a href="/extension.html">Chrome Extension</a><a href="/how-it-works.html">How it works</a><a href="/about.html">About</a><a href="/report-a-scam.html">Report a scam</a><a href="/privacy.html">Privacy</a><a href="/extension-privacy.html">Extension Privacy</a><a href="/blog/index.html">Blog</a>
     </div>
     <div class="footer-copy">© 2026 VerifyJobs.org — Free · No account · No data stored</div>
   </div>
 </footer>
+<script src="/shared.js" defer></script>
 </body>
 </html>

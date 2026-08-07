@@ -19,6 +19,7 @@ const winston = require('winston');
 const analyzeJob = require('./engine/analyzer');
 const { ensureStorage, getAllAnalyses } = require('./engine/storage');
 const { enrichWithML, checkServerHealth } = require('./engine/ml_scorer');
+const { buildDecision } = require('./engine/decision');
 
 // ─────────────────────────────────────────────
 // CONFIGURATION
@@ -170,12 +171,12 @@ const upload = multer({
   storage: multer.memoryStorage(),
   limits: { fileSize: config.maxFileSize },
   fileFilter: (req, file, cb) => {
-    const allowed = ['.pdf', '.doc', '.docx'];
+    const allowed = ['.pdf', '.doc', '.docx', '.jpg', '.jpeg', '.png', '.webp'];
     const ext = path.extname(file.originalname).toLowerCase();
     if (allowed.includes(ext)) {
       cb(null, true);
     } else {
-      cb(new Error('Only PDF and Word files (.pdf, .doc, .docx) allowed'));
+      cb(new Error('Only PDF, Word (.pdf, .doc, .docx) and image files (.jpg, .jpeg, .png, .webp) allowed'));
     }
   },
 });
@@ -1089,6 +1090,27 @@ app.post('/analyze-file', upload.single('file'), async (req, res) => {
       const mammoth = require('mammoth');
       const extracted = await mammoth.extractRawText({ buffer: file.buffer });
       text = extracted.value || '';
+    } else if (['.jpg', '.jpeg', '.png', '.webp'].includes(ext)) {
+      if (!tesseract) {
+        return res.status(400).json({
+          error: 'Image OCR not available on this server',
+          message: 'Please install tesseract.js: npm install tesseract.js',
+        });
+      }
+      try {
+        const { data } = await tesseract.recognize(file.buffer, 'eng', {
+          logger: () => {},
+        });
+        text = data.text || '';
+        logger.info('OCR completed', {
+          filename: file.originalname,
+          confidence: data.confidence,
+          extractedLength: text.length,
+        });
+      } catch (ocrErr) {
+        logger.error('OCR failed', { error: ocrErr.message, filename: file.originalname });
+        throw new Error(`Image OCR failed: ${ocrErr.message}`);
+      }
     } else {
       return res.status(400).json({ error: 'Unsupported file type' });
     }
@@ -1175,28 +1197,39 @@ app.post('/analyze-url', validateUrlInput, async (req, res) => {
     const ruleResult = analyzeJob(ctx.combinedText, ctx.pageTitle, 'URL');
     const result     = await enrichWithML(ctx.combinedText, ruleResult);
     
-    // ========== ADD THE BLOCK HERE ==========
+    // ========== TRUSTED DOMAIN SAFEGUARD ==========
     const hostname = (() => {
       try { return new URL(ctx.submittedUrl || rawUrl).hostname.toLowerCase(); }
       catch { return ''; }
     })();
-    
+
     const isTrusted = isCanonicalSource(hostname);
-    
-    if (isTrusted) {
-      // Strong positive signal for official career systems
+    const isOwnSite = hostname === 'verifyjobs.org' || hostname.endsWith('.verifyjobs.org');
+
+    if (isTrusted || isOwnSite) {
       result.positiveIndicators = result.positiveIndicators || [];
-      result.positiveIndicators.unshift(
-        `Official career portal domain (${hostname})`
-      );
-    
-      // If the scraper got almost no text, it is almost certainly a JS-rendered ATS page
-      if ((ctx.combinedText || '').trim().split(/\s+/).length < 40) {
+      if (!result.positiveIndicators.some(p => /official career portal|verifyjobs/i.test(String(p)))) {
+        result.positiveIndicators.unshift(
+          isOwnSite
+            ? 'Official VerifyJobs.org page (not a job posting)'
+            : `Official career portal domain (${hostname})`
+        );
+      }
+
+      // Own marketing/docs site should never be scored as a job scam
+      if (isOwnSite) {
+        result.riskScore = Math.min(result.riskScore, 10);
+        result.legitimacyScore = Math.max(result.legitimacyScore || 0, 90);
+        result.redFlags = [];
+        result.status = 'legitimate';
+        result.statusLabel = '✅ Not a job posting — VerifyJobs site';
+        result.explanation = 'This URL is the VerifyJobs website itself (educational / marketing content), not a job advertisement. Scam-related phrases on this page are examples used to educate users.';
+        result.recommendation = 'This is not a job to apply for. Use the tool to check actual job postings.';
+      } else if ((ctx.combinedText || '').trim().split(/\s+/).length < 40) {
+        // Short text on trusted ATS = JS-rendered portal
         result.redFlags = (result.redFlags || []).filter(f =>
           !/short|placeholder|very short/i.test(typeof f === 'string' ? f : f.signal || f.label || '')
         );
-    
-        // Pull the risk score down significantly
         result.riskScore = Math.min(result.riskScore, 25);
         result.legitimacyScore = Math.max(result.legitimacyScore || 0, 75);
         result.status = 'likely_legitimate';
@@ -1204,13 +1237,35 @@ app.post('/analyze-url', validateUrlInput, async (req, res) => {
         result.explanation = 'This job is hosted on a known official career system (Oracle Cloud / Workday / Greenhouse / etc.). Short extracted text is normal for these JavaScript-heavy portals and is not treated as a scam signal.';
         result.recommendation = 'This appears to be a genuine posting on an official career portal. Still verify the specific vacancy and never pay any fees.';
       } else {
-        // Even with full text, give a legitimacy boost
+        // Full text on trusted domain — boost legitimacy and RECOMPUTE status
         result.riskScore = Math.max(0, result.riskScore - 25);
         result.legitimacyScore = Math.min(100, (result.legitimacyScore || 0) + 25);
+
+        // Re-map status from adjusted score so label matches the number
+        const s = result.riskScore;
+        if (s >= 75) {
+          result.status = 'definite_scam';
+          result.statusLabel = '🚨 DEFINITE SCAM';
+        } else if (s >= 55) {
+          result.status = 'high_risk';
+          result.statusLabel = '⚠️ HIGH RISK';
+        } else if (s >= 40) {
+          result.status = 'suspicious';
+          result.statusLabel = '⚡ SUSPICIOUS';
+        } else if (s >= 20) {
+          result.status = 'caution';
+          result.statusLabel = '✓ CAUTION';
+        } else {
+          result.status = 'legitimate';
+          result.statusLabel = '✅ LIKELY LEGITIMATE';
+        }
       }
     }
-    // ========== END OF BLOCK ==========
-    
+    // ========== END BLOCK ==========
+
+    // Keep decision in sync with any post-ML score/status adjustments (trusted domains, own site)
+    result.decision = buildDecision(result, ctx.combinedText || '');
+
     const final = {
       ...result,
       submittedUrl:    ctx.submittedUrl,
@@ -1330,6 +1385,17 @@ try {
 }
 
 // ─────────────────────────────────────────────
+// IMAGE OCR (tesseract.js)
+// ─────────────────────────────────────────────
+let tesseract;
+try {
+  tesseract = require('tesseract.js');
+  logger.info('✅ tesseract.js loaded');
+} catch (e) {
+  logger.warn('⚠ tesseract.js unavailable — image upload disabled', { error: e.message });
+}
+
+// ─────────────────────────────────────────────
 // ERROR HANDLING
 // ─────────────────────────────────────────────
 app.use((err, req, res, next) => {
@@ -1344,7 +1410,7 @@ app.use((err, req, res, next) => {
     return res.status(400).json({ error: err.message });
   }
 
-  if (err.message.includes('Only PDF and Word files')) {
+  if (err.message.includes('Only PDF') || err.message.includes('Only PDF, Word')) {
     return res.status(400).json({ error: err.message });
   }
 

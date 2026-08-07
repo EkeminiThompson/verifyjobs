@@ -5,6 +5,7 @@ const { redFlags, positiveSignals } = require('./rules');
 const { analyzeJobFreshness } = require('./job-freshness');
 const { normalizeScore, getStatus, getStatusLabel } = require('./scorer');
 const { addAnalysis } = require('./storage');
+const { buildDecision } = require('./decision');
 
 // ─────────────────────────────────────────────
 // JOB STATUS DETECTION
@@ -437,6 +438,9 @@ function analyzeJob(text, jobTitle = 'Untitled Job', source = 'Unknown') {
         analysisTimestamp:    new Date().toISOString(),
       },
     };
+
+    // Customer-facing decision (verdict, top reasons, next steps, scam pattern)
+    result.decision = buildDecision(result, clean);
    
     try {
       addAnalysis(result, jobTitle, source, text);

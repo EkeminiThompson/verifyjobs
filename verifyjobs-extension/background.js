@@ -83,6 +83,13 @@ async function handleAnalyze(payload) {
       jobTitle: payload.jobTitle || "Untitled Job",
       source: payload.source || "Extension"
     });
+  } else if (payload.type === "file") {
+    endpoint = `${base}/analyze-file`;
+    const fd = new FormData();
+    fd.append("file", payload.file, payload.file.name || "upload");
+    fd.append("jobTitle", payload.jobTitle || payload.file.name || "File Upload");
+    headers = {}; // let browser set multipart boundary
+    body = fd;
   } else {
     throw new Error("Unknown analysis type");
   }
