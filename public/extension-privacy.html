@@ -5,13 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-Content-Type-Options" content="nosniff">
 <meta http-equiv="X-Frame-Options" content="DENY">
-<title>Privacy Policy — VerifyJobs.org</title>
-<meta name="description" content="VerifyJobs.org Privacy Policy: We do not store job descriptions, require no account, use no tracking cookies, and never sell your data.">
+<title>Chrome Extension Privacy Policy — VerifyJobs.org</title>
+<meta name="description" content="Privacy policy for the VerifyJobs Chrome extension. We do not collect personal data, do not track users, and only send job text or URLs you choose to analyse to verifyjobs.org.">
 <meta name="robots" content="index, follow">
-<link rel="canonical" href="https://verifyjobs.org/privacy.html">
+<link rel="canonical" href="https://verifyjobs.org/extension-privacy.html">
 <meta property="og:type" content="article">
-<meta property="og:url" content="https://verifyjobs.org/privacy.html">
-<meta property="og:title" content="Privacy Policy — VerifyJobs.org">
+<meta property="og:url" content="https://verifyjobs.org/extension-privacy.html">
+<meta property="og:title" content="Chrome Extension Privacy Policy — VerifyJobs.org">
 <meta property="og:image" content="https://verifyjobs.org/og-image.png">
 <meta property="og:site_name" content="VerifyJobs.org">
 <meta name="twitter:card" content="summary_large_image">
@@ -52,7 +52,6 @@ body { font-family: var(--body); color: var(--black); background: var(--white); 
 .page-deck { font-family: var(--body); font-size: 16px; color: var(--grey1); line-height: 1.75; max-width: 640px; margin-bottom: 16px; }
 .updated-tag { font-family: var(--sans); font-size: 12px; color: var(--grey3); }
 
-/* Summary tiles */
 .summary-tiles { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; background: var(--grey4); border: 1px solid var(--grey4); border-radius: 16px; overflow: hidden; margin-bottom: 40px; }
 .summary-tile { background: var(--white); padding: 20px 18px; display: flex; align-items: center; gap: 12px; }
 .summary-tile-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); flex-shrink: 0; }
@@ -80,11 +79,6 @@ body { font-family: var(--body); color: var(--black); background: var(--white); 
 .footer-links a:hover { color: var(--black); }
 .footer-copy { font-family: var(--body); font-size: 13px; color: var(--grey3); }
 
-@media(max-width:640px) { .summary-tiles { grid-template-columns: 1fr; } .nav-links { display: none; }
-  .nav-hamburger { display: flex; } .page { padding: 0 16px 48px; } .page-hero { padding: 40px 0 32px; margin-bottom: 32px; } }
-*:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
-
-/* ─── MOBILE NAV ─── */
 .nav-hamburger {
   display: none;
   flex-direction: column;
@@ -98,7 +92,6 @@ body { font-family: var(--body); color: var(--black); background: var(--white); 
   padding: 4px;
   border-radius: 8px;
   margin-left: 8px;
-  -webkit-tap-highlight-color: transparent;
 }
 .nav-hamburger span {
   display: block;
@@ -106,12 +99,7 @@ body { font-family: var(--body); color: var(--black); background: var(--white); 
   height: 2px;
   background: var(--black);
   border-radius: 2px;
-  transition: transform 0.2s, opacity 0.2s;
 }
-.nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-.nav-hamburger.open span:nth-child(2) { opacity: 0; }
-.nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-
 .mobile-menu {
   display: none;
   position: fixed;
@@ -135,9 +123,15 @@ body { font-family: var(--body); color: var(--black); background: var(--white); 
   border-bottom: 1px solid var(--grey5);
 }
 .mobile-menu a:last-child { border-bottom: none; }
-.mobile-menu a:hover { color: var(--black); }
-.mobile-menu a.active { color: var(--blue); }
 
+@media(max-width:640px) {
+  .summary-tiles { grid-template-columns: 1fr; }
+  .nav-links { display: none; }
+  .nav-hamburger { display: flex; }
+  .page { padding: 0 16px 48px; }
+  .page-hero { padding: 40px 0 32px; margin-bottom: 32px; }
+}
+*:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
 </style>
 </head>
 <body>
@@ -145,7 +139,7 @@ body { font-family: var(--body); color: var(--black); background: var(--white); 
 <nav class="nav">
   <div class="nav-inner">
     <a class="wordmark" href="/"><b>Verify</b>Jobs</a>
-        <div class="nav-links">
+    <div class="nav-links">
       <a href="/">Home</a>
       <a href="/analytics.html">Analytics</a>
       <a href="/how-it-works.html">How it works</a>
@@ -156,7 +150,9 @@ body { font-family: var(--body); color: var(--black); background: var(--white); 
     <div class="nav-right">
       <button class="nav-hamburger" id="navHamburger" aria-label="Open navigation" aria-expanded="false" aria-controls="mobileMenu">
         <span></span><span></span><span></span>
-      </button><div class="nav-chip">Engine <span>● online</span></div></div>
+      </button>
+      <div class="nav-chip">Engine <span>● online</span></div>
+    </div>
   </div>
 </nav>
 <div class="mobile-menu" id="mobileMenu" role="navigation" aria-label="Mobile navigation">
@@ -171,86 +167,99 @@ body { font-family: var(--body); color: var(--black); background: var(--white); 
 <div class="page">
   <div class="page-hero">
     <nav class="breadcrumb" aria-label="Breadcrumb">
-      <a href="/">Home</a><span>›</span><span>Privacy Policy</span>
+      <a href="/">Home</a><span>›</span>
+      <a href="/privacy.html">Privacy</a><span>›</span>
+      <span>Chrome Extension</span>
     </nav>
-    <h1 class="page-h1">Privacy Policy</h1>
-    <p class="page-deck">We built VerifyJobs to protect people — that same commitment applies to how we handle your data.</p>
-    <div class="updated-tag">Last updated: May 10, 2026</div>
+    <h1 class="page-h1">Chrome Extension Privacy Policy</h1>
+    <p class="page-deck">This policy covers the VerifyJobs Chrome extension. It explains what data the extension handles and how it is used.</p>
+    <div class="updated-tag">Last updated: August 7, 2026</div>
   </div>
 
   <div class="summary-tiles">
-    <div class="summary-tile"><span class="summary-tile-dot"></span><span class="summary-tile-text">We don't store your job text</span></div>
-    <div class="summary-tile"><span class="summary-tile-dot"></span><span class="summary-tile-text">No account or email required</span></div>
-    <div class="summary-tile"><span class="summary-tile-dot"></span><span class="summary-tile-text">Never sold to third parties</span></div>
+    <div class="summary-tile"><span class="summary-tile-dot"></span><span class="summary-tile-text">No personal data collected</span></div>
+    <div class="summary-tile"><span class="summary-tile-dot"></span><span class="summary-tile-text">No tracking or ads</span></div>
+    <div class="summary-tile"><span class="summary-tile-dot"></span><span class="summary-tile-text">Only analyses what you submit</span></div>
   </div>
 
   <main>
 
     <div class="c-card">
-      <div class="c-card-title">1. About this policy</div>
-      <p class="c-card-p">This Privacy Policy explains how VerifyJobs.org collects, uses, and protects your information when you use our free job scam detection tool. We prioritize transparency and minimal data collection.</p>
+      <div class="c-card-title">1. What this extension does</div>
+      <p class="c-card-p">The VerifyJobs Chrome extension lets you check job postings for scam signals without leaving the page. You can paste text, submit a URL, or analyse the current tab. The extension sends that content to the VerifyJobs analysis service and shows the risk score and flags in the popup.</p>
     </div>
 
     <div class="c-card">
-      <div class="c-card-title">2. Information you submit</div>
-      <p class="c-card-p">When you analyse a job posting, you may submit:</p>
+      <div class="c-card-title">2. Data the extension handles</div>
+      <p class="c-card-p">When you run an analysis, the extension may send:</p>
       <ul>
-        <li>Job description text</li>
-        <li>PDF or Word document</li>
-        <li>URL to a job posting</li>
+        <li>Job description text you paste or select</li>
+        <li>A job URL you enter or the URL of the current page</li>
+        <li>An optional job title you type</li>
       </ul>
       <div class="highlight-box">
-        <p><strong>Important:</strong> All submitted content is processed in memory only and is not saved to any permanent storage. We do not store, log, or retain your job descriptions, files, or URLs.</p>
+        <p><strong>Important:</strong> This content is sent only when you click Analyse (or use the context menu / floating button). It is processed by the same VerifyJobs engine used on the website. The extension itself does not store job text, URLs, or results on your device beyond the current session needed to show the popup.</p>
       </div>
     </div>
 
     <div class="c-card">
-      <div class="c-card-title">3. Automatically collected information</div>
-      <p class="c-card-p">We automatically log basic technical information for security and performance:</p>
+      <div class="c-card-title">3. Local storage</div>
+      <p class="c-card-p">The extension stores only one preference on your device:</p>
       <ul>
-        <li>IP address (for rate limiting and abuse prevention)</li>
-        <li>Browser type and version</li>
-        <li>Pages visited and timestamps</li>
+        <li><strong>API Base URL</strong> — the server address used for analysis (default: <code>https://verifyjobs.org</code>). You can change this in the extension Options page.</li>
       </ul>
-      <p class="c-card-p">This data is not used for profiling or advertising.</p>
+      <p class="c-card-p">No browsing history, cookies from other sites, or personal identifiers are stored by the extension.</p>
     </div>
 
     <div class="c-card">
-      <div class="c-card-title">4. Cookies and tracking</div>
-      <p class="c-card-p">We use no advertising cookies, tracking pixels, or third-party analytics tools (no Google Analytics, no Facebook Pixel, etc.). Only a minimal session cookie is used to remember your active tab — it expires when you close the browser.</p>
+      <div class="c-card-title">4. Permissions explained</div>
+      <p class="c-card-p">The extension requests these Chrome permissions:</p>
+      <ul>
+        <li><strong>activeTab / scripting</strong> — to read the current page URL or selected text when you choose to analyse it</li>
+        <li><strong>contextMenus</strong> — to add “Check with VerifyJobs” to the right-click menu</li>
+        <li><strong>storage</strong> — to save your API Base URL preference</li>
+        <li><strong>sidePanel</strong> — optional side-panel UI</li>
+        <li><strong>Host permissions</strong> for verifyjobs.org (to call the analysis API) and major job sites (so the optional floating button can appear)</li>
+      </ul>
+      <p class="c-card-p">The extension does not read your email, passwords, or data from unrelated websites.</p>
     </div>
 
     <div class="c-card">
-      <div class="c-card-title">5. Data sharing</div>
-      <p class="c-card-p">We never sell, rent, or share your personal data with third parties for marketing purposes.</p>
-      <p class="c-card-p">We may disclose information only when legally required or to protect the safety and integrity of our service.</p>
+      <div class="c-card-title">5. How the server uses the data</div>
+      <p class="c-card-p">Job text and URLs sent by the extension are handled under the main <a href="/privacy.html" style="color:var(--blue);text-decoration:none;">VerifyJobs.org Privacy Policy</a>:</p>
+      <ul>
+        <li>Processed in memory for analysis</li>
+        <li>Not stored permanently as personal profiles</li>
+        <li>Not sold or used for advertising</li>
+        <li>Basic technical logs (e.g. IP for rate limiting) may be kept for security</li>
+      </ul>
     </div>
 
     <div class="c-card">
-      <div class="c-card-title">6. Security</div>
-      <p class="c-card-p">All connections are encrypted with HTTPS. Uploaded files are processed in memory and immediately discarded. We follow industry-standard security practices.</p>
+      <div class="c-card-title">6. No tracking or third-party analytics</div>
+      <p class="c-card-p">The extension does not include advertising SDKs, tracking pixels, Google Analytics, or any third-party analytics. It does not build a profile of your browsing activity.</p>
     </div>
 
     <div class="c-card">
-      <div class="c-card-title">7. Your rights</div>
-      <p class="c-card-p">Since we do not collect or store identifiable personal data from job submissions, there is no personal profile to access or delete. Contact us if you have any concerns.</p>
+      <div class="c-card-title">7. Children</div>
+      <p class="c-card-p">The extension is not directed at children under 13. We do not knowingly collect data from children.</p>
     </div>
 
     <div class="c-card">
-      <div class="c-card-title">8. Children</div>
-      <p class="c-card-p">Our service is not directed at children under 13. We do not knowingly collect data from children.</p>
+      <div class="c-card-title">8. Changes</div>
+      <p class="c-card-p">We may update this policy when the extension’s behaviour changes. The “Last updated” date will be revised. Continued use after changes means you accept the updated policy.</p>
     </div>
 
     <div class="c-card">
-      <div class="c-card-title">9. Changes to this policy</div>
-      <p class="c-card-p">We may update this policy occasionally. The "Last updated" date will be revised. Continued use after changes means you accept the updated policy.</p>
-    </div>
-
-    <div class="c-card">
-      <div class="c-card-title">10. Contact us</div>
-      <p class="c-card-p">Questions about this Privacy Policy?</p>
+      <div class="c-card-title">9. Contact</div>
+      <p class="c-card-p">Questions about the extension or this policy?</p>
       <div class="contact-box">
-        <p><strong>VerifyJobs.org</strong><br>Email: <a href="mailto:privacy@verifyjobs.org">privacy@verifyjobs.org</a><br>Website: <a href="https://verifyjobs.org">verifyjobs.org</a></p>
+        <p>
+          <strong>VerifyJobs.org</strong><br>
+          Email: <a href="mailto:privacy@verifyjobs.org">privacy@verifyjobs.org</a><br>
+          Website: <a href="https://verifyjobs.org">verifyjobs.org</a><br>
+          Main privacy policy: <a href="/privacy.html">verifyjobs.org/privacy.html</a>
+        </p>
       </div>
     </div>
 
@@ -260,11 +269,25 @@ body { font-family: var(--body); color: var(--black); background: var(--white); 
 <footer class="footer">
   <div class="footer-inner">
     <div class="footer-links">
-      <a href="/">Home</a><a href="/analytics.html">Analytics</a><a href="/how-it-works.html">How it works</a>
-      <a href="/about.html">About</a><a href="/report-a-scam.html">Report a scam</a><a href="/privacy.html">Privacy</a><a href="/extension-privacy.html">Extension Privacy</a><a href="/blog/index.html">Blog</a>
+      <a href="/">Home</a>
+      <a href="/analytics.html">Analytics</a>
+      <a href="/how-it-works.html">How it works</a>
+      <a href="/about.html">About</a>
+      <a href="/report-a-scam.html">Report a scam</a>
+      <a href="/privacy.html">Privacy</a>
+      <a href="/extension-privacy.html">Extension Privacy</a>
+      <a href="/blog/index.html">Blog</a>
     </div>
     <div class="footer-copy">© 2026 VerifyJobs.org — Free · No account · No data stored</div>
   </div>
 </footer>
+
+<script>
+document.getElementById('navHamburger')?.addEventListener('click', function() {
+  this.classList.toggle('open');
+  document.getElementById('mobileMenu')?.classList.toggle('open');
+  this.setAttribute('aria-expanded', this.classList.contains('open'));
+});
+</script>
 </body>
 </html>

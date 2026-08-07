@@ -19,7 +19,7 @@ body {
   align-items: center;
   justify-content: space-between;
   padding: 12px 14px;
-  background: linear-gradient(135deg, #0f766e, #0d9488);
+  background: linear-gradient(135deg, #1a73e8, #1557b0);
   color: white;
 }
 
@@ -70,7 +70,7 @@ body {
 }
 .tab.active {
   background: white;
-  color: #0f766e;
+  color: #1a73e8;
   box-shadow: 0 1px 3px rgba(0,0,0,0.08);
 }
 
@@ -89,7 +89,7 @@ textarea, input[type="text"], input[type="url"] {
   background: white;
 }
 textarea:focus, input:focus {
-  outline: 2px solid #0d9488;
+  outline: 2px solid #1557b0;
   border-color: transparent;
 }
 
@@ -111,10 +111,10 @@ textarea:focus, input:focus {
 }
 
 .primary {
-  background: #0d9488;
+  background: #1557b0;
   color: white;
 }
-.primary:hover { background: #0f766e; }
+.primary:hover { background: #1a73e8; }
 .primary:disabled {
   opacity: 0.6;
   cursor: not-allowed;
@@ -136,7 +136,7 @@ textarea:focus, input:focus {
   width: 36px;
   height: 36px;
   border: 3px solid #e2e8f0;
-  border-top-color: #0d9488;
+  border-top-color: #1557b0;
   border-radius: 50%;
   margin: 0 auto 14px;
   animation: spin 0.7s linear infinite;
@@ -237,7 +237,7 @@ footer {
   border-top: 1px solid #e2e8f0;
 }
 footer a {
-  color: #0d9488;
+  color: #1557b0;
   text-decoration: none;
 }
 footer a:hover { text-decoration: underline; }

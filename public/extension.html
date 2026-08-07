@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-Content-Type-Options" content="nosniff">
+<meta http-equiv="X-Frame-Options" content="DENY">
+<title>Chrome Extension — VerifyJobs.org</title>
+<meta name="description" content="Check any job posting for scams without leaving the page. Free VerifyJobs Chrome extension — paste text, right-click, or analyse the current tab. No account required.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://verifyjobs.org/extension.html">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://verifyjobs.org/extension.html">
+<meta property="og:title" content="Chrome Extension — VerifyJobs.org">
+<meta property="og:description" content="Instantly check job postings for scams from any page. Free, no account, powered by the same hybrid AI + rules engine as VerifyJobs.org.">
+<meta property="og:image" content="https://verifyjobs.org/og-image.png">
+<meta property="og:site_name" content="VerifyJobs.org">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@verifyjobs">
+<meta name="theme-color" content="#ffffff">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Google+Sans+Display:wght@400;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --black:#202124; --grey1:#3c4043; --grey2:#5f6368; --grey3:#9aa0a6;
+  --grey4:#dadce0; --grey5:#f1f3f4; --grey6:#f8f9fa; --white:#ffffff;
+  --red:#d93025; --blue:#1a73e8; --green:#188038; --amber:#e37400; --teal:#0d9488;
+  --sans:'Google Sans','Product Sans',-apple-system,'Helvetica Neue',Arial,sans-serif;
+  --display:'Google Sans Display','Google Sans',-apple-system,'Helvetica Neue',Arial,sans-serif;
+  --body:'Roboto',-apple-system,'Helvetica Neue',Arial,sans-serif;
+}
+html { background: var(--white); }
+body { font-family: var(--body); color: var(--black); background: var(--white); -webkit-font-smoothing: antialiased; }
+
+.nav { position: sticky; top: 0; z-index: 100; background: var(--white); border-bottom: 1px solid var(--grey4); height: 64px; display: flex; align-items: center; padding: 0 24px; }
+.nav-inner { width: 100%; max-width: 1280px; margin: 0 auto; display: flex; align-items: center; }
+.wordmark { font-family: var(--sans); font-size: 22px; font-weight: 400; color: var(--black); text-decoration: none; letter-spacing: -0.3px; margin-right: 32px; }
+.wordmark b { font-weight: 700; }
+.nav-links { display: flex; align-items: center; gap: 4px; flex: 1; }
+.nav-links a { font-family: var(--sans); font-size: 14px; font-weight: 500; color: var(--grey2); text-decoration: none; padding: 8px 12px; border-radius: 24px; transition: background 0.15s, color 0.15s; }
+.nav-links a:hover { background: var(--grey5); color: var(--black); }
+.nav-right { margin-left: auto; }
+.nav-chip { font-family: var(--sans); font-size: 12px; font-weight: 500; color: var(--grey2); background: var(--grey5); border: 1px solid var(--grey4); border-radius: 20px; padding: 5px 12px; }
+.nav-chip span { color: var(--green); font-weight: 600; }
+
+.page { max-width: 900px; margin: 0 auto; padding: 0 24px 80px; }
+.page-hero { padding: 64px 0 48px; border-bottom: 1px solid var(--grey4); margin-bottom: 48px; }
+.breadcrumb { font-family: var(--sans); font-size: 13px; color: var(--grey3); margin-bottom: 20px; display: flex; align-items: center; gap: 8px; }
+.breadcrumb a { color: var(--grey2); text-decoration: none; }
+.breadcrumb a:hover { color: var(--black); }
+.page-h1 { font-family: var(--display); font-size: clamp(32px, 4.5vw, 52px); font-weight: 400; color: var(--black); line-height: 1.1; letter-spacing: -0.5px; margin-bottom: 16px; }
+.page-deck { font-family: var(--body); font-size: 17px; color: var(--grey1); line-height: 1.75; max-width: 640px; margin-bottom: 28px; }
+
+.cta-row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+.btn-primary {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--blue); color: white; font-family: var(--sans); font-size: 15px; font-weight: 500;
+  padding: 12px 22px; border-radius: 24px; text-decoration: none; border: none; cursor: pointer;
+  transition: background 0.15s;
+}
+.btn-primary:hover { background: #1557b0; }
+.btn-secondary {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--white); color: var(--grey1); font-family: var(--sans); font-size: 14px; font-weight: 500;
+  padding: 11px 18px; border-radius: 24px; text-decoration: none;
+  border: 1px solid var(--grey4); transition: background 0.15s;
+}
+.btn-secondary:hover { background: var(--grey5); }
+
+.summary-tiles { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; background: var(--grey4); border: 1px solid var(--grey4); border-radius: 16px; overflow: hidden; margin-bottom: 48px; }
+.summary-tile { background: var(--white); padding: 20px 18px; display: flex; align-items: center; gap: 12px; }
+.summary-tile-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); flex-shrink: 0; }
+.summary-tile-text { font-family: var(--sans); font-size: 13px; font-weight: 600; color: var(--black); }
+
+.section-title { font-family: var(--display); font-size: 24px; font-weight: 400; color: var(--black); margin-bottom: 20px; letter-spacing: -0.3px; }
+.c-card { background: var(--white); border: 1px solid var(--grey4); border-radius: 12px; padding: 28px 32px; margin-bottom: 16px; }
+.c-card-title { font-family: var(--display); font-size: 17px; font-weight: 400; color: var(--black); margin-bottom: 10px; }
+.c-card-p { font-family: var(--body); font-size: 14px; color: var(--grey1); line-height: 1.8; margin-bottom: 10px; }
+.c-card-p:last-child { margin-bottom: 0; }
+.c-card ul { margin: 8px 0 8px 20px; }
+.c-card li { font-family: var(--body); font-size: 14px; color: var(--grey1); line-height: 1.8; margin-bottom: 4px; }
+
+.feature-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 40px; }
+.feature-card {
+  background: var(--white); border: 1px solid var(--grey4); border-radius: 12px; padding: 22px 20px;
+}
+.feature-icon {
+  width: 36px; height: 36px; border-radius: 10px; background: #e8f0fe; color: var(--blue);
+  display: flex; align-items: center; justify-content: center; font-size: 18px; margin-bottom: 12px;
+}
+.feature-card h3 { font-family: var(--sans); font-size: 15px; font-weight: 600; color: var(--black); margin-bottom: 6px; }
+.feature-card p { font-family: var(--body); font-size: 13px; color: var(--grey2); line-height: 1.6; }
+
+.steps { counter-reset: step; margin-bottom: 40px; }
+.step {
+  display: flex; gap: 16px; padding: 18px 0; border-bottom: 1px solid var(--grey5);
+}
+.step:last-child { border-bottom: none; }
+.step-num {
+  width: 32px; height: 32px; border-radius: 50%; background: var(--blue); color: white;
+  font-family: var(--sans); font-size: 14px; font-weight: 600;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.step-body h3 { font-family: var(--sans); font-size: 15px; font-weight: 600; color: var(--black); margin-bottom: 4px; }
+.step-body p { font-family: var(--body); font-size: 14px; color: var(--grey1); line-height: 1.7; }
+
+.highlight-box { background: #e8f0fe; border: 1px solid #c2d7f7; border-radius: 8px; padding: 16px 18px; margin: 14px 0; }
+.highlight-box p { font-family: var(--body); font-size: 14px; color: #174ea6; line-height: 1.7; }
+
+.store-note {
+  background: var(--grey6); border: 1px solid var(--grey4); border-radius: 12px; padding: 24px;
+  margin: 32px 0 48px; text-align: center;
+}
+.store-note p { font-family: var(--body); font-size: 14px; color: var(--grey1); line-height: 1.7; margin-bottom: 16px; }
+.store-note .pending { font-family: var(--sans); font-size: 13px; color: var(--amber); font-weight: 500; }
+
+.footer { border-top: 1px solid var(--grey4); padding: 24px; margin-top: 40px; }
+.footer-inner { max-width: 1280px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+.footer-links { display: flex; gap: 20px; flex-wrap: wrap; }
+.footer-links a { font-family: var(--body); font-size: 13px; color: var(--grey2); text-decoration: none; }
+.footer-links a:hover { color: var(--black); }
+.footer-copy { font-family: var(--body); font-size: 13px; color: var(--grey3); }
+
+.nav-hamburger {
+  display: none; flex-direction: column; justify-content: center; gap: 5px;
+  width: 36px; height: 36px; background: none; border: none; cursor: pointer; padding: 4px; border-radius: 8px; margin-left: 8px;
+}
+.nav-hamburger span { display: block; width: 22px; height: 2px; background: var(--black); border-radius: 2px; }
+.mobile-menu {
+  display: none; position: fixed; top: 64px; left: 0; right: 0;
+  background: var(--white); border-bottom: 1px solid var(--grey4); z-index: 99;
+  padding: 8px 16px 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+.mobile-menu.open { display: block; }
+.mobile-menu a {
+  display: block; font-family: var(--sans); font-size: 15px; font-weight: 500;
+  color: var(--grey1); text-decoration: none; padding: 12px 8px; border-bottom: 1px solid var(--grey5);
+}
+.mobile-menu a:last-child { border-bottom: none; }
+
+@media(max-width:640px) {
+  .summary-tiles, .feature-grid { grid-template-columns: 1fr; }
+  .nav-links { display: none; }
+  .nav-hamburger { display: flex; }
+  .page { padding: 0 16px 48px; }
+  .page-hero { padding: 40px 0 32px; margin-bottom: 32px; }
+  .cta-row { flex-direction: column; align-items: stretch; }
+  .btn-primary, .btn-secondary { justify-content: center; }
+}
+*:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="wordmark" href="/"><b>Verify</b>Jobs</a>
+    <div class="nav-links">
+      <a href="/">Home</a>
+      <a href="/analytics.html">Analytics</a>
+      <a href="/how-it-works.html">How it works</a>
+      <a href="/about.html">About</a>
+      <a href="/report-a-scam.html">Report a scam</a>
+      <a href="/blog/index.html">Blog</a>
+    </div>
+    <div class="nav-right">
+      <button class="nav-hamburger" id="navHamburger" aria-label="Open navigation" aria-expanded="false" aria-controls="mobileMenu">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="nav-chip">Engine <span>● online</span></div>
+    </div>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobileMenu" role="navigation" aria-label="Mobile navigation">
+  <a href="/">Home</a>
+  <a href="/analytics.html">Analytics</a>
+  <a href="/how-it-works.html">How it works</a>
+  <a href="/about.html">About</a>
+  <a href="/report-a-scam.html">Report a scam</a>
+  <a href="/blog/index.html">Blog</a>
+  <a href="/extension.html">Chrome Extension</a>
+</div>
+
+<div class="page">
+  <div class="page-hero">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="/">Home</a><span>›</span><span>Chrome Extension</span>
+    </nav>
+    <h1 class="page-h1">Check jobs for scams without leaving the page (coming soon)</h1>
+    <p class="page-deck">
+      The free VerifyJobs Chrome extension brings the same hybrid AI + rules engine to LinkedIn, Indeed, WhatsApp Web, and any other page. Paste text, right-click a selection, or analyse the current tab — results appear in the popup.
+    </p>
+    <div class="cta-row">
+      <!-- Replace # with your real Chrome Web Store URL once published -->
+      <a class="btn-primary" id="chromeStoreBtn" href="https://chrome.google.com/webstore/detail/verifyjobs" target="_blank" rel="noopener">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+        Add to Chrome — Free
+      </a>
+      <a class="btn-secondary" href="/extension-privacy.html">Extension Privacy Policy</a>
+    </div>
+  </div>
+
+  <div class="summary-tiles">
+    <div class="summary-tile"><span class="summary-tile-dot"></span><span class="summary-tile-text">100% free · no account</span></div>
+    <div class="summary-tile"><span class="summary-tile-dot"></span><span class="summary-tile-text">Same engine as the website</span></div>
+    <div class="summary-tile"><span class="summary-tile-dot"></span><span class="summary-tile-text">No tracking · no ads</span></div>
+  </div>
+
+  <h2 class="section-title">Why use the extension?</h2>
+  <div class="feature-grid">
+    <div class="feature-card">
+      <div class="feature-icon">⚡</div>
+      <h3>Stay on the page</h3>
+      <p>No need to copy-paste into a new tab. Analyse LinkedIn jobs, Indeed listings, or recruiter messages where you already are.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🖱️</div>
+      <h3>Right-click any text</h3>
+      <p>Select a job description or WhatsApp message → right-click → “Check selection with VerifyJobs”.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🔗</div>
+      <h3>One-click URL check</h3>
+      <p>Open the popup and choose “This Page”, or right-click a link and send it straight to the analyser.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🛡️</div>
+      <h3>Same protection</h3>
+      <p>Uses the live VerifyJobs hybrid engine (50+ rules + ML). Risk score, red flags, and recommendation in seconds.</p>
+    </div>
+  </div>
+
+  <h2 class="section-title">How to get it</h2>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <h3>Open the Chrome Web Store listing</h3>
+        <p>Click <strong>Add to Chrome — Free</strong> above (or search “VerifyJobs” in the Chrome Web Store). Works on Chrome, Edge, Brave, and other Chromium browsers.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <h3>Confirm the install</h3>
+        <p>Chrome will show the permissions the extension needs (active tab, context menu, storage). These are only used when you choose to analyse a job.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <h3>Pin it (optional) and start checking</h3>
+        <p>Click the puzzle icon in the toolbar → pin VerifyJobs. Then use the popup, right-click menu, or the floating button on major job sites.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="store-note">
+    <p>
+      <strong>Chrome Web Store status</strong><br>
+      Once the extension is published, the button above will take users straight to the official store page for a one-click trusted install.
+    </p>
+    <p class="pending">We're replacing the button href with live store URL after approval.</p>
+  </div>
+
+  <h2 class="section-title">What you can do</h2>
+  <div class="c-card">
+    <div class="c-card-title">Three ways to analyse</div>
+    <ul>
+      <li><strong>Paste Text</strong> — job description, email, or WhatsApp/Telegram message</li>
+      <li><strong>URL</strong> — paste any job link; the server fetches and analyses the page</li>
+      <li><strong>This Page</strong> — analyse the tab you currently have open</li>
+    </ul>
+    <p class="c-card-p">Results show a risk score (0–100), legitimacy score, status badge, red flags, positive signals, and a plain-English recommendation — all inside the popup.</p>
+  </div>
+
+  <div class="c-card">
+    <div class="c-card-title">Privacy in short</div>
+    <p class="c-card-p">The extension only sends content when you click Analyse. It does not track your browsing, does not show ads, and does not require an account. The only preference stored locally is the optional API server address (default: verifyjobs.org).</p>
+    <div class="highlight-box">
+      <p>Full details: <a href="/extension-privacy.html" style="color:#174ea6;font-weight:500;">Chrome Extension Privacy Policy →</a></p>
+    </div>
+  </div>
+
+  <div class="c-card">
+    <div class="c-card-title">Already use the website?</div>
+    <p class="c-card-p">The extension uses the same analysis engine as <a href="/" style="color:var(--blue);text-decoration:none;">verifyjobs.org</a>. Same rules, same ML model, same commitment: free, no account, no permanent storage of your job text.</p>
+  </div>
+
+  <div style="text-align:center; margin-top: 40px;">
+    <a class="btn-primary" href="https://chrome.google.com/webstore/detail/verifyjobs" target="_blank" rel="noopener">
+      Add to Chrome — Free
+    </a>
+    <p style="margin-top:14px; font-size:13px; color:var(--grey3); font-family:var(--body);">
+      Free forever · No account · <a href="/extension-privacy.html" style="color:var(--grey2);">Privacy policy</a>
+    </p>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-links">
+      <a href="/">Home</a>
+      <a href="/analytics.html">Analytics</a>
+      <a href="/how-it-works.html">How it works</a>
+      <a href="/about.html">About</a>
+      <a href="/report-a-scam.html">Report a scam</a>
+      <a href="/privacy.html">Privacy</a>
+      <a href="/extension-privacy.html">Extension Privacy</a>
+      <a href="/extension.html">Chrome Extension</a>
+      <a href="/blog/index.html">Blog</a>
+    </div>
+    <div class="footer-copy">© 2026 VerifyJobs.org — Free · No account · No data stored</div>
+  </div>
+</footer>
+
+<script>
+document.getElementById('navHamburger')?.addEventListener('click', function() {
+  this.classList.toggle('open');
+  document.getElementById('mobileMenu')?.classList.toggle('open');
+  this.setAttribute('aria-expanded', this.classList.contains('open'));
+});
+</script>
+</body>
+</html>

@@ -1,6 +1,6 @@
 // background.js — Service worker for VerifyJobs Chrome extension
 
-const DEFAULT_API_BASE = "http://localhost:3000"; // Change in Options if needed
+const DEFAULT_API_BASE = "https://verifyjobs.org";
 
 // Create context menu on install
 chrome.runtime.onInstalled.addListener(() => {

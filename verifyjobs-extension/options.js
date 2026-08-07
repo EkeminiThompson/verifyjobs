@@ -1,4 +1,4 @@
-const DEFAULT_API_BASE = "http://localhost:3000";
+const DEFAULT_API_BASE = "https://verifyjobs.org";
 
 document.addEventListener("DOMContentLoaded", () => {
   chrome.storage.sync.get({ apiBase: DEFAULT_API_BASE }, (data) => {

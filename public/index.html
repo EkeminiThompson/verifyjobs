@@ -1129,7 +1129,9 @@ textarea { min-height: 120px; resize: vertical; line-height: 1.6; }
   .nav { padding: 0 16px; }
   .nav-links { display: none; }
   .nav-hamburger { display: flex; }
+  .nav-chip { display: none; }
   .wordmark { font-size: 18px; margin-right: 0; }
+  .nav-right { gap: 4px; }
 
   /* Hero */
   .hero {
@@ -1227,16 +1229,18 @@ textarea { min-height: 120px; resize: vertical; line-height: 1.6; }
   display: none;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
   gap: 5px;
-  width: 36px;
-  height: 36px;
+  width: 40px;
+  height: 40px;
   background: none;
   border: none;
   cursor: pointer;
-  padding: 4px;
+  padding: 8px;
   border-radius: 8px;
-  margin-left: 8px;
+  flex-shrink: 0;
   -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
 }
 .nav-hamburger span {
   display: block;
@@ -1244,22 +1248,24 @@ textarea { min-height: 120px; resize: vertical; line-height: 1.6; }
   height: 2px;
   background: var(--black);
   border-radius: 2px;
-  transition: transform 0.2s, opacity 0.2s;
+  transition: transform 0.22s ease, opacity 0.22s ease;
+  transform-origin: center;
 }
-.nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-.nav-hamburger.open span:nth-child(2) { opacity: 0; }
-.nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+.nav-hamburger[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-hamburger[aria-expanded="true"] span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.nav-hamburger[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
 .mobile-menu {
   display: none;
   position: fixed;
   top: 64px;
-  left: 0; right: 0;
+  left: 0;
+  right: 0;
   background: var(--white);
   border-bottom: 1px solid var(--grey4);
-  z-index: 99;
-  padding: 8px 16px 16px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  z-index: 999;
+  padding: 8px 16px 20px;
+  box-shadow: 0 6px 24px rgba(0,0,0,0.10);
 }
 .mobile-menu.open { display: block; }
 .mobile-menu a {
@@ -1269,11 +1275,12 @@ textarea { min-height: 120px; resize: vertical; line-height: 1.6; }
   font-weight: 500;
   color: var(--grey1);
   text-decoration: none;
-  padding: 12px 8px;
+  padding: 13px 8px;
   border-bottom: 1px solid var(--grey5);
+  -webkit-tap-highlight-color: transparent;
 }
 .mobile-menu a:last-child { border-bottom: none; }
-.mobile-menu a:hover { color: var(--black); }
+.mobile-menu a:hover, .mobile-menu a:active { color: var(--black); background: var(--grey5); border-radius: 8px; }
 .mobile-menu a.active { color: var(--blue); }
 
 </style>
@@ -1286,21 +1293,21 @@ textarea { min-height: 120px; resize: vertical; line-height: 1.6; }
     <a class="wordmark" href="/"><b>Verify</b>Jobs</a>
         <div class="nav-links">
       <a href="/" class="active">Home</a>
-      <a href="/analytics.html">Analytics</a>
+      <a href="/extension.html">Chrome Extension</a>
       <a href="/how-it-works.html">How it works</a>
       <a href="/about.html">About</a>
       <a href="/report-a-scam.html">Report a scam</a>
       <a href="/blog/index.html">Blog</a>
     </div>
     <div class="nav-right">
-      <button class="nav-hamburger" id="navHamburger" aria-label="Open navigation" aria-expanded="false" aria-controls="mobileMenu">
+      <div class="nav-chip">Engine <span>● online</span></div>
+      <button class="nav-hamburger" id="navHamburger" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobileMenu" type="button">
         <span></span><span></span><span></span>
       </button>
-      <div class="nav-chip">Engine <span>● online</span></div>
     </div>
   </div>
 </nav>
-<div class="mobile-menu" id="mobileMenu" role="navigation" aria-label="Mobile navigation">
+<div class="mobile-menu" id="mobileMenu" role="dialog" aria-label="Navigation menu">
   <a href="/" class="active">Home</a>
   <a href="/analytics.html">Analytics</a>
   <a href="/how-it-works.html">How it works</a>
@@ -1525,6 +1532,19 @@ textarea { min-height: 120px; resize: vertical; line-height: 1.6; }
     </div>
   </div>
 
+  <!-- Chrome Extension CTA -->
+<div class="promo-strip" style="margin: 48px 0;">
+  <div>
+    <div class="promo-eyebrow">New</div>
+    <div class="promo-t">Check jobs without leaving the page</div>
+    <div class="promo-d">Free Chrome extension — right-click any job text or analyse the current tab. Same engine as VerifyJobs.</div>
+  </div>
+  <a href="/extension.html" class="btn-outlined">
+    Get the Chrome extension
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+  </a>
+</div>
+
   <!-- FAQ -->
   <section id="faq" aria-labelledby="faq-head" style="margin-top:80px">
     <h2 class="grid-section-head" id="faq-head">Frequently asked</h2>
@@ -1610,7 +1630,7 @@ textarea { min-height: 120px; resize: vertical; line-height: 1.6; }
   <div class="footer-inner">
     <div class="footer-links">
       <a href="/">Home</a><a href="/analytics.html">Analytics</a><a href="/how-it-works.html">How it works</a>
-      <a href="/about.html">About</a><a href="/report-a-scam.html">Report a scam</a><a href="/privacy.html">Privacy</a><a href="/blog/index.html">Blog</a>
+      <a href="/about.html">About</a><a href="/report-a-scam.html">Report a scam</a><a href="/privacy.html">Privacy</a><a href="/extension.html">Chrome Extension</a><a href="/blog/index.html">Blog</a>
     </div>
     <div class="footer-copy">© 2026 VerifyJobs.org — Free · No account · No data stored</div>
   </div>
@@ -1780,6 +1800,45 @@ function showResults(a) {
   rs2.style.display='block';
   setTimeout(()=>rs2.scrollIntoView({behavior:'smooth',block:'start'}),50);
 }
+
+// ── Hamburger nav ──────────────────────────────────────────────────────────
+(function(){
+  var btn  = document.getElementById('navHamburger');
+  var menu = document.getElementById('mobileMenu');
+  if (!btn || !menu) return;
+
+  function openMenu(){
+    menu.classList.add('open');
+    btn.setAttribute('aria-expanded','true');
+  }
+  function closeMenu(){
+    menu.classList.remove('open');
+    btn.setAttribute('aria-expanded','false');
+  }
+  function isOpen(){
+    return menu.classList.contains('open');
+  }
+
+  btn.addEventListener('click', function(e){
+    e.stopPropagation();
+    isOpen() ? closeMenu() : openMenu();
+  });
+
+  document.addEventListener('click', function(e){
+    if (isOpen() && !menu.contains(e.target) && !btn.contains(e.target)){
+      closeMenu();
+    }
+  });
+
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape' && isOpen()) closeMenu();
+  });
+
+  // Close when a menu link is tapped
+  menu.querySelectorAll('a').forEach(function(a){
+    a.addEventListener('click', closeMenu);
+  });
+})();
 </script>
 </body>
 </html>

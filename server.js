@@ -211,6 +211,7 @@ const CANONICAL_SOURCES = [
   'remoteok.com',
   'flexjobs.com',
   'handshake.com',
+  'verifyjobs.org',
 
   // Core ATS platforms
   'lever.co',
