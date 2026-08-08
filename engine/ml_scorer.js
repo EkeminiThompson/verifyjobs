@@ -285,6 +285,15 @@ async function getMLScore(text, ruleScore) {
  * Drop-in wrapper around the rule engine output.
  */
 async function enrichWithML(text, ruleResult) {
+  // Do not ML-score non-job inputs — preserve not_a_job result as-is
+  if (
+    ruleResult?.status === 'not_a_job' ||
+    ruleResult?.metadata?.notAJob === true ||
+    ruleResult?.jobLikelihood?.isJob === false
+  ) {
+    return ruleResult;
+  }
+
   const mlData = await getMLScore(text, ruleResult.riskScore);
 
   function scoreToStatus(s) {

@@ -9,7 +9,6 @@
   </style>
 </head>
 <body>
-  <!-- Reuse the same UI structure as popup for consistency -->
   <div class="header">
     <div class="logo">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
@@ -18,6 +17,7 @@
       </svg>
       <span>VerifyJobs</span>
     </div>
+    <button id="settingsBtn" class="icon-btn" title="Settings" aria-label="Settings">⚙</button>
   </div>
 
   <div id="inputSection" class="section">
@@ -46,6 +46,12 @@
   </div>
 
   <div id="resultSection" class="section hidden">
+    <div id="verdictCard" class="verdict-card">
+      <div id="verdictLabel" class="verdict-label">—</div>
+      <p id="verdictSummary" class="verdict-summary"></p>
+      <div id="scamPattern" class="scam-pattern hidden"></div>
+    </div>
+
     <div class="score-row">
       <div class="score-box" id="riskBox">
         <div class="score-label">Risk</div>
@@ -56,16 +62,27 @@
         <div class="score-value" id="legitScore">—</div>
       </div>
     </div>
-    <div id="statusBadge" class="status-badge">—</div>
-    <p id="recommendation" class="recommendation"></p>
+
+    <div id="reasonsSection" class="flags-section">
+      <h3>Why this verdict</h3>
+      <ul id="reasonsList"></ul>
+    </div>
+
+    <div id="nextStepsSection" class="flags-section">
+      <h3>What to do next</h3>
+      <ol id="nextStepsList"></ol>
+    </div>
+
     <div id="redFlags" class="flags-section hidden">
-      <h3>🚩 Red Flags</h3>
+      <h3>All red flags</h3>
       <ul id="redFlagsList"></ul>
     </div>
+
     <div id="positiveSignals" class="flags-section hidden">
-      <h3>✅ Positive Signals</h3>
+      <h3>Positive signals</h3>
       <ul id="positiveList"></ul>
     </div>
+
     <div id="metaInfo" class="meta"></div>
     <button id="newCheckBtn" class="secondary">Check another</button>
   </div>
@@ -78,6 +95,7 @@
     <button id="retryBtn" class="secondary">Try again</button>
   </div>
 
+  <script src="decision.js"></script>
   <script src="popup.js"></script>
 </body>
 </html>

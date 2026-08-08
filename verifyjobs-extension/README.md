@@ -61,3 +61,13 @@ verifyjobs-extension/
 ## License
 
 Use freely with your VerifyJobs project.
+
+## v1.3.2
+- Aligned with site: `not_a_job` / `not_applicable` decision when input is not a job posting
+- Neutral verdict tone styles
+- Risk/legitimacy show N/A for non-job results
+
+## v1.3.3
+- Side panel aligned with popup (verdict card, reasons, next steps)
+- Side panel loads decision.js
+- Null-safe renderResult; explicit not_a_job handling when decision missing

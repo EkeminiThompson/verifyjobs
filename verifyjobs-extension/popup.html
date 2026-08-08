@@ -56,6 +56,12 @@
   </div>
 
   <div id="resultSection" class="section hidden">
+    <div id="verdictCard" class="verdict-card">
+      <div id="verdictLabel" class="verdict-label">—</div>
+      <p id="verdictSummary" class="verdict-summary"></p>
+      <div id="scamPattern" class="scam-pattern hidden"></div>
+    </div>
+
     <div class="score-row">
       <div class="score-box" id="riskBox">
         <div class="score-label">Risk</div>
@@ -67,16 +73,23 @@
       </div>
     </div>
 
-    <div id="statusBadge" class="status-badge">—</div>
-    <p id="recommendation" class="recommendation"></p>
+    <div id="reasonsSection" class="flags-section">
+      <h3>Why this verdict</h3>
+      <ul id="reasonsList"></ul>
+    </div>
+
+    <div id="nextStepsSection" class="flags-section">
+      <h3>What to do next</h3>
+      <ol id="nextStepsList"></ol>
+    </div>
 
     <div id="redFlags" class="flags-section hidden">
-      <h3>🚩 Red Flags</h3>
+      <h3>All red flags</h3>
       <ul id="redFlagsList"></ul>
     </div>
 
     <div id="positiveSignals" class="flags-section hidden">
-      <h3>✅ Positive Signals</h3>
+      <h3>Positive signals</h3>
       <ul id="positiveList"></ul>
     </div>
 
@@ -98,6 +111,7 @@
     · Free · No data stored
   </footer>
 
+  <script src="decision.js"></script>
   <script src="popup.js"></script>
 </body>
 </html>

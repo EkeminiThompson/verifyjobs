@@ -16,9 +16,12 @@ $$(".tab").forEach((btn) => {
   });
 });
 
-$("#settingsBtn").addEventListener("click", () => {
-  chrome.runtime.openOptionsPage();
-});
+const settingsBtn = $("#settingsBtn");
+if (settingsBtn) {
+  settingsBtn.addEventListener("click", () => {
+    chrome.runtime.openOptionsPage();
+  });
+}
 
 $("#analyzeBtn").addEventListener("click", () => runAnalysis());
 $("#newCheckBtn").addEventListener("click", resetUI);
@@ -116,40 +119,98 @@ function renderResult(data) {
 
   const risk = data.riskScore ?? data.risk_score ?? 0;
   const legit = data.legitimacyScore ?? data.legitimacy_score ?? (100 - risk);
-  const status = (data.status || data.recommendation || "").toLowerCase();
 
-  $("#riskScore").textContent = Math.round(risk);
-  $("#legitScore").textContent = Math.round(legit);
-
-  // Color the risk box
-  const riskBox = $("#riskBox");
-  riskBox.style.borderColor = risk >= 70 ? "#f87171" : risk >= 45 ? "#fbbf24" : "#34d399";
-  $("#riskScore").style.color = risk >= 70 ? "#dc2626" : risk >= 45 ? "#d97706" : "#059669";
-
-  const badge = $("#statusBadge");
-  badge.className = "status-badge";
-  if (risk >= 70 || status.includes("danger") || status.includes("scam") || status.includes("high")) {
-    badge.textContent = "High Risk";
-    badge.classList.add("danger");
-  } else if (risk >= 45 || status.includes("caution") || status.includes("suspicious")) {
-    badge.textContent = "Caution";
-    badge.classList.add("caution");
-  } else {
-    badge.textContent = "Lower Risk";
-    badge.classList.add("safe");
+  // Decision layer (server-provided or client-side fallback)
+  // Always prefer server decision; rebuild locally if status is not_a_job
+  let decision = data.decision || null;
+  if (!decision && globalThis.VerifyJobsDecision) {
+    decision = globalThis.VerifyJobsDecision.buildDecision(data);
   }
 
-  $("#recommendation").textContent =
-    data.recommendation ||
-    data.summary ||
-    data.note ||
-    (risk >= 70
-      ? "Multiple serious scam indicators found. Avoid this opportunity."
-      : risk >= 45
-      ? "Suspicious signals detected. Research the employer carefully before proceeding."
-      : "Fewer red flags detected, but always verify independently.");
+  // Verdict card (null-safe for older sidepanel markup)
+  const verdictCard = $("#verdictCard");
+  const verdictLabel = $("#verdictLabel");
+  const verdictSummary = $("#verdictSummary");
+  const patternEl = $("#scamPattern");
 
-  // Red flags
+  if (decision && verdictLabel) {
+    verdictLabel.textContent = decision.verdictLabel;
+    if (verdictSummary) verdictSummary.textContent = decision.summary;
+    if (verdictCard) verdictCard.className = "verdict-card tone-" + (decision.verdictTone || "warn");
+    if (patternEl) {
+      if (decision.scamPattern) {
+        patternEl.textContent = "Looks like: " + decision.scamPattern.label;
+        patternEl.classList.remove("hidden");
+      } else {
+        patternEl.classList.add("hidden");
+      }
+    }
+    const reasonsList = $("#reasonsList");
+    if (reasonsList) {
+      reasonsList.innerHTML = "";
+      (decision.topReasons || []).forEach((r) => {
+        const li = document.createElement("li");
+        li.textContent = r;
+        reasonsList.appendChild(li);
+      });
+    }
+    const stepsList = $("#nextStepsList");
+    if (stepsList) {
+      stepsList.innerHTML = "";
+      (decision.nextSteps || []).forEach((s) => {
+        const li = document.createElement("li");
+        li.textContent = s;
+        stepsList.appendChild(li);
+      });
+    }
+  } else if (verdictLabel) {
+    const st = String(data.status || "").toLowerCase();
+    if (st === "not_a_job") {
+      verdictLabel.textContent = "Not a job posting";
+      if (verdictSummary) verdictSummary.textContent = data.explanation || data.recommendation || "This does not look like a job ad.";
+      if (verdictCard) verdictCard.className = "verdict-card tone-neutral";
+    } else {
+      verdictLabel.textContent = risk >= 70 ? "Don't apply" : risk >= 45 ? "Verify first" : "Looks OK";
+      if (verdictSummary) verdictSummary.textContent = data.recommendation || "";
+      if (verdictCard) verdictCard.className = "verdict-card tone-" + (risk >= 70 ? "danger" : risk >= 45 ? "warn" : "safe");
+    }
+    if (patternEl) patternEl.classList.add("hidden");
+  }
+
+  // Legacy sidepanel status badge (if present)
+  const statusBadge = $("#statusBadge");
+  if (statusBadge) {
+    if (decision) statusBadge.textContent = decision.verdictLabel;
+    else if (String(data.status || "").toLowerCase() === "not_a_job") statusBadge.textContent = "Not a job posting";
+    else statusBadge.textContent = data.statusLabel || data.status || "—";
+  }
+  const recEl = $("#recommendation");
+  if (recEl) {
+    recEl.textContent = (decision && decision.summary) || data.recommendation || data.explanation || "";
+  }
+
+  const isNotJob =
+    (decision && decision.verdict === "not_applicable") ||
+    String(data.status || "").toLowerCase() === "not_a_job" ||
+    data.metadata?.notAJob === true;
+
+  if (isNotJob) {
+    $("#riskScore").textContent = "N/A";
+    $("#legitScore").textContent = "N/A";
+    $("#riskScore").style.color = "#6b7280";
+    $("#legitScore").style.color = "#6b7280";
+    $("#riskBox").style.borderColor = "#d1d5db";
+    if ($("#legitBox")) $("#legitBox").style.borderColor = "#d1d5db";
+  } else {
+    $("#riskScore").textContent = Math.round(risk);
+    $("#legitScore").textContent = Math.round(legit);
+    $("#riskScore").style.color = risk >= 70 ? "#dc2626" : risk >= 45 ? "#d97706" : "#059669";
+    $("#legitScore").style.color = "";
+    $("#riskBox").style.borderColor = risk >= 70 ? "#f87171" : risk >= 45 ? "#fbbf24" : "#34d399";
+    if ($("#legitBox")) $("#legitBox").style.borderColor = "";
+  }
+
+  // Full red flags (secondary)
   const redFlags = data.redFlags || data.red_flags || data.flags || [];
   const redSection = $("#redFlags");
   const redList = $("#redFlagsList");
@@ -165,7 +226,6 @@ function renderResult(data) {
     redSection.classList.add("hidden");
   }
 
-  // Positive signals
   const positives = data.positiveIndicators || data.positiveSignals || data.positive_signals || data.positives || [];
   const posSection = $("#positiveSignals");
   const posList = $("#positiveList");
@@ -181,10 +241,8 @@ function renderResult(data) {
     posSection.classList.add("hidden");
   }
 
-  // Meta
   const metaParts = [];
-  if (data.submittedUrl) metaParts.push(`URL: ${truncate(data.submittedUrl, 40)}`);
-  if (data.canonicalUrl) metaParts.push(`Canonical: ${truncate(data.canonicalUrl, 40)}`);
+  if (data.submittedUrl) metaParts.push("URL: " + truncate(data.submittedUrl, 40));
   if (data.ml?.available) metaParts.push("ML + Rules");
   if (data.cached) metaParts.push("Cached");
   $("#metaInfo").textContent = metaParts.join(" · ");

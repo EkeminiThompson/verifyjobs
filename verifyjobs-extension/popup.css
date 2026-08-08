@@ -61,12 +61,13 @@ body {
   flex: 1;
   border: none;
   background: transparent;
-  padding: 7px 4px;
+  padding: 7px 2px;
   border-radius: 6px;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 600;
   color: #475569;
   cursor: pointer;
+  white-space: nowrap;
 }
 .tab.active {
   background: white;
@@ -242,6 +243,54 @@ footer a {
 }
 footer a:hover { text-decoration: underline; }
 
+.file-drop {
+  display: block;
+  border: 2px dashed #cbd5e1;
+  border-radius: 10px;
+  padding: 18px 12px;
+  text-align: center;
+  cursor: pointer;
+  background: #f8fafc;
+  margin-bottom: 8px;
+}
+.file-drop:hover { border-color: #1a73e8; background: #f0f5ff; }
+.file-drop input[type=file] { display: none; }
+.file-drop span { font-size: 13px; color: #475569; word-break: break-all; }
+
+.verdict-card {
+  border-radius: 12px;
+  padding: 14px 14px 12px;
+  margin-bottom: 12px;
+  border: 1px solid #e2e8f0;
+}
+.verdict-card.tone-danger { background: #fef2f2; border-color: #fecaca; }
+.verdict-card.tone-warn { background: #fffbeb; border-color: #fde68a; }
+.verdict-card.tone-safe { background: #ecfdf5; border-color: #a7f3d0; }
+.verdict-card.tone-neutral { background: #f9fafb; border-color: #e5e7eb; }
+.verdict-label {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 4px;
+  color: #0f172a;
+}
+.verdict-card.tone-danger .verdict-label { color: #b91c1c; }
+.verdict-card.tone-warn .verdict-label { color: #b45309; }
+.verdict-card.tone-safe .verdict-label { color: #047857; }
+.verdict-card.tone-neutral .verdict-label { color: #4b5563; }
+.verdict-summary { font-size: 13px; color: #334155; line-height: 1.45; margin: 0; }
+.scam-pattern {
+  margin-top: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #9a3412;
+  background: #ffedd5;
+  display: inline-block;
+  padding: 3px 8px;
+  border-radius: 999px;
+}
+#nextStepsList { padding-left: 18px; margin: 0; }
+#nextStepsList li { font-size: 12.5px; color: #334155; margin-bottom: 6px; line-height: 1.4; }
+#reasonsList li { font-size: 12.5px; }
 .file-drop {
   display: block;
   border: 2px dashed #cbd5e1;

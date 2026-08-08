@@ -226,4 +226,4 @@ function plainReason(text, kind) {
   return t;
 }
 
-module.exports = { buildDecision, SCAM_PATTERNS };
+globalThis.VerifyJobsDecision = { buildDecision, SCAM_PATTERNS };

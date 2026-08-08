@@ -6,6 +6,7 @@ const { analyzeJobFreshness } = require('./job-freshness');
 const { normalizeScore, getStatus, getStatusLabel } = require('./scorer');
 const { addAnalysis } = require('./storage');
 const { buildDecision } = require('./decision');
+const { assessJobLikelihood, buildNotAJobResult } = require('./job-likelihood');
 
 // ─────────────────────────────────────────────
 // JOB STATUS DETECTION
@@ -322,6 +323,18 @@ function analyzeJob(text, jobTitle = 'Untitled Job', source = 'Unknown') {
     }
    
     const clean = cleanText(text);
+
+    // ── Job likelihood gate (must look like a job before fraud scoring) ──
+    const jobCheck = assessJobLikelihood(clean, jobTitle);
+    if (!jobCheck.isJob && (jobCheck.confidence === 'high' || jobCheck.confidence === 'medium')) {
+      const early = buildNotAJobResult(jobCheck, jobTitle, source, clean);
+      early.decision = buildDecision(early, clean);
+      try { addAnalysis(early, jobTitle, source, text); } catch (err) {
+        console.error('Storage error:', err.message);
+      }
+      return early;
+    }
+
     let riskScore = 0;
     const redFlagsFound  = [];
     const positivesFound = [];
@@ -437,6 +450,15 @@ function analyzeJob(text, jobTitle = 'Untitled Job', source = 'Unknown') {
         hasCompanyName:       metadata.hasCompanyName,
         analysisTimestamp:    new Date().toISOString(),
       },
+    };
+
+    // Job-likelihood metadata (always attach when we scored as a job)
+    result.jobLikelihood = {
+      isJob: true,
+      confidence: jobCheck.confidence,
+      score: jobCheck.score,
+      reasons: jobCheck.reasons,
+      signals: jobCheck.signals,
     };
 
     // Customer-facing decision (verdict, top reasons, next steps, scam pattern)
