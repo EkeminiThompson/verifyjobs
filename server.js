@@ -18,7 +18,18 @@ const NodeCache = require('node-cache');
 const winston = require('winston');
 
 const analyzeJob = require('./engine/analyzer');
-const { ensureStorage, getAllAnalyses, getStorageInfo } = require('./engine/storage');
+let ensureStorage, getAllAnalyses, getStorageInfo;
+try {
+  const storageMod = require('./engine/storage');
+  ensureStorage = storageMod.ensureStorage || (() => {});
+  getAllAnalyses = storageMod.getAllAnalyses || (() => []);
+  getStorageInfo = storageMod.getStorageInfo || (() => ({ analysesFile: 'n/a', recordCount: 0, writable: false, exists: false }));
+} catch (e) {
+  console.warn('[storage] module load failed:', e.message);
+  ensureStorage = () => {};
+  getAllAnalyses = () => [];
+  getStorageInfo = () => ({ analysesFile: 'n/a', recordCount: 0, writable: false, exists: false });
+}
 const { enrichWithML, checkServerHealth } = require('./engine/ml_scorer');
 const { buildDecision } = require('./engine/decision');
 
@@ -984,16 +995,12 @@ app.get('/google6c2364060583a1e1.html', (req, res) => {
 
 // Health check
 app.get('/health', (req, res) => {
-  res.json({
+  // Keep this fast — Render uses it for deploy readiness
+  res.status(200).json({
     status: 'ok',
     timestamp: new Date().toISOString(),
     uptime: process.uptime(),
     version: '2.0',
-    cache: {
-      enabled: config.cacheEnabled,
-      keys: analysisCache.keys().length,
-      stats: analysisCache.getStats(),
-    },
   });
 });
 
@@ -1559,11 +1566,17 @@ app.use((err, req, res, next) => {
 // ─────────────────────────────────────────────
 // CATCH-ALL 404
 // ─────────────────────────────────────────────
-app.use('*', (req, res) => {
-  if (req.path.startsWith('/api/')) {
+// Express 4 + 5 safe 404 (avoid app.use('*') which breaks path-to-regexp v8 / Express 5)
+app.use((req, res) => {
+  if (req.path.startsWith('/api/') || req.path.startsWith('/analyze') || req.path.startsWith('/analytics')) {
     return res.status(404).json({ error: 'API endpoint not found' });
   }
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+  const fallback = path.join(__dirname, 'public', 'index.html');
+  const local = path.join(__dirname, 'index.html');
+  const fs = require('fs');
+  if (fs.existsSync(fallback)) return res.sendFile(fallback);
+  if (fs.existsSync(local)) return res.sendFile(local);
+  res.status(404).send('Not found');
 });
 
 // ─────────────────────────────────────────────
@@ -1588,34 +1601,56 @@ function gracefulShutdown(signal) {
 // ─────────────────────────────────────────────
 // START SERVER
 // ─────────────────────────────────────────────
-server = app.listen(config.port, () => {
-  logger.info('🚀 VerifyJobs v2.0 started', {
-    port: config.port,
-    env: config.nodeEnv,
-    root: __dirname,
-    cacheEnabled: config.cacheEnabled,
+// Render / containers require 0.0.0.0 — localhost-only bind fails health checks
+const HOST = process.env.HOST || '0.0.0.0';
+const PORT = Number(process.env.PORT) || Number(config.port) || 3000;
+
+try {
+  server = app.listen(PORT, HOST, () => {
+    logger.info('🚀 VerifyJobs v2.0 started', {
+      host: HOST,
+      port: PORT,
+      env: config.nodeEnv,
+      root: __dirname,
+      cacheEnabled: config.cacheEnabled,
+    });
+
+    console.log(`🚀 VerifyJobs v2.0 listening on http://${HOST}:${PORT}`);
+    console.log(`📄 Root: ${__dirname}`);
+    console.log(`✅ Health: http://${HOST}:${PORT}/health`);
+    console.log(`📊 Analytics: http://${HOST}:${PORT}/analytics.html`);
+    console.log(`🔒 Environment: ${config.nodeEnv}`);
+
+    try {
+      ensureStorage();
+      const s = getStorageInfo();
+      console.log(`💾 Storage: ${s.analysesFile} (records=${s.recordCount}, writable=${s.writable})`);
+    } catch (e) {
+      console.warn('💾 Storage check failed:', e.message);
+    }
+
+    // Non-blocking — never delay listen / readiness
+    if (process.env.ENABLE_ML !== 'false') {
+      Promise.race([
+        checkServerHealth(),
+        new Promise((resolve) => setTimeout(() => resolve(false), 2500)),
+      ]).then(available => {
+        if (available) console.log('🤖 ML inference server: connected');
+        else console.log('⚠️  ML inference server: offline — rule engine only');
+      }).catch(() => {
+        console.log('⚠️  ML inference server: offline — rule engine only');
+      });
+    }
   });
 
-  console.log(`🚀 VerifyJobs v2.0 on http://localhost:${config.port}`);
-  console.log(`📄 Root: ${__dirname}`);
-  console.log(`✅ Health: http://localhost:${config.port}/health`);
-  console.log(`📊 Analytics: http://localhost:${config.port}/analytics.html`);
-  console.log(`🔒 Environment: ${config.nodeEnv}`);
-  try {
-    ensureStorage();
-    const s = getStorageInfo();
-    console.log(`💾 Storage: ${s.analysesFile} (records=${s.recordCount}, writable=${s.writable})`);
-  } catch (e) {
-    console.warn('💾 Storage check failed:', e.message);
-  }
-
-  if (process.env.ENABLE_ML !== 'false') {
-    checkServerHealth().then(available => {
-      if (available) console.log('🤖 ML inference server: connected');
-      else console.log('⚠️  ML inference server: offline — rule engine only');
-    });
-  }
-});
+  server.on('error', (err) => {
+    console.error('❌ Server failed to bind:', err.message);
+    process.exit(1);
+  });
+} catch (err) {
+  console.error('❌ Failed to start server:', err);
+  process.exit(1);
+}
 
 process.on('SIGTERM', () => gracefulShutdown('SIGTERM'));
 process.on('SIGINT',  () => gracefulShutdown('SIGINT'));
