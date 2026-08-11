@@ -8,6 +8,7 @@ const path = require('path');
 const multer = require('multer');
 const https = require('https');
 const http = require('http');
+const zlib = require('zlib');
 const crypto = require('crypto');
 const dns = require('dns').promises;
 const helmet = require('helmet');
@@ -362,7 +363,62 @@ async function isSafeUrl(rawUrl) {
 // ─────────────────────────────────────────────
 // HTTP FETCHER WITH ABORT CONTROLLER
 // ─────────────────────────────────────────────
-function fetchUrl(rawUrl, redirectsLeft = config.maxRedirects, signal = null) {
+// Browser-like UA rotation — reduces trivial bot blocks (not a Cloudflare bypass)
+const FETCH_USER_AGENTS = [
+  'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36',
+  'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36',
+  'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:129.0) Gecko/20100101 Firefox/129.0',
+  'Mozilla/5.0 (Macintosh; Intel Mac OS X 14_5) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.5 Safari/605.1.15',
+];
+
+function browserHeaders(targetUrl, ua, referer) {
+  let origin = undefined;
+  try {
+    const u = new URL(targetUrl);
+    origin = u.origin;
+  } catch (_) {}
+  return {
+    'User-Agent': ua,
+    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8',
+    'Accept-Language': 'en-US,en;q=0.9',
+    'Accept-Encoding': 'gzip, deflate, br',
+    'Cache-Control': 'no-cache',
+    'Pragma': 'no-cache',
+    'Upgrade-Insecure-Requests': '1',
+    'Sec-Fetch-Dest': 'document',
+    'Sec-Fetch-Mode': 'navigate',
+    'Sec-Fetch-Site': referer ? 'same-origin' : 'none',
+    'Sec-Fetch-User': '?1',
+    'Sec-CH-UA': '"Chromium";v="128", "Not;A=Brand";v="24", "Google Chrome";v="128"',
+    'Sec-CH-UA-Mobile': '?0',
+    'Sec-CH-UA-Platform': '"Windows"',
+    'DNT': '1',
+    'Connection': 'keep-alive',
+    ...(referer ? { 'Referer': referer } : {}),
+  };
+}
+
+function decodeBody(buf, encoding) {
+  const enc = (encoding || '').toLowerCase();
+  return new Promise((resolve, reject) => {
+    if (!enc || enc === 'identity') return resolve(buf.toString('utf-8'));
+    if (enc.includes('gzip')) {
+      return zlib.gunzip(buf, (err, out) => err ? reject(err) : resolve(out.toString('utf-8')));
+    }
+    if (enc.includes('deflate')) {
+      return zlib.inflate(buf, (err, out) => err ? reject(err) : resolve(out.toString('utf-8')));
+    }
+    if (enc.includes('br') && zlib.brotliDecompress) {
+      return zlib.brotliDecompress(buf, (err, out) => err ? reject(err) : resolve(out.toString('utf-8')));
+    }
+    resolve(buf.toString('utf-8'));
+  });
+}
+
+/**
+ * Single attempt — browser-like headers, gzip, redirects.
+ */
+function fetchUrlOnce(rawUrl, redirectsLeft, signal, ua, referer) {
   return new Promise((resolve, reject) => {
     let url;
     try {
@@ -372,17 +428,11 @@ function fetchUrl(rawUrl, redirectsLeft = config.maxRedirects, signal = null) {
     }
 
     const lib = url.protocol === 'https:' ? https : http;
+    const headers = browserHeaders(rawUrl, ua, referer);
 
     const req = lib.get(rawUrl, {
-      timeout: config.fetchTimeout,
-      headers: {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
-        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-        'Accept-Language': 'en-US,en;q=0.5',
-        'Accept-Encoding': 'identity',
-        'Cache-Control': 'no-cache',
-        'DNT': '1',
-      },
+      timeout: config.fetchTimeout || 20000,
+      headers,
     }, (res) => {
       if ([301, 302, 303, 307, 308].includes(res.statusCode)) {
         if (redirectsLeft <= 0) {
@@ -396,7 +446,7 @@ function fetchUrl(rawUrl, redirectsLeft = config.maxRedirects, signal = null) {
         }
         const next = location.startsWith('http') ? location : new URL(location, rawUrl).href;
         res.resume();
-        return resolve(fetchUrl(next, redirectsLeft - 1, signal));
+        return resolve(fetchUrlOnce(next, redirectsLeft - 1, signal, ua, rawUrl));
       }
 
       if (res.statusCode !== 200) {
@@ -410,7 +460,7 @@ function fetchUrl(rawUrl, redirectsLeft = config.maxRedirects, signal = null) {
         return reject(new Error(`Unsupported content type: ${ct}`));
       }
 
-      const contentLength = parseInt(res.headers['content-length'] || '0');
+      const contentLength = parseInt(res.headers['content-length'] || '0', 10);
       if (contentLength > 5 * 1024 * 1024) {
         res.resume();
         return reject(new Error('Response too large'));
@@ -429,12 +479,10 @@ function fetchUrl(rawUrl, redirectsLeft = config.maxRedirects, signal = null) {
       });
 
       res.on('end', () => {
-        try {
-          const html = Buffer.concat(chunks).toString('utf-8');
-          resolve({ html, finalUrl: rawUrl });
-        } catch (err) {
-          reject(new Error('Failed to decode response'));
-        }
+        const buf = Buffer.concat(chunks);
+        decodeBody(buf, res.headers['content-encoding'])
+          .then(html => resolve({ html, finalUrl: rawUrl, statusCode: 200 }))
+          .catch(() => reject(new Error('Failed to decode response')));
       });
 
       res.on('error', reject);
@@ -445,17 +493,45 @@ function fetchUrl(rawUrl, redirectsLeft = config.maxRedirects, signal = null) {
       reject(new Error('Request timed out'));
     });
 
-    req.on('error', (err) => {
-      reject(err);
-    });
+    req.on('error', reject);
 
     if (signal) {
+      if (signal.aborted) {
+        req.destroy();
+        return reject(new Error('Request aborted'));
+      }
       signal.addEventListener('abort', () => {
         req.destroy();
         reject(new Error('Request aborted'));
-      });
+      }, { once: true });
     }
   });
+}
+
+/**
+ * Fetch with one retry on 403/429/503 using a different User-Agent.
+ * Improves success vs naive bots; cannot defeat hard Cloudflare challenges.
+ */
+function fetchUrl(rawUrl, redirectsLeft = config.maxRedirects, signal = null) {
+  const maxAttempts = 2;
+  const startUa = Math.floor(Math.random() * FETCH_USER_AGENTS.length);
+
+  async function attempt(i) {
+    const ua = FETCH_USER_AGENTS[(startUa + i) % FETCH_USER_AGENTS.length];
+    try {
+      return await fetchUrlOnce(rawUrl, redirectsLeft, signal, ua, null);
+    } catch (err) {
+      const msg = String(err.message || err);
+      const retryable = /HTTP 403|HTTP 429|HTTP 503|timed out/i.test(msg);
+      if (retryable && i + 1 < maxAttempts) {
+        await new Promise(r => setTimeout(r, 400 + Math.random() * 600));
+        return attempt(i + 1);
+      }
+      throw err;
+    }
+  }
+
+  return attempt(0);
 }
 
 // ─────────────────────────────────────────────
@@ -706,29 +782,71 @@ async function scrapeAndAnalyze(rawUrl) {
 }
 
 function buildUrlFallbackText(rawUrl) {
+  // Metadata only — never inject synthetic scam phrases.
+  // Scoring must not run on this alone as if it were a job ad.
   const urlObj = new URL(rawUrl);
   const hostname = urlObj.hostname.replace(/^www\./, '');
-  const lines = [
+  return [
     `Job posting URL: ${rawUrl}`,
     `Domain: ${hostname}`,
     `Path: ${urlObj.pathname}`,
-  ];
+  ].join('\n');
+}
 
-  if (isCanonicalSource(hostname)) {
-    lines.push('Posted on a verified job board platform');
-    lines.push('Official company careers page');
-    lines.push('Apply through our website');
-  }
-
-  if (/whatsapp|telegram|bit\.ly|tinyurl|t\.me/i.test(rawUrl)) {
-    lines.push('Contact only on WhatsApp');
-  }
-
-  if (/earn|income|passive|crypto|bitcoin/i.test(rawUrl)) {
-    lines.push('Easy money earn income');
-  }
-
-  return lines.join('\n');
+function buildInsufficientFetchResult(ctx, rawUrl) {
+  const err = ctx.fetchError || 'page content unavailable';
+  const summary =
+    'We could not download the page content (often blocked bots, login walls, or HTTP 403/401). ' +
+    'Without the posting text we will not invent a scam score from the URL alone.';
+  return {
+    status: 'insufficient_data',
+    statusLabel: 'Could not read page',
+    riskScore: 0,
+    legitimacyScore: null,
+    redFlags: [],
+    positiveIndicators: [],
+    explanation: summary,
+    recommendation:
+      'Paste the job / fellowship text from the page, or try again later. A blocked fetch is not evidence of fraud.',
+    actionItems: [
+      'Open the link in your browser and copy the full description',
+      'Use the Paste Text tab for a reliable check',
+      'If the site blocks automated access, URL mode cannot score it fairly',
+    ],
+    note: `Page fetch failed (${err}). No risk score from URL structure alone.`,
+    metadata: {
+      notAJob: false,
+      insufficientData: true,
+      fetchError: err,
+      submittedUrl: rawUrl,
+      analysisTimestamp: new Date().toISOString(),
+    },
+    ml: { available: false, reason: 'Skipped — no page text to score' },
+    decision: {
+      verdict: 'insufficient_data',
+      verdictLabel: 'Could not read page',
+      verdictTone: 'neutral',
+      summary: summary,
+      topReasons: [
+        `Fetch failed: ${err}`,
+        'Scoring URL path alone would produce false alarms or false confidence',
+      ],
+      nextSteps: [
+        'Paste the visible job text into VerifyJobs',
+        'Or re-try URL analysis later if the site allows crawlers',
+        'Do not treat a failed fetch as proof the posting is a scam',
+      ],
+      scamPattern: null,
+      confidenceNote: 'No content-based assessment was possible.',
+      riskScore: 0,
+    },
+    submittedUrl: rawUrl,
+    canonicalUrl: null,
+    fetchedPages: [],
+    fetchSuccess: false,
+    fetchError: err,
+    extractedLength: 0,
+  };
 }
 
 function buildNote(ctx) {
@@ -741,7 +859,7 @@ function buildNote(ctx) {
       parts.push('Both pages were analysed for maximum accuracy.');
     }
   } else if (ctx.fetchError) {
-    parts.push(`Page fetch failed (${ctx.fetchError}). Score is based on URL structure only.`);
+    parts.push(`Page fetch failed (${ctx.fetchError}). No content-based score was produced.`);
   } else {
     parts.push(`Analysed ${ctx.combinedText.length} characters from ${ctx.fetchedPages.length} page(s).`);
     if (!ctx.canonicalUrl) {
@@ -1194,7 +1312,20 @@ app.post('/analyze-url', validateUrlInput, async (req, res) => {
       }
     }
 
-    const ctx        = await scrapeAndAnalyze(rawUrl);
+    const ctx = await scrapeAndAnalyze(rawUrl);
+
+    // Truth-seeking: never score a bare URL / failed fetch as a job scam
+    const wordCount = (ctx.combinedText || '').trim().split(/\s+/).filter(Boolean).length;
+    if (ctx.fetchError || wordCount < 40) {
+      const insufficient = buildInsufficientFetchResult(ctx, rawUrl);
+      logger.warn('URL analysis aborted — insufficient page text', {
+        url: rawUrl,
+        fetchError: ctx.fetchError,
+        wordCount,
+      });
+      return res.json(insufficient);
+    }
+
     const ruleResult = analyzeJob(ctx.combinedText, ctx.pageTitle, 'URL');
     const result     = await enrichWithML(ctx.combinedText, ruleResult);
     
