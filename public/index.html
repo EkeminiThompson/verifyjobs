@@ -1811,14 +1811,24 @@ function showResults(a) {
     caution:        {cls:'warn',  label:'Caution Advised', sub:'Some concerns detected'},
     low_concern:    {cls:'safe',  label:'Low Concern',     sub:'Minor or no issues found'},
     legitimate:     {cls:'safe',  label:'Likely Legitimate',sub:'No major red flags detected'},
+    likely_legitimate: {cls:'safe', label:'Likely Legitimate',sub:'Official career portal host'},
     not_a_job:      {cls:'neutral',label:'Not a Job Posting',sub:'This does not look like a job ad — scam checks skipped'},
+    insufficient_data: {cls:'neutral',label:'Could Not Read Page',sub:'Fetch failed or too little text — not a scam verdict'},
   };
   // Prefer explicit not_a_job / decision so chip never contradicts decision card
   const st = String(a.status || '').toLowerCase();
   const isNotJob = st === 'not_a_job' || st === 'not_a_job_posting' ||
     a.metadata?.notAJob === true ||
     (a.decision && String(a.decision.verdict || '').toLowerCase() === 'not_a_job');
-  const v = isNotJob ? vMap.not_a_job : (vMap[a.status] || vMap['suspicious']);
+  const isInsufficient = st === 'insufficient_data' || a.metadata?.insufficientData === true ||
+    (a.decision && String(a.decision.verdict || '').toLowerCase() === 'insufficient_data');
+  const isTrustedPortal = a.metadata?.trustedCareerPortal === true ||
+    (a.decision && /trusted career portal/i.test(String(a.decision.verdictLabel || '')));
+  let v;
+  if (isInsufficient) v = vMap.insufficient_data;
+  else if (isNotJob) v = vMap.not_a_job;
+  else if (isTrustedPortal) v = vMap.likely_legitimate || vMap.legitimate;
+  else v = vMap[a.status] || vMap['suspicious'];
 
   const chip = document.getElementById('verdictChip');
   chip.textContent = v.label;
@@ -1826,7 +1836,7 @@ function showResults(a) {
   document.getElementById('verdictSub').textContent = v.sub;
 
   const rs=a.riskScore, ls=a.legitimacyScore;
-  if (isNotJob) {
+  if (isNotJob || isInsufficient) {
     document.getElementById('riskVal').innerHTML = `<span class="s-amber">N/A</span>`;
     document.getElementById('legVal').innerHTML  = `<span class="s-amber">N/A</span>`;
   } else {

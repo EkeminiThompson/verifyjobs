@@ -1321,8 +1321,90 @@ app.post('/analyze-url', validateUrlInput, async (req, res) => {
 
     const ctx = await scrapeAndAnalyze(rawUrl);
 
-    // Truth-seeking: never score a bare URL / failed fetch as a job scam
     const wordCount = (ctx.combinedText || '').trim().split(/\s+/).filter(Boolean).length;
+    const hostname = (() => {
+      try { return new URL(ctx.submittedUrl || rawUrl).hostname.toLowerCase(); }
+      catch { return ''; }
+    })();
+    const isTrustedHost = isCanonicalSource(hostname);
+    const isOwnSiteEarly = hostname === 'verifyjobs.org' || hostname.endsWith('.verifyjobs.org');
+
+    // Trusted ATS (Oracle HCM, Workday, Greenhouse, …): JS shells / soft blocks
+    // are normal — do NOT return insufficient_data or invent a scam score.
+    if ((ctx.fetchError || wordCount < 40) && isTrustedHost && !isOwnSiteEarly) {
+      const portalResult = {
+        status: 'likely_legitimate',
+        statusLabel: 'Likely Legitimate (Trusted Career Portal)',
+        riskScore: 0,
+        legitimacyScore: 85,
+        redFlags: [],
+        positiveIndicators: [
+          `Official career portal domain (${hostname})`,
+          'Known ATS / HCM host (content often loads in the browser only)',
+        ],
+        explanation:
+          'This URL is on a known official career system (e.g. Oracle Cloud HCM, Workday, Greenhouse). ' +
+          'Little or no text could be extracted because these sites are JavaScript apps or restrict bots. ' +
+          'That is expected and is not a scam signal. We still cannot verify the specific vacancy wording without the full description.',
+        recommendation:
+          'Treat the host as a real career portal. Open the link yourself, confirm the vacancy, and never pay any fee to apply. ' +
+          'For a full automated check, paste the job text from the page.',
+        actionItems: [
+          'Open the posting in your browser and confirm employer, title, and closing date',
+          'Apply only through this official portal — ignore WhatsApp / payment side channels',
+          'Optional: paste the full description into VerifyJobs for a content-based score',
+        ],
+        note: ctx.fetchError
+          ? `Trusted host ${hostname}; fetch issue (${ctx.fetchError}). Portal trust applied — not scored as fraud.`
+          : `Trusted host ${hostname}; only ${wordCount} words extracted (typical for JS ATS). Portal trust applied.`,
+        metadata: {
+          trustedCareerPortal: true,
+          hostname,
+          wordCount,
+          fetchError: ctx.fetchError || null,
+          analysisTimestamp: new Date().toISOString(),
+        },
+        ml: { available: false, reason: 'Skipped — insufficient extractable text on trusted ATS' },
+        decision: {
+          verdict: 'looks_ok',
+          verdictLabel: 'Trusted career portal',
+          verdictTone: 'safe',
+          summary:
+            'Hosted on a known official careers system. Limited page text is normal for Oracle/Workday-style sites — not evidence of a scam.',
+          topReasons: [
+            `Domain matches known ATS/HCM: ${hostname}`,
+            wordCount < 40
+              ? 'Job details are usually filled in by JavaScript after load'
+              : 'Partial extract only',
+          ],
+          nextSteps: [
+            'Review the vacancy in your browser on this same official URL',
+            'Never pay to apply or move the process solely to WhatsApp/Telegram',
+            'Paste the description here if you want a full text-based risk score',
+          ],
+          scamPattern: null,
+          confidenceNote:
+            'Host trust only — we did not read full JD text. Unusual for a scam to sit on real Oracle/UNDP HCM, but always read the posting yourself.',
+          riskScore: 0,
+        },
+        submittedUrl: rawUrl,
+        canonicalUrl: ctx.canonicalUrl || null,
+        fetchedPages: ctx.fetchedPages || [],
+        fetchSuccess: !ctx.fetchError,
+        fetchError: ctx.fetchError || null,
+        extractedLength: (ctx.combinedText || '').length,
+        pageTitle: ctx.pageTitle || hostname,
+      };
+      logger.info('Trusted ATS with thin/failed extract — portal trust result', {
+        url: rawUrl,
+        hostname,
+        wordCount,
+        fetchError: ctx.fetchError,
+      });
+      return res.json(portalResult);
+    }
+
+    // Non-trusted hosts: never invent a scam score from a bare URL / failed fetch
     if (ctx.fetchError || wordCount < 40) {
       const insufficient = buildInsufficientFetchResult(ctx, rawUrl);
       logger.warn('URL analysis aborted — insufficient page text', {
@@ -1337,13 +1419,9 @@ app.post('/analyze-url', validateUrlInput, async (req, res) => {
     const result     = await enrichWithML(ctx.combinedText, ruleResult);
     
     // ========== TRUSTED DOMAIN SAFEGUARD ==========
-    const hostname = (() => {
-      try { return new URL(ctx.submittedUrl || rawUrl).hostname.toLowerCase(); }
-      catch { return ''; }
-    })();
-
-    const isTrusted = isCanonicalSource(hostname);
-    const isOwnSite = hostname === 'verifyjobs.org' || hostname.endsWith('.verifyjobs.org');
+    // hostname / isTrustedHost / isOwnSiteEarly already computed above
+    const isTrusted = isTrustedHost;
+    const isOwnSite = isOwnSiteEarly;
 
     if (isTrusted || isOwnSite) {
       result.positiveIndicators = result.positiveIndicators || [];
