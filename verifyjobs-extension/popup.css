@@ -304,3 +304,29 @@ footer a:hover { text-decoration: underline; }
 .file-drop:hover { border-color: #1a73e8; background: #f0f5ff; }
 .file-drop input[type=file] { display: none; }
 .file-drop span { font-size: 13px; color: #475569; word-break: break-all; }
+
+/* ML blend chips (match site) */
+.ml-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 10px 0 4px;
+}
+.ml-bar.hidden { display: none; }
+.ml-chip {
+  font-size: 11px;
+  font-family: inherit;
+  background: #f1f3f4;
+  border: 1px solid #dadce0;
+  border-radius: 100px;
+  padding: 4px 10px;
+  color: #3c4043;
+}
+.ml-chip b { color: #202124; }
+.disclaimer {
+  font-size: 11px;
+  color: #9aa0a6;
+  margin: 8px 0 4px;
+  line-height: 1.4;
+}
+.score-box.muted .score-value { color: #9aa0a6; }

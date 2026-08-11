@@ -1813,7 +1813,12 @@ function showResults(a) {
     legitimate:     {cls:'safe',  label:'Likely Legitimate',sub:'No major red flags detected'},
     not_a_job:      {cls:'neutral',label:'Not a Job Posting',sub:'This does not look like a job ad — scam checks skipped'},
   };
-  const v = vMap[a.status] || vMap['suspicious'];
+  // Prefer explicit not_a_job / decision so chip never contradicts decision card
+  const st = String(a.status || '').toLowerCase();
+  const isNotJob = st === 'not_a_job' || st === 'not_a_job_posting' ||
+    a.metadata?.notAJob === true ||
+    (a.decision && String(a.decision.verdict || '').toLowerCase() === 'not_a_job');
+  const v = isNotJob ? vMap.not_a_job : (vMap[a.status] || vMap['suspicious']);
 
   const chip = document.getElementById('verdictChip');
   chip.textContent = v.label;
@@ -1821,10 +1826,17 @@ function showResults(a) {
   document.getElementById('verdictSub').textContent = v.sub;
 
   const rs=a.riskScore, ls=a.legitimacyScore;
-  const rCls = rs>=70?'s-red':rs>=45?'s-amber':'s-green';
-  const lCls = ls>=70?'s-green':ls>=45?'s-amber':'s-red';
-  document.getElementById('riskVal').innerHTML = `<span class="${rCls}">${rs}</span><span class="unit">/100</span>`;
-  document.getElementById('legVal').innerHTML  = `<span class="${lCls}">${ls}</span><span class="unit">/100</span>`;
+  if (isNotJob) {
+    document.getElementById('riskVal').innerHTML = `<span class="s-amber">N/A</span>`;
+    document.getElementById('legVal').innerHTML  = `<span class="s-amber">N/A</span>`;
+  } else {
+    const rCls = rs>=70?'s-red':rs>=45?'s-amber':'s-green';
+    const lCls = (ls==null)?'s-amber':ls>=70?'s-green':ls>=45?'s-amber':'s-red';
+    document.getElementById('riskVal').innerHTML = `<span class="${rCls}">${rs}</span><span class="unit">/100</span>`;
+    document.getElementById('legVal').innerHTML  = ls==null
+      ? `<span class="s-amber">N/A</span>`
+      : `<span class="${lCls}">${ls}</span><span class="unit">/100</span>`;
+  }
 
   // ── Decision card (from decision.js) ──────────────────────────
   const decision = a.decision || (window.VerifyJobsDecision && window.VerifyJobsDecision.buildDecision(a));

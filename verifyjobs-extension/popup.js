@@ -241,11 +241,40 @@ function renderResult(data) {
     posSection.classList.add("hidden");
   }
 
+  // ML blend bar (matches site when server returns ml block)
+  const mlBar = $("#mlBar");
+  if (mlBar) {
+    if (data.ml && data.ml.available) {
+      const w = data.ml.blendWeights || {};
+      const floors = (data.ml.floorsTriggered && data.ml.floorsTriggered.length)
+        ? "Floors: " + data.ml.floorsTriggered.join(", ")
+        : "No hard floors";
+      const chips = [
+        "<span class=\"ml-chip\"><b>ML</b> " + (data.ml.score ?? "—") + "% · " + (data.ml.confidence || "—") + "</span>",
+        "<span class=\"ml-chip\"><b>Blend</b> ML " + Math.round((w.ml || 0) * 100) + "% / Rules " + Math.round((w.rules || 0) * 100) + "%</span>",
+        "<span class=\"ml-chip\"><b>Method</b> " + (data.ml.blendMethod || "—") + "</span>",
+        "<span class=\"ml-chip\">" + floors + "</span>",
+      ];
+      if (data.ml.latencyMs) chips.push("<span class=\"ml-chip\" style=\"opacity:0.6\">⚡ " + data.ml.latencyMs + "ms</span>");
+      mlBar.innerHTML = chips.join("");
+      mlBar.classList.remove("hidden");
+    } else if (data.ml && data.ml.available === false) {
+      mlBar.innerHTML = "<span class=\"ml-chip\" style=\"opacity:0.7\">ML offline — rules only</span>";
+      mlBar.classList.remove("hidden");
+    } else {
+      mlBar.innerHTML = "";
+      mlBar.classList.add("hidden");
+    }
+  }
+
   const metaParts = [];
   if (data.submittedUrl) metaParts.push("URL: " + truncate(data.submittedUrl, 40));
-  if (data.ml?.available) metaParts.push("ML + Rules");
+  if (data.ml && data.ml.available) metaParts.push("Hybrid ML + rules");
+  else if (data.ml && data.ml.available === false) metaParts.push("Rules only");
   if (data.cached) metaParts.push("Cached");
-  $("#metaInfo").textContent = metaParts.join(" · ");
+  if (data.status === "not_a_job") metaParts.push("Not a job");
+  const metaEl = $("#metaInfo");
+  if (metaEl) metaEl.textContent = metaParts.join(" · ");
 }
 
 function showSection(name) {

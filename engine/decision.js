@@ -1,52 +1,55 @@
-// decision.js — Turn risk scores into clear customer guidance
-// Use from analyzer.js after scoring, or from the frontend as a fallback.
+// decision.js — Calibrated guidance from analysis (truth-seeking)
+// Prefer under-claiming over false certainty. Pattern labels need evidence.
+
+'use strict';
 
 /**
- * Known scam pattern detectors (plain-language labels for users).
- * Order matters: first match wins as primary pattern.
+ * Primary scam pattern — first solid match wins.
+ * Tests are intentionally stricter than loose keyword lists.
  */
 const SCAM_PATTERNS = [
   {
     id: 'advance_fee',
     label: 'Advance-fee scam',
     test: (text, flags) =>
-      /upfront|registration fee|training fee|starter kit|equipment fee|background check fee|pay (to |before )?(apply|start|work)|gift ?card|western union|moneygram/i.test(text) ||
-      flags.some(f => /upfront|fee|payment|pay /i.test(f)),
+      /(?:pay|paid?|send).{0,24}(?:registration|training|equipment|starter|background\s*check)\s*fee|upfront\s+(?:fee|payment)|starter\s+kit|western\s+union|moneygram|gift\s*cards?/i.test(text) ||
+      flags.some(f => /upfront payment|registration fee|training fee|untraceable payment|gift card/i.test(f)),
   },
   {
     id: 'task_scam',
     label: 'Task / micro-job scam',
     test: (text, flags) =>
-      /data entry|captcha|like and subscribe|product rating|app install|daily task|earn \$?\d+ per (day|task|hour)/i.test(text) ||
-      flags.some(f => /data entry|typing|survey|task/i.test(f)),
+      /complete\s+tasks?\s+to\s+earn|daily\s+tasks?\s+to\s+earn|earn\s+\$?\d+\s+per\s+(?:task|day)|amazon\s+review\s+tasks?/i.test(text) ||
+      flags.some(f => /task-based commission|daily task/i.test(f)),
   },
   {
     id: 'fake_recruiter',
-    label: 'Fake recruiter',
+    label: 'Fake recruiter pattern',
     test: (text, flags) =>
-      /whatsapp only|telegram only|contact (me|us) on whatsapp|hr@gmail|recruiter@yahoo|@gmail\.com|@yahoo\.com/i.test(text) ||
-      flags.some(f => /whatsapp|telegram|free email|gmail|yahoo/i.test(f)),
+      /whatsapp\s+only|telegram\s+only|contact\s+(?:me|us)\s+only\s+on\s+whatsapp|interview\s+(?:via|on)\s+whatsapp/i.test(text) ||
+      flags.some(f => /exclusively through messaging|interview.*messaging app/i.test(f)),
   },
   {
     id: 'identity_harvest',
     label: 'Identity / document harvest',
     test: (text, flags) =>
-      /send (your )?(passport|id card|national id|bvn|nin|ssn|bank statement|utility bill)|scan of (your )?id/i.test(text) ||
-      flags.some(f => /passport|identity|document|bvn|nin|ssn|bank/i.test(f)),
+      /(?:send|share|upload).{0,40}(?:passport|bvn|nin|ssn|bank\s*account).{0,30}(?:whatsapp|telegram|before\s+you\s+start)/i.test(text) ||
+      flags.some(f => /prematurely|via messaging app|identity or bank details via/i.test(f)),
   },
   {
     id: 'crypto_job',
-    label: 'Crypto / investment job scam',
+    label: 'Crypto / trading job scam',
     test: (text, flags) =>
-      /crypto|bitcoin|forex|trading signal|investment (manager|advisor)|guaranteed (return|profit)/i.test(text) ||
-      flags.some(f => /crypto|bitcoin|forex|invest/i.test(f)),
+      /(?:guaranteed\s+(?:return|profit)|trading\s+signals?|forex\s+trading\s+job|crypto(?:currency)?\s+(?:trading\s+)?(?:job|work))/i.test(text) ||
+      flags.some(f => /cryptocurrency payment|crypto wallets|guaranteed (?:return|profit)/i.test(f)),
   },
   {
     id: 'urgency_pressure',
-    label: 'High-pressure urgency scam',
+    label: 'High-pressure urgency',
     test: (text, flags) =>
-      /act now|limited slots|only \d+ spots|today only|urgent hiring|immediate start.*pay/i.test(text) ||
-      flags.some(f => /urgenc|pressure|act now/i.test(f)),
+      /(?:urgent\s+hiring|limited\s+slots?|only\s+\d+\s+(?:positions?|slots?)|few\s+positions?\s+left).{0,40}(?:pay|fee|whatsapp|telegram)/i.test(text) ||
+      (flags.filter(f => /urgenc|pressure|immediate hiring/i.test(f)).length >= 1 &&
+        flags.some(f => /fee|whatsapp|telegram|payment|capital/i.test(f))),
   },
 ];
 
@@ -57,20 +60,36 @@ function normalizeFlags(list) {
     .filter(Boolean);
 }
 
+function plainReason(s, kind) {
+  let t = String(s || '').trim();
+  t = t.replace(/^[\u{1F300}-\u{1F9FF}\u{2600}-\u{26FF}\s]+/u, '');
+  t = t.replace(/^[🚨⚠️✓✅🛑📱🚔🔍💼🔎📧⭐🤝❌📅]+\s*/u, '');
+  if (t.length > 120) t = t.slice(0, 117) + '…';
+  return t;
+}
+
+function detectPattern(text, flags) {
+  for (const p of SCAM_PATTERNS) {
+    try {
+      if (p.test(text, flags)) return { id: p.id, label: p.label };
+    } catch (_) { /* ignore bad regex edge */ }
+  }
+  return null;
+}
+
 /**
- * Build a customer-facing decision object from an analysis result.
- * @param {object} result - Output from analyzeJob / API
- * @param {string} [rawText] - Optional original text for pattern detection
+ * Build customer-facing decision. Language stays advisory — never omniscient.
  */
 function buildDecision(result, rawText = '') {
-  const risk = Number(result.riskScore ?? result.risk_score ?? 50);
+  const risk = Number(result.riskScore ?? result.risk_score ?? 0);
   const flags = normalizeFlags(result.redFlags || result.red_flags || []);
   const positives = normalizeFlags(
     result.positiveIndicators || result.positiveSignals || result.positives || []
   );
-  const text = String(rawText || result.explanation || '').slice(0, 20000);
+  const text = String(
+    rawText || result.originalText || result.metadata?.snippet || result.explanation || ''
+  ).slice(0, 20000);
 
-  // ── Not a job posting ────────────────────────────
   const statusStr = String(result.status || '').toLowerCase();
   const notAJob =
     statusStr === 'not_a_job' ||
@@ -80,30 +99,30 @@ function buildDecision(result, rawText = '') {
 
   if (notAJob) {
     const why = (result.jobLikelihood?.reasons || result.metadata?.contextFlags || []).slice(0, 3);
-    const reasons = why.length
-      ? why.map(r => String(r))
-      : ['The text does not look like a job advertisement.'];
     return {
       verdict: 'not_applicable',
       verdictLabel: 'Not a job posting',
       verdictTone: 'neutral',
-      topReasons: reasons,
+      topReasons: why.length
+        ? why.map(r => plainReason(r))
+        : ['The text does not look like a job or opportunity ad.'],
       nextSteps: [
-        'Paste a full job description, offer letter, or recruiting message.',
-        'Or upload a PDF / Word job posting.',
-        'Or submit the URL of the listing on a careers site.',
-        'Scam checks only apply to job ads — not resumes, blogs, or random pages.',
+        'Paste a full job, fellowship, or vacancy description.',
+        'Or upload a PDF / Word posting.',
+        'Or submit a direct careers / ATS URL (not only a homepage).',
+        'Scam checks apply to job-like ads — not pure policy pages or resumes.',
       ],
       scamPattern: null,
-      summary: 'Not a job posting — scam checks are for job ads only.',
+      summary: 'Not a job posting — scam checks are for jobs and similar opportunities only.',
+      confidenceNote: 'Classification is rule-based and can be wrong on unusual pages.',
     };
   }
 
-  // ── Verdict ──────────────────────────────────────
   let verdict;
   let verdictLabel;
-  let verdictTone; // danger | warn | safe
+  let verdictTone;
 
+  // Thresholds match product bands; labels avoid "proven scam" without hard proof
   if (risk >= 70) {
     verdict = 'dont_apply';
     verdictLabel = "Don't apply";
@@ -114,116 +133,101 @@ function buildDecision(result, rawText = '') {
     verdictTone = 'warn';
   } else {
     verdict = 'looks_ok';
-    verdictLabel = 'Looks OK';
+    verdictLabel = 'No strong scam signals';
     verdictTone = 'safe';
   }
 
-  // Override if status already says definite scam with high confidence
-  const status = String(result.status || '').toLowerCase();
-  if (status.includes('definite') || status.includes('scam') && risk >= 55) {
-    if (risk >= 55) {
-      verdict = 'dont_apply';
-      verdictLabel = "Don't apply";
-      verdictTone = 'danger';
-    }
+  if ((statusStr.includes('definite') || statusStr === 'definite_scam') && risk >= 70) {
+    verdict = 'dont_apply';
+    verdictLabel = "Don't apply";
+    verdictTone = 'danger';
   }
 
-  // ── Top 3 reasons (plain language) ───────────────
-  const reasons = [];
+  const pattern = detectPattern(text, flags);
 
-  if (flags.length) {
-    // Prefer real red flags, shortened
-    for (const f of flags) {
-      if (reasons.length >= 3) break;
-      reasons.push(plainReason(f, 'flag'));
-    }
+  // Reasons: evidence first, then calibrated synthesis
+  const topReasons = [];
+  flags.slice(0, 4).forEach(f => topReasons.push(plainReason(f, 'flag')));
+  if (pattern && topReasons.length < 5) {
+    topReasons.push('Pattern resembles: ' + pattern.label);
+  }
+  if (risk >= 45 && flags.length >= 2) {
+    topReasons.push('Several warning signs appear together — verify independently before trusting the ad.');
+  } else if (risk >= 45 && flags.length === 1) {
+    topReasons.push('One strong warning sign — confirm through official channels before sharing data or money.');
+  }
+  if (risk < 45 && positives.length) {
+    topReasons.push(plainReason(positives[0], 'positive'));
+  }
+  if (risk < 30 && flags.length === 0) {
+    topReasons.push('No high-weight scam rules matched this text.');
+  }
+  if (!topReasons.length) {
+    topReasons.push('Limited automated evidence either way — manual checks still matter.');
   }
 
-  if (reasons.length < 3 && risk >= 45) {
-    reasons.push('Several warning signs appear together — treat this as high risk until proven otherwise.');
-  }
-
-  if (reasons.length < 3 && positives.length && risk < 45) {
-    for (const p of positives) {
-      if (reasons.length >= 3) break;
-      reasons.push(plainReason(p, 'positive'));
-    }
-  }
-
-  if (reasons.length === 0) {
-    if (risk < 25) {
-      reasons.push('No major scam indicators were detected in the text provided.');
-    } else {
-      reasons.push('Some mixed signals — independent verification is still recommended.');
-    }
-  }
-
-  // ── Known scam pattern ───────────────────────────
-  let scamPattern = null;
-  if (risk >= 40) {
-    for (const p of SCAM_PATTERNS) {
-      if (p.test(text, flags)) {
-        scamPattern = { id: p.id, label: p.label };
-        break;
-      }
-    }
-  }
-
-  // ── What to do next ──────────────────────────────
-  const nextSteps = [];
-
+  // Next steps by band — always include "we can be wrong"
+  let nextSteps;
   if (verdict === 'dont_apply') {
-    nextSteps.push('Do not send money, gift cards, crypto, or bank details.');
-    nextSteps.push('Do not share passport, national ID, BVN, NIN, or SSN.');
-    nextSteps.push('Stop contact and keep screenshots as evidence.');
-    nextSteps.push('Report the listing on the platform where you found it.');
-    nextSteps.push('Report to local authorities if you already lost money (FTC, Action Fraud, EFCC, etc.).');
+    nextSteps = [
+      'Do not send money, gift cards, crypto, or bank/ID details based on this ad.',
+      'Ignore pressure to "pay to start" or to move the chat only to WhatsApp/Telegram.',
+      'If you already paid or shared data, contact your bank and local fraud reporting channel.',
+      'Search the organisation name + "scam" on an independent browser search.',
+      'This is an automated assessment — rare false alarms exist; official career pages can still be checked carefully.',
+    ];
   } else if (verdict === 'verify_first') {
-    nextSteps.push('Find the company via Google — do not trust links inside the message.');
-    nextSteps.push('Check the company on LinkedIn and whether real employees list it.');
-    nextSteps.push('Confirm the email domain matches the official website.');
-    nextSteps.push('Never pay for training, equipment, or “background checks” before day one.');
-    nextSteps.push('Search the job title in quotes plus “scam” to see if it was copied elsewhere.');
+    nextSteps = [
+      'Find the organisation via an independent search — do not rely only on links inside the message.',
+      'Prefer official careers / ATS domains (or known organisers for fellowships).',
+      'Confirm any email domain matches the official website.',
+      'Never pay for training, equipment, or "background checks" before a verified start.',
+      'Automated flags can be wrong on unusual but real programmes — verify, then decide.',
+    ];
   } else {
-    nextSteps.push('Still confirm the company on its official careers page.');
-    nextSteps.push('Review Glassdoor / Indeed ratings before accepting an offer.');
-    nextSteps.push('Never pay fees to start work — legitimate employers do not charge you to get hired.');
+    nextSteps = [
+      'Still confirm the employer or organiser on their official site or known channels.',
+      'Be wary if contact suddenly moves to WhatsApp-only or asks for fees.',
+      'Do not send ID or bank details until you are sure who you are dealing with.',
+      'Absence of automated red flags is not a guarantee of legitimacy.',
+    ];
   }
 
-  // Cap next steps at 5 for UI
-  const limitedSteps = nextSteps.slice(0, 5);
+  let summary;
+  if (verdict === 'dont_apply') {
+    summary = pattern
+      ? `High risk signals — pattern looks like: ${pattern.label}. Do not pay or share sensitive data.`
+      : 'High risk signals from the rule engine. Do not pay or share sensitive data until independently verified.';
+  } else if (verdict === 'verify_first') {
+    summary = pattern
+      ? `Verify first — possible ${pattern.label.toLowerCase()}. Confirm via official channels.`
+      : 'Verify first — some warning signs need independent confirmation.';
+  } else {
+    summary = 'No strong automated scam signals — still do basic verification before applying or sharing data.';
+  }
+
+  // Soften if positives heavily outweigh few soft flags
+  if (verdict === 'verify_first' && positives.length >= 4 && flags.length <= 1 && risk < 55) {
+    summary += ' Several professional signals are also present.';
+  }
 
   return {
     verdict,
     verdictLabel,
     verdictTone,
-    topReasons: reasons.slice(0, 3),
-    nextSteps: limitedSteps,
-    scamPattern, // { id, label } or null
-    // Short one-liner for cards / notifications
-    summary:
-      verdict === 'dont_apply'
-        ? scamPattern
-          ? `Don't apply — looks like a ${scamPattern.label.toLowerCase()}.`
-          : "Don't apply — strong scam indicators."
-        : verdict === 'verify_first'
-        ? scamPattern
-          ? `Verify first — possible ${scamPattern.label.toLowerCase()}.`
-          : 'Verify first — warning signs present.'
-        : 'Looks OK — still do basic company checks.',
+    topReasons: topReasons.slice(0, 5),
+    nextSteps,
+    scamPattern: pattern,
+    summary,
+    confidenceNote:
+      'Advisory only. Rules and models miss some scams and occasionally flag real posts. Seek truth via official sources.',
+    riskScore: risk,
   };
 }
 
-function plainReason(text, kind) {
-  let t = String(text).trim();
-  // Strip emoji prefixes and rule-id style noise
-  t = t.replace(/^[\u{1F300}-\u{1F9FF}\u{2600}-\u{26FF}\s]+/u, '');
-  t = t.replace(/^[🚨⚠️✓✅🛑📱🚔🔍💼🔎📧⭐🤝❌📅]+\s*/u, '');
-  if (t.length > 120) t = t.slice(0, 117) + '…';
-  if (kind === 'positive' && !/^(has |includes |mentions |lists |uses |official)/i.test(t)) {
-    // keep as-is; positives are already mostly plain
-  }
-  return t;
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = { buildDecision, SCAM_PATTERNS };
 }
-
-module.exports = { buildDecision, SCAM_PATTERNS };
+if (typeof globalThis !== 'undefined') {
+  globalThis.VerifyJobsDecision = { buildDecision, SCAM_PATTERNS };
+}

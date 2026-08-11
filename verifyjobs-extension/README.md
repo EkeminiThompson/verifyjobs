@@ -71,3 +71,10 @@ Use freely with your VerifyJobs project.
 - Side panel aligned with popup (verdict card, reasons, next steps)
 - Side panel loads decision.js
 - Null-safe renderResult; explicit not_a_job handling when decision missing
+
+## v1.3.4
+- Synced decision.js with site (not_a_job, verdict, next steps)
+- ML blend chips when API returns hybrid `ml` block
+- Side panel + popup both load decision.js
+- Advisory disclaimer under results
+- Meta shows Hybrid ML + rules / Rules only / Not a job

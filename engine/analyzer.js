@@ -229,28 +229,28 @@ function extractMetadata(text) {
 
 function buildExplanation(score, redCount, positiveCount, contextResult) {
   const contextSummary = contextResult.contextFlags.length
-    ? ` Context flags: ${contextResult.contextFlags.slice(0, 3).join('; ')}.`
+    ? ` Context notes: ${contextResult.contextFlags.slice(0, 3).join('; ')}.`
     : '';
 
   if (score >= 75) {
-    return `This posting has ${redCount} serious red flag${redCount !== 1 ? 's' : ''} and matches well-documented employment fraud patterns.${contextSummary} The combination of indicators makes this almost certainly a scam.`;
+    return `Automated checks found ${redCount} serious red flag${redCount !== 1 ? 's' : ''} that often appear in employment fraud.${contextSummary} Treat this as high risk until an official source proves otherwise — tools can still err.`;
   }
   if (score >= 55) {
-    return `This posting has ${redCount} significant warning sign${redCount !== 1 ? 's' : ''}.${contextSummary}${positiveCount > 0 ? ` While ${positiveCount} positive indicator${positiveCount !== 1 ? 's were' : ' was'} found, the red flags outweigh them substantially.` : ''} Extreme caution is warranted.`;
+    return `Automated checks found ${redCount} significant warning sign${redCount !== 1 ? 's' : ''}.${contextSummary}${positiveCount > 0 ? ` ${positiveCount} positive signal${positiveCount !== 1 ? 's were' : ' was'} also present, so weigh both sides.` : ''} Verify independently before sharing money or documents.`;
   }
   if (score >= 40) {
-    return `This posting shows ${redCount} concern${redCount !== 1 ? 's' : ''} that warrant careful verification.${contextSummary}${positiveCount >= 3 ? ` Some legitimate signals (${positiveCount}) are present, but risks remain.` : ''} Do not proceed without independent research.`;
+    return `Automated checks found ${redCount} concern${redCount !== 1 ? 's' : ''} worth verifying.${contextSummary}${positiveCount >= 3 ? ` Several professional signals (${positiveCount}) are also present.` : ''} Do not rely on this score alone.`;
   }
   if (score >= 20) {
-    return `This posting has ${redCount} minor concern${redCount !== 1 ? 's' : ''}.${contextSummary}${positiveCount >= 2 ? ` Positive indicators (${positiveCount}) suggest this may be legitimate.` : ''} Standard due diligence is recommended.`;
+    return `Automated checks found ${redCount} minor concern${redCount !== 1 ? 's' : ''}.${contextSummary}${positiveCount >= 2 ? ` Positive signals (${positiveCount}) lean professional.` : ''} Basic due diligence is still recommended.`;
   }
-  return `This posting appears relatively safe — ${redCount === 0 ? 'no' : redCount} red flag${redCount !== 1 ? 's were' : ' was'} detected.${positiveCount >= 3 ? ` Multiple positive signals (${positiveCount}) indicate professional legitimacy.` : ''} Always verify company information independently before accepting any offer.`;
+  return `Automated checks found ${redCount === 0 ? 'no major' : redCount} red flag${redCount !== 1 ? 's' : ''}.${positiveCount >= 3 ? ` Multiple professional signals (${positiveCount}) were present.` : ''} That is not a guarantee of legitimacy — confirm the employer or organiser through official channels.`;
 }
 
 function buildRecommendation(score, jobStatus) {
   let rec;
   if (score >= 75) {
-    rec = '🚨 AVOID COMPLETELY. Do not respond, send money, or share personal information. This posting exhibits overwhelming scam indicators.';
+    rec = '🚨 HIGH AUTOMATED RISK. Do not send money or sensitive documents. Verify the organisation independently before any further steps.';
   } else if (score >= 55) {
     rec = '⚠️ HIGH RISK. Do not proceed without verifying the company through its official website — not the contact details in this posting. Never pay fees of any kind.';
   } else if (score >= 40) {
