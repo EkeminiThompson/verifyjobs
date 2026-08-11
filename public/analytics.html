@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-Content-Type-Options" content="nosniff">
 <meta http-equiv="X-Frame-Options" content="DENY">
-<title>Analytics — Job Scam Intelligence Dashboard — VerifyJobs</title>
-<meta name="description" content="Real-time job scam analytics: AI model performance, A/B tests, cohort insights, segment intelligence, and daily analysis volume.">
+<title>Intelligence Dashboard — VerifyJobs</title>
+<meta name="description" content="VerifyJobs intelligence dashboard: live risk patterns, trained ML hold-out metrics, segment insights, and hybrid engine status.">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://verifyjobs.org/analytics.html">
 <meta property="og:type" content="website">
@@ -23,55 +23,40 @@
 <link rel="stylesheet" href="/shared.css">
 <style>
 .page { max-width: 1280px; margin: 0 auto; padding: 0 24px 80px; }
-/* Loading */
 .loading-state { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 80px 24px; gap: 16px; }
 .g-spinner { width: 40px; height: 40px; border: 3px solid var(--grey4); border-top-color: var(--blue); border-radius: 50%; animation: spin 0.7s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
 .loading-state p { font-family: var(--sans); font-size: 14px; color: var(--grey2); }
-
-/* Error */
 .error-bar { display: none; background: #fce8e6; border: 1px solid #f5c6c6; border-radius: 8px; padding: 14px 16px; margin-bottom: 24px; font-family: var(--body); font-size: 14px; color: #c5221f; }
 .error-bar.show { display: block; }
-
-/* KPI grid */
+.trust-bar { background: #e8f0fe; border: 1px solid #c2d7f5; border-radius: 8px; padding: 12px 16px; margin-bottom: 20px; font-family: var(--body); font-size: 13px; color: var(--grey1); line-height: 1.6; }
 .kpi-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 1px; background: var(--grey4); border: 1px solid var(--grey4); border-radius: 16px; overflow: hidden; margin-bottom: 24px; }
 .kpi-cell { background: var(--white); padding: 24px 20px; }
 .kpi-label { font-family: var(--sans); font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; color: var(--grey3); margin-bottom: 8px; }
 .kpi-val { font-family: var(--display); font-size: 32px; font-weight: 700; color: var(--black); line-height: 1; }
 .kpi-val .unit { font-size: 16px; font-weight: 400; color: var(--grey3); }
-.kpi-trend { font-family: var(--body); font-size: 12px; color: var(--grey2); margin-top: 4px; }
-
-/* Dashboard grid */
 .dash-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; }
 .dash-1 { margin-bottom: 20px; }
 .d-card { background: var(--white); border: 1px solid var(--grey4); border-radius: 12px; padding: 24px; }
 .d-card-title { font-family: var(--sans); font-size: 14px; font-weight: 700; color: var(--black); margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
 .d-card-title-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--blue); flex-shrink: 0; }
-
-/* Data table rows */
-.data-row { display: flex; justify-content: space-between; align-items: center; padding: 9px 0; border-bottom: 1px solid var(--grey5); font-family: var(--body); font-size: 13px; }
+.data-row { display: flex; justify-content: space-between; align-items: center; padding: 9px 0; border-bottom: 1px solid var(--grey5); font-family: var(--body); font-size: 13px; gap: 12px; }
 .data-row:last-child { border: none; }
-.data-row-label { color: var(--grey2); }
-.data-row-val { font-weight: 500; color: var(--black); }
-
-/* Badges */
+.data-row-label { color: var(--grey2); word-break: break-word; }
+.data-row-val { font-weight: 500; color: var(--black); flex-shrink: 0; }
 .badge { display: inline-flex; align-items: center; padding: 3px 8px; border-radius: 100px; font-family: var(--sans); font-size: 11px; font-weight: 600; }
 .badge-red { background: #fce8e6; color: var(--red); }
 .badge-green { background: #e6f4ea; color: var(--green); }
 .badge-amber { background: #fef7e0; color: var(--amber); }
 .badge-blue { background: #e8f0fe; color: var(--blue); }
-
-/* Insight text */
 .insight { background: var(--grey6); border: 1px solid var(--grey4); border-radius: 8px; padding: 12px 14px; font-family: var(--body); font-size: 13px; color: var(--grey1); line-height: 1.65; margin-top: 12px; }
-
-/* Mini stat */
 .mini-stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
 .mini-stat { background: var(--grey6); border-radius: 8px; padding: 14px; }
 .mini-stat-val { font-family: var(--display); font-size: 24px; font-weight: 700; color: var(--black); line-height: 1; margin-bottom: 2px; }
 .mini-stat-lbl { font-family: var(--body); font-size: 11px; color: var(--grey2); }
-
+.intel-card { border-color: #c2d7f5; background: linear-gradient(180deg, #f8fbff 0%, #fff 48%); }
+.alert-item { background: #fef7e0; border: 1px solid #f5e6b8; border-radius: 8px; padding: 10px 12px; font-size: 13px; color: var(--grey1); margin-top: 8px; line-height: 1.55; }
 .note-bar { background: var(--grey6); border: 1px solid var(--grey4); border-radius: 8px; padding: 12px 16px; font-family: var(--body); font-size: 13px; color: var(--grey2); line-height: 1.65; margin-top: 8px; }
-
 @media(max-width:960px) { .kpi-grid { grid-template-columns: 1fr 1fr; } .dash-2 { grid-template-columns: 1fr; } }
 @media(max-width:560px) { .page { padding: 0 16px 48px; } .kpi-grid { grid-template-columns: 1fr; } .mini-stat-grid { grid-template-columns: 1fr 1fr; } }
 </style>
@@ -81,7 +66,7 @@
 <nav class="nav">
   <div class="nav-inner">
     <a class="wordmark" href="/"><b>Verify</b>Jobs</a>
-        <div class="nav-links">
+    <div class="nav-links">
       <a href="/">Home</a>
       <a href="/analytics.html" class="active">Analytics</a>
       <a href="/extension.html">Chrome Extension</a>
@@ -93,7 +78,9 @@
     <div class="nav-right">
       <button class="nav-hamburger" id="navHamburger" aria-label="Open navigation" aria-expanded="false" aria-controls="mobileMenu">
         <span></span><span></span><span></span>
-      </button><div class="nav-chip">Engine <span>● online</span></div></div>
+      </button>
+      <div class="nav-chip">Engine <span>● online</span></div>
+    </div>
   </div>
 </nav>
 <div class="mobile-menu" id="mobileMenu" role="navigation" aria-label="Mobile navigation">
@@ -111,8 +98,8 @@
     <nav class="breadcrumb" aria-label="Breadcrumb">
       <a href="/">Home</a><span>›</span><span>Analytics</span>
     </nav>
-    <h1 class="page-h1">Job scam<br><em>intelligence dashboard</em></h1>
-    <p class="page-deck">Real-time analytics from job scam detection — AI model performance, A/B tests, cohort insights, and segment intelligence.</p>
+    <h1 class="page-h1">Job scam<br><em>intelligence</em></h1>
+    <p class="page-deck">Live traffic patterns, trained model quality from the ML service, and derived insights, built for trust.</p>
   </div>
 
   <div class="error-bar" id="errorMsg" role="alert"><span id="errorText"></span></div>
@@ -122,13 +109,19 @@
     <p>Loading analytics data…</p>
   </div>
 
-  <main id="dashboardContent" style="display:none" aria-label="Analytics dashboard">
-
+  <main id="dashboardContent" style="display:none" aria-label="Intelligence dashboard">
+    <div class="trust-bar" id="trustBar" role="note"></div>
+    <div class="d-card intel-card" id="intelCard" style="margin-bottom:20px;display:none">
+      <div class="d-card-title"><span class="d-card-title-dot"></span> Intelligence summary</div>
+      <div id="intelHeadline" style="font-family:var(--display);font-size:20px;font-weight:700;margin-bottom:10px;color:var(--black)"></div>
+      <ul id="intelBullets" style="margin:0 0 12px 18px;font-family:var(--body);font-size:13px;color:var(--grey1);line-height:1.7"></ul>
+      <div id="intelAlerts"></div>
+    </div>
     <div class="kpi-grid" id="kpiGrid"></div>
 
     <div class="dash-2">
       <div class="d-card">
-        <div class="d-card-title"><span class="d-card-title-dot"></span> AI Model Performance</div>
+        <div class="d-card-title"><span class="d-card-title-dot"></span> Trained ML model</div>
         <div id="modelMetrics"></div>
         <div id="featureImportance"></div>
       </div>
@@ -141,11 +134,11 @@
 
     <div class="dash-2">
       <div class="d-card">
-        <div class="d-card-title"><span class="d-card-title-dot"></span> A/B Test — Input Methods</div>
+        <div class="d-card-title"><span class="d-card-title-dot"></span> Input methods</div>
         <div id="abTestResults"></div>
       </div>
       <div class="d-card">
-        <div class="d-card-title"><span class="d-card-title-dot"></span> Causal Inference (DiD)</div>
+        <div class="d-card-title"><span class="d-card-title-dot"></span> Time split (exploratory)</div>
         <div id="causalResults"></div>
       </div>
     </div>
@@ -167,7 +160,7 @@
         <div id="scoreHistogram"></div>
       </div>
       <div class="d-card">
-        <div class="d-card-title"><span class="d-card-title-dot"></span> Scam Rate by Source</div>
+        <div class="d-card-title"><span class="d-card-title-dot"></span> Risk by source</div>
         <div id="sourceBreakdown"></div>
       </div>
     </div>
@@ -178,7 +171,6 @@
     </div>
 
     <div class="note-bar" id="insightNote" role="note"></div>
-
   </main>
 </div>
 
@@ -187,7 +179,7 @@
     <div class="footer-links">
       <a href="/">Home</a><a href="/analytics.html">Analytics</a><a href="/extension.html">Chrome Extension</a><a href="/how-it-works.html">How it works</a><a href="/about.html">About</a><a href="/report-a-scam.html">Report a scam</a><a href="/privacy.html">Privacy</a><a href="/extension-privacy.html">Extension Privacy</a><a href="/blog/index.html">Blog</a>
     </div>
-    <div class="footer-copy">© 2026 VerifyJobs.org — Free · No account · No data stored</div>
+    <div class="footer-copy">© 2026 VerifyJobs.org — Free · No account · Advisory tool</div>
   </div>
 </footer>
 
@@ -200,17 +192,47 @@ async function fetchAnalytics() {
   return await r.json();
 }
 
-function esc(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+function esc(s) {
+  const d = document.createElement('div');
+  d.textContent = s == null ? '' : String(s);
+  return d.innerHTML;
+}
+
+function pct(v) {
+  if (v == null || Number.isNaN(v)) return '—';
+  return (Number(v) <= 1 ? Number(v) * 100 : Number(v)).toFixed(1) + '%';
+}
+
+function renderTrust(data) {
+  const el = document.getElementById('trustBar');
+  el.textContent = data.trustNote
+    || 'High-risk rates are score proxies, not human labels. Model metrics come from the trained ML hold-out set when the ML server is up.';
+}
+
+function renderIntelligence(data) {
+  const card = document.getElementById('intelCard');
+  const intel = data.intelligence;
+  if (!intel || data.empty) {
+    card.style.display = 'none';
+    return;
+  }
+  card.style.display = 'block';
+  document.getElementById('intelHeadline').textContent = intel.headline || 'Intelligence summary';
+  const ul = document.getElementById('intelBullets');
+  ul.innerHTML = (intel.bullets || []).map(b => `<li>${esc(b)}</li>`).join('');
+  const alerts = document.getElementById('intelAlerts');
+  alerts.innerHTML = (intel.alerts || []).map(a => `<div class="alert-item">${esc(a)}</div>`).join('');
+}
 
 function renderKPIs(data) {
   const o = data.overview || {};
   const total = data.recordCount || o.total || 0;
-  const scamRate = o.scamRate || (data.isDemo ? 34.2 : 0);
-  const avgRisk = o.avgRiskScore || (data.isDemo ? 42.1 : 0);
+  const highRiskRate = o.highRiskRate != null ? o.highRiskRate : (o.scamRate || 0);
+  const avgRisk = o.avgRiskScore || 0;
   const kpis = [
     { label: 'Total Analyses', value: total, unit: '' },
-    { label: 'Scam Rate', value: scamRate.toFixed(1), unit: '%' },
-    { label: 'Avg Risk Score', value: avgRisk.toFixed(1), unit: '/100' },
+    { label: 'High-risk rate', value: Number(highRiskRate).toFixed(1), unit: '%' },
+    { label: 'Avg Risk Score', value: Number(avgRisk).toFixed(1), unit: '/100' },
     { label: 'Engine Status', value: 'Live', unit: '' },
   ];
   document.getElementById('kpiGrid').innerHTML = kpis.map(k => `
@@ -222,100 +244,154 @@ function renderKPIs(data) {
 
 function renderModelMetrics(data) {
   const model = data.model || {};
-  if (model.error) { document.getElementById('modelMetrics').innerHTML = `<div class="insight">${esc(model.error)}</div>`; return; }
-  const auc = model.auc || 0.87, f1 = model.bestF1 || 0.79, prec = model.bestPrecision || 0.83, rec = model.bestRecall || 0.75;
-  document.getElementById('modelMetrics').innerHTML = `
+  const box = document.getElementById('modelMetrics');
+  const featBox = document.getElementById('featureImportance');
+  featBox.innerHTML = '';
+
+  if (model.error || model.available === false) {
+    box.innerHTML = `<div class="insight">${esc(model.error || 'ML server unavailable')}</div>`;
+    return;
+  }
+
+  if (!model.available && model.source !== 'trained_holdout') {
+    box.innerHTML = `<div class="insight">${esc(model.error || 'No model metrics')}</div>`;
+    return;
+  }
+
+  const auc = model.auc;
+  const f1 = model.bestF1 ?? model.f1;
+  const auprc = model.auprc;
+  const thresh = model.threshold;
+
+  box.innerHTML = `
     <div class="mini-stat-grid">
-      <div class="mini-stat"><div class="mini-stat-val">${(auc*100).toFixed(1)}%</div><div class="mini-stat-lbl">AUC-ROC</div></div>
-      <div class="mini-stat"><div class="mini-stat-val">${(f1*100).toFixed(1)}%</div><div class="mini-stat-lbl">F1 Score</div></div>
-      <div class="mini-stat"><div class="mini-stat-val">${(prec*100).toFixed(1)}%</div><div class="mini-stat-lbl">Precision</div></div>
-      <div class="mini-stat"><div class="mini-stat-val">${(rec*100).toFixed(1)}%</div><div class="mini-stat-lbl">Recall</div></div>
-    </div>`;
+      <div class="mini-stat"><div class="mini-stat-val">${auc != null ? pct(auc) : '—'}</div><div class="mini-stat-lbl">Test AUC-ROC</div></div>
+      <div class="mini-stat"><div class="mini-stat-val">${auprc != null ? pct(auprc) : '—'}</div><div class="mini-stat-lbl">Test AUPRC</div></div>
+      <div class="mini-stat"><div class="mini-stat-val">${f1 != null ? pct(f1) : '—'}</div><div class="mini-stat-lbl">Test F1</div></div>
+      <div class="mini-stat"><div class="mini-stat-val">${thresh != null ? Number(thresh).toFixed(2) : '—'}</div><div class="mini-stat-lbl">Threshold</div></div>
+    </div>
+    <div class="insight">${esc(model.note || 'Held-out test metrics from training — not live traffic.')}</div>`;
+
   const features = model.featureImportance || [];
   if (features.length) {
-    document.getElementById('featureImportance').innerHTML = `<div style="font-family:var(--sans);font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:var(--grey3);margin-bottom:8px">Top Features</div>` +
-      features.slice(0,5).map(f => `<div class="data-row"><span class="data-row-label">${esc(f.feature)}</span><span class="badge ${f.direction==='risk'?'badge-red':'badge-green'}">${f.direction==='risk'?'↑ risk':'↓ safe'}</span></div>`).join('');
+    featBox.innerHTML = `<div style="font-family:var(--sans);font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.07em;color:var(--grey3);margin:12px 0 8px">Top trained features</div>` +
+      features.slice(0, 6).map(f => {
+        const name = typeof f === 'string' ? f : (f.feature || '—');
+        return `<div class="data-row"><span class="data-row-label">${esc(name)}</span><span class="badge badge-blue">trained</span></div>`;
+      }).join('');
   }
 }
 
 function renderSegmentInsights(data) {
-  const segments = data.segments || {}, insights = segments.insights || [];
-  if (!insights.length) { document.getElementById('segmentInsights').innerHTML = '<div class="insight">Not enough data for segment analysis</div>'; return; }
-  document.getElementById('segmentInsights').innerHTML = insights.slice(0,5).map(s =>
-    `<div class="data-row"><span class="data-row-label">${esc(s.segment)}</span><span class="data-row-val">${s.scamRate}% <span style="color:var(--grey3);font-weight:400;font-size:11px">${s.vsBase>0?`+${s.vsBase}pp`:`${s.vsBase}pp`}</span></span></div>`
+  const segments = data.segments || {};
+  const insights = segments.insights || [];
+  if (!insights.length) {
+    document.getElementById('segmentInsights').innerHTML = '<div class="insight">Not enough data for segment analysis</div>';
+    document.getElementById('segmentActionable').innerHTML = '';
+    return;
+  }
+  document.getElementById('segmentInsights').innerHTML = insights.slice(0, 5).map(s =>
+    `<div class="data-row"><span class="data-row-label">${esc(s.segment)}${s.reliable === false ? ' <span class="badge badge-amber">small n</span>' : ''}</span><span class="data-row-val">${s.scamRate}% <span style="color:var(--grey3);font-weight:400;font-size:11px">${s.vsBase > 0 ? `+${s.vsBase}pp` : `${s.vsBase}pp`} · n=${s.n}</span></span></div>`
   ).join('');
-  if (segments.actionable) document.getElementById('segmentActionable').innerHTML = `<div class="insight" style="margin-top:10px">${esc(segments.actionable)}</div>`;
+  if (segments.actionable) {
+    document.getElementById('segmentActionable').innerHTML = `<div class="insight" style="margin-top:10px">${esc(segments.actionable)}</div>`;
+  }
 }
 
 function renderABTest(data) {
-  const ab = data.abTest || {}, groups = ab.groups || [];
-  if (!groups.length) { document.getElementById('abTestResults').innerHTML = '<div class="insight">Insufficient A/B test data</div>'; return; }
+  const ab = data.abTest || {};
+  if (ab.error) {
+    document.getElementById('abTestResults').innerHTML = `<div class="insight">${esc(ab.error)}</div>`;
+    return;
+  }
+  const groups = ab.groups || [];
+  if (!groups.length) {
+    document.getElementById('abTestResults').innerHTML = '<div class="insight">Insufficient data</div>';
+    return;
+  }
   const test = ab.test || {};
-  const sigBadge = test.significant ? '<span class="badge badge-red">statistically significant</span>' : '<span class="badge badge-amber">not significant</span>';
+  const sigBadge = test.significant
+    ? '<span class="badge badge-amber">observational signal</span>'
+    : '<span class="badge badge-amber">not significant</span>';
   document.getElementById('abTestResults').innerHTML =
     groups.map(g => `<div class="data-row"><span class="data-row-label">${esc(g.name)}</span><span class="data-row-val">n=${g.n} · ${g.scamRate}%</span></div>`).join('') +
-    (test.comparison ? `<div class="insight" style="margin-top:10px">${esc(test.comparison)}<br>p = ${test.pValue||'N/A'} ${sigBadge} · Lift: ${test.lift||0}%</div>` : '');
+    `<div class="insight" style="margin-top:10px">${esc(test.interpretation || ab.disclaimer || 'Observational only.')}<br>${test.pValue != null ? `p = ${test.pValue} ${sigBadge}` : ''}</div>`;
 }
 
 function renderCausal(data) {
   const causal = data.causal || {};
-  if (causal.error) { document.getElementById('causalResults').innerHTML = `<div class="insight">${esc(causal.error)}</div>`; return; }
+  if (causal.error) {
+    document.getElementById('causalResults').innerHTML = `<div class="insight">${esc(causal.error)}</div>`;
+    return;
+  }
   const groups = causal.groups || {};
   document.getElementById('causalResults').innerHTML = `
-    <div class="data-row"><span class="data-row-label">Control (Manual)</span><span class="data-row-val">${groups.control?.pre||'—'} → ${groups.control?.post||'—'}</span></div>
-    <div class="data-row"><span class="data-row-label">Treatment (URL/File)</span><span class="data-row-val">${groups.treatment?.pre||'—'} → ${groups.treatment?.post||'—'}</span></div>
-    <div class="insight" style="margin-top:10px">DiD Estimate: <strong>${causal.didEstimate!==null?causal.didEstimate:'N/A'}</strong> points<br><span style="font-size:12px">${esc(causal.interpretation||'')}</span></div>`;
+    <div class="data-row"><span class="data-row-label">Control (Manual)</span><span class="data-row-val">${groups.control?.pre ?? '—'} → ${groups.control?.post ?? '—'}</span></div>
+    <div class="data-row"><span class="data-row-label">Treatment (URL/File)</span><span class="data-row-val">${groups.treatment?.pre ?? '—'} → ${groups.treatment?.post ?? '—'}</span></div>
+    <div class="insight" style="margin-top:10px">${esc(causal.interpretation || causal.disclaimer || '')}</div>`;
 }
 
 function renderCohorts(data) {
-  const list = (data.cohorts||{}).cohorts||[];
-  if (!list.length) { document.getElementById('cohortTable').innerHTML = '<div class="insight">Not enough cohort data</div>'; return; }
+  const list = (data.cohorts || {}).cohorts || [];
+  if (!list.length) {
+    document.getElementById('cohortTable').innerHTML = '<div class="insight">Not enough cohort data</div>';
+    return;
+  }
   document.getElementById('cohortTable').innerHTML = list.slice(-6).map(c =>
-    `<div class="data-row"><span class="data-row-label">${esc(c.week)}</span><span class="data-row-val">n=${c.count} · ${c.scamRate}% scam</span></div>`
+    `<div class="data-row"><span class="data-row-label">${esc(c.week)}</span><span class="data-row-val">n=${c.count} · ${c.scamRate}% high-risk</span></div>`
   ).join('');
 }
 
 function renderTopFlags(data) {
-  const flags = (data.queries||{}).topRedFlags||[];
-  if (!flags.length) { document.getElementById('topFlags').innerHTML = '<div class="insight">No red flag data</div>'; return; }
-  document.getElementById('topFlags').innerHTML = flags.slice(0,6).map(f =>
-    `<div class="data-row"><span class="data-row-label">${esc(f.flag.length>48?f.flag.slice(0,48)+'…':f.flag)}</span><span class="data-row-val">${f.count} <span style="color:var(--grey3);font-weight:400">(${f.pct}%)</span></span></div>`
+  const flags = (data.queries || {}).topRedFlags || [];
+  if (!flags.length) {
+    document.getElementById('topFlags').innerHTML = '<div class="insight">No red flag data</div>';
+    return;
+  }
+  document.getElementById('topFlags').innerHTML = flags.slice(0, 6).map(f =>
+    `<div class="data-row"><span class="data-row-label">${esc(f.flag.length > 48 ? f.flag.slice(0, 48) + '…' : f.flag)}</span><span class="data-row-val">${f.count} <span style="color:var(--grey3);font-weight:400">(${f.pct}%)</span></span></div>`
   ).join('');
 }
 
 function renderScoreHistogram(data) {
-  const hist = (data.queries||{}).scoreHistogram||(data.overview?.scoreDistribution||[]);
-  if (!hist.length) { document.getElementById('scoreHistogram').innerHTML = '<div class="insight">No histogram data</div>'; return; }
-  const max = Math.max(...hist.map(h=>h.count));
+  const hist = (data.queries || {}).scoreHistogram || (data.overview?.scoreDistribution || []);
+  if (!hist.length) {
+    document.getElementById('scoreHistogram').innerHTML = '<div class="insight">No histogram data</div>';
+    return;
+  }
+  const max = Math.max(...hist.map(h => h.count), 1);
   document.getElementById('scoreHistogram').innerHTML = hist.map(h => `
     <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;font-size:12px">
-      <span style="width:40px;color:var(--grey2);font-family:var(--body)">${esc(h.label||h.bin||'0')}</span>
+      <span style="width:40px;color:var(--grey2);font-family:var(--body)">${esc(h.label || h.bin || '0')}</span>
       <div style="flex:1;background:var(--grey5);border-radius:4px;height:20px;overflow:hidden">
-        <div style="width:${(h.count/max)*100}%;background:var(--blue);height:100%;border-radius:4px;opacity:0.75"></div>
+        <div style="width:${(h.count / max) * 100}%;background:var(--blue);height:100%;border-radius:4px;opacity:0.75"></div>
       </div>
       <span style="width:24px;text-align:right;color:var(--grey2);font-family:var(--body)">${h.count}</span>
     </div>`).join('');
 }
 
 function renderSourceBreakdown(data) {
-  const sources = (data.queries||{}).bySource||[];
-  if (!sources.length) { document.getElementById('sourceBreakdown').innerHTML = '<div class="insight">No source data</div>'; return; }
+  const sources = (data.queries || {}).bySource || [];
+  if (!sources.length) {
+    document.getElementById('sourceBreakdown').innerHTML = '<div class="insight">No source data</div>';
+    return;
+  }
   document.getElementById('sourceBreakdown').innerHTML = sources.map(s =>
     `<div class="data-row"><span class="data-row-label">${esc(s.source)}</span><span class="data-row-val">${s.scamRate}% · ${s.count} checks</span></div>`
   ).join('');
 }
 
 function renderDailyVolume(data) {
-  const daily = (data.queries||{}).dailyVolume||[];
+  const daily = (data.queries || {}).dailyVolume || [];
   if (daily.length) {
-    const max = Math.max(...daily.map(d=>d.count||0));
+    const max = Math.max(...daily.map(d => d.count || 0), 1);
     document.getElementById('dailyVolumeChart').innerHTML = `
       <div style="overflow-x:auto;margin-top:8px">
-        <div style="display:flex;gap:3px;min-width:560px;align-items:flex-end;height:80px">
-          ${daily.slice(-28).map(d=>`
+        <div style="display:flex;gap:3px;min-width:min(100%,560px);align-items:flex-end;height:80px">
+          ${daily.slice(-28).map(d => `
             <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px">
-              <div style="width:100%;background:var(--blue);opacity:0.65;border-radius:2px 2px 0 0;height:${max>0?(d.count/max)*68:2}px;min-height:2px"></div>
-              <span style="font-size:9px;color:var(--grey3);font-family:var(--body);writing-mode:initial">${(d.date||'').slice(5)||''}</span>
+              <div style="width:100%;background:var(--blue);opacity:0.65;border-radius:2px 2px 0 0;height:${(d.count / max) * 68}px;min-height:2px"></div>
+              <span style="font-size:9px;color:var(--grey3);font-family:var(--body)">${esc((d.date || '').slice(5) || '')}</span>
             </div>`).join('')}
         </div>
       </div>`;
@@ -325,9 +401,10 @@ function renderDailyVolume(data) {
 }
 
 function renderInsightNote(data) {
-  document.getElementById('insightNote').textContent = data.isDemo
-    ? 'Demo mode — showing synthetic data based on typical scam patterns. Real data will appear after job analyses are performed.'
-    : `Live analytics based on ${data.recordCount||0} real job analyses. AI model updates automatically as new data arrives.`;
+  const intel = data.intelligence || {};
+  document.getElementById('insightNote').textContent = data.empty
+    ? (data.message || 'No data yet.')
+    : `Intelligence view · ${data.recordCount || 0} analyses · maturity: ${intel.maturity || 'n/a'} · High-risk proxy = score ≥ 65 · Model card = ML hold-out metrics from serve.py`;
 }
 
 async function loadDashboard() {
@@ -340,10 +417,34 @@ async function loadDashboard() {
   try {
     const data = await fetchAnalytics();
     analyticsData = data;
-    renderKPIs(data); renderModelMetrics(data); renderSegmentInsights(data);
-    renderABTest(data); renderCausal(data); renderCohorts(data);
-    renderTopFlags(data); renderScoreHistogram(data); renderSourceBreakdown(data);
-    renderDailyVolume(data); renderInsightNote(data);
+    if (data.empty) {
+      loading.style.display = 'none';
+      content.style.display = 'block';
+      renderTrust(data);
+      document.getElementById('kpiGrid').innerHTML = '';
+      const stor = data.storage || {};
+      const hint = stor.analysesFile
+        ? `Looking for data at: ${stor.analysesFile} (exists=${stor.exists}, writable=${stor.writable})`
+        : '';
+      document.getElementById('modelMetrics').innerHTML =
+        `<div class="insight">${esc(data.message || 'No analyses yet')}${hint ? '<br><br>' + esc(hint) : ''}</div>`;
+      if (data.model) renderModelMetrics(data);
+      renderInsightNote(data);
+      return;
+    }
+    renderTrust(data);
+    renderIntelligence(data);
+    renderKPIs(data);
+    renderModelMetrics(data);
+    renderSegmentInsights(data);
+    renderABTest(data);
+    renderCausal(data);
+    renderCohorts(data);
+    renderTopFlags(data);
+    renderScoreHistogram(data);
+    renderSourceBreakdown(data);
+    renderDailyVolume(data);
+    renderInsightNote(data);
     loading.style.display = 'none';
     content.style.display = 'block';
   } catch (err) {

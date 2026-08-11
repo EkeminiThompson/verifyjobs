@@ -17,7 +17,7 @@ const NodeCache = require('node-cache');
 const winston = require('winston');
 
 const analyzeJob = require('./engine/analyzer');
-const { ensureStorage, getAllAnalyses } = require('./engine/storage');
+const { ensureStorage, getAllAnalyses, getStorageInfo } = require('./engine/storage');
 const { enrichWithML, checkServerHealth } = require('./engine/ml_scorer');
 const { buildDecision } = require('./engine/decision');
 
@@ -810,12 +810,12 @@ const {
   getFullAnalytics,
   runQuery,
   getModelMetrics,
+  getTrainedModelMetrics,
   runABTest,
   runDifferenceInDifferences,
   getCohortAnalysis,
   getSegmentInsights,
   extractFeatures,
-  predictScamProbability,
   loadAnalyses,
 } = require('./engine/analytics');
 
@@ -894,14 +894,15 @@ app.get('/analyses', generalLimiter, (req, res) => {
 });
 
 // Analytics dashboard — must be before express.static or analytics.html wins
-app.get('/analytics', generalLimiter, (req, res) => {
+app.get('/analytics', generalLimiter, async (req, res) => {
   const startTime = Date.now();
   try {
-    const analytics = getFullAnalytics();
+    const analytics = await getFullAnalytics();
     logger.info('Analytics dashboard generated', {
       recordCount: analytics.recordCount || 0,
       duration: Date.now() - startTime,
       isDemo: analytics.empty || false,
+      modelAvailable: !!(analytics.model && analytics.model.available),
     });
     res.json(analytics);
   } catch (err) {
@@ -935,28 +936,28 @@ app.post('/analytics/query', generalLimiter, (req, res) => {
   }
 });
 
-app.post('/analytics/predict', generalLimiter, (req, res) => {
+app.post('/analytics/predict', generalLimiter, async (req, res) => {
   try {
-    const { text, jobTitle, source } = req.body;
+    const { text, jobTitle, source } = req.body || {};
     if (!text || typeof text !== 'string') {
-      return res.status(400).json({ error: 'Text is required for prediction' });
+      return res.status(400).json({ error: 'text is required' });
     }
+    // Use the same product path as /analyze (rules + optional real ML blend)
     const analysis = analyzeJob(text, jobTitle || 'Untitled', source || 'API');
-    const features = extractFeatures({ result: analysis });
-    const mlProbability = predictScamProbability(features);
+    let result = analysis;
+    try {
+      const { enrichWithML } = require('./engine/ml_scorer');
+      result = await enrichWithML(text, analysis);
+    } catch (e) {
+      logger.warn('ML enrich skipped on /analytics/predict', { error: e.message });
+    }
     res.json({
       ruleBasedScore: analysis.riskScore,
-      mlProbability,
-      mlPrediction: mlProbability >= 0.45 ? 'scam' : 'legitimate',
-      confidence: Math.abs(mlProbability - 0.5) * 2,
-      features: {
-        redFlagCount: features.redFlagCount,
-        positiveCount: features.positiveCount,
-        hasFreeEmail: features.hasFreeEmail,
-        hasURL: features.hasURL,
-        wordCount: features.wordCount,
-      },
-      recommendation: analysis.status,
+      finalScore: result.riskScore,
+      ml: result.ml || null,
+      status: result.status,
+      decision: result.decision || null,
+      recommendation: result.recommendation,
     });
   } catch (err) {
     logger.error('Prediction failed', { error: err.message });
@@ -964,10 +965,10 @@ app.post('/analytics/predict', generalLimiter, (req, res) => {
   }
 });
 
-app.get('/analytics/model-metrics', generalLimiter, (req, res) => {
+
+app.get('/analytics/model-metrics', generalLimiter, async (req, res) => {
   try {
-    const records = loadAnalyses();
-    const metrics = getModelMetrics(records);
+    const metrics = await getTrainedModelMetrics();
     res.json(metrics);
   } catch (err) {
     logger.error('Model metrics failed', { error: err.message });
@@ -1218,13 +1219,16 @@ app.post('/analyze-url', validateUrlInput, async (req, res) => {
 
       // Own marketing/docs site should never be scored as a job scam
       if (isOwnSite) {
-        result.riskScore = Math.min(result.riskScore, 10);
-        result.legitimacyScore = Math.max(result.legitimacyScore || 0, 90);
+        result.riskScore = 0;
+        result.legitimacyScore = 0;
         result.redFlags = [];
-        result.status = 'legitimate';
-        result.statusLabel = '✅ Not a job posting — VerifyJobs site';
+        result.status = 'not_a_job';
+        result.statusLabel = 'Not a job posting — VerifyJobs site';
         result.explanation = 'This URL is the VerifyJobs website itself (educational / marketing content), not a job advertisement. Scam-related phrases on this page are examples used to educate users.';
         result.recommendation = 'This is not a job to apply for. Use the tool to check actual job postings.';
+        result.metadata = result.metadata || {};
+        result.metadata.notAJob = true;
+        result.jobLikelihood = { isJob: false, confidence: 'high', score: 0, reasons: ['Official VerifyJobs site'], signals: { positive: [], negative: ['Educational / tool content'] } };
       } else if ((ctx.combinedText || '').trim().split(/\s+/).length < 40) {
         // Short text on trusted ATS = JS-rendered portal
         result.redFlags = (result.redFlags || []).filter(f =>
@@ -1466,6 +1470,13 @@ server = app.listen(config.port, () => {
   console.log(`✅ Health: http://localhost:${config.port}/health`);
   console.log(`📊 Analytics: http://localhost:${config.port}/analytics.html`);
   console.log(`🔒 Environment: ${config.nodeEnv}`);
+  try {
+    ensureStorage();
+    const s = getStorageInfo();
+    console.log(`💾 Storage: ${s.analysesFile} (records=${s.recordCount}, writable=${s.writable})`);
+  } catch (e) {
+    console.warn('💾 Storage check failed:', e.message);
+  }
 
   if (process.env.ENABLE_ML !== 'false') {
     checkServerHealth().then(available => {
