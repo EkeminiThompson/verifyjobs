@@ -16,11 +16,49 @@ const redFlags = [
     severity: 'critical'
   },
   {
+    pattern: /earn\s+\d{2,}\s*%|\d{2,}\s*%\s*(weekly|daily|per\s+week|per\s+day|monthly)|returns?\s+paid\s+every\s+(friday|week|day)|guaranteed\s+(weekly|daily)\s+(return|profit|income)/i,
+    score: 48,
+    reason: 'Unrealistic percentage returns (weekly/daily profit promises)',
+    severity: 'critical'
+  },
+  {
+    pattern: /(?:minimum\s*(?:investment|capital|deposit)?\s*:?\s*[$£€₦]\s*[\d,]+|your\s+capital\s+is\s+protected|insurance\s+fund|capital\s+protection)/i,
+    score: 44,
+    reason: 'Requires personal capital with guaranteed protection claims',
+    severity: 'high'
+  },
+  {
+    pattern: /contact\s+(?:us|me|hr)?\s+on\s+telegram|telegram\s+only|message\s+(?:us|me)\s+on\s+telegram/i,
+    score: 36,
+    reason: 'Recruitment contact only via Telegram',
+    severity: 'high'
+  },
+
+  {
     pattern: /pay (upfront|fee|registration|processing|training|deposit|equipment|setup|starter|kit|membership)/i,
     score: 48,
     reason: 'Requests upfront payment for job-related expenses',
     severity: 'critical'
   },
+  {
+    pattern: /(?:application|processing|medical|screening|portal|form|admission)\s+fees?|fees?\s+for\s+(?:processing|medical|screening|application|background)/i,
+    score: 50,
+    reason: 'Charges an application, processing, or medical fee to apply',
+    severity: 'critical'
+  },
+  {
+    pattern: /pay\s+to\s*:|pay\s+into\s*:|make\s+payment\s+to|acct?\.?\s*name\s*:|account\s+name\s*:|account\s+(?:number|no)\s*:/i,
+    score: 46,
+    reason: 'Instructs payment to a named bank account for the job',
+    severity: 'critical'
+  },
+  {
+    pattern: /\b(nnpc|n\.?n\.?p\.?c|shell|chevron|exxon\s*mobil|totalenergies|undp|unicef|who\b|world\s+bank|imf\b|mtn|airtel|dangote)\b[\s\S]{0,200}(?:application\s+fee|processing\s+fee|medical\s+fee|registration\s+fee|pay\s+to\s*:|acct?\.?\s*name\s*:)/i,
+    score: 52,
+    reason: 'Major organisation name used with a demand for application/processing payment',
+    severity: 'critical'
+  },
+
   {
     pattern: /western union|moneygram|wire transfer|gift card|steam card|itunes card|google play card/i,
     score: 50,
@@ -140,13 +178,13 @@ const redFlags = [
     severity: 'medium'
   },
   {
-    pattern: /no (experience|qualification|degree|background|skills?) (needed|required)|anyone can (do|apply)/i,
+    pattern: /no (?:prior\s+)?(experience|qualification|degree|background|skills?)(?:\s+(needed|required|necessary))?|anyone can (do|apply)/i,
     score: 18,
     reason: 'No experience or qualifications required (common in scams)',
     severity: 'medium'
   },
   {
-    pattern: /data entry|copy paste|typing|survey|form filling|ad posting|click ads/i,
+    pattern: /data entry|copy[\s-]?paste|typing|survey|form filling|ad posting|click ads|copy ads|paste them on/i,
     score: 20,
     reason: 'Common scam job categories (data entry, typing, surveys)',
     severity: 'medium'
@@ -168,6 +206,12 @@ const redFlags = [
     score: 20,
     reason: 'Part-time work with unrealistically high pay',
     severity: 'medium'
+  },
+  {
+    pattern: /work\s+\d+\s*(hours?|hrs?)\s*(daily|a\s+day|per\s+day).{0,40}earn|earn.{0,40}work\s+\d+\s*(hours?|hrs?)/i,
+    score: 24,
+    reason: 'Unrealistically short work hours with pay claims',
+    severity: 'medium-high'
   },
   {
     pattern: /virtual assistant.*no experience|personal assistant.*immediate start/i,

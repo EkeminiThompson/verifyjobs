@@ -1052,6 +1052,30 @@ textarea { min-height: 120px; resize: vertical; line-height: 1.6; }
 html, body { overflow-x: hidden; }
 img, svg, video { max-width: 100%; height: auto; }
 
+
+/* Engine status chip — always available on homepage */
+.nav-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--grey1);
+  background: var(--grey6, #f8f9fa);
+  border: 1px solid var(--grey4, #e8eaed);
+  border-radius: 100px;
+  padding: 6px 12px;
+  white-space: nowrap;
+  user-select: none;
+}
+.nav-chip span {
+  color: var(--green, #1a7a45);
+  font-weight: 600;
+}
+.nav-chip.is-offline span { color: var(--red, #d93025); }
+.nav-chip.is-checking span { color: var(--grey2, #5f6368); }
+
 @media(max-width: 960px) {
   .hero {
     grid-template-columns: 1fr;
@@ -1100,7 +1124,12 @@ img, svg, video { max-width: 100%; height: auto; }
     height: 56px;
   }
   .wordmark { font-size: 18px; margin-right: 12px; }
-  .nav-chip { display: none; }
+  .nav-chip {
+    display: inline-flex;
+    font-size: 11px;
+    padding: 4px 10px;
+  }
+  .nav-chip span { font-size: 11px; }
 
   /* Hero */
   .hero {
@@ -1344,7 +1373,7 @@ img, svg, video { max-width: 100%; height: auto; }
       <a href="/blog/index.html">Blog</a>
     </div>
     <div class="nav-right">
-      <div class="nav-chip">Engine <span>● online</span></div>
+      <div class="nav-chip" id="engineChip" title="Analysis engine status">Engine <span id="engineStatus">● checking</span></div>
       <button class="nav-hamburger" id="navHamburger" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobileMenu" type="button">
         <span></span><span></span><span></span>
       </button>
@@ -1908,6 +1937,30 @@ function showResults(a) {
   rs2.style.display='block';
   setTimeout(()=>rs2.scrollIntoView({behavior:'smooth',block:'start'}),50);
 }
+</script>
+
+<script>
+(function pollEngine() {
+  const chip = document.getElementById('engineChip');
+  const el = document.getElementById('engineStatus');
+  if (!el) return;
+  const set = (cls, text) => {
+    el.textContent = text;
+    if (chip) {
+      chip.classList.remove('is-offline', 'is-checking');
+      if (cls) chip.classList.add(cls);
+    }
+  };
+  set('is-checking', '● checking');
+  const ctrl = new AbortController();
+  const t = setTimeout(() => ctrl.abort(), 4000);
+  fetch('/health', { signal: ctrl.signal, cache: 'no-store' })
+    .then(r => r.ok ? r.json().catch(() => ({})) : Promise.reject())
+    .then(() => { clearTimeout(t); set('', '● online'); })
+    .catch(() => { clearTimeout(t); set('is-offline', '● offline'); });
+  // re-check every 60s
+  setTimeout(pollEngine, 60000);
+})();
 </script>
 <script src="/shared.js" defer></script>
 </body>

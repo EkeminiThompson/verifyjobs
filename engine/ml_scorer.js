@@ -87,8 +87,13 @@ async function checkServerHealth() {
 const HARD_FLOOR_RULES = [
   {
     name:     'upfront_fee',
-    pattern:  /pay\s+(registration|fee|upfront|deposit|training|equipment)|registration\s+fee|activation\s+fee/i,
+    pattern:  /pay\s+(registration|fee|upfront|deposit|training|equipment|application)|registration\s+fee|activation\s+fee|application\s+fee|processing\s+fee|medical\s+fee|pay\s+to\s*:/i,
     minScore: 68,
+  },
+  {
+    name:     'brand_plus_fee',
+    pattern:  /\b(nnpc|shell|chevron|unicef|undp|world\s+bank)\b[\s\S]{0,200}(?:application\s+fee|processing\s+fee|pay\s+to\s*:)/i,
+    minScore: 75,
   },
   {
     name:     'crypto_payment',

@@ -318,7 +318,7 @@ function isCanonicalSource(hostname) {
 // ─────────────────────────────────────────────
 // ENHANCED SAFETY CHECK WITH DNS RESOLUTION
 // ─────────────────────────────────────────────
-async function isSafeUrl(rawUrl) {
+async function isSafeUrlSync(rawUrl) {
   let url;
   try {
     url = new URL(rawUrl);
@@ -369,6 +369,25 @@ async function isSafeUrl(rawUrl) {
   }
 
   return true;
+}
+
+// Sync host-only safety for extractCanonical (must not use async isSafeUrl as boolean)
+function isSafeUrlSync(rawUrl) {
+  try {
+    const url = new URL(rawUrl);
+    if (!['http:', 'https:'].includes(url.protocol)) return false;
+    const host = url.hostname.toLowerCase();
+    if (BLOCKED_DOMAINS.some(d => host === d || host.endsWith('.' + d))) return false;
+    const privatePatterns = [
+      /^localhost$/i, /^127\./, /^0\./, /^10\./,
+      /^172\.(1[6-9]|2\d|3[01])\./, /^192\.168\./, /^169\.254\./,
+      /^::1$/, /^fc00:/, /^fe80:/, /^fd[0-9a-f]{2}:/i,
+    ];
+    if (privatePatterns.some(pat => pat.test(host))) return false;
+    return true;
+  } catch {
+    return false;
+  }
 }
 
 // ─────────────────────────────────────────────
@@ -596,7 +615,7 @@ function extractCanonicalJobUrl(html, pageUrl) {
     html.match(/<link[^>]+href=["']([^"']+)["'][^>]+rel=["']canonical["']/i);
   if (cm) {
     const u = resolveUrl(cm[1], pageUrl);
-    if (u && !isSameHost(u, pageUrl) && isSafeUrl(u)) {
+    if (u && !isSameHost(u, pageUrl) && isSafeUrlSync(u)) {
       candidates.push({ url: u, strategy: 'canonical-link', priority: 1 });
     }
   }
@@ -605,7 +624,7 @@ function extractCanonicalJobUrl(html, pageUrl) {
     html.match(/<meta[^>]+content=["']([^"']+)["'][^>]+property=["']og:url["']/i);
   if (og) {
     const u = resolveUrl(og[1], pageUrl);
-    if (u && !isSameHost(u, pageUrl) && isSafeUrl(u)) {
+    if (u && !isSameHost(u, pageUrl) && isSafeUrlSync(u)) {
       candidates.push({ url: u, strategy: 'og:url', priority: 2 });
     }
   }
@@ -621,7 +640,7 @@ function extractCanonicalJobUrl(html, pageUrl) {
             const val = item[key];
             if (val && typeof val === 'string') {
               const u = resolveUrl(val, pageUrl);
-              if (u && !isSameHost(u, pageUrl) && isSafeUrl(u)) {
+              if (u && !isSameHost(u, pageUrl) && isSafeUrlSync(u)) {
                 candidates.push({ url: u, strategy: 'json-ld', priority: 2 });
               }
             }
@@ -645,7 +664,7 @@ function extractCanonicalJobUrl(html, pageUrl) {
       const href = m[1];
       if (!href || /^[#\s]|javascript:|mailto:/i.test(href)) continue;
       const u = resolveUrl(href, pageUrl);
-      if (u && !isSameHost(u, pageUrl) && isSafeUrl(u)) {
+      if (u && !isSameHost(u, pageUrl) && isSafeUrlSync(u)) {
         candidates.push({ url: u, strategy: 'apply-button', priority: 3 });
       }
     }
@@ -660,7 +679,7 @@ function extractCanonicalJobUrl(html, pageUrl) {
     let m;
     while ((m = rx.exec(html)) !== null) {
       const u = resolveUrl(m[1], pageUrl);
-      if (u && !isSameHost(u, pageUrl) && isSafeUrl(u)) {
+      if (u && !isSameHost(u, pageUrl) && isSafeUrlSync(u)) {
         candidates.push({ url: u, strategy: 'data-attribute', priority: 4 });
       }
     }
@@ -676,7 +695,7 @@ function extractCanonicalJobUrl(html, pageUrl) {
     while ((m = rx.exec(html)) !== null) {
       try {
         const u = resolveUrl(decodeURIComponent(m[1]), pageUrl);
-        if (u && !isSameHost(u, pageUrl) && isSafeUrl(u)) {
+        if (u && !isSameHost(u, pageUrl) && isSafeUrlSync(u)) {
           candidates.push({ url: u, strategy: 'redirect-param', priority: 3 });
         }
       } catch {
@@ -1461,20 +1480,26 @@ app.post('/analyze-url', validateUrlInput, async (req, res) => {
         result.riskScore = Math.max(0, result.riskScore - 25);
         result.legitimacyScore = Math.min(100, (result.legitimacyScore || 0) + 25);
 
-        // Re-map status from adjusted score so label matches the number
+        // Re-map status from adjusted score — thresholds match engine/scorer.js
         const s = result.riskScore;
-        if (s >= 75) {
+        if (s >= 80) {
           result.status = 'definite_scam';
           result.statusLabel = '🚨 DEFINITE SCAM';
-        } else if (s >= 55) {
+        } else if (s >= 65) {
+          result.status = 'very_high_risk';
+          result.statusLabel = '🔴 VERY HIGH RISK';
+        } else if (s >= 50) {
           result.status = 'high_risk';
-          result.statusLabel = '⚠️ HIGH RISK';
-        } else if (s >= 40) {
+          result.statusLabel = '🟠 HIGH RISK';
+        } else if (s >= 35) {
           result.status = 'suspicious';
-          result.statusLabel = '⚡ SUSPICIOUS';
+          result.statusLabel = '🟡 SUSPICIOUS';
         } else if (s >= 20) {
           result.status = 'caution';
-          result.statusLabel = '✓ CAUTION';
+          result.statusLabel = '🔵 CAUTION ADVISED';
+        } else if (s >= 10) {
+          result.status = 'low_concern';
+          result.statusLabel = '🟢 LOW CONCERN';
         } else {
           result.status = 'legitimate';
           result.statusLabel = '✅ LIKELY LEGITIMATE';

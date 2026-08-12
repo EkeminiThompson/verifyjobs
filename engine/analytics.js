@@ -632,12 +632,12 @@ function buildIntelligence(records, overview, segments, queries, trainedModel) {
   }
 
   const headline = n === 0
-    ? 'No analyses yet.'
+    ? 'No analyses yet — nothing to infer.'
     : maturity === 'early'
-      ? `Early signal from ${n} analyses — patterns are forming.`
+      ? `Early, directional signal from ${n} analyses — treat patterns as hypotheses, not facts.`
       : maturity === 'forming'
-        ? `Forming intelligence from ${n} analyses.`
-        : `Live intelligence from ${n} analyses.`;
+        ? `Forming picture from ${n} analyses — still thin for strong claims.`
+        : `Operational picture from ${n} analyses (proxy high-risk, not human labels).`;
 
   return {
     headline,

@@ -113,7 +113,7 @@
       <button class="nav-hamburger" id="navHamburger" aria-label="Open navigation" aria-expanded="false" aria-controls="mobileMenu">
         <span></span><span></span><span></span>
       </button>
-      <div class="nav-chip">Engine <span>● online</span></div>
+      <div class="nav-chip" id="engineChip" title="Analysis engine status">Engine <span id="engineStatus">● checking</span></div>
     </div>
   </div>
 </nav>
@@ -252,9 +252,36 @@
   </div>
 </footer>
 
-<script>document.getElementById('mobileMenu')?.classList.toggle('open');
-  this.setAttribute('aria-expanded', this.classList.contains('open'));
+<script>
+document.getElementById('navHamburger')?.addEventListener('click', function () {
+  const menu = document.getElementById('mobileMenu');
+  menu?.classList.toggle('open');
+  this.classList.toggle('open');
+  this.setAttribute('aria-expanded', menu?.classList.contains('open') ? 'true' : 'false');
 });
+</script>
+
+<script>
+(function pollEngine() {
+  const chip = document.getElementById('engineChip');
+  const el = document.getElementById('engineStatus');
+  if (!el) return;
+  const set = (cls, text) => {
+    el.textContent = text;
+    if (chip) {
+      chip.classList.remove('is-offline', 'is-checking');
+      if (cls) chip.classList.add(cls);
+    }
+  };
+  set('is-checking', '● checking');
+  const ctrl = new AbortController();
+  const t = setTimeout(() => ctrl.abort(), 4000);
+  fetch('/health', { signal: ctrl.signal, cache: 'no-store' })
+    .then(r => r.ok ? r.json().catch(() => ({})) : Promise.reject())
+    .then(() => { clearTimeout(t); set('', '● online'); })
+    .catch(() => { clearTimeout(t); set('is-offline', '● offline'); });
+  setTimeout(pollEngine, 60000);
+})();
 </script>
 <script src="/shared.js" defer></script>
 </body>

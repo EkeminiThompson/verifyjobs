@@ -229,40 +229,57 @@ function extractMetadata(text) {
 
 function buildExplanation(score, redCount, positiveCount, contextResult) {
   const contextSummary = contextResult.contextFlags.length
-    ? ` Context notes: ${contextResult.contextFlags.slice(0, 3).join('; ')}.`
+    ? ` Context: ${contextResult.contextFlags.slice(0, 3).join('; ')}.`
     : '';
 
+  // Evidence-first, under-claim, explicit about tool limits
   if (score >= 75) {
-    return `Automated checks found ${redCount} serious red flag${redCount !== 1 ? 's' : ''} that often appear in employment fraud.${contextSummary} Treat this as high risk until an official source proves otherwise — tools can still err.`;
+    return `Evidence: ${redCount} high-weight fraud signal${redCount !== 1 ? 's' : ''} matched patterns commonly seen in employment scams.${contextSummary} ` +
+      `This is strong automated evidence against applying — not a courtroom proof. An official careers page or verified employer contact could still overturn it; links inside the ad alone should not.`;
   }
   if (score >= 55) {
-    return `Automated checks found ${redCount} significant warning sign${redCount !== 1 ? 's' : ''}.${contextSummary}${positiveCount > 0 ? ` ${positiveCount} positive signal${positiveCount !== 1 ? 's were' : ' was'} also present, so weigh both sides.` : ''} Verify independently before sharing money or documents.`;
+    return `Evidence: ${redCount} serious warning signal${redCount !== 1 ? 's' : ''}.${contextSummary}` +
+      (positiveCount > 0
+        ? ` ${positiveCount} professional signal${positiveCount !== 1 ? 's' : ''} also fired, so the picture is mixed.`
+        : '') +
+      ` Independent verification is required before money, IDs, or bank details leave your hands. Automation can miss real programmes and can over-flag unusual but honest ones.`;
   }
   if (score >= 40) {
-    return `Automated checks found ${redCount} concern${redCount !== 1 ? 's' : ''} worth verifying.${contextSummary}${positiveCount >= 3 ? ` Several professional signals (${positiveCount}) are also present.` : ''} Do not rely on this score alone.`;
+    return `Evidence: ${redCount} concern${redCount !== 1 ? 's' : ''} worth checking.${contextSummary}` +
+      (positiveCount >= 3
+        ? ` Several professional signals (${positiveCount}) are present as well.`
+        : '') +
+      ` Treat the score as a prompt to verify, not as a final verdict.`;
   }
   if (score >= 20) {
-    return `Automated checks found ${redCount} minor concern${redCount !== 1 ? 's' : ''}.${contextSummary}${positiveCount >= 2 ? ` Positive signals (${positiveCount}) lean professional.` : ''} Basic due diligence is still recommended.`;
+    return `Evidence: ${redCount} minor concern${redCount !== 1 ? 's' : ''}.${contextSummary}` +
+      (positiveCount >= 2
+        ? ` Positive signals (${positiveCount}) lean professional.`
+        : '') +
+      ` Standard due diligence still applies — low score is not a green light to skip checks.`;
   }
-  return `Automated checks found ${redCount === 0 ? 'no major' : redCount} red flag${redCount !== 1 ? 's' : ''}.${positiveCount >= 3 ? ` Multiple professional signals (${positiveCount}) were present.` : ''} That is not a guarantee of legitimacy — confirm the employer or organiser through official channels.`;
+  return `Evidence: ${redCount === 0 ? 'no high-weight fraud rules matched' : redCount + ' red flag' + (redCount !== 1 ? 's' : '') + ' matched'}.` +
+    (positiveCount >= 3 ? ` Multiple professional signals (${positiveCount}) were present.` : '') +
+    ` Absence of automated red flags is not proof of legitimacy. Confirm the employer through channels you found independently.`;
 }
 
 function buildRecommendation(score, jobStatus) {
   let rec;
   if (score >= 75) {
-    rec = '🚨 HIGH AUTOMATED RISK. Do not send money or sensitive documents. Verify the organisation independently before any further steps.';
+    rec = 'Do not send money, crypto, gift cards, or identity/bank details based on this ad. ' +
+      'If you still want to check it, find the organisation through an independent search — not the contacts or links in the message.';
   } else if (score >= 55) {
-    rec = '⚠️ HIGH RISK. Do not proceed without verifying the company through its official website — not the contact details in this posting. Never pay fees of any kind.';
+    rec = 'Verify first via the organisation’s official site or known ATS — ignore pressure to move the chat only to WhatsApp/Telegram or to pay any fee to “start.”';
   } else if (score >= 40) {
-    rec = '⚡ CAUTION. Verify the company through independent sources before engaging. Never pay upfront fees for training, equipment, or background checks.';
+    rec = 'Worth a careful check: confirm the employer independently and never pay for training, equipment, or background checks before a verified start.';
   } else if (score >= 20) {
-    rec = '✓ POTENTIALLY LEGITIMATE. Verify the company on Glassdoor and LinkedIn, and confirm job details through the official company website.';
+    rec = 'No strong automated fraud pattern — still confirm the company on its official site and, where useful, LinkedIn/Glassdoor before you rely on the ad.';
   } else {
-    rec = '✓ APPEARS LEGITIMATE. Conduct standard due diligence: confirm the company website, read reviews, and verify the recruiter on LinkedIn.';
+    rec = 'Automated signals look clean. That is useful, not conclusive: confirm the employer and the role through official channels before sharing sensitive data.';
   }
 
   if (!jobStatus.isAcceptingApplications && jobStatus.status !== 'Unknown') {
-    rec += ` ⚠️ Note: This position appears to be ${jobStatus.status.toUpperCase()} and may not be accepting applications.`;
+    rec += ` Note: status language suggests this role may be ${jobStatus.status} and not currently accepting applications.`;
   }
 
   return rec;
@@ -272,39 +289,38 @@ function buildActionItems(score, metadata, jobStatus) {
   const actions = [];
 
   if (score >= 55) {
-    actions.push('🛑 DO NOT send money, gift cards, or cryptocurrency under any circumstances');
-    actions.push('🛑 DO NOT share your bank account, BVN, NIN, or passport details');
-    actions.push('📱 Report this posting to the platform where you found it');
-    actions.push('🚔 File a report: FTC (USA) · EFCC / NITDA (Nigeria) · Action Fraud (UK)');
+    actions.push('Do not send money, gift cards, crypto, BVN, NIN, SSN, or passport copies based on this ad');
+    actions.push('Do not treat WhatsApp/Telegram-only contact as a substitute for an official employer channel');
+    actions.push('If you already paid or shared data, contact your bank and the relevant fraud channel (e.g. FTC, Action Fraud, EFCC/NITDA)');
+    actions.push('Report the ad on the platform where you found it');
   }
 
   if (score >= 40) {
-    actions.push('⚠️ Search "[company name] scam" on Google and check ScamPulse, BBB Scam Tracker');
+    actions.push('Search the organisation name + “scam” on an independent browser search (not only links in the message)');
   }
 
   if (metadata.hasCompanyName || score < 55) {
-    actions.push('🔍 Verify the company on its official website — search for it independently, don\'t use links in the posting');
-    actions.push('💼 Find the company on LinkedIn and check whether employees list it on their profiles');
+    actions.push('Find the organisation via your own search — official site or known ATS — then compare to this ad');
+    actions.push('On LinkedIn, check whether real employees list the organisation (absence is a soft signal, not proof)');
   }
 
-  actions.push('🔎 Paste the job title + key phrases in quotes into Google to detect copy-paste scam postings');
+  actions.push('Search the exact job title and unusual phrases in quotes to catch copy-paste scam templates');
 
   if (metadata.hasFreeEmail) {
-    actions.push('📧 The email domain is a free provider (Gmail/Yahoo/etc.) — legitimate companies use branded email');
+    actions.push('Email is on a free provider (Gmail/Yahoo/etc.) — many real small outfits use these, but large employers usually do not; verify the domain story');
   } else if (metadata.hasEmail) {
-    actions.push('📧 Confirm the email domain matches the company\'s official website exactly');
+    actions.push('Confirm the email domain matches the organisation’s official website exactly (watch lookalike domains)');
   }
 
   if (score < 40) {
-    actions.push('⭐ Read company reviews on Glassdoor, Indeed, and Google before accepting any offer');
-    actions.push('🤝 Contact the company directly through its official website to confirm this posting is genuine');
+    actions.push('Read recent reviews and confirm the role on the official careers page before accepting any offer');
   }
 
-  if (['Filled', 'Closed', 'Expired', 'Cancelled'].includes(jobStatus.status)) {
-    actions.push(`📅 This position appears ${jobStatus.status.toLowerCase()} — check the company's careers page for current openings`);
+  if (['Filled', 'Closed', 'Expired', 'Cancelled', 'Likely Closed'].includes(jobStatus.status)) {
+    actions.push(`Status language suggests ${jobStatus.status.toLowerCase()} — check current openings on the official careers page`);
   }
 
-  actions.push('❌ Never pay for training, equipment, starter kits, or background checks before your first day of work');
+  actions.push('Never pay for training, equipment, starter kits, or “background checks” before a start you have verified independently');
 
   return actions;
 }

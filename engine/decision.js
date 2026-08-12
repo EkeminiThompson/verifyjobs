@@ -12,8 +12,8 @@ const SCAM_PATTERNS = [
     id: 'advance_fee',
     label: 'Advance-fee scam',
     test: (text, flags) =>
-      /(?:pay|paid?|send).{0,24}(?:registration|training|equipment|starter|background\s*check)\s*fee|upfront\s+(?:fee|payment)|starter\s+kit|western\s+union|moneygram|gift\s*cards?/i.test(text) ||
-      flags.some(f => /upfront payment|registration fee|training fee|untraceable payment|gift card/i.test(f)),
+      /(?:pay|paid?|send).{0,24}(?:registration|training|equipment|starter|background\s*check|application|processing|medical)\s*fee|upfront\s+(?:fee|payment)|application\s+fee|processing\s+fee|medical\s+fee|starter\s+kit|western\s+union|moneygram|gift\s*cards?|pay\s+to\s*:|acct?\.?\s*name\s*:/i.test(text) ||
+      flags.some(f => /upfront payment|registration fee|training fee|application, processing, or medical fee|payment to a named bank|untraceable payment|gift card|major organisation name used with a demand/i.test(f)),
   },
   {
     id: 'task_scam',
