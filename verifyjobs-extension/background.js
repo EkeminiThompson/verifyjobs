@@ -84,6 +84,10 @@ async function handleAnalyze(payload) {
       source: payload.source || "Extension"
     });
   } else if (payload.type === "file") {
+    // Prefer popup direct upload — File may not survive messaging
+    if (!payload.file || typeof payload.file === "string") {
+      throw new Error("File upload must run from the popup (File / Image tab).");
+    }
     endpoint = `${base}/analyze-file`;
     const fd = new FormData();
     fd.append("file", payload.file, payload.file.name || "upload");

@@ -6,12 +6,12 @@
  * Order matters: first match wins as primary pattern.
  */
 const SCAM_PATTERNS = [
-  {
+    {
     id: 'advance_fee',
     label: 'Advance-fee scam',
     test: (text, flags) =>
-      /upfront|registration fee|training fee|starter kit|equipment fee|background check fee|pay (to |before )?(apply|start|work)|gift ?card|western union|moneygram/i.test(text) ||
-      flags.some(f => /upfront|fee|payment|pay /i.test(f)),
+      /upfront|registration fee|training fee|starter kit|equipment fee|background check fee|pay (to |before )?(apply|start|work)|application fee|processing fee|medical fee|pay to:|acct\s*name|clearance fee|activation fee/i.test(text) ||
+      flags.some(f => /fee|upfront|payment required|registration|application fee/i.test(f)),
   },
   {
     id: 'task_scam',
@@ -38,7 +38,7 @@ const SCAM_PATTERNS = [
     id: 'crypto_job',
     label: 'Crypto / investment job scam',
     test: (text, flags) =>
-      /crypto|bitcoin|forex|trading signal|investment (manager|advisor)|guaranteed (return|profit)/i.test(text) ||
+      /crypto|bitcoin|forex|trading signal|investment (manager|advisor|associate)|guaranteed (return|profit)|\d+%\s*(weekly|daily|monthly)|usdt|telegram/i.test(text) ||
       flags.some(f => /crypto|bitcoin|forex|invest/i.test(f)),
   },
   {
@@ -104,7 +104,7 @@ function buildDecision(result, rawText = '') {
   let verdictLabel;
   let verdictTone; // danger | warn | safe
 
-  if (risk >= 70) {
+  if (risk >= 65) {
     verdict = 'dont_apply';
     verdictLabel = "Don't apply";
     verdictTone = 'danger';
@@ -121,7 +121,7 @@ function buildDecision(result, rawText = '') {
   // Override if status already says definite scam with high confidence
   const status = String(result.status || '').toLowerCase();
   if (status.includes('definite') || status.includes('scam') && risk >= 55) {
-    if (risk >= 55) {
+    if (risk >= 65) {
       verdict = 'dont_apply';
       verdictLabel = "Don't apply";
       verdictTone = 'danger';

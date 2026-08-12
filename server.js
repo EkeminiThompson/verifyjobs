@@ -318,7 +318,7 @@ function isCanonicalSource(hostname) {
 // ─────────────────────────────────────────────
 // ENHANCED SAFETY CHECK WITH DNS RESOLUTION
 // ─────────────────────────────────────────────
-async function isSafeUrlSync(rawUrl) {
+async function isSafeUrl(rawUrl) {
   let url;
   try {
     url = new URL(rawUrl);

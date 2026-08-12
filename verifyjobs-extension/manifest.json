@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "VerifyJobs \u2013 Job Scam Checker",
-  "version": "1.3.4",
-  "description": "Check any job posting for scams. Hybrid rules + ML via VerifyJobs. Clear verdicts, not-a-job detection, advisory results.",
+  "version": "1.3.5",
+  "description": "Check any job posting for scams. Hybrid rules + ML via VerifyJobs. Text, URL, PDF/Word/image OCR. Clear verdicts and not-a-job detection.",
   "homepage_url": "https://verifyjobs.org",
   "permissions": [
     "contextMenus",
@@ -12,15 +12,15 @@
     "sidePanel"
   ],
   "host_permissions": [
-    "https://verifyjobs.org/*",
     "http://localhost:3000/*",
-    "https://*.linkedin.com/*",
-    "https://*.indeed.com/*",
     "https://*.glassdoor.com/*",
+    "https://*.indeed.com/*",
+    "https://*.linkedin.com/*",
     "https://*.monster.com/*",
+    "https://*.telegram.org/*",
     "https://*.ziprecruiter.com/*",
-    "https://web.whatsapp.com/*",
-    "https://*.telegram.org/*"
+    "https://verifyjobs.org/*",
+    "https://web.whatsapp.com/*"
   ],
   "background": {
     "service_worker": "background.js"
