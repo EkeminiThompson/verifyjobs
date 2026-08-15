@@ -8,25 +8,59 @@
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <title>About VerifyJobs — Free Job Scam Detector</title>
 <meta name="description" content="Learn who built VerifyJobs.org and why — a free job scam detector built for job seekers in Nigeria, Ghana, India, and worldwide. No sign-up, no cost, no data stored.">
-<meta name="robots" content="index, follow">
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
 <link rel="canonical" href="https://verifyjobs.org/about.html">
-<meta property="og:type" content="article">
+<meta property="og:type" content="website">
 <meta property="og:url" content="https://verifyjobs.org/about.html">
 <meta property="og:title" content="About VerifyJobs — Free Job Scam Detector">
 <meta property="og:description" content="We built VerifyJobs because no one should lose their savings to a fake employer. Free, instant, no sign-up.">
-<meta property="og:image" content="https://verifyjobs.org/og-report-scam.jpg">
+<meta property="og:image" content="https://verifyjobs.org/og-image.png">
 <meta property="og:site_name" content="VerifyJobs.org">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@verifyjobs">
 <meta name="twitter:title" content="About VerifyJobs — Free Job Scam Detector">
-<meta name="twitter:image" content="https://verifyjobs.org/og-report-scam.jpg">
+<meta name="twitter:image" content="https://verifyjobs.org/og-image.png">
 <meta name="theme-color" content="#ffffff">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://verifyjobs.org/"},
+    {"@type": "ListItem", "position": 2, "name": "About", "item": "https://verifyjobs.org/about.html"}
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "AboutPage",
+  "name": "About VerifyJobs",
+  "url": "https://verifyjobs.org/about.html",
+  "description": "VerifyJobs.org is a free job scam detector built for job seekers worldwide. No sign-up, no cost, no data stored.",
+  "isPartOf": {"@id": "https://verifyjobs.org/#website"},
+  "about": {"@id": "https://verifyjobs.org/#organization"},
+  "mainEntity": {
+    "@type": "Organization",
+    "@id": "https://verifyjobs.org/#organization",
+    "name": "VerifyJobs",
+    "url": "https://verifyjobs.org",
+    "description": "Free, instant job scam detection tool. Hybrid AI + 50+ rule patterns. No account required.",
+    "areaServed": "Worldwide",
+    "knowsAbout": ["Job scam detection", "Employment fraud", "Advance-fee fraud", "WhatsApp recruitment scams"]
+  }
+}
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Google+Sans+Display:wght@400;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/shared.css">
 <style>
 .page { max-width: 1280px; margin: 0 auto; padding: 0 24px 80px; }
+.breadcrumb { font-family: var(--body); font-size: 13px; color: var(--grey2); margin: 0 0 16px; display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+.breadcrumb a { color: var(--grey2); text-decoration: none; }
+.breadcrumb a:hover { color: var(--blue); text-decoration: underline; }
+.breadcrumb-sep { color: var(--grey3); }
 .stats-strip { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; background: var(--grey4); border: 1px solid var(--grey4); border-radius: 16px; overflow: hidden; margin-bottom: 56px; }
 .stat-cell { background: var(--white); padding: 28px 24px; text-align: center; }
 .stat-cell-n { font-family: var(--display); font-size: 36px; font-weight: 700; color: var(--black); display: block; line-height: 1; margin-bottom: 6px; }
@@ -39,23 +73,25 @@
 .c-card-p a { color: var(--blue); text-decoration: none; }
 .c-card-p a:hover { text-decoration: underline; }
 
-/* Country grid */
 .country-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; background: var(--grey4); border: 1px solid var(--grey4); border-radius: 12px; overflow: hidden; margin-top: 16px; }
 .country-cell { background: var(--white); padding: 16px 12px; text-align: center; }
 .country-flag { font-size: 24px; display: block; margin-bottom: 6px; }
 .country-name { font-family: var(--sans); font-size: 12px; font-weight: 500; color: var(--black); }
 
-/* Values grid */
 .values-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--grey4); border: 1px solid var(--grey4); border-radius: 12px; overflow: hidden; margin-top: 16px; }
 .value-tile { background: var(--white); padding: 24px; }
 .value-title { font-family: var(--sans); font-size: 14px; font-weight: 700; color: var(--black); margin-bottom: 6px; }
 .value-body { font-family: var(--body); font-size: 13px; color: var(--grey2); line-height: 1.7; }
 
-/* Metric row */
 .metric-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 1px; background: var(--grey4); border: 1px solid var(--grey4); border-radius: 12px; overflow: hidden; margin-top: 16px; }
 .metric-box { background: var(--grey6); padding: 20px; }
 .metric-n { font-family: var(--display); font-size: 28px; font-weight: 700; color: var(--black); line-height: 1; margin-bottom: 4px; }
 .metric-l { font-family: var(--body); font-size: 12px; color: var(--grey2); }
+
+.related-links { list-style: none; margin: 16px 0 0; padding: 0; }
+.related-links li { margin-bottom: 10px; font-family: var(--body); font-size: 14px; line-height: 1.5; }
+.related-links a { color: var(--blue); text-decoration: none; }
+.related-links a:hover { text-decoration: underline; }
 
 .cta-block { background: var(--black); border-radius: 16px; padding: 48px 40px; text-align: center; margin-top: 48px; }
 .cta-block-h { font-family: var(--display); font-size: 28px; font-weight: 400; color: var(--white); margin-bottom: 10px; }
@@ -102,7 +138,7 @@
 <div class="page">
   <div class="page-hero">
     <nav class="breadcrumb" aria-label="Breadcrumb">
-      <a href="/">Home</a><span class="breadcrumb-sep">›</span><span>About</span>
+      <a href="/">Home</a><span class="breadcrumb-sep" aria-hidden="true">›</span><span>About</span>
     </nav>
     <h1 class="page-h1">Built to protect<br><em>job seekers everywhere</em></h1>
     <p class="page-deck">VerifyJobs exists to give every job seeker — regardless of where they live — a fast, free way to check if a job offer is real before they invest time, money, or personal information.</p>
@@ -119,7 +155,8 @@
     <div class="c-card">
       <div class="c-card-title">Our mission</div>
       <p class="c-card-p">VerifyJobs.org exists to give every job seeker — regardless of where they live or how tech-savvy they are — a fast, free way to check if a job offer is real before they invest time, money, or personal information.</p>
-      <p class="c-card-p">Job fraud is not a small problem. Millions of people lose billions of dollars each year to fake employers who exploit desperation. The scams are sophisticated, the platforms are everywhere — WhatsApp, Telegram, email, social media — and the victims are often people who can least afford to lose what they lose. We built VerifyJobs to close that gap.</p>
+      <p class="c-card-p">Job fraud is not a small problem. Millions of people lose billions of dollars each year to fake employers who exploit desperation. The scams are sophisticated, the platforms are everywhere — <a href="/blog/whatsapp-job-scams-nigeria.html">WhatsApp</a>, Telegram, email, social media — and the victims are often people who can least afford to lose what they lose. We built VerifyJobs to close that gap.</p>
+      <p class="c-card-p">Learn <a href="/how-it-works.html">how the hybrid engine works</a> (50+ rules + AI), or go straight to the <a href="/">free job scam checker</a>.</p>
       <div class="metric-row">
         <div class="metric-box"><div class="metric-n">0.819</div><div class="metric-l">Model AUC</div></div>
         <div class="metric-box"><div class="metric-n">0.80</div><div class="metric-l">Precision</div></div>
@@ -132,7 +169,7 @@
       <div class="c-card-title">Why we built this</div>
       <p class="c-card-p">The idea came from watching people in our own communities fall for job scams — educated people, careful people, people who checked multiple times but had no reliable tool to verify what they were looking at.</p>
       <p class="c-card-p">Most existing tools require sign-ups, charge fees, or only work for specific platforms. We wanted something anyone could open on their phone, paste a WhatsApp message into, and get a clear answer in seconds. No account. No payment. No friction.</p>
-      <p class="c-card-p">VerifyJobs is especially focused on job seekers in Nigeria, Ghana, Kenya, India, the Philippines, and other markets where WhatsApp job scams, advance-fee fraud, and fake brand ambassador schemes are rampant — but the tool works for anyone, anywhere.</p>
+      <p class="c-card-p">VerifyJobs is especially focused on job seekers in Nigeria, Ghana, Kenya, India, the Philippines, and other markets where <a href="/blog/whatsapp-job-scams-nigeria.html">WhatsApp job scams</a>, <a href="/blog/advance-fee-job-fraud.html">advance-fee fraud</a>, and <a href="/blog/remote-job-scams.html">fake remote / work-from-home schemes</a> are rampant — but the tool works for anyone, anywhere.</p>
     </div>
 
     <div class="c-card">
@@ -149,22 +186,37 @@
         <div class="country-cell"><span class="country-flag">🇨🇦</span><div class="country-name">Canada</div></div>
         <div class="country-cell"><span class="country-flag">🌍</span><div class="country-name">Worldwide</div></div>
       </div>
+      <p class="c-card-p" style="margin-top:16px">Start with our practical guides: <a href="/blog/how-to-know-if-a-job-is-a-scam.html">15 warning signs of a job scam</a> and <a href="/blog/how-to-verify-a-job-offer.html">how to verify a job offer in 7 steps</a>.</p>
     </div>
 
     <div class="c-card">
       <div class="c-card-title">Our values</div>
       <div class="values-grid">
-        <div class="value-tile"><div class="value-title">Always free</div><p class="value-body">Scam detection should not cost money. VerifyJobs is and will remain free to use for everyone.</p></div>
-        <div class="value-tile"><div class="value-title">Privacy first</div><p class="value-body">We don't store the text you paste or the files you upload. Your data stays yours.</p></div>
+        <div class="value-tile"><div class="value-title">Always free</div><p class="value-body">Scam detection should not cost money. VerifyJobs is and will remain free to use for everyone. Use the <a href="/">checker</a> or the <a href="/extension.html">Chrome extension</a> with no account.</p></div>
+        <div class="value-tile"><div class="value-title">Privacy first</div><p class="value-body">We don't store the text you paste or the files you upload. Your data stays yours. See our <a href="/privacy.html">privacy policy</a>.</p></div>
         <div class="value-tile"><div class="value-title">Globally relevant</div><p class="value-body">Our scam patterns cover local fraud methods, not just Western ones — built for Africa, Asia, and beyond.</p></div>
-        <div class="value-tile"><div class="value-title">Continuously updated</div><p class="value-body">Scam patterns evolve. Our rule engine and ML model are updated as new tactics emerge.</p></div>
+        <div class="value-tile"><div class="value-title">Continuously updated</div><p class="value-body">Scam patterns evolve. Our rule engine and ML model are updated as new tactics emerge. Transparency: <a href="/how-it-works.html">how it works</a> and <a href="/analytics.html">analytics</a>.</p></div>
       </div>
     </div>
 
     <div class="c-card">
       <div class="c-card-title">What we are not</div>
       <p class="c-card-p">VerifyJobs is not a government agency, a law enforcement body, or a legal service. Our verdicts are based on pattern matching and should be used as a guide, not as a definitive legal determination. We are also not affiliated with any job board, recruiter, or employer.</p>
-      <p class="c-card-p">If you believe you have been the victim of a job scam, please report it to your national consumer protection agency — <a href="https://efcc.gov.ng" rel="noopener noreferrer" target="_blank">EFCC in Nigeria</a>, <a href="https://reportfraud.ftc.gov" rel="noopener noreferrer" target="_blank">FTC in the USA</a>, <a href="https://actionfraud.police.uk" rel="noopener noreferrer" target="_blank">Action Fraud in the UK</a> — and, if money was stolen, your bank immediately.</p>
+      <p class="c-card-p">If you believe you have been the victim of a job scam, please report it using the country links on our <a href="/report-a-scam.html">Report a scam</a> page — including <a href="https://efcc.gov.ng" rel="noopener noreferrer" target="_blank">EFCC in Nigeria</a>, <a href="https://reportfraud.ftc.gov" rel="noopener noreferrer" target="_blank">FTC in the USA</a>, <a href="https://actionfraud.police.uk" rel="noopener noreferrer" target="_blank">Action Fraud in the UK</a> — and, if money was stolen, contact your bank immediately.</p>
+    </div>
+
+    <div class="c-card">
+      <div class="c-card-title">Learn more</div>
+      <ul class="related-links">
+        <li><a href="/">Free job scam checker</a> — paste text, upload a file, or submit a URL</li>
+        <li><a href="/how-it-works.html">How VerifyJobs works</a> — hybrid rules + AI explained</li>
+        <li><a href="/extension.html">Chrome extension</a> — check jobs without leaving the page</li>
+        <li><a href="/blog/">Blog</a> — guides on warning signs, WhatsApp scams, advance-fee fraud, remote scams</li>
+        <li><a href="/blog/how-to-verify-a-job-offer.html">How to verify a job offer</a> — 7 practical steps</li>
+        <li><a href="/blog/how-to-know-if-a-job-is-a-scam.html">15 warning signs of a job scam</a></li>
+        <li><a href="/report-a-scam.html">Report a scam</a> — official reporting links by country</li>
+        <li><a href="/privacy.html">Privacy</a> — what we do and do not store</li>
+      </ul>
     </div>
 
     <div class="cta-block">

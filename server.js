@@ -999,6 +999,40 @@ app.get('/llms.txt', (req, res) => {
   });
 });
 
+// ─────────────────────────────────────────────
+// AI / LLM FILES
+// ─────────────────────────────────────────────
+
+// AI Usage permissions and policy (critical for crawler permissions)
+app.get('/ai.txt', (req, res) => {
+  res.type('text/plain');
+  res.sendFile(path.join(__dirname, 'ai.txt'), (err) => {
+    if (err) { 
+      logger.error('ai.txt not found'); 
+      res.status(404).send('Not found'); 
+    }
+  });
+});
+
+// Full LLM knowledge base (comprehensive content)
+app.get('/llms-full.txt', (req, res) => {
+  res.type('text/plain');
+  res.sendFile(path.join(__dirname, 'llms-full.txt'), (err) => {
+    if (err) { 
+      logger.error('llms-full.txt not found'); 
+      res.status(404).send('Not found'); 
+    }
+  });
+});
+
+
+app.get('/ai-sitemap.xml', (req, res) => {
+  res.type('application/xml');
+  res.sendFile(path.join(__dirname, 'ai-sitemap.xml'), (err) => {
+    if (err) { logger.error('ai-sitemap.xml not found'); res.status(404).send('Not found'); }
+  });
+});
+
 app.get('/google6c2364060583a1e1.html', (req, res) => {
   res.type('text/html');
   res.sendFile(path.join(__dirname, 'google6c2364060583a1e1.html'), (err) => {

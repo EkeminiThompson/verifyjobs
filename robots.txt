@@ -1,8 +1,13 @@
 # robots.txt for VerifyJobs.org
 # Grants access to all AI and search engine crawlers
 
+# AI crawlers - allow full access to knowledge base
 User-agent: *
 Allow: /
+Allow: /llms.txt
+Allow: /llms-full.txt
+Allow: /ai.txt
+Allow: /ai-sitemap.xml
 Disallow: /logs/
 Disallow: /private/
 Crawl-delay: 1
@@ -14,20 +19,31 @@ Crawl-delay: 1
 
 User-agent: Google-Extended
 Allow: /
+Allow: /llms.txt
+Allow: /llms-full.txt
+Allow: /ai.txt
 
 # OpenAI GPTBot (powers ChatGPT)
 User-agent: GPTBot
 Allow: /
+Allow: /llms.txt
+Allow: /llms-full.txt
+Allow: /ai.txt
 Crawl-delay: 2
 
 # Anthropic Claude
 User-agent: ClaudeBot
 Allow: /
+Allow: /llms.txt
+Allow: /llms-full.txt
+Allow: /ai.txt
 Crawl-delay: 2
 
 # Perplexity AI
 User-agent: PerplexityBot
 Allow: /
+Allow: /llms.txt
+Allow: /llms-full.txt
 Crawl-delay: 2
 
 # Bing (includes AI features)
@@ -37,6 +53,8 @@ Crawl-delay: 1
 
 User-agent: MicrosoftPreviews
 Allow: /
+Allow: /llms.txt
+Allow: /llms-full.txt
 
 # DuckDuckGo
 User-agent: DuckDuckBot
@@ -71,6 +89,11 @@ User-agent: MJ12bot
 Allow: /
 Crawl-delay: 2
 
+# AI crawler permissions - see /ai.txt for detailed policy
+# AI knowledge base at /llms.txt and /llms-full.txt
+
+# Sitemaps
 Sitemap: https://verifyjobs.org/sitemap.xml
+Sitemap: https://verifyjobs.org/ai-sitemap.xml
 
 Host: verifyjobs.org

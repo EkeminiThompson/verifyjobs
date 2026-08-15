@@ -1,0 +1,29 @@
+# AI Usage Policy for VerifyJobs.org
+# Last updated: 2026-08-15
+
+# Permissions
+User-agent: *
+Allow: /llms.txt
+Allow: /llms-full.txt
+Allow: /ai.txt
+Allow: /ai-sitemap.xml
+
+# Usage Terms
+You are granted permission to access and use the content of this site for:
+- AI model training
+- Natural language processing research
+- Improving job scam detection algorithms
+- Other legitimate machine learning purposes
+
+# Restrictions
+You may NOT:
+- Use this content to create competing job scam detection services without attribution
+- Scrape the site at rates exceeding 1 request per 5 seconds
+- Republish the full content without linking back to verifyjobs.org
+
+# Attribution
+When using this data, please cite:
+"VerifyJobs.org Job Scam Detection Dataset" (https://verifyjobs.org)
+
+# Contact
+For special permissions or bulk access, contact: legal@verifyjobs.org

@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  AI Sitemap for VerifyJobs.org
+  Purpose: Help AI crawlers, LLMs, and search bots discover and index all VerifyJobs content
+  URL: https://verifyjobs.org/ai-sitemap.xml
+  Version: 1.0
+  Last Updated: 2026-08-15
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+        xmlns:news="http://www.google.com/schemas/sitemap-news/0.9"
+        xmlns:mobile="http://www.google.com/schemas/sitemap-mobile/1.0"
+        xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
+
+  <!-- ============================================ -->
+  <!-- CORE PAGES - Highest Priority                -->
+  <!-- ============================================ -->
+
+  <!-- Homepage - Primary entry point -->
+  <url>
+    <loc>https://verifyjobs.org/</loc>
+    <lastmod>2026-08-15</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://verifyjobs.org/" />
+    <xhtml:link rel="alternate" hreflang="en-ng" href="https://verifyjobs.org/" />
+    <xhtml:link rel="alternate" hreflang="en-gh" href="https://verifyjobs.org/" />
+    <xhtml:link rel="alternate" hreflang="en-ke" href="https://verifyjobs.org/" />
+    <xhtml:link rel="alternate" hreflang="en-in" href="https://verifyjobs.org/" />
+    <xhtml:link rel="alternate" hreflang="en-gb" href="https://verifyjobs.org/" />
+    <xhtml:link rel="alternate" hreflang="en-ca" href="https://verifyjobs.org/" />
+    <xhtml:link rel="alternate" hreflang="en-us" href="https://verifyjobs.org/" />
+  </url>
+
+  <!-- AI-specific files -->
+  <url>
+    <loc>https://verifyjobs.org/llms.txt</loc>
+    <lastmod>2026-08-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <url>
+    <loc>https://verifyjobs.org/.well-known/ai.txt</loc>
+    <lastmod>2026-08-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- Core tool pages -->
+  <url>
+    <loc>https://verifyjobs.org/analytics.html</loc>
+    <lastmod>2026-08-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://verifyjobs.org/how-it-works.html</loc>
+    <lastmod>2026-08-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://verifyjobs.org/about.html</loc>
+    <lastmod>2026-08-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- ============================================ -->
+  <!-- EXTENSION PAGES                              -->
+  <!-- ============================================ -->
+
+  <url>
+    <loc>https://verifyjobs.org/extension.html</loc>
+    <lastmod>2026-08-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://verifyjobs.org/report-a-scam.html</loc>
+    <lastmod>2026-08-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- ============================================ -->
+  <!-- LEGAL & POLICY PAGES                        -->
+  <!-- ============================================ -->
+
+  <url>
+    <loc>https://verifyjobs.org/privacy.html</loc>
+    <lastmod>2026-08-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://verifyjobs.org/extension-privacy.html</loc>
+    <lastmod>2026-08-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://verifyjobs.org/terms.html</loc>
+    <lastmod>2026-08-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <!-- ============================================ -->
+  <!-- BLOG PAGES                                  -->
+  <!-- ============================================ -->
+
+  <!-- Blog index -->
+  <url>
+    <loc>https://verifyjobs.org/blog/index.html</loc>
+    <lastmod>2026-08-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Blog articles - Core (highest priority) -->
+  <url>
+    <loc>https://verifyjobs.org/blog/how-to-know-if-a-job-is-a-scam.html</loc>
+    <lastmod>2026-08-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <news:news>
+      <news:publication>
+        <news:name>VerifyJobs Blog</news:name>
+        <news:language>en</news:language>
+      </news:publication>
+      <news:publication_date>2026-08-15</news:publication_date>
+      <news:title>How to Know If a Job Is a Scam: 15 Warning Signs &amp; Verification Steps</news:title>
+      <news:keywords>job scam, fake job, verify job offer, job fraud, employment scam</news:keywords>
+    </news:news>
+  </url>
+
+  <url>
+    <loc>https://verifyjobs.org/blog/whatsapp-job-scams-nigeria.html</loc>
+    <lastmod>2026-08-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <news:news>
+      <news:publication>
+        <news:name>VerifyJobs Blog</news:name>
+        <news:language>en</news:language>
+      </news:publication>
+      <news:publication_date>2026-08-15</news:publication_date>
+      <news:title>WhatsApp Job Scams in Nigeria: How to Spot and Avoid Fake Recruitment Messages</news:title>
+      <news:keywords>WhatsApp job scam, Nigeria job fraud, recruitment scam, fake job Nigeria</news:keywords>
+    </news:news>
+  </url>
+
+  <url>
+    <loc>https://verifyjobs.org/blog/advance-fee-job-fraud.html</loc>
+    <lastmod>2026-08-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <news:news>
+      <news:publication>
+        <news:name>VerifyJobs Blog</news:name>
+        <news:language>en</news:language>
+      </news:publication>
+      <news:publication_date>2026-08-15</news:publication_date>
+      <news:title>Job Requires Upfront Payment? Complete Guide to Advance-Fee Job Scams</news:title>
+      <news:keywords>advance fee fraud, job registration fee, upfront payment job scam, pay before you start</news:keywords>
+    </news:news>
+  </url>
+
+  <url>
+    <loc>https://verifyjobs.org/blog/remote-job-scams.html</loc>
+    <lastmod>2026-08-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <news:news>
+      <news:publication>
+        <news:name>VerifyJobs Blog</news:name>
+        <news:language>en</news:language>
+      </news:publication>
+      <news:publication_date>2026-08-15</news:publication_date>
+      <news:title>Remote Job Scams: How to Spot Fake Data Entry &amp; Work-From-Home Frauds</news:title>
+      <news:keywords>remote job scam, WFH fraud, fake data entry, work from home scam</news:keywords>
+    </news:news>
+  </url>
+
+  <!-- Blog articles - Extended (additional guides) -->
+  <url>
+    <loc>https://verifyjobs.org/blog/top-10-scam-phrases.html</loc>
+    <lastmod>2026-08-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://verifyjobs.org/blog/verify-recruiter-identity.html</loc>
+    <lastmod>2026-08-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://verifyjobs.org/blog/fake-tech-jobs.html</loc>
+    <lastmod>2026-08-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://verifyjobs.org/blog/2026-midyear-scam-stats.html</loc>
+    <lastmod>2026-08-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://verifyjobs.org/blog/crypto-job-scams-2026.html</loc>
+    <lastmod>2026-08-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://verifyjobs.org/blog/protect-bvn-nin.html</loc>
+    <lastmod>2026-08-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://verifyjobs.org/blog/ats-fake-portals.html</loc>
+    <lastmod>2026-08-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Blog category pages (if they exist) -->
+  <url>
+    <loc>https://verifyjobs.org/blog/category/scam-prevention.html</loc>
+    <lastmod>2026-08-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://verifyjobs.org/blog/category/educational-resources.html</loc>
+    <lastmod>2026-08-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://verifyjobs.org/blog/category/industry-news.html</loc>
+    <lastmod>2026-08-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://verifyjobs.org/blog/category/research-reports.html</loc>
+    <lastmod>2026-08-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- ============================================ -->
+  <!-- STATIC ASSETS                                -->
+  <!-- ============================================ -->
+
+  <!-- Open Graph image -->
+  <url>
+    <loc>https://verifyjobs.org/og-image.png</loc>
+    <lastmod>2026-08-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+    <image:image>
+      <image:loc>https://verifyjobs.org/og-image.png</image:loc>
+      <image:title>VerifyJobs — Free Job Scam Detection Tool</image:title>
+    </image:image>
+  </url>
+
+  <!-- Favicon -->
+  <url>
+    <loc>https://verifyjobs.org/favicon.ico</loc>
+    <lastmod>2026-08-15</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
+  <!-- ============================================ -->
+  <!-- API DOCUMENTATION (if public)                -->
+  <!-- ============================================ -->
+
+  <url>
+    <loc>https://verifyjobs.org/api-docs.html</loc>
+    <lastmod>2026-08-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://verifyjobs.org/developers.html</loc>
+    <lastmod>2026-08-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <!-- ============================================ -->
+  <!-- PRESS & MEDIA                                -->
+  <!-- ============================================ -->
+
+  <url>
+    <loc>https://verifyjobs.org/press.html</loc>
+    <lastmod>2026-08-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+  <!-- ============================================ -->
+  <!-- CONTACT & SUPPORT                            -->
+  <!-- ============================================ -->
+
+  <url>
+    <loc>https://verifyjobs.org/contact.html</loc>
+    <lastmod>2026-08-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+  <url>
+    <loc>https://verifyjobs.org/help.html</loc>
+    <lastmod>2026-08-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+  <url>
+    <loc>https://verifyjobs.org/faq.html</loc>
+    <lastmod>2026-08-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <!-- ============================================ -->
+  <!-- CAREERS PAGE (if applicable)                 -->
+  <!-- ============================================ -->
+
+  <url>
+    <loc>https://verifyjobs.org/careers.html</loc>
+    <lastmod>2026-08-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.4</priority>
+  </url>
+
+  <!-- ============================================ -->
+  <!-- JSON STRUCTURED DATA FILES                   -->
+  <!-- ============================================ -->
+
+  <url>
+    <loc>https://verifyjobs.org/structured-data.json</loc>
+    <lastmod>2026-08-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+</urlset>
