@@ -3,6 +3,35 @@
    Included on every page via <script src="/shared.js" defer></script>
    ============================================================ */
 
+// ── Engine status chip ──────────────────────────────────────
+// Polls /health and updates #engineChip / #engineStatus on any page that has them.
+(function pollEngine() {
+  var chip = document.getElementById('engineChip');
+  var el   = document.getElementById('engineStatus');
+  if (!el) return;
+
+  function set(cls, text) {
+    el.textContent = text;
+    if (chip) {
+      chip.classList.remove('is-offline', 'is-checking');
+      if (cls) chip.classList.add(cls);
+    }
+  }
+
+  function check() {
+    set('is-checking', '● checking');
+    var ctrl = new AbortController();
+    var t = setTimeout(function () { ctrl.abort(); }, 4000);
+    fetch('/health', { signal: ctrl.signal, cache: 'no-store' })
+      .then(function (r) { return r.ok ? r.json().catch(function () { return {}; }) : Promise.reject(); })
+      .then(function ()  { clearTimeout(t); set('', '● online'); })
+      .catch(function () { clearTimeout(t); set('is-offline', '● offline'); });
+  }
+
+  check();
+  setInterval(check, 60000);
+})();
+
 // ── Hamburger / mobile nav ──────────────────────────────────
 (function () {
   var btn  = document.getElementById('navHamburger');

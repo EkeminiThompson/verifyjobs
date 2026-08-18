@@ -11,6 +11,8 @@ logs/
 
 # Runtime data
 data/analyses.json
+data/shares.json
+data/scraped-jobs.json
 
 # Python
 __pycache__/

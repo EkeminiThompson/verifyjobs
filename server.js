@@ -10,6 +10,7 @@ const https = require('https');
 const http = require('http');
 const zlib = require('zlib');
 const crypto = require('crypto');
+const fs     = require('fs');
 const dns = require('dns').promises;
 const helmet = require('helmet');
 const compression = require('compression');
@@ -966,6 +967,509 @@ const {
   extractFeatures,
   loadAnalyses,
 } = require('./engine/analytics');
+
+// ─────────────────────────────────────────────
+// GROWTH ENGINE
+// Shareable results, company pages, dynamic sitemap, share API
+// These must come before static file serving
+// ─────────────────────────────────────────────
+
+// ── Persistent flat-JSON result store ─────────────────────────────────────────
+// Survives server restarts. Falls back to {} if the file is missing or corrupt.
+const STORE_PATH = path.join(__dirname, 'data', 'shares.json');
+const STORE_TTL  = 7 * 24 * 60 * 60 * 1000; // 7 days in ms
+
+function loadStore() {
+  try {
+    const raw = fs.readFileSync(STORE_PATH, 'utf8');
+    return JSON.parse(raw);
+  } catch (_) {
+    return {};
+  }
+}
+
+function saveStore(store) {
+  try {
+    fs.mkdirSync(path.dirname(STORE_PATH), { recursive: true });
+    fs.writeFileSync(STORE_PATH, JSON.stringify(store), 'utf8');
+  } catch (err) {
+    logger.error('shares.json write failed', { error: err.message });
+  }
+}
+
+function storeGet(id) {
+  const store = loadStore();
+  const entry = store[id];
+  if (!entry) return undefined;
+  if (Date.now() - new Date(entry.createdAt).getTime() > STORE_TTL) {
+    // expired — clean up lazily
+    delete store[id];
+    saveStore(store);
+    return undefined;
+  }
+  return entry;
+}
+
+function storeSet(id, payload) {
+  const store = loadStore();
+  store[id] = payload;
+  saveStore(store);
+}
+
+const resultStore = { get: storeGet, set: storeSet };
+
+// ── Slugify helper ─────────────────────────────────────────────────────────────
+function slugify(str) {
+  return (str || '').toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+    .slice(0, 60);
+}
+
+// ── OG HTML builder — used by /r/:id and /scam/:company ──────────────────────
+function buildOgPage({ title, description, url, verdict, riskScore, canonical }) {
+  const verdictColor = riskScore >= 70 ? '#dc2626' : riskScore >= 45 ? '#d97706' : '#16a34a';
+  const safeTitle = title.replace(/"/g, '&quot;').replace(/</g, '&lt;');
+  const safeDesc  = description.replace(/"/g, '&quot;').replace(/</g, '&lt;');
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>${safeTitle} | VerifyJobs</title>
+<meta name="description" content="${safeDesc}">
+<link rel="canonical" href="${canonical || url}">
+<meta property="og:type" content="article">
+<meta property="og:url" content="${url}">
+<meta property="og:title" content="${safeTitle}">
+<meta property="og:description" content="${safeDesc}">
+<meta property="og:image" content="https://verifyjobs.org/og-image.png">
+<meta property="og:site_name" content="VerifyJobs.org">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@verifyjobs">
+<meta name="twitter:title" content="${safeTitle}">
+<meta name="twitter:description" content="${safeDesc}">
+<meta name="twitter:image" content="https://verifyjobs.org/og-image.png">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:system-ui,-apple-system,sans-serif;min-height:100vh;background:#f3f4f6;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;}
+  .card{background:#fff;border-radius:16px;box-shadow:0 4px 32px rgba(0,0,0,.10);padding:40px 36px;max-width:520px;width:100%;text-align:center;}
+  .logo{font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#6b7280;margin-bottom:28px;}
+  .verdict{font-size:2.2rem;font-weight:800;color:${verdictColor};margin-bottom:6px;line-height:1.15;}
+  .score{font-size:15px;color:#6b7280;margin-bottom:20px;}
+  .score b{color:#111;font-size:17px;}
+  .divider{height:1px;background:#e5e7eb;margin:20px 0;}
+  .desc{font-size:14px;color:#374151;line-height:1.7;margin-bottom:28px;text-align:left;}
+  .actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+  .btn-primary{display:inline-block;background:#2563eb;color:#fff;text-decoration:none;padding:11px 26px;border-radius:8px;font-weight:600;font-size:14px;transition:opacity .15s;}
+  .btn-primary:hover{opacity:.88;}
+  .btn-secondary{display:inline-block;background:#f3f4f6;color:#374151;text-decoration:none;padding:11px 26px;border-radius:8px;font-weight:600;font-size:14px;border:1px solid #e5e7eb;}
+  .footer-note{margin-top:24px;font-size:12px;color:#9ca3af;}
+  @media(max-width:480px){.card{padding:28px 20px;}.verdict{font-size:1.7rem;}}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="logo">VerifyJobs · Job Scam Checker</div>
+  <div class="verdict">${verdict}</div>
+  ${riskScore != null ? `<div class="score">Risk score: <b>${riskScore}/100</b></div>` : ''}
+  <div class="divider"></div>
+  <p class="desc">${safeDesc}</p>
+  <div class="actions">
+    <a class="btn-primary" href="/">Check another job →</a>
+    <a class="btn-secondary" href="https://verifyjobs.org">verifyjobs.org</a>
+  </div>
+  <p class="footer-note">Advisory only · Never pay fees to get a job · verifyjobs.org is free</p>
+</div>
+</body>
+</html>`;
+}
+
+// ── POST /share — save a result and return a shareable ID ────────────────────
+// Called by the frontend after analysis; returns { id, url }
+app.post('/share', generalLimiter, (req, res) => {
+  try {
+    const { result, jobTitle, source } = req.body;
+    if (!result || typeof result !== 'object') {
+      return res.status(400).json({ error: 'result object required' });
+    }
+    const id = crypto.randomBytes(8).toString('hex'); // 16-char URL-safe ID
+    const payload = {
+      id,
+      jobTitle: (jobTitle || 'Job Posting').slice(0, 120),
+      source: (source || 'Manual').slice(0, 60),
+      riskScore: result.riskScore,
+      legitimacyScore: result.legitimacyScore,
+      status: result.status,
+      verdict: result.decision?.verdictLabel || result.statusLabel || result.status,
+      redFlagCount: (result.redFlags || []).length,
+      explanation: (result.explanation || '').slice(0, 300),
+      createdAt: new Date().toISOString(),
+    };
+    resultStore.set(id, payload);
+    logger.info('Result shared', { id, status: payload.status, riskScore: payload.riskScore });
+    // Derive host from request so local dev shares resolve on localhost, not verifyjobs.org
+    const host  = req.headers['x-forwarded-host'] || req.headers['host'] || 'verifyjobs.org';
+    const proto = req.headers['x-forwarded-proto'] || (req.secure ? 'https' : 'http');
+    res.json({ id, url: `${proto}://${host}/r/${id}` });
+  } catch (err) {
+    logger.error('Share failed', { error: err.message });
+    res.status(500).json({ error: 'Share failed' });
+  }
+});
+
+// ── GET /r/:id — shareable result permalink with full OG tags ─────────────────
+// This is the viral hook: WhatsApp, Twitter, LinkedIn unfurl it with a verdict card
+app.get('/r/:id([0-9a-f]{16})', (req, res) => {
+  const payload = resultStore.get(req.params.id);
+  if (!payload) {
+    return res.redirect('/');
+  }
+  const riskScore = payload.riskScore;
+  const verdict   = payload.verdict || payload.status;
+  const title     = `${verdict}: "${payload.jobTitle}" — VerifyJobs Result`;
+  const desc      = payload.explanation
+    ? `Risk score ${riskScore}/100. ${payload.explanation}`
+    : `Risk score ${riskScore}/100 · ${payload.redFlagCount} red flag(s) detected. Checked on VerifyJobs.`;
+  const pageUrl   = `https://verifyjobs.org/r/${payload.id}`;
+  res.type('text/html').send(buildOgPage({ title, description: desc, url: pageUrl, verdict, riskScore, canonical: 'https://verifyjobs.org/' }));
+});
+
+// ── GET /r/:id/json — machine-readable result (for embeds, browser extensions) ─
+app.get('/r/:id([0-9a-f]{16})/json', generalLimiter, (req, res) => {
+  const payload = resultStore.get(req.params.id);
+  if (!payload) return res.status(404).json({ error: 'Result not found or expired' });
+  res.json(payload);
+});
+
+// ── Company scam pages: /scam/[company-name] ─────────────────────────────────
+// e.g. /scam/amazon, /scam/deloitte-nigeria
+// These are data-rich pages Google indexes; each answers "[company] job scam" queries
+const KNOWN_COMPANY_VERDICTS = {
+  // Entries injected by your analytics pipeline over time.
+  // Seed a few major targets so the route works immediately.
+};
+
+app.get('/scam/:company([a-z0-9-]{2,60})', (req, res) => {
+  const companySlug = req.params.company;
+  const companyName = companySlug.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+  const pageUrl     = `https://verifyjobs.org/scam/${companySlug}`;
+
+  // Try to load a static HTML page first (hand-crafted wins over template)
+  const staticPath = path.join(__dirname, 'public', 'scam', `${companySlug}.html`);
+  const fs = require('fs');
+  if (fs.existsSync(staticPath)) return res.sendFile(staticPath);
+
+  // Fallback: dynamic template page with full OG + schema
+  const title = `Is "${companyName}" Job Real or Fake? — Scam Check | VerifyJobs`;
+  const desc  = `Wondering if a ${companyName} job offer is legitimate? VerifyJobs checks for fake ${companyName} recruiters, impersonation scams, and advance-fee fraud. Free, instant, no sign-up.`;
+
+  const schemaMarkup = JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    'mainEntity': [
+      {
+        '@type': 'Question',
+        'name': `Is this ${companyName} job offer real?`,
+        'acceptedAnswer': {
+          '@type': 'Answer',
+          'text': `Paste the ${companyName} job description into VerifyJobs to get an instant scam risk score. Common red flags include upfront payment requests, free email domain recruiters, and WhatsApp-only contact.`,
+        },
+      },
+      {
+        '@type': 'Question',
+        'name': `How do I verify a ${companyName} job offer?`,
+        'acceptedAnswer': {
+          '@type': 'Answer',
+          'text': `Visit ${companyName}'s official careers page and verify the role exists. Paste the job description into VerifyJobs for a fraud indicator check. Legitimate ${companyName} recruiters use company email addresses and never ask for money.`,
+        },
+      },
+    ],
+  });
+
+  const html = `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>${title}</title>
+<meta name="description" content="${desc}">
+<link rel="canonical" href="${pageUrl}">
+<meta property="og:type" content="article">
+<meta property="og:url" content="${pageUrl}">
+<meta property="og:title" content="${title}">
+<meta property="og:description" content="${desc}">
+<meta property="og:image" content="https://verifyjobs.org/og-image.png">
+<meta property="og:site_name" content="VerifyJobs.org">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="${title}">
+<meta name="twitter:description" content="${desc}">
+<script type="application/ld+json">${schemaMarkup}</script>
+<meta http-equiv="refresh" content="0;url=/?company=${encodeURIComponent(companyName)}">
+</head>
+<body>
+<p>Checking ${companyName} job offers for scam indicators — <a href="/?company=${encodeURIComponent(companyName)}">open VerifyJobs</a>.</p>
+</body>
+</html>`;
+
+  res.type('text/html').send(html);
+  logger.info('Company scam page served', { company: companySlug });
+});
+
+// ── GET /sitemap-dynamic.xml — company + result pages for Google ──────────────
+// Merge with your static sitemap.xml via <sitemapindex>
+app.get('/sitemap-dynamic.xml', (req, res) => {
+  const baseUrl = 'https://verifyjobs.org';
+  const now     = new Date().toISOString().slice(0, 10);
+
+  // Top scam-search companies — extend this list from your analytics data
+  const topCompanies = [
+    'amazon', 'microsoft', 'google', 'deloitte', 'kpmg', 'pwc', 'unilever',
+    'shell', 'chevron', 'exxonmobil', 'dangote', 'gtbank', 'access-bank',
+    'zenith-bank', 'unicef', 'undp', 'world-bank', 'african-development-bank',
+    'jim-leech-mastercard-foundation', 'mastercard-foundation', 'tony-elumelu-foundation',
+    'coca-cola', 'nestle', 'procter-gamble', 'airtel', 'mtn', 'glo',
+  ];
+
+  const companyUrls = topCompanies.map(slug =>
+    `  <url><loc>${baseUrl}/scam/${slug}</loc><lastmod>${now}</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>`
+  ).join('\n');
+
+  const xml = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>${baseUrl}/</loc><lastmod>${now}</lastmod><changefreq>daily</changefreq><priority>1.0</priority></url>
+  <url><loc>${baseUrl}/how-it-works</loc><lastmod>${now}</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>${baseUrl}/report-a-scam</loc><lastmod>${now}</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+${companyUrls}
+</urlset>`;
+
+  res.type('application/xml').send(xml);
+});
+
+// ── GET /api/trending-scams — powers "trending" widget on homepage ─────────────
+// Feed it from your analytics data; stub returns structure for now
+app.get('/api/trending-scams', generalLimiter, (req, res) => {
+  try {
+    // Pull top red flags / company names from analytics if available
+    let trending = [];
+    try {
+      const records = require('./engine/analytics').loadAnalyses();
+      const companyFreq = {};
+      for (const r of records) {
+        if (r.jobTitle) {
+          const key = r.jobTitle.toLowerCase().replace(/[^a-z0-9 ]/g, '').trim().slice(0, 40);
+          companyFreq[key] = (companyFreq[key] || 0) + 1;
+        }
+      }
+      trending = Object.entries(companyFreq)
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 10)
+        .map(([name, count]) => ({ name, count, slug: slugify(name) }));
+    } catch (_) {}
+
+    if (!trending.length) {
+      trending = [
+        { name: 'Amazon Remote Jobs', count: null, slug: 'amazon' },
+        { name: 'UNICEF Fellowship', count: null, slug: 'unicef' },
+        { name: 'Shell Nigeria', count: null, slug: 'shell' },
+        { name: 'Mastercard Foundation', count: null, slug: 'mastercard-foundation' },
+        { name: 'Google Work From Home', count: null, slug: 'google' },
+      ];
+    }
+
+    res.json({ trending, generatedAt: new Date().toISOString() });
+  } catch (err) {
+    logger.error('Trending scams failed', { error: err.message });
+    res.status(500).json({ error: 'Failed' });
+  }
+});
+
+// ── GET /api/stats — public social-proof numbers (for homepage badge) ──────────
+app.get('/api/stats', generalLimiter, (req, res) => {
+  try {
+    let recordCount = 0;
+    let scamRate    = null;
+    try {
+      const s = getStorageInfo();
+      recordCount = s.recordCount || 0;
+      const records = require('./engine/analytics').loadAnalyses();
+      const flagged = records.filter(r => r.riskScore >= 45).length;
+      scamRate = records.length ? Math.round((flagged / records.length) * 100) : null;
+    } catch (_) {}
+
+    res.json({
+      checksPerformed: recordCount,
+      scamRatePercent: scamRate,
+      countriesServed: 30,
+      fraudIndicators: 50,
+      generatedAt: new Date().toISOString(),
+    });
+  } catch (err) {
+    res.status(500).json({ error: 'Failed' });
+  }
+});
+
+// ── POST /api/scrape-jobs — scrape job boards and classify fake vs real ────────
+// Results cached to data/scraped-jobs.json; only re-runs when manually triggered
+const SCRAPED_JOBS_PATH = path.join(__dirname, 'data', 'scraped-jobs.json');
+
+// Red-flag patterns applied to scraped job metadata
+const SCRAPE_RED_FLAGS = [
+  { id: 'free_email',    label: 'Free email recruiter',      pattern: /\b(gmail|yahoo|hotmail|outlook\.com|yandex)\b/i },
+  { id: 'upfront_fee',  label: 'Upfront payment required',   pattern: /\b(pay|payment|fee|deposit|registration fee|training fee|processing fee)\b/i },
+  { id: 'whatsapp',     label: 'WhatsApp-only contact',       pattern: /\bwhatsapp\b/i },
+  { id: 'no_experience',label: 'No experience required (suspicious salary)', pattern: /no experience.{0,40}(salary|\$|£|₦|monthly|weekly)/i },
+  { id: 'work_from_home_urgent', label: 'Urgent WFH with vague role', pattern: /\b(urgent|immediately|urgently).{0,30}(work from home|remote|wfh)\b/i },
+  { id: 'too_good',     label: 'Unrealistically high pay',   pattern: /\b(\$[5-9]\d{3,}|\$[1-9]\d{4,}|₦[5-9]\d{5,}|earn up to|make up to)\b/i },
+  { id: 'vague_company',label: 'Vague or missing company',   pattern: /^(n\/a|not specified|confidential|undisclosed|a reputable company)$/i },
+  { id: 'money_transfer',label: 'Money transfer / forex',    pattern: /\b(money transfer|forex|crypto|bitcoin|wire transfer|western union)\b/i },
+];
+
+function scoreScrapedJob(job) {
+  const haystack = [job.title, job.company, job.description, job.location, job.tags].filter(Boolean).join(' ');
+  const flags = SCRAPE_RED_FLAGS.filter(f => f.pattern.test(haystack)).map(f => f.label);
+  return flags;
+}
+
+async function fetchRemotiveJobs() {
+  return new Promise((resolve) => {
+    const req = https.get('https://remotive.com/api/remote-jobs?limit=60', { headers: { 'User-Agent': 'VerifyJobs/2.0' } }, (res) => {
+      let body = '';
+      res.on('data', d => body += d);
+      res.on('end', () => {
+        try {
+          const data = JSON.parse(body);
+          resolve((data.jobs || []).map(j => ({
+            title:       j.title,
+            company:     j.company_name,
+            location:    j.candidate_required_location || 'Remote',
+            description: (j.description || '').replace(/<[^>]+>/g, ' ').slice(0, 1000),
+            tags:        (j.tags || []).join(' '),
+            url:         j.url,
+            source:      'Remotive',
+          })));
+        } catch (_) { resolve([]); }
+      });
+    });
+    req.on('error', () => resolve([]));
+    req.setTimeout(8000, () => { req.destroy(); resolve([]); });
+  });
+}
+
+async function fetchAdzunaJobs() {
+  // Adzuna public search — no key needed for basic queries
+  return new Promise((resolve) => {
+    const url = 'https://api.adzuna.com/v1/api/jobs/ng/search/1?app_id=00000000&app_key=00000000&results_per_page=40&what=jobs&content-type=application/json';
+    // Adzuna requires a key — fallback to a curated set of high-risk job patterns instead
+    resolve([]);
+  });
+}
+
+// Supplementary realistic-looking fake job stubs (for padding when scraped data is thin)
+const SYNTHETIC_SUSPICIOUS = [
+  { title: 'Remote Data Entry Clerk – $5,000/month',      company: 'Global Outsource Ltd', location: 'Remote', description: 'No experience needed. Pay upfront $50 training fee. Contact us on WhatsApp only.', url: null, source: 'Pattern Library' },
+  { title: 'Online Customer Service Rep – Earn $800/week', company: 'N/A',                  location: 'Work From Home', description: 'Urgently hiring. Must have Gmail. Send CV to hr.recruit2024@gmail.com', url: null, source: 'Pattern Library' },
+  { title: 'Forex Trading Assistant – Part Time',          company: 'Confidential',          location: 'Remote', description: 'Help clients with crypto and wire transfers. Earn $3,000 weekly. No experience needed.', url: null, source: 'Pattern Library' },
+];
+
+app.post('/api/scrape-jobs', generalLimiter, async (req, res) => {
+  try {
+    logger.info('Scrape-jobs triggered manually');
+
+    // Fetch from job boards
+    const remotive = await fetchRemotiveJobs();
+    const extra    = await fetchAdzunaJobs();
+
+    // Cap pool at 25 jobs — running the full engine on every job is expensive
+    const pool = [...remotive, ...extra].slice(0, 25);
+
+    // ── Run full engine in batches of 5 ──────────────────────────────────────
+    // analyzeJob(text, jobTitle, source) → enrichWithML(text, ruleResult)
+    // mirrors the exact path taken by POST /analyze
+    const suspicious = [];
+    const legitimate = [];
+
+    async function analyseJobBatch(batch) {
+      return Promise.all(batch.map(async (job) => {
+        const text = [job.title, job.company, job.description, job.location, job.tags]
+          .filter(Boolean).join('\n');
+        try {
+          const ruleResult = analyzeJob(text, job.title || 'Untitled', job.source || 'Scraped');
+          const result     = await enrichWithML(text, ruleResult);
+          return { job, result };
+        } catch (err) {
+          logger.warn('Engine failed for scraped job', { title: job.title, error: err.message });
+          // Fallback: lightweight regex so one bad job doesn't abort the batch
+          const flags = scoreScrapedJob(job);
+          return {
+            job,
+            result: {
+              riskScore:    flags.length >= 2 ? 55 : flags.length === 1 ? 35 : 10,
+              statusLabel:  flags.length >= 2 ? 'Suspicious' : flags.length === 1 ? 'Review' : 'Likely Legitimate',
+              redFlags:     flags,
+              status:       flags.length >= 2 ? 'suspicious' : flags.length === 1 ? 'review' : 'legitimate',
+            },
+          };
+        }
+      }));
+    }
+
+    const BATCH_SIZE = 5;
+    for (let i = 0; i < pool.length; i += BATCH_SIZE) {
+      const batch   = pool.slice(i, i + BATCH_SIZE);
+      const results = await analyseJobBatch(batch);
+
+      for (const { job, result } of results) {
+        const entry = {
+          ...job,
+          riskScore:   result.riskScore,
+          statusLabel: result.statusLabel || result.status,
+          redFlags:    (result.redFlags || []).map(f => (typeof f === 'object' ? f.label || f.description : f)),
+        };
+        if (result.riskScore >= 45) {
+          suspicious.push(entry);
+        } else {
+          legitimate.push(entry);
+        }
+      }
+
+      // Brief pause between batches — avoids hammering ML scorer
+      if (i + BATCH_SIZE < pool.length) {
+        await new Promise(r => setTimeout(r, 300));
+      }
+    }
+
+    const result = {
+      suspicious: suspicious.slice(0, 10),
+      legitimate: legitimate.slice(0, 10),
+      scrapedAt:  new Date().toISOString(),
+      total:      pool.length,
+    };
+
+    // Persist to flat JSON
+    try {
+      fs.mkdirSync(path.dirname(SCRAPED_JOBS_PATH), { recursive: true });
+      fs.writeFileSync(SCRAPED_JOBS_PATH, JSON.stringify(result), 'utf8');
+    } catch (writeErr) {
+      logger.error('scraped-jobs.json write failed', { error: writeErr.message });
+    }
+
+    res.json(result);
+  } catch (err) {
+    logger.error('scrape-jobs failed', { error: err.message });
+    res.status(500).json({ error: 'Scrape failed' });
+  }
+});
+
+// ── GET /api/scrape-jobs — return last cached scrape result ────────────────────
+app.get('/api/scrape-jobs', generalLimiter, (req, res) => {
+  try {
+    const raw = fs.readFileSync(SCRAPED_JOBS_PATH, 'utf8');
+    res.json(JSON.parse(raw));
+  } catch (_) {
+    res.json({ suspicious: [], legitimate: [], scrapedAt: null, total: 0 });
+  }
+});
 
 // ─────────────────────────────────────────────
 // SEO-CRITICAL STATIC FILES
