@@ -282,7 +282,7 @@ const CANONICAL_SOURCES = [
   'careers.spotify.com',
   'careers.stripe.com',
 
-  // UN / international organizations
+  // UN / international organizations + major humanitarian job boards
   'un.org',
   'careers.un.org',
   'undp.org',
@@ -301,6 +301,19 @@ const CANONICAL_SOURCES = [
   'unwomen.org',
   'unodc.org',
   'ohchr.org',
+  'reliefweb.int',           // UN OCHA ReliefWeb (frequently WAF-protected)
+  'ocha.org',
+  'unocha.org',
+  'devex.com',
+  'impactpool.org',
+  'unjobnet.org',
+  'unjobs.org',
+  'cinfo.ch',
+  'idealist.org',
+  'charityjob.co.uk',
+  'bond.org.uk',
+  'jobs.theguardian.com',
+  'theguardian.com',
 ];
 
 const BLOCKED_DOMAINS = [
@@ -400,6 +413,8 @@ const FETCH_USER_AGENTS = [
   'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36',
   'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:129.0) Gecko/20100101 Firefox/129.0',
   'Mozilla/5.0 (Macintosh; Intel Mac OS X 14_5) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.5 Safari/605.1.15',
+  'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36',
+  'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36 Edg/126.0.0.0',
 ];
 
 function browserHeaders(targetUrl, ua, referer) {
@@ -480,6 +495,16 @@ function fetchUrlOnce(rawUrl, redirectsLeft, signal, ua, referer) {
         return resolve(fetchUrlOnce(next, redirectsLeft - 1, signal, ua, rawUrl));
       }
 
+      // Detect common bot-protection / WAF responses and report them clearly
+      const wafAction = (res.headers['x-amzn-waf-action'] || res.headers['cf-mitigated'] || res.headers['cf-ray'] || '').toString().toLowerCase();
+      if ([202, 403, 429, 503].includes(res.statusCode)) {
+        const reason = wafAction
+          ? `HTTP ${res.statusCode} (WAF challenge: ${wafAction.slice(0, 40)})`
+          : `HTTP ${res.statusCode}`;
+        res.resume();
+        return reject(new Error(reason));
+      }
+
       if (res.statusCode !== 200) {
         res.resume();
         return reject(new Error(`HTTP ${res.statusCode}`));
@@ -553,7 +578,7 @@ function fetchUrl(rawUrl, redirectsLeft = config.maxRedirects, signal = null) {
       return await fetchUrlOnce(rawUrl, redirectsLeft, signal, ua, null);
     } catch (err) {
       const msg = String(err.message || err);
-      const retryable = /HTTP 403|HTTP 429|HTTP 503|timed out/i.test(msg);
+      const retryable = /HTTP 202|HTTP 403|HTTP 429|HTTP 503|WAF challenge|timed out/i.test(msg);
       if (retryable && i + 1 < maxAttempts) {
         await new Promise(r => setTimeout(r, 400 + Math.random() * 600));
         return attempt(i + 1);
@@ -966,6 +991,9 @@ const {
   getSegmentInsights,
   extractFeatures,
   loadAnalyses,
+  addLabel,
+  getLabelCount,
+  MIN_LIVE_LABELS,
 } = require('./engine/analytics');
 
 // ─────────────────────────────────────────────
@@ -1658,6 +1686,57 @@ app.get('/analytics/model-metrics', generalLimiter, async (req, res) => {
   }
 });
 
+// ── POST /feedback — human label for live model metrics (≥100 unlocks live block) ─
+// Body: { label: 'scam'|'legit', riskScore?: number, predictedStatus?: string, analysisId?: string, source?: string }
+app.post('/feedback', generalLimiter, (req, res) => {
+  try {
+    const { label, riskScore, predictedStatus, analysisId, source } = req.body || {};
+    if (!label || !['scam', 'legit'].includes(String(label).toLowerCase())) {
+      return res.status(400).json({
+        error: 'label is required and must be "scam" or "legit"',
+      });
+    }
+    const result = addLabel({
+      label: String(label).toLowerCase(),
+      riskScore: typeof riskScore === 'number' ? riskScore : undefined,
+      predictedStatus: predictedStatus || undefined,
+      analysisId: analysisId || undefined,
+      source: source || 'web',
+    });
+    if (!result.ok) {
+      return res.status(500).json({ error: result.error || 'Failed to save label' });
+    }
+    const count = result.labelCount;
+    logger.info('Feedback label saved', { label: result.label.label, labelCount: count });
+    res.json({
+      ok: true,
+      labelCount: count,
+      required: MIN_LIVE_LABELS,
+      liveMetricsReady: count >= MIN_LIVE_LABELS,
+      message:
+        count >= MIN_LIVE_LABELS
+          ? `Thanks — ${count} labels collected. Live model metrics are now available.`
+          : `Thanks — ${count}/${MIN_LIVE_LABELS} labels toward live metrics.`,
+    });
+  } catch (err) {
+    logger.error('Feedback failed', { error: err.message });
+    res.status(500).json({ error: 'Feedback failed' });
+  }
+});
+
+app.get('/feedback/count', generalLimiter, (req, res) => {
+  try {
+    const count = getLabelCount();
+    res.json({
+      labelCount: count,
+      required: MIN_LIVE_LABELS,
+      liveMetricsReady: count >= MIN_LIVE_LABELS,
+    });
+  } catch (err) {
+    res.status(500).json({ error: 'Failed' });
+  }
+});
+
 app.get('/analytics/ab-test', generalLimiter, (req, res) => {
   try {
     const records = loadAnalyses();
@@ -1886,9 +1965,11 @@ app.post('/analyze-url', validateUrlInput, async (req, res) => {
     const isTrustedHost = isCanonicalSource(hostname);
     const isOwnSiteEarly = hostname === 'verifyjobs.org' || hostname.endsWith('.verifyjobs.org');
 
-    // Trusted ATS (Oracle HCM, Workday, Greenhouse, …): JS shells / soft blocks
-    // are normal — do NOT return insufficient_data or invent a scam score.
+    // Trusted career portals / official boards (ReliefWeb, UN, Greenhouse, Workday…):
+    // JS shells, AWS WAF challenges, or soft blocks are normal.
+    // Do NOT return insufficient_data or invent a scam score.
     if ((ctx.fetchError || wordCount < 40) && isTrustedHost && !isOwnSiteEarly) {
+      const isWaf = /WAF challenge|HTTP 202|HTTP 403|HTTP 429|HTTP 503/i.test(String(ctx.fetchError || ''));
       const portalResult = {
         status: 'likely_legitimate',
         statusLabel: 'Likely Legitimate (Trusted Career Portal)',
@@ -1896,52 +1977,57 @@ app.post('/analyze-url', validateUrlInput, async (req, res) => {
         legitimacyScore: 85,
         redFlags: [],
         positiveIndicators: [
-          `Official career portal domain (${hostname})`,
-          'Known ATS / HCM host (content often loads in the browser only)',
+          `Official / highly trusted domain (${hostname})`,
+          isWaf
+            ? 'Site uses bot protection (AWS WAF / Cloudflare) — common on real humanitarian & corporate career sites'
+            : 'Known official career / ATS host (content often loads only in a real browser)',
         ],
         explanation:
-          'This URL is on a known official career system (e.g. Oracle Cloud HCM, Workday, Greenhouse). ' +
-          'Little or no text could be extracted because these sites are JavaScript apps or restrict bots. ' +
-          'That is expected and is not a scam signal. We still cannot verify the specific vacancy wording without the full description.',
+          `This URL is on a known legitimate career or humanitarian job board (${hostname}). ` +
+          (isWaf
+            ? 'The site blocked our automated fetch with a bot challenge. This is expected on real sites such as ReliefWeb, UN portals, and major ATS platforms and is not a scam signal. '
+            : 'Little or no text could be extracted because these sites are often JavaScript apps or restrict bots. ') +
+          'We still cannot verify the specific vacancy wording without the full description you see in your browser.',
         recommendation:
-          'Treat the host as a real career portal. Open the link yourself, confirm the vacancy, and never pay any fee to apply. ' +
-          'For a full automated check, paste the job text from the page.',
+          'Treat the host as a real career portal. Open the link yourself, confirm the vacancy and employer, and never pay any fee to apply. ' +
+          'For a full automated check, paste the complete job text from the page into the Paste Text tab.',
         actionItems: [
-          'Open the posting in your browser and confirm employer, title, and closing date',
-          'Apply only through this official portal — ignore WhatsApp / payment side channels',
-          'Optional: paste the full description into VerifyJobs for a content-based score',
+          'Open the posting in your browser and confirm employer, title, location, and closing date',
+          'Apply only through the official form or portal — ignore any WhatsApp / payment side channels',
+          'Optional but recommended: paste the full description into VerifyJobs for a content-based risk score',
         ],
         note: ctx.fetchError
-          ? `Trusted host ${hostname}; fetch issue (${ctx.fetchError}). Portal trust applied — not scored as fraud.`
-          : `Trusted host ${hostname}; only ${wordCount} words extracted (typical for JS ATS). Portal trust applied.`,
+          ? `Trusted host ${hostname}; fetch blocked (${ctx.fetchError}). Portal trust applied — not scored as fraud.`
+          : `Trusted host ${hostname}; only ${wordCount} words extracted (typical for JS/WAF-protected sites). Portal trust applied.`,
         metadata: {
           trustedCareerPortal: true,
           hostname,
           wordCount,
           fetchError: ctx.fetchError || null,
+          wafOrChallenge: isWaf,
           analysisTimestamp: new Date().toISOString(),
         },
-        ml: { available: false, reason: 'Skipped — insufficient extractable text on trusted ATS' },
+        ml: { available: false, reason: 'Skipped — insufficient extractable text on trusted portal' },
         decision: {
           verdict: 'looks_ok',
           verdictLabel: 'Trusted career portal',
           verdictTone: 'safe',
           summary:
-            'Hosted on a known official careers system. Limited page text is normal for Oracle/Workday-style sites — not evidence of a scam.',
+            `Hosted on a known official board (${hostname}). Bot protection or limited extractable text is normal for ReliefWeb, UN, Workday, Greenhouse, etc. — not evidence of a scam.`,
           topReasons: [
-            `Domain matches known ATS/HCM: ${hostname}`,
-            wordCount < 40
-              ? 'Job details are usually filled in by JavaScript after load'
-              : 'Partial extract only',
+            `Domain matches known trusted career / humanitarian source: ${hostname}`,
+            isWaf
+              ? 'Bot challenge (WAF) is common on legitimate high-traffic job sites'
+              : (wordCount < 40 ? 'Job details usually require a real browser (JS-rendered)' : 'Partial extract only'),
           ],
           nextSteps: [
             'Review the vacancy in your browser on this same official URL',
             'Never pay to apply or move the process solely to WhatsApp/Telegram',
-            'Paste the description here if you want a full text-based risk score',
+            'Paste the full description here if you want a detailed text-based risk score',
           ],
           scamPattern: null,
           confidenceNote:
-            'Host trust only — we did not read full JD text. Unusual for a scam to sit on real Oracle/UNDP HCM, but always read the posting yourself.',
+            'Host trust only — we could not read the full JD text. Scams almost never sit on real ReliefWeb / UN / major ATS domains, but always read the posting yourself.',
           riskScore: 0,
         },
         submittedUrl: rawUrl,
@@ -1952,11 +2038,12 @@ app.post('/analyze-url', validateUrlInput, async (req, res) => {
         extractedLength: (ctx.combinedText || '').length,
         pageTitle: ctx.pageTitle || hostname,
       };
-      logger.info('Trusted ATS with thin/failed extract — portal trust result', {
+      logger.info('Trusted portal with thin/failed extract — portal trust result', {
         url: rawUrl,
         hostname,
         wordCount,
         fetchError: ctx.fetchError,
+        wafOrChallenge: isWaf,
       });
       return res.json(portalResult);
     }

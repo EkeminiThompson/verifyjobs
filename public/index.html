@@ -1851,13 +1851,18 @@ img, svg, video { max-width: 100%; height: auto; }
         </div>
         <div class="ml-bar" id="mlBar" style="display:none"></div>
       </div>
-      <!-- Share row — appears after analysis -->
+      <!-- Share + feedback row — appears after analysis -->
       <div class="share-row" id="shareRow" style="display:none">
         <button class="btn-share" id="shareBtn" onclick="shareResult()">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
           Share result
         </button>
         <span class="share-copied" id="shareCopied">Link copied!</span>
+        <span style="flex:1"></span>
+        <span id="feedbackPrompt" style="font-family:var(--body);font-size:12px;color:var(--grey2)">Was this correct?</span>
+        <button class="btn-share" id="fbLegit" onclick="sendFeedback('legit')" title="Mark as legitimate">Looks legit</button>
+        <button class="btn-share" id="fbScam" onclick="sendFeedback('scam')" title="Mark as scam" style="background:#fce8e6;border-color:#f5c6c2;color:var(--red)">Looks like a scam</button>
+        <span class="share-copied" id="feedbackThanks">Thanks — label saved</span>
       </div>
     </div>
   </div>
@@ -2264,10 +2269,55 @@ function showResults(a) {
   rs2.style.display='block';
   setTimeout(()=>rs2.scrollIntoView({behavior:'smooth',block:'start'}),50);
 
-  // Show share row and wire it up for this result
+  // Show share + feedback row
   document.getElementById('shareRow').style.display='flex';
   document.getElementById('shareCopied').classList.remove('show');
-  window._lastResult = a; // store for shareResult()
+  document.getElementById('feedbackThanks').classList.remove('show');
+  document.getElementById('feedbackPrompt').style.display = '';
+  document.getElementById('fbLegit').style.display = '';
+  document.getElementById('fbScam').style.display = '';
+  document.getElementById('fbLegit').disabled = false;
+  document.getElementById('fbScam').disabled = false;
+  window._lastResult = a; // store for shareResult() / feedback
+}
+
+// ── Human feedback (labels unlock live model metrics at 100) ─────────────────
+async function sendFeedback(label) {
+  const a = window._lastResult;
+  if (!a || a.metadata?.insufficientData || a.status === 'insufficient_data' || a.status === 'not_a_job') {
+    return;
+  }
+  const btnL = document.getElementById('fbLegit');
+  const btnS = document.getElementById('fbScam');
+  btnL.disabled = true;
+  btnS.disabled = true;
+  try {
+    const r = await fetch('/feedback', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        label,
+        riskScore: typeof a.riskScore === 'number' ? a.riskScore : undefined,
+        predictedStatus: a.status || a.statusLabel || undefined,
+        source: 'web',
+      }),
+    });
+    const data = await r.json().catch(() => ({}));
+    if (r.ok) {
+      document.getElementById('feedbackThanks').textContent =
+        data.message || 'Thanks — label saved';
+      document.getElementById('feedbackThanks').classList.add('show');
+      document.getElementById('feedbackPrompt').style.display = 'none';
+      btnL.style.display = 'none';
+      btnS.style.display = 'none';
+    } else {
+      btnL.disabled = false;
+      btnS.disabled = false;
+    }
+  } catch (_) {
+    btnL.disabled = false;
+    btnS.disabled = false;
+  }
 }
 
 // ── Share result ──────────────────────────────────────────────────────────────

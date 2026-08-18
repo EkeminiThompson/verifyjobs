@@ -16,6 +16,10 @@ const MIN_OPS_N = 5;
 const MIN_AB_N = 100;
 const MIN_DID_N = 100;
 const MIN_SEGMENT_N = 30;
+// Human labels required before live model metrics are shown (not circular riskScore proxies)
+const MIN_LIVE_LABELS = 100;
+
+const LABELS_PATH = path.join(__dirname, '..', 'data', 'labels.json');
 
 // ─────────────────────────────────────────────
 // DATA ACCESS
@@ -189,10 +193,116 @@ function fetchJson(url, timeoutMs = 2500) {
   });
 }
 
+// ─────────────────────────────────────────────
+// HUMAN LABELS (for live model metrics at ≥ MIN_LIVE_LABELS)
+// ─────────────────────────────────────────────
+
+function loadLabels() {
+  try {
+    const raw = fs.readFileSync(LABELS_PATH, 'utf8');
+    const data = JSON.parse(raw);
+    return Array.isArray(data) ? data : (data.labels || []);
+  } catch {
+    return [];
+  }
+}
+
+function saveLabels(labels) {
+  try {
+    fs.mkdirSync(path.dirname(LABELS_PATH), { recursive: true });
+    fs.writeFileSync(LABELS_PATH, JSON.stringify({ labels, updatedAt: new Date().toISOString() }, null, 0), 'utf8');
+    return true;
+  } catch (err) {
+    return false;
+  }
+}
+
 /**
- * Trustworthy model card: hold-out metrics from training, not live logs.
+ * Record a human label for an analysis.
+ * @param {{ analysisId?: string, riskScore?: number, predictedStatus?: string, label: 'scam'|'legit', source?: string }} entry
+ */
+function addLabel(entry) {
+  if (!entry || !['scam', 'legit'].includes(entry.label)) {
+    return { ok: false, error: 'label must be "scam" or "legit"' };
+  }
+  const labels = loadLabels();
+  const row = {
+    id: entry.analysisId || `fb_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
+    label: entry.label,
+    riskScore: typeof entry.riskScore === 'number' ? entry.riskScore : null,
+    predictedStatus: entry.predictedStatus || null,
+    source: entry.source || 'feedback',
+    createdAt: new Date().toISOString(),
+  };
+  labels.push(row);
+  if (!saveLabels(labels)) {
+    return { ok: false, error: 'Could not persist label' };
+  }
+  return { ok: true, labelCount: labels.length, label: row };
+}
+
+function getLabelCount() {
+  return loadLabels().length;
+}
+
+/**
+ * Compute precision / recall / F1 from human labels vs model riskScore.
+ * Positive class = scam. Prediction = riskScore >= threshold (default 45).
+ */
+function computeLiveMetrics(labels, threshold = 45) {
+  const usable = labels.filter(l =>
+    l.label && typeof l.riskScore === 'number' && !Number.isNaN(l.riskScore)
+  );
+  if (usable.length < MIN_LIVE_LABELS) {
+    return {
+      available: false,
+      labelCount: usable.length,
+      required: MIN_LIVE_LABELS,
+      note: `Need ${MIN_LIVE_LABELS} human labels with riskScore to show live metrics (have ${usable.length}).`,
+    };
+  }
+
+  let tp = 0, fp = 0, tn = 0, fn = 0;
+  for (const l of usable) {
+    const predScam = l.riskScore >= threshold;
+    const trueScam = l.label === 'scam';
+    if (predScam && trueScam) tp++;
+    else if (predScam && !trueScam) fp++;
+    else if (!predScam && !trueScam) tn++;
+    else fn++;
+  }
+
+  const precision = tp + fp > 0 ? tp / (tp + fp) : null;
+  const recall = tp + fn > 0 ? tp / (tp + fn) : null;
+  const f1 = precision != null && recall != null && (precision + recall) > 0
+    ? (2 * precision * recall) / (precision + recall)
+    : null;
+  const accuracy = (tp + tn + fp + fn) > 0 ? (tp + tn) / (tp + tn + fp + fn) : null;
+
+  return {
+    available: true,
+    labelCount: usable.length,
+    threshold,
+    tp, fp, tn, fn,
+    precision: precision != null ? parseFloat(precision.toFixed(4)) : null,
+    recall: recall != null ? parseFloat(recall.toFixed(4)) : null,
+    bestF1: f1 != null ? parseFloat(f1.toFixed(4)) : null,
+    accuracy: accuracy != null ? parseFloat(accuracy.toFixed(4)) : null,
+    auc: null,
+    note: `Live metrics from ${usable.length} human labels (threshold risk≥${threshold}). Not circular riskScore proxies.`,
+  };
+}
+
+/**
+ * Trustworthy model card: hold-out metrics from training.
+ * When ≥ MIN_LIVE_LABELS human labels exist, also attach live metrics.
  */
 async function getTrainedModelMetrics() {
+  const labels = loadLabels();
+  const liveLabelCount = labels.length;
+  const live = computeLiveMetrics(labels);
+
+  let holdout;
   try {
     const info = await fetchJson(`${ML_SERVER_URL}/model-info`);
     const ensemble = info.ensemble_test_metrics || {};
@@ -203,7 +313,7 @@ async function getTrainedModelMetrics() {
       direction: 'trained',
     }));
 
-    return {
+    holdout = {
       source: 'trained_holdout',
       available: true,
       auc: ensemble.auc ?? xgb.auc ?? null,
@@ -222,21 +332,65 @@ async function getTrainedModelMetrics() {
       },
     };
   } catch (err) {
-    return {
+    holdout = {
       source: 'trained_holdout',
       available: false,
       error: `ML server unreachable (${err.message}). Start serve.py or set ML_SERVER_URL. Live traffic is not used as ground truth.`,
     };
   }
+
+  if (live.available && liveLabelCount >= MIN_LIVE_LABELS) {
+    return {
+      ...holdout,
+      source: 'live_and_holdout',
+      liveMetricsReady: true,
+      liveLabelCount,
+      live: {
+        available: true,
+        labelCount: live.labelCount,
+        threshold: live.threshold,
+        precision: live.precision,
+        recall: live.recall,
+        bestF1: live.bestF1,
+        accuracy: live.accuracy,
+        tp: live.tp,
+        fp: live.fp,
+        tn: live.tn,
+        fn: live.fn,
+        note: live.note,
+      },
+      note:
+        `Live metrics from ${liveLabelCount} human labels (shown once ≥${MIN_LIVE_LABELS}). ` +
+        'Hold-out metrics remain the training quality reference.',
+    };
+  }
+
+  return {
+    ...holdout,
+    liveMetricsReady: false,
+    liveLabelCount,
+    live: {
+      available: false,
+      labelCount: liveLabelCount,
+      required: MIN_LIVE_LABELS,
+      note: live.note || `Need ${MIN_LIVE_LABELS} human labels to show live metrics (have ${liveLabelCount}).`,
+    },
+  };
 }
 
 /**
- * @deprecated Circular live-log evaluation removed. Kept as explicit refusal.
+ * Circular live-log evaluation remains disabled.
+ * Use human labels via addLabel + getTrainedModelMetrics live block instead.
  */
 function getModelMetrics(records) {
+  const liveLabelCount = getLabelCount();
   return {
-    error: 'Live-log model metrics disabled. Labels from riskScore≥65 are circular and not trustworthy. Use trained hold-out metrics from the ML server.',
+    error:
+      'Live-log model metrics from riskScore proxies remain disabled (circular). ' +
+      `Submit human labels via POST /feedback. Live metrics unlock at ${MIN_LIVE_LABELS} labels (have ${liveLabelCount}).`,
     sampleSize: records.length,
+    liveLabelCount,
+    required: MIN_LIVE_LABELS,
   };
 }
 
@@ -686,7 +840,9 @@ async function getFullAnalytics() {
     recordCount: records.length,
     trustNote:
       'High-risk rates use risk ≥ 65 as an operational proxy (not human labels). ' +
-      'Model quality is the trained hold-out set from serve.py. Insights below are derived from live traffic patterns.',
+      'Model quality is the trained hold-out set from serve.py. ' +
+      `Live model metrics (precision/recall/F1 vs human labels) unlock at ${MIN_LIVE_LABELS} feedback labels. ` +
+      'Insights below are derived from live traffic patterns.',
     intelligence,
     overview,
     model: trainedModel,
@@ -712,4 +868,9 @@ module.exports = {
   runQuery,
   loadAnalyses,
   extractFeatures,
+  addLabel,
+  loadLabels,
+  getLabelCount,
+  computeLiveMetrics,
+  MIN_LIVE_LABELS,
 };
