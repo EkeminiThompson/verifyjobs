@@ -13,6 +13,7 @@ logs/
 data/analyses.json
 data/shares.json
 data/scraped-jobs.json
+data/labels.json
 
 # Python
 __pycache__/
